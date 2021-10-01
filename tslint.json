@@ -1,0 +1,41 @@
+{
+  "defaultSeverity": "error",
+  "extends": "tslint:recommended",
+  "rulesDirectory": [],
+  "rules": {
+    "array-type": false,
+    "arrow-parens": false,
+    "interface-name": false,
+    "no-angle-bracket-type-assertion": false,
+    "no-consecutive-blank-lines": true,
+    "no-empty": true,
+    "no-switch-case-fall-through": true,
+    "no-use-before-declare": false,
+    "no-var-requires": false,
+    "object-literal-key-quotes": false,
+    "max-line-length": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "member-ordering": false,
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "semicolon": [true, "never"],
+    "trailing-comma": false,
+    "no-output-on-prefix": true,
+    "only-arrow-functions": false,
+    "one-variable-per-declaration": false,
+    "arrow-return-shorthand": false,
+    "radix": false,
+    "forin": false,
+    "no-console": false,
+    "no-shadowed-variable": false,
+    "space-before-function-paren": false,
+    "no-bitwise": false,
+    "no-string-literal": false,
+    "no-unused-expression": false,
+    "no-unused-declaration": true,
+    "one-line": false
+  }
+}

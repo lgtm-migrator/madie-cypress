@@ -1,0 +1,28 @@
+{
+    "env": {},
+    "chromeWebSecurity": false,
+    "pageLoadTimeout": 100000,
+    "defaultCommandTimeout": 50000,
+    "video": false,
+    "trashAssetsBeforeRuns": true,
+    "videoUploadOnPasses": false,
+    "viewportWidth": 1300,
+    "viewportHeight": 800,
+    "watchForFileChanges": false,
+    "numTestsKeptInMemory": 5,
+    "reporter": "mochawesome",
+    "reporterOptions": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": false,
+        "timestamp": "mmddyyyy_HHMMss",
+        "json": true,
+        "inline": true
+    },
+    "retries": {
+        "runMode": 2,
+        "openMode": 0
+    },
+    "screenshotsFolder": "mochawesome-report/assets"
+
+}

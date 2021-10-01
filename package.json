@@ -1,0 +1,33 @@
+{
+	"name": "MADiE-Cypress",
+	"version": "1.0.0",
+	"description": "Cypress project for MADiE",
+	"scripts": {
+		"cypress:open": "cypress open",
+		"cypress:open:dev": "cypress open --env configFile=dev",
+		"cypress:run": "cypress run --spec cypress/integration/**/*",
+		"compile": "tsc --noEmit",
+		"combine:reports": "npx mochawesome-merge 'cypress/results/*.json' > mochawesome.json",
+		"generateOne:report": "npx marge mochawesome.json",
+		"delete:mochawesome": "rm mochawesome.json",
+		"delete:reports": "rm cypress/results/*.json",
+		"dev:all:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/**/*.spec.ts' --browser chrome --headed;",
+		"dev:all:ui:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run dev:all:ui:tests; npm run combine:reports; npm run generateOne:report"
+	},
+	"devDependencies": {
+		"@cypress/browserify-preprocessor": "^2.2.4",
+		"@types/node": "^12.19.3",
+		"cypress": "^8.5.0",
+		"cypress-commands": "^1.1.0",
+		"cypress-visual-regression": "^1.5.2",
+		"mocha": "^8.2.1",
+		"mochawesome": "^4.1.0",
+		"mochawesome-merge": "^4.2.0",
+		"mongodb": "3.6.0",
+		"tsify": "^5.0.2",
+		"typescript": "^4.1.3"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	}
+}
