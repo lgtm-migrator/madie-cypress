@@ -34,6 +34,11 @@ module.exports = (on, config) => {
       console.log(message)
 
       return null
+    },
+    table(message) {
+      console.table(message)
+
+      return null
     }
   })
   on('file:preprocessor', browserify(options))

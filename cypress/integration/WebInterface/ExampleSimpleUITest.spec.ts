@@ -1,19 +1,14 @@
-import { MATLoginExample } from '../../Shared/MATLoginExample'
-import { MATMeasureLibraryExample } from '../../Shared/MATMeasureLibraryExample'
+import { OktaLogin } from '../../Shared/OktaLogin'
 
-describe('Example Login to MAT', () => {
+describe('Example Login to MADiE', () => {
     beforeEach('Login',() => {
 
-        MATLoginExample.Login()
-
+        OktaLogin.Login()
     })
 
-    it('example TEST, verify new measure button exists and visible', () => {
+    it('example TEST', () => {
 
-        //verifying New Measure button is visible and active
-        cy.get(MATMeasureLibraryExample.newMeasureButton).should('be.visible')
-        cy.get(MATMeasureLibraryExample.newMeasureButton).should('be.enabled')
-
+        //TEST goes here
     })
 })
 
