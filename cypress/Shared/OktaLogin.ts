@@ -7,7 +7,6 @@ export class OktaLogin {
     public static readonly passwordInput = '#okta-signin-password'
     //public static readonly termsConditionsCheckbox = '.custom-checkbox'
     public static readonly signInButton = '#okta-signin-submit'
-    public static readonly signOutButton = '#main > :nth-child(2) > :nth-child(4)'
 
     // private static harpUser = Cypress.env('DEV_USERNAME')
     // private static password = Cypress.env('DEV_PASSWORD')
@@ -31,8 +30,8 @@ export class OktaLogin {
     }
 
     public static Logout(): void {
-        cy.get(this.signOutButton).should('be.visible')
-        cy.get(this.signOutButton).click()
+        cy.get(LandingPage.signOutButton).should('be.visible')
+        cy.get(LandingPage.signOutButton).click()
         cy.log('Logout Successful')
     }
 }

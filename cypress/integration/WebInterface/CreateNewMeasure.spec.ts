@@ -1,5 +1,6 @@
-import {OktaLogin} from "../../Shared/OktaLogin"
-import {LandingPage} from "../../Shared/LandingPage"
+import {OktaLogin} from "../../Shared/OktaLogin";
+import {LandingPage} from "../../Shared/LandingPage";
+import {CreateMeasurePage} from "../../Shared/CreateMeasurePage";
 
 describe('Create New Measure', () => {
     beforeEach('Login',() => {
@@ -17,11 +18,13 @@ describe('Create New Measure', () => {
 
         //Click on Measures Button
         cy.get(LandingPage.measuresButton).click()
-        cy.get(LandingPage.newMeasureButton).click()
-        cy.get(LandingPage.enterMeasureName).type('TestMeasure')
-        cy.get(LandingPage.createMeasureButton).click()
+        cy.get(CreateMeasurePage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type('TestMeasure')
+        cy.get(CreateMeasurePage.createMeasureButton).click()
         // Click on cancel button
-        cy.get(LandingPage.cancelButton).click()
+        cy.get(CreateMeasurePage.cancelButton).click()
     })
 })
+
+
 
