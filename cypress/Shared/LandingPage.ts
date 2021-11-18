@@ -5,5 +5,6 @@ export class LandingPage {
     public static readonly createMeasureButton = '[data-testid=create-new-measure-save-button]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly enterMeasureName = '[data-testid=measure-name-text-field]'
+    public static readonly measuresButton = '[data-testid=measure-button]'
 }
 

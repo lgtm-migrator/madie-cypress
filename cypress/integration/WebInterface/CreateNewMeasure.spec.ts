@@ -15,12 +15,11 @@ describe('Create New Measure', () => {
 
     it('Login to Madie and Create New Measure', () => {
 
-        // Navigate to Create Measure Page
-        cy.visit('https://dev-madie.hcqis.org/measure')
+        //Click on Measures Button
+        cy.get(LandingPage.measuresButton).click()
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(LandingPage.enterMeasureName).type('TestMeasure')
         cy.get(LandingPage.createMeasureButton).click()
-
         // Click on cancel button
         cy.get(LandingPage.cancelButton).click()
     })
