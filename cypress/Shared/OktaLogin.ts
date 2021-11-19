@@ -1,4 +1,4 @@
-import { LandingPage } from '../Shared/LandingPage'
+import {LandingPage} from "./LandingPage"
 
 //MADiE OKTA Login Class
 export class OktaLogin {
@@ -8,8 +8,11 @@ export class OktaLogin {
     //public static readonly termsConditionsCheckbox = '.custom-checkbox'
     public static readonly signInButton = '#okta-signin-submit'
 
-    private static harpUser = Cypress.env('DEV_USERNAME')
-    private static password = Cypress.env('DEV_PASSWORD')
+    // private static harpUser = Cypress.env('DEV_USERNAME')
+    // private static password = Cypress.env('DEV_PASSWORD')
+
+    private static harpUser = Cypress.env('MADIE_DEV_USERNAME')
+    private static password = Cypress.env('MADIE_DEV_PASSWORD')
 
     public static Login(): void {
 
@@ -22,7 +25,13 @@ export class OktaLogin {
         cy.get(this.passwordInput).type(this.password)
         cy.get(this.signInButton).click()
         //Verify the success message on home page
-        cy.get(LandingPage.loginSuccessmsg).should('be.visible')
+        cy.get(LandingPage.loginSuccessmsg).should('contain.text', 'You are successfully logged in')
         cy.log('Login Successful')
+    }
+
+    public static Logout(): void {
+        cy.get(LandingPage.signOutButton).should('be.visible')
+        cy.get(LandingPage.signOutButton).click()
+        cy.log('Logout Successful')
     }
 }
