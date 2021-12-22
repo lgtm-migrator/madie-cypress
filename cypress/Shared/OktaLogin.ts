@@ -8,11 +8,8 @@ export class OktaLogin {
     //public static readonly termsConditionsCheckbox = '.custom-checkbox'
     public static readonly signInButton = '#okta-signin-submit'
 
-    // private static harpUser = Cypress.env('DEV_USERNAME')
-    // private static password = Cypress.env('DEV_PASSWORD')
-
-    private static harpUser = Cypress.env('MADIE_DEV_USERNAME')
-    private static password = Cypress.env('MADIE_DEV_PASSWORD')
+    private static harpUser = Cypress.env('DEV_USERNAME')
+    private static password = Cypress.env('DEV_PASSWORD')
 
     public static Login(): void {
 
