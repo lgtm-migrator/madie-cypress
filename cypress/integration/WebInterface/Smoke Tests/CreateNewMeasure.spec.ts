@@ -2,7 +2,8 @@ import {OktaLogin} from "../../../Shared/OktaLogin";
 import {LandingPage} from "../../../Shared/LandingPage";
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage";
 
-let measureName = 'TestMeasure'+ Date.now()
+let measureName = ''
+let CQLLibraryName = ''
 
 describe('Create New Measure', () => {
     beforeEach('Login',() => {
@@ -14,10 +15,14 @@ describe('Create New Measure', () => {
 
     it('Login to Madie and Create New Measure', () => {
 
+        measureName = 'TestMeasure' + Date.now()
+        CQLLibraryName = 'CQLLibrary' + Date.now()
+
         //Click on Measures Button
         cy.get(LandingPage.measuresButton).click()
         cy.get(CreateMeasurePage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
         cy.get(CreateMeasurePage.createMeasureButton).click()
 
         // Navigate to home page
