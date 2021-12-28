@@ -13,7 +13,7 @@ describe('Edit Measure', () => {
         })
     })
 
-    it.only('Measure Name empty', () => {
+    it('Measure Name empty', () => {
         measureName = ''
         cy.request({
             failOnStatusCode: false,
