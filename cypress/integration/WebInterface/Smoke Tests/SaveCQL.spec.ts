@@ -2,25 +2,23 @@ import {OktaLogin} from "../../../Shared/OktaLogin";
 import {LandingPage} from "../../../Shared/LandingPage";
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage";
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage";
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
 
 let measureName = ''
-let updatedMeasureName = ''
 let CQLLibraryName = ''
 let model = ''
 
-describe('Edit Measure', () => {
+describe('Save CQL on CQL Editor Page', () => {
     beforeEach('Login',() => {
         OktaLogin.Login()
     })
 
     afterEach('Logout', () => {
-        OktaLogin.Logout()
-    })
+        OktaLogin.Logout()})
 
-    it('Edit Measure Name and verify the measure name is updated on Measures page', () => {
+    it('Create New Measure and Add CQL to the Measure', () => {
 
-        measureName = 'TestMeasure'+ Date.now()
-        updatedMeasureName = 'UpdatedMeasure' + Date.now()
+        measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'CQLLibrary' + Date.now()
         model = 'QI-Core'
 
@@ -36,23 +34,19 @@ describe('Edit Measure', () => {
         //Navigate back to Measures page and Edit Measure Name
         cy.go('back')
 
-        //Edit Measure Name
+        //Click on Edit Button
         cy.get(CreateMeasurePage.editMeasureButton).click()
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear()
-        cy.wait(100)
-        cy.get(EditMeasurePage.editMeasureTextBox).type(updatedMeasureName)
-        cy.get(EditMeasurePage.saveEditedMeasureName).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(CQLEditorPage.cqlEditorTextBox).type('library TestMeasure version \'0.0.014\' {enter}')
+        cy.get(CQLEditorPage.cqlEditorTextBox).type('using FHIR version \'4.0.1\' {enter}')
+        cy.get(CQLEditorPage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers')
+        cy.get(CQLEditorPage.cqlEditorSaveButton).click()
 
-        //Add Measure Steward
-        cy.get(EditMeasurePage.measureStewardLeftNavTab).click()
-        cy.get(EditMeasurePage.measureStewardTextBox).clear().type('SB')
-        cy.get(EditMeasurePage.measureStewardSaveButton).click()
-        cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')
-
-        //Navigate back to Measures page and verify if the Measure Name is updated
+        //Navigate to Measures page and verify the saved CQL
         cy.get(CreateMeasurePage.topNavMeasureTab).click()
-        cy.get(CreateMeasurePage.listOfMeasures).should('contain', updatedMeasureName)
+        cy.get(CreateMeasurePage.editMeasureButton).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(CQLEditorPage.cqlEditorTextBox).should('contain.text', 'library TestMeasure version \'0.0.014\' using FHIR version \'4.0.1\' include FHIRHelpers version \'4.0.001\' called FHIRHelpers' )
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
