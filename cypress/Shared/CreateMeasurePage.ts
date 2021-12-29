@@ -4,6 +4,8 @@ export class CreateMeasurePage {
     public static readonly createMeasureButton = '[data-testid=create-new-measure-save-button]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
+    public static readonly measureModelDropdown = '#mui-1'
+    public static readonly measureModelQICore = '[data-testid="measure-model-option-QI-Core"]'
     public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name"]'
     public static readonly fieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly editMeasureButton = 'button[class="MeasureList___StyledButton-sc-1kfngu9-19 gwghIH"]:visible:last'

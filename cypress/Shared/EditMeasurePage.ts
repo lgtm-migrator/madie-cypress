@@ -7,4 +7,11 @@ export class EditMeasurePage {
     public static readonly editMeasureFieldLevelError = '[data-testid="edit-measure-name-error-text"]'
     public static readonly editMeasureSaveButton = '[data-testid="save-edit-measure-name"] > path'
     public static readonly editMeasureCancelButton = '.fa-times-circle'
+    public static readonly measureStewardLeftNavTab = '.sc-kfPuZi'
+
+    //Measure Steward Page
+    public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
+    public static readonly measureStewardSaveButton = '[data-testid="measureStewardSave"]'
+    public static readonly measureStewardConfirmaionText = '.sc-bqiRlB'
+
 }

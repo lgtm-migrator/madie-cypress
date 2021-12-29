@@ -4,7 +4,9 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage";
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage";
 import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
 
-let measureName = 'TestMeasure'+ Date.now()
+let measureName = ''
+let CQLLibraryName = ''
+let model = ''
 
 describe('Save CQL on CQL Editor Page', () => {
     beforeEach('Login',() => {
@@ -14,12 +16,19 @@ describe('Save CQL on CQL Editor Page', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()})
 
-    it('Login to Madie and Create New Measure', () => {
+    it('Create New Measure and Add CQL to the Measure', () => {
 
-        //Click on Measures Button
+        measureName = 'TestMeasure' + Date.now()
+        CQLLibraryName = 'CQLLibrary' + Date.now()
+        model = 'QI-Core'
+
+        //Click on Measures Button and Create New Measure
         cy.get(LandingPage.measuresButton).click()
         cy.get(CreateMeasurePage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
         cy.get(CreateMeasurePage.createMeasureButton).click()
 
         //Navigate back to Measures page and Edit Measure Name

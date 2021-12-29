@@ -6,6 +6,7 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage";
 let measureName = ''
 let updatedMeasureName = ''
 let CQLLibraryName = ''
+let model = ''
 
 describe('Edit Measure', () => {
     beforeEach('Login',() => {
@@ -21,18 +22,21 @@ describe('Edit Measure', () => {
         measureName = 'TestMeasure'+ Date.now()
         updatedMeasureName = 'UpdatedMeasure' + Date.now()
         CQLLibraryName = 'CQLLibrary' + Date.now()
+        model = 'QI-Core'
 
-        //Click on Measures Button
+        //Click on Measures Button and Create New Measure
         cy.get(LandingPage.measuresButton).click()
         cy.get(CreateMeasurePage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
         cy.get(CreateMeasurePage.createMeasureButton).click()
 
         //Navigate back to Measures page and Edit Measure Name
         cy.go('back')
 
-        //Click on Edit Button
+        //Edit Measure Name
         cy.get(CreateMeasurePage.editMeasureButton).click()
         cy.get(EditMeasurePage.editMeasurePen).click()
         cy.get(EditMeasurePage.editMeasureTextBox).clear()
@@ -40,8 +44,14 @@ describe('Edit Measure', () => {
         cy.get(EditMeasurePage.editMeasureTextBox).type(updatedMeasureName)
         cy.get(EditMeasurePage.saveEditedMeasureName).click()
 
+        //Add Measure Steward
+        cy.get(EditMeasurePage.measureStewardLeftNavTab).click()
+        cy.get(EditMeasurePage.measureStewardTextBox).clear().type('SB')
+        cy.get(EditMeasurePage.measureStewardSaveButton).click()
+        cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')
+
         //Navigate back to Measures page and verify if the Measure Name is updated
-        cy.go('back')
+        cy.get(CreateMeasurePage.topNavMeasureTab).click()
         cy.get(CreateMeasurePage.listOfMeasures).should('contain', updatedMeasureName)
 
         // Navigate to home page
