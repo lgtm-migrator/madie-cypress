@@ -56,6 +56,5 @@ describe('Edit Measure', () => {
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
-
     })
 })
