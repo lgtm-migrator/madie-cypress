@@ -24,11 +24,11 @@ describe('Edit Measure', () => {
             body: {"id": "61c37324c3ea4928b42712f7","measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.measureName).to.eql('Measure Name is required')
+            expect(response.body.validationErrors.measureName).to.eql('Measure Name is required')
         })
     })
 
-    it('Measure Name has only numbers', () => {
+    it('Measure Name is required', () => {
         measureName = ''
         cy.request({
             failOnStatusCode: false,
@@ -37,7 +37,7 @@ describe('Edit Measure', () => {
             body: {"id": "61c37324c3ea4928b42712f7","measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.measureName).to.eql('A measure name must contain at least one letter.')
+            expect(response.body.validationErrors.measureName).to.eql('Measure Name is required')
         })
     })
 
@@ -50,7 +50,7 @@ describe('Edit Measure', () => {
             body: {"id": "61c37324c3ea4928b42712f7","measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.measureName).to.eql('Measure Name is Required')
+            expect(response.body.validationErrors.measureName).to.eql('A measure name must contain at least one letter.')
         })
     })
 
@@ -63,7 +63,7 @@ describe('Edit Measure', () => {
             body: {"id": "61c37324c3ea4928b42712f7","measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.measureName).to.eql('Measure Name can not contain underscores')
+            expect(response.body.validationErrors.measureName).to.eql('Measure Name can not contain underscores')
         })
     })
 
@@ -80,8 +80,7 @@ describe('Edit Measure', () => {
             body: {"id": "61c37324c3ea4928b42712f7","measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.measureName).to.eql('Measure Name contains at least one letter and can not be ' +
-                'more than 500 characters')
+            expect(response.body.validationErrors.measureName).to.eql('Measure Name can not be more than 500 characters')
         })
     })
 
