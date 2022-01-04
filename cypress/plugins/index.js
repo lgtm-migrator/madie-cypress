@@ -39,6 +39,17 @@ module.exports = (on, config) => {
       console.table(message)
 
       return null
+    },
+    getMeasureId(filename) {
+      let buffer = fs.readFileSync(filename)
+
+      const fileContent = buffer.toString()
+
+      cy.wrap(fileContent).as('measureId')
+
+
+      console.log(fileContent)
+      return fileContent
     }
   })
   on('file:preprocessor', browserify(options))

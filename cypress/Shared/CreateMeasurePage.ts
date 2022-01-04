@@ -10,7 +10,19 @@ export class CreateMeasurePage {
     public static readonly measureNameFieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly cqlLibraryNameDuplicateErrorMsg = '[data-testid="server-error-alerts"]'
-    public static readonly editMeasureButton = 'button[class="MeasureList___StyledButton-sc-1kfngu9-19 gwghIH"]:visible:last'
-    public static readonly listOfMeasures = '.MeasureList___StyledTd-sc-1kfngu9-13 > [data-testid="measure-button-null"]:visible:last'
-    public static readonly topNavMeasureTab = ':nth-child(2) > .styles__InnerItem-sc-147g1sa-8'
+
+
+    public static clickCreateMeasureButton() : void {
+
+        //setup for grabbing the measure create call
+        cy.intercept('POST', '/api/measure').as('measure')
+
+        cy.get(this.createMeasureButton).click()
+
+        //saving measureID to file to use later
+        cy.wait('@measure').then(({response}) => {
+            expect(response.statusCode).to.eq(201)
+            cy.writeFile('cypress/downloads/measureId', response.body.id)
+        })
+    }
 }
