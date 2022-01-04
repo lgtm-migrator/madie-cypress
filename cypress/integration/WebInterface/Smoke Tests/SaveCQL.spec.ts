@@ -1,8 +1,10 @@
-import {OktaLogin} from "../../../Shared/OktaLogin";
-import {LandingPage} from "../../../Shared/LandingPage";
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage";
-import {EditMeasurePage} from "../../../Shared/EditMeasurePage";
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
+import {OktaLogin} from "../../../Shared/OktaLogin"
+import {LandingPage} from "../../../Shared/LandingPage"
+import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
+import {MeasuresPage} from "../../../Shared/MeasuresPage"
+import {TopNav} from "../../../Shared/TopNav"
 
 let measureName = ''
 let CQLLibraryName = ''
@@ -14,7 +16,8 @@ describe('Save CQL on CQL Editor Page', () => {
     })
 
     afterEach('Logout', () => {
-        OktaLogin.Logout()})
+        OktaLogin.Logout()
+    })
 
     it('Create New Measure and Add CQL to the Measure', () => {
 
@@ -29,13 +32,10 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
-        cy.get(CreateMeasurePage.createMeasureButton).click()
-
-        //Navigate back to Measures page and Edit Measure Name
-        cy.go('back')
+        CreateMeasurePage.clickCreateMeasureButton()
 
         //Click on Edit Button
-        cy.get(CreateMeasurePage.editMeasureButton).click()
+        MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(CQLEditorPage.cqlEditorTextBox).type('library TestMeasure version \'0.0.014\' {enter}')
         cy.get(CQLEditorPage.cqlEditorTextBox).type('using FHIR version \'4.0.1\' {enter}')
@@ -43,8 +43,9 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.get(CQLEditorPage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL
-        cy.get(CreateMeasurePage.topNavMeasureTab).click()
-        cy.get(CreateMeasurePage.editMeasureButton).click()
+        cy.get(TopNav.measureTab).click()
+        //Click on Edit Button
+        MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(CQLEditorPage.cqlEditorTextBox).should('contain.text', 'library TestMeasure version \'0.0.014\' using FHIR version \'4.0.1\' include FHIRHelpers version \'4.0.001\' called FHIRHelpers' )
 

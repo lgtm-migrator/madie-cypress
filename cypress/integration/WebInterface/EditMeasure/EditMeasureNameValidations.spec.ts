@@ -1,7 +1,8 @@
-import {OktaLogin} from "../../../Shared/OktaLogin";
-import {LandingPage} from "../../../Shared/LandingPage";
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage";
-import {EditMeasurePage} from "../../../Shared/EditMeasurePage";
+import {OktaLogin} from "../../../Shared/OktaLogin"
+import {LandingPage} from "../../../Shared/LandingPage"
+import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
+import {MeasuresPage} from "../../../Shared/MeasuresPage"
 
 let measureName = ''
 let CQLLibraryName = ''
@@ -30,13 +31,11 @@ describe('Edit Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
-        cy.get(CreateMeasurePage.createMeasureButton).click()
+        CreateMeasurePage.clickCreateMeasureButton()
 
-        //Navigate back to Measures page and Edit Measure Name
-        cy.go('back')
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
-        cy.get(CreateMeasurePage.editMeasureButton).click()
+        MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.editMeasurePen).click()
         cy.get(EditMeasurePage.editMeasureTextBox).clear()
         cy.get(EditMeasurePage.editMeasureSaveButton).click()
