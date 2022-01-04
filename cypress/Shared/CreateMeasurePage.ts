@@ -10,6 +10,11 @@ export class CreateMeasurePage {
     public static readonly measureNameFieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly cqlLibraryNameDuplicateErrorMsg = '[data-testid="server-error-alerts"]'
+    public static readonly measureScoringDropdown = '#measureScoring'
+    public static readonly measureScoringCohort = '[data-value="Cohort"]'
+    public static readonly measureScoringProportion = '[data-value="Proportion"]'
+    public static readonly measureScoringCV = '[data-value="CV"]'
+    public static readonly measureScoringRatio = '[data-value="Ratio"]'
 
 
     public static clickCreateMeasureButton() : void {
