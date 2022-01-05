@@ -4,10 +4,6 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 
-let measureName = ''
-let CQLLibraryName = ''
-let model = ''
-
 describe('Edit Measure Name Validations', () => {
 
     beforeEach('Login',() => {
@@ -20,19 +16,8 @@ describe('Edit Measure Name Validations', () => {
 
     it('Verify error messages when the edit measure name entered is invalid', () => {
 
-        measureName = 'Measure' + Date.now()
-        CQLLibraryName = 'CQLLibrary' + Date.now()
-        model = 'QI-Core'
-
-        //Click on Measures Button and Create New Measure
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
-        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
-        cy.get(CreateMeasurePage.measureModelDropdown).click()
-        cy.get(CreateMeasurePage.measureModelQICore).click()
-        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
-        CreateMeasurePage.clickCreateMeasureButton()
-
+        // Create New Measure
+        CreateMeasurePage.createCohortMeasure()
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
         MeasuresPage.clickEditforCreatedMeasure()
