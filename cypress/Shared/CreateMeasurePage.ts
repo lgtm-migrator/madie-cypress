@@ -18,7 +18,22 @@ export class CreateMeasurePage {
     public static readonly measureScoringCV = '[data-value="CV"]'
     public static readonly measureScoringRatio = '[data-value="Ratio"]'
 
-    public static CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring) : void {
+
+    public static clickCreateMeasureButton() : void {
+
+        //setup for grabbing the measure create call
+        cy.intercept('POST', '/api/measure').as('measure')
+
+        cy.get(this.createMeasureButton).click()
+
+        //saving measureID to file to use later
+        cy.wait('@measure').then(({response}) => {
+            expect(response.statusCode).to.eq(201)
+            cy.writeFile('cypress/downloads/measureId', response.body.id)
+        })
+    }
+
+    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
 
         cy.log('Create ' +measureScoring+ ' Measure')
         cy.get(LandingPage.measuresButton).click()
@@ -43,18 +58,9 @@ export class CreateMeasurePage {
                 break
         }
         cy.get(this.createMeasureButton).click()
+
+        this.clickCreateMeasureButton()
+
         cy.log( measureScoring+ ' Measure created successfully')
-
-        //setup for grabbing the measure create call
-        cy.intercept('POST', '/api/measure').as('measure')
-
-        cy.get(this.createMeasureButton).click()
-
-        //saving measureID to file to use later
-        cy.wait('@measure').then(({response}) => {
-            expect(response.statusCode).to.eq(201)
-            cy.writeFile('cypress/downloads/measureId', response.body.id)
-        })
-
     }
 }
