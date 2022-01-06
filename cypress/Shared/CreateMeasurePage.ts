@@ -1,3 +1,5 @@
+import {LandingPage} from "./LandingPage"
+
 export class CreateMeasurePage {
 
     public static readonly newMeasureButton = '[data-testid=create-new-measure-button]'
@@ -29,5 +31,36 @@ export class CreateMeasurePage {
             expect(response.statusCode).to.eq(201)
             cy.writeFile('cypress/downloads/measureId', response.body.id)
         })
+    }
+
+    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
+
+        cy.log('Create ' +measureScoring+ ' Measure')
+        cy.get(LandingPage.measuresButton).click()
+        cy.get(this.newMeasureButton).click()
+        cy.get(this.measureNameTextbox).type(measureName)
+        cy.get(this.measureModelDropdown).click()
+        cy.get(this.measureModelQICore).click()
+        cy.get(this.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(this.measureScoringDropdown).click()
+        switch (measureScoring){
+            case 'Cohort':
+                cy.get(this.measureScoringCohort).click()
+                break
+            case 'CV' :
+                cy.get(this.measureScoringCV).click()
+                break
+            case 'Proportion':
+                cy.get(this.measureScoringProportion).click()
+                break
+            case 'Ratio':
+                cy.get(this.measureScoringRatio).click()
+                break
+        }
+        cy.get(this.createMeasureButton).click()
+
+        this.clickCreateMeasureButton()
+
+        cy.log( measureScoring+ ' Measure created successfully')
     }
 }

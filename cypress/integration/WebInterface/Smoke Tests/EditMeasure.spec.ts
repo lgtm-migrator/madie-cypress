@@ -5,11 +5,10 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TopNav} from "../../../Shared/TopNav"
 
-let measureName = ''
-let updatedMeasureName = ''
-let CQLLibraryName = ''
-let model = ''
-
+let measureName = 'TestMeasure' + Date.now()
+let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureScoring = 'Ratio'
+let updatedMeasureName = 'UpdatedTestMeasure' + Date.now()
 
 describe('Edit Measure', () => {
     beforeEach('Login',() => {
@@ -22,24 +21,12 @@ describe('Edit Measure', () => {
 
     it('Edit Measure Name and verify the measure name is updated on Measures page', () => {
 
-        measureName = 'TestMeasure'+ Date.now()
-        updatedMeasureName = 'UpdatedMeasure' + Date.now()
-        CQLLibraryName = 'CQLLibrary' + Date.now()
-        model = 'QI-Core'
-
-        //Click on Measures Button and Create New Measure
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
-        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
-        cy.get(CreateMeasurePage.measureModelDropdown).click()
-        cy.get(CreateMeasurePage.measureModelQICore).click()
-        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CQLLibraryName)
-
-        CreateMeasurePage.clickCreateMeasureButton()
-
-        MeasuresPage.clickEditforCreatedMeasure()
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Edit Measure Name
+        MeasuresPage.clickEditforCreatedMeasure()
+
         cy.get(EditMeasurePage.editMeasurePen).click()
         cy.get(EditMeasurePage.editMeasureTextBox).clear()
         cy.wait(100)
