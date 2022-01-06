@@ -5,6 +5,9 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TopNav} from "../../../Shared/TopNav"
 
+let measureName = 'TestMeasure' + Date.now()
+let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureScoring = 'Ratio'
 let updatedMeasureName = 'UpdatedTestMeasure' + Date.now()
 
 describe('Edit Measure', () => {
@@ -19,7 +22,7 @@ describe('Edit Measure', () => {
     it('Edit Measure Name and verify the measure name is updated on Measures page', () => {
 
         //Create New Measure
-        CreateMeasurePage.clickCreateMeasureButton()
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Edit Measure Name
         MeasuresPage.clickEditforCreatedMeasure()

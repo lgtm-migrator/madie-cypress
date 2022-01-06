@@ -17,8 +17,12 @@ describe('Save CQL on CQL Editor Page', () => {
 
     it('Create New Measure and Add CQL to the Measure', () => {
 
+        let measureName = 'TestMeasure' + Date.now()
+        let CqlLibraryName = 'TestLibrary' + Date.now()
+        let measureScoring = 'Ratio'
+
         //Create New Measure
-        CreateMeasurePage.clickCreateMeasureButton()
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()

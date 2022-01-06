@@ -16,8 +16,12 @@ describe('Edit Measure Name Validations', () => {
 
     it('Verify error messages when the edit measure name entered is invalid', () => {
 
+        let measureName = 'TestMeasure' + Date.now()
+        let CqlLibraryName = 'TestLibrary' + Date.now()
+        let measureScoring = 'Ratio'
+
         // Create New Measure
-        CreateMeasurePage.createCohortMeasure()
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
         MeasuresPage.clickEditforCreatedMeasure()

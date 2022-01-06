@@ -14,8 +14,12 @@ describe('Create New Measure', () => {
 
     it('Login to Madie and Create New Measure', () => {
 
+        let measureName = 'TestMeasure' + Date.now()
+        let CqlLibraryName = 'TestLibrary' + Date.now()
+        let measureScoring = 'Ratio'
+
         //Create New Measure
-        CreateMeasurePage.createCohortMeasure()
+        CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
