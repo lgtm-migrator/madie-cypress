@@ -1,5 +1,7 @@
 pipeline{
-    agent any
+        agent {
+            label 'dev-madie'
+        }
 
     options {
         buildDiscarder(logRotator(numToKeepStr:'20'))
@@ -11,7 +13,7 @@ pipeline{
     }
 
     environment{
-        AWS_ACCOUNT = credentials('HCQIS_NONPROD')
+        AWS_ACCOUNT = credentials('HCQIS_DEV')
         CYPRESS_DEV_USERNAME=credentials('CYPRESS_DEV_USERNAME')
         CYPRESS_DEV_PASSWORD=credentials('CYPRESS_DEV_PASSWORD')
         CYPRESS_TEST_USERNAME=credentials('CYPRESS_TEST_USERNAME')
