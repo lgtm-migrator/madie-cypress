@@ -1,10 +1,12 @@
+export {}
+
+let measureName = ''
+let CQLLibraryName = ''
+let model = 'QI-Core'
+
 describe('Create Measure', () => {
 
-    let measureName = ''
-    let CQLLibraryName = ''
-    let model = 'QI-Core'
-
-    it('Create New Measure', () => {
+    it('Create New Measure, successfull creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         cy.request({
@@ -17,7 +19,7 @@ describe('Create Measure', () => {
     })
 
     //Measure Name Validations
-    it('Measure Name empty', () => {
+    it('Validation Error: Measure Name empty', () => {
         measureName = ''
         CQLLibraryName = 'TestCql' + Date.now()
         cy.request({
@@ -31,7 +33,7 @@ describe('Create Measure', () => {
         })
     })
 
-    it('Measure Name does not contain alphabets', () => {
+    it('Validation Error: Measure Name does not contain alphabets', () => {
         measureName = '123456'
         CQLLibraryName = 'TestCql' + Date.now()
         cy.request({
@@ -45,7 +47,7 @@ describe('Create Measure', () => {
         })
     })
 
-    it('Measure Name contains under scores', () => {
+    it('Validation Error: Measure Name contains under scores', () => {
         measureName = 'Test_Measure'
         CQLLibraryName = 'TestCql' + Date.now()
         cy.request({
@@ -59,7 +61,7 @@ describe('Create Measure', () => {
         })
     })
 
-    it('Measure Name contains more than 500 characters', () => {
+    it('Validation Error: Measure Name contains more than 500 characters', () => {
         measureName = 'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty' +
             'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty' +
             'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty' +
@@ -76,15 +78,27 @@ describe('Create Measure', () => {
             expect(response.body.validationErrors.measureName).to.eql("Measure Name can not be more than 500 characters")
         })
     })
+
+    it('Validation Error: Model Invalid Value', () => {
+        measureName = 'TestMeasure' + Date.now()
+        CQLLibraryName = 'TestCql' + Date.now()
+        model = 'QI-CoreINVALID'
+        cy.request({
+            failOnStatusCode: false,
+            url: '/api/measure',
+            method: 'POST',
+            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": "Cohort"}
+        }).then((response) => {
+            expect(response.status).to.eql(400)
+            expect(response.body.validationErrors.model).to.eql("MADiE was unable to complete your request, please try again.")
+        })
+    })
+
 })
 
 describe('CQL Library name validations', () => {
 
-    let measureName = 'TestMeasure' + Date.now()
-    let CQLLibraryName = ''
-    let model = 'QI-Core'
-
-    it('CQL library Name empty', () => {
+    it('Validation Error: CQL library Name empty', () => {
 
         CQLLibraryName = ''
 
@@ -99,7 +113,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name does not starts with an upper case letter', () => {
+    it('Validation Error: CQL library Name does not starts with an upper case letter', () => {
 
         CQLLibraryName = 'test'
 
@@ -114,7 +128,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name contains spaces', () => {
+    it('Validation Error: CQL library Name contains spaces', () => {
 
         CQLLibraryName = 'Test 222'
 
@@ -129,7 +143,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name contains underscores', () => {
+    it('Validation Error: CQL library Name contains underscores', () => {
 
         CQLLibraryName = 'Test_222'
 
@@ -144,7 +158,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name contains special characters', () => {
+    it('Validation Error: CQL library Name contains special characters', () => {
 
         CQLLibraryName = 'Test!@#%$^&'
 
@@ -159,7 +173,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name does not contain alphabets', () => {
+    it('Validation Error: CQL library Name does not contain alphabets', () => {
 
         CQLLibraryName = '123456'
 
@@ -174,7 +188,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name start with number', () => {
+    it('Validation Error: CQL library Name start with number', () => {
 
         CQLLibraryName = '123Test'
 
@@ -189,7 +203,7 @@ describe('CQL Library name validations', () => {
         })
     })
 
-    it('CQL library Name already exists', () => {
+    it('Validation Error: CQL library Name already exists', () => {
 
         CQLLibraryName = 'TestCql1640794914452'
 

@@ -1,3 +1,4 @@
+export {}
 let measureName = ''
 let CQLLibraryName = 'TestCql' + Date.now()
 let model = 'QI-Core'
