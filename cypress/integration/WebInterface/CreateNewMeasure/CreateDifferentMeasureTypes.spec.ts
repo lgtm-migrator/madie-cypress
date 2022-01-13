@@ -43,7 +43,7 @@ describe('Create different Measure types', () => {
 
         measureName = 'CVTestMeasure' + Date.now()
         CqlLibraryName = 'CVTestLibrary' + Date.now()
-        measureScoring = 'CV'
+        measureScoring = 'Continuous Variable'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
 

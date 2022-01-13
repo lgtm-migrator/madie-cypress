@@ -12,7 +12,8 @@ describe('Measure Name Validations', () => {
         OktaLogin.Logout()
     })
 
-    it('Verify error messages when the measure name entered is invalid', () => {
+    //Measure Name Validations
+    it('Verify error messages when the measure name entered is invalid or empty', () => {
 
         //Click on Measures Button
         cy.get(LandingPage.measuresButton).click()
@@ -49,7 +50,8 @@ describe('Measure Name Validations', () => {
         cy.get(LandingPage.madieLogo).click()
     })
 
-    it('Verify error messages when the CQL Library Name entered is invalid', () => {
+    //CQL Library Name Validations
+    it('Verify error messages when the CQL Library Name entered is invalid or empty', () => {
         let measureName = 'TestMeasure' + Date.now()
 
         //Click on Measures Button
@@ -97,11 +99,57 @@ describe('Measure Name Validations', () => {
 
         //Verify the error message when the CQL Library Name given already exists
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).clear().type('TestCql1640794914452')
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.createMeasureButton).click()
         cy.get(CreateMeasurePage.cqlLibraryNameDuplicateErrorMsg).should('contain.text', 'CQL library with given name already exists')
 
         // Navigate to MADiE Landing page
         cy.get(LandingPage.madieLogo).click()
 
+    })
+
+    //Measure Scoring Validations
+    it('Verify error message when the Measure Scoring field is empty', () => {
+
+        let measureName = 'MeasureScoringTest' + Date.now()
+        let CqlLibraryName = 'ScoringTestLibrary' + Date.now()
+
+        //Click on Measures Button
+        cy.get(LandingPage.measuresButton).click()
+        cy.get(CreateMeasurePage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).focus().blur()
+        cy.get(CreateMeasurePage.measureScoringFieldLevelError).should('contain.text', 'Measure Scoring is required.')
+        //Verify if create measure button is disabled
+        cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
+
+        // Navigate to home page
+        cy.get(LandingPage.madieLogo).click()
+    })
+
+    //Measure Type Validations
+    it('Verify error message when the Measure Type field is empty', () => {
+
+        let measureName = 'MeasureTypeTest' + Date.now()
+        let CqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Click on Measures Button
+        cy.get(LandingPage.measuresButton).click()
+        cy.get(CreateMeasurePage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).focus().blur()
+        cy.get(CreateMeasurePage.measureModelFieldLevelError).should('contain.text', 'A measure model is required.')
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
+        //Verify if create measure button is disabled
+        cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
+
+        // Navigate to home page
+        cy.get(LandingPage.madieLogo).click()
     })
 })
