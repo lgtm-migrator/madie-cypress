@@ -8,15 +8,17 @@ export class CreateMeasurePage {
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
     public static readonly measureModelDropdown = '#mui-1'
     public static readonly measureModelQICore = '[data-testid="measure-model-option-QI-Core"]'
+    public static readonly measureModelFieldLevelError = '#mui-1-helper-text'
     public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name"]'
     public static readonly measureNameFieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly cqlLibraryNameDuplicateErrorMsg = '[data-testid="server-error-alerts"]'
     public static readonly measureScoringDropdown = '#measureScoring'
-    public static readonly measureScoringCohort = '[data-value="Cohort"]'
-    public static readonly measureScoringProportion = '[data-value="Proportion"]'
-    public static readonly measureScoringCV = '[data-value="CV"]'
-    public static readonly measureScoringRatio = '[data-value="Ratio"]'
+    public static readonly measureScoringFieldLevelError = '#measureScoring-helper-text'
+    public static readonly measureScoringCohort = '[data-testid=measure-scoring-option-Cohort]'
+    public static readonly measureScoringContinuousVariable = '[data-testid="measure-scoring-option-Continuous Variable"]'
+    public static readonly measureScoringProportion = '[data-testid=measure-scoring-option-Proportion]'
+    public static readonly measureScoringRatio = '[data-testid=measure-scoring-option-Ratio]'
 
 
     public static clickCreateMeasureButton() : void {
@@ -47,8 +49,8 @@ export class CreateMeasurePage {
             case 'Cohort':
                 cy.get(this.measureScoringCohort).click()
                 break
-            case 'CV' :
-                cy.get(this.measureScoringCV).click()
+            case 'Continuous Variable' :
+                cy.get(this.measureScoringContinuousVariable).click()
                 break
             case 'Proportion':
                 cy.get(this.measureScoringProportion).click()
