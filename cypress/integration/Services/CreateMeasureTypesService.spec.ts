@@ -34,7 +34,7 @@ describe('Create different  Measure types', () => {
     it('Create Continuous Variable Measure', () => {
         measureName = 'CVTestMeasure' + Date.now()
         CQLLibraryName = 'CVTestLibrary' + Date.now()
-        measureScoring = 'CV'
+        measureScoring = 'Continuous Variable'
         cy.request({
             url: '/api/measure',
             method: 'POST',
@@ -44,7 +44,7 @@ describe('Create different  Measure types', () => {
         })
     })
 
-    it.only('Create Ratio Measure', () => {
+    it('Create Ratio Measure', () => {
         measureName = 'RatioTestMeasure' + Date.now()
         CQLLibraryName = 'RatioTestLibrary' + Date.now()
         measureScoring = 'Ratio'
