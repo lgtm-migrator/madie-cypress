@@ -4,7 +4,7 @@ export class EditMeasurePage {
     public static readonly measureDetailsTab = '[data-testid=measure-details-tab]'
     public static readonly cqlEditorTab = '[data-testid=cql-editor-tab]'
     public static readonly measureGroupsTab = '[data-testid=measure-groups-tab]'
-    public static readonly patientsTab = '[data-testid=patients-tab]'
+    public static readonly testCasesTab = '[data-testid=patients-tab]'
 
     //Measure Details
     public static readonly editMeasurePen = 'path'
