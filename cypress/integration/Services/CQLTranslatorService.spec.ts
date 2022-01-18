@@ -4,7 +4,11 @@ import {MeasureCQL} from "../../Shared/MeasureCQL"
 
 describe('CQL Translation', () => {
 
-    it.skip('CQL Translation, successful 200', () => {
+    it('CQL Translation, successful 200', () => {
+
+        cy.clearCookies()
+        cy.clearLocalStorage()
+
         cy.request({
             url: '/cql/translator/cql?showWarnings=false&annotations=true&locators=true&disable-list-demotion=true&' +
                 'disable-list-promotion=true&disable-method-invocation=true&validate-units=true',
