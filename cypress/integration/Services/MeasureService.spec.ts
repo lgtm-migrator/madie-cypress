@@ -7,7 +7,7 @@ let measureScoring = ''
 
 describe('Create Measure', () => {
 
-    it('Create New Measure, successfull creation', () => {
+    it('Create New Measure, successful creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
@@ -65,7 +65,7 @@ describe('Create Measure', () => {
             body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not contain underscores")
+            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not contain underscores.")
         })
     })
 
@@ -84,15 +84,17 @@ describe('Create Measure', () => {
             body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not be more than 500 characters")
+            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not be more than 500 characters.")
         })
     })
 
     it('Validation Error: Model Invalid Value', () => {
+
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         model = 'QI-CoreINVALID'
         measureScoring = 'Cohort'
+
         cy.request({
             failOnStatusCode: false,
             url: '/api/measure',
@@ -110,6 +112,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name empty', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = ''
         measureScoring = 'Cohort'
 
@@ -120,12 +123,13 @@ describe('CQL Library name validations', () => {
             body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is required")
+            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is required.")
         })
     })
 
     it('Validation Error: CQL library Name does not starts with an upper case letter', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'test'
         measureScoring = 'Cohort'
 
@@ -142,6 +146,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name contains spaces', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test 222'
         measureScoring = 'Cohort'
 
@@ -158,6 +163,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name contains underscores', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test_222'
         measureScoring = 'Cohort'
 
@@ -174,6 +180,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name contains special characters', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test!@#%$^&'
         measureScoring = 'Cohort'
 
@@ -190,6 +197,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name does not contain alphabets', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = '123456'
         measureScoring = 'Cohort'
 
@@ -206,6 +214,7 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name start with number', () => {
 
+        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = '123Test'
         measureScoring = 'Cohort'
 
@@ -222,7 +231,8 @@ describe('CQL Library name validations', () => {
 
     it('Validation Error: CQL library Name already exists', () => {
 
-        CQLLibraryName = 'TestCql1640794914452'
+        measureName = 'CQLLibraryTest' + Date.now()
+        CQLLibraryName = 'TestCql1642617079691'
         measureScoring = 'Cohort'
 
         cy.request({
@@ -232,7 +242,7 @@ describe('CQL Library name validations', () => {
             body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
         }).then((response) => {
             expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already exists")
+            expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already exists.")
         })
     })
 
@@ -244,13 +254,13 @@ describe('Measure Scoring Validations', () => {
 
         measureName = 'MeasureScoringTest' + Date.now()
         CQLLibraryName = 'ScoringTestLibrary' + Date.now()
-        measureScoring = ''
+        measureScoring = ""
 
         cy.request({
             failOnStatusCode: false,
             url: '/api/measure',
             method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
+            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring":measureScoring}
         }).then((response) => {
             expect(response.status).to.eql(400)
             expect(response.body.validationErrors.measureScoring).to.eql("Measure Scoring is required.")
