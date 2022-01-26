@@ -7,19 +7,31 @@ let measureScoring = ''
 
 describe('Create Measure', () => {
 
-    it('Create New Measure, successful creation', () => {
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    it('Create New Measure, successfull creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
 
-        cy.request({
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(201)
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+            })
         })
     })
+
 
     //Measure Name Validations
     it('Validation Error: Measure Name empty', () => {
@@ -27,14 +39,24 @@ describe('Create Measure', () => {
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("Measure Name is required.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureName).to.eql("Measure Name is required.")
+            })
         })
     })
 
@@ -43,14 +65,24 @@ describe('Create Measure', () => {
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("A measure name must contain at least one letter.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureName).to.eql("A measure name must contain at least one letter.")
+            })
         })
     })
 
@@ -58,14 +90,25 @@ describe('Create Measure', () => {
         measureName = 'Test_Measure'
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not contain underscores.")
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureName).to.eql("Measure Name can not contain underscores.")
+            })
         })
     })
 
@@ -77,32 +120,52 @@ describe('Create Measure', () => {
             'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwqwertyqwertyqwertyqwertyqwertyq'
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureName).to.eql("Measure Name can not be more than 500 characters.")
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureName).to.eql("Measure Name can not be more than 500 characters.")
+            })
         })
     })
 
     it('Validation Error: Model Invalid Value', () => {
-
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         model = 'QI-CoreINVALID'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.model).to.eql("MADiE was unable to complete your request, please try again.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.model).to.eql("MADiE was unable to complete your request, please try again.")
+            })
         })
     })
 
@@ -110,139 +173,217 @@ describe('Create Measure', () => {
 
 describe('CQL Library name validations', () => {
 
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
     it('Validation Error: CQL library Name empty', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = ''
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is required.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is required.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name does not starts with an upper case letter', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'test'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name contains spaces', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test 222'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name contains underscores', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test_222'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must not contain \'_\' (underscores).")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must not contain \'_\' (underscores).")
+            })
         })
     })
 
     it('Validation Error: CQL library Name contains special characters', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = 'Test!@#%$^&'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name does not contain alphabets', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = '123456'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name start with number', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
         CQLLibraryName = '123Test'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+            })
         })
     })
 
     it('Validation Error: CQL library Name already exists', () => {
 
-        measureName = 'CQLLibraryTest' + Date.now()
-        CQLLibraryName = 'TestCql1642617079691'
+        CQLLibraryName = 'TestCql1640794914452'
         measureScoring = 'Cohort'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already exists.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already.")
+            })
         })
     })
 
@@ -250,20 +391,36 @@ describe('CQL Library name validations', () => {
 
 describe('Measure Scoring Validations', () => {
 
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
     it('Validation Error: Measure Scoring Empty', () => {
 
         measureName = 'MeasureScoringTest' + Date.now()
         CQLLibraryName = 'ScoringTestLibrary' + Date.now()
-        measureScoring = ""
+        measureScoring = ''
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring":measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureScoring).to.eql("Measure Scoring is required.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureScoring).to.eql("Measure Scoring is required.")
+            })
         })
     })
 
@@ -273,18 +430,62 @@ describe('Measure Scoring Validations', () => {
         CQLLibraryName = 'ScoringTestLibrary' + Date.now()
         measureScoring = 'ahjsm$&^&'
 
-        cy.request({
-            failOnStatusCode: false,
-            url: '/api/measure',
-            method: 'POST',
-            body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
-        }).then((response) => {
-            expect(response.status).to.eql(400)
-            expect(response.body.validationErrors.measureScoring).to.eql("Value provided is not a valid option.")
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.measureScoring).to.eql("Value provided is not a valid option.")
+            })
         })
     })
+})
 
+describe('Authentication', () => {
 
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    it('Bad Access Token', () => {
+
+        measureName = 'MeasureScoringTest' + Date.now()
+        CQLLibraryName = 'ScoringTestLibrary' + Date.now()
+        measureScoring = 'Cohort'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value + 'TEST'
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(401)
+                expect(response.statusText).to.eql('Unauthorized')
+            })
+        })
+    })
 })
 
 
