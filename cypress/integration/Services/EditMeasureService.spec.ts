@@ -5,6 +5,8 @@ describe('Edit Measure', () => {
 
     before('Create Measure',() => {
 
+        cy.setAccessTokenCookie()
+
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
