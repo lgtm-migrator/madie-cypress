@@ -5,7 +5,7 @@ let CQLLibraryName = ''
 let model = 'QI-Core'
 let measureScoring = ''
 
-describe('Create Measure', () => {
+describe('Measure Service: Create Measure', () => {
 
     beforeEach('Set Access Token',() => {
 
@@ -171,7 +171,113 @@ describe('Create Measure', () => {
 
 })
 
-describe('CQL Library name validations', () => {
+describe('Measure Service: Create different Measure types', () => {
+
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    it('Create Cohort Measure', () => {
+        measureName = 'CohortTestMeasure' + Date.now()
+        CQLLibraryName = 'CohortTestLibrary' + Date.now()
+        measureScoring = 'Cohort'
+        model = 'QI-Core'
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+            })
+        })
+    })
+
+    it('Create Proportion Measure', () => {
+        measureName = 'ProportionTestMeasure' + Date.now()
+        CQLLibraryName = 'ProportionTestLibrary' + Date.now()
+        measureScoring = 'Proportion'
+        model = 'QI-Core'
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+            })
+        })
+    })
+
+    it('Create Continuous Variable Measure', () => {
+        measureName = 'CVTestMeasure' + Date.now()
+        CQLLibraryName = 'CVTestLibrary' + Date.now()
+        measureScoring = 'Continuous Variable'
+        model = 'QI-Core'
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+            })
+        })
+    })
+
+    it('Create Ratio Measure', () => {
+        measureName = 'RatioTestMeasure' + Date.now()
+        CQLLibraryName = 'RatioTestLibrary' + Date.now()
+        measureScoring = 'Ratio'
+        model = 'QI-Core'
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "measureName": measureName,
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": model,
+                    "measureScoring": measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+            })
+        })
+    })
+
+})
+
+describe('Measure Service: CQL Library name validations', () => {
 
     beforeEach('Set Access Token',() => {
 
@@ -226,7 +332,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -252,7 +358,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -278,7 +384,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must not contain \'_\' (underscores).")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -304,7 +410,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -330,7 +436,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -356,7 +462,7 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("Measure Library Name is invalid.")
             })
         })
     })
@@ -382,14 +488,14 @@ describe('CQL Library name validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already.")
+                expect(response.body.validationErrors.cqlLibraryName).to.eql("CQL library with given name already exists.")
             })
         })
     })
 
 })
 
-describe('Measure Scoring Validations', () => {
+describe('Measure Service: Measure Scoring Validations', () => {
 
     beforeEach('Set Access Token',() => {
 
@@ -452,7 +558,7 @@ describe('Measure Scoring Validations', () => {
     })
 })
 
-describe('Authentication', () => {
+describe('Measure Service: Authentication', () => {
 
     beforeEach('Set Access Token',() => {
 
