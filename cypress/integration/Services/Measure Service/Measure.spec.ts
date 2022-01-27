@@ -20,7 +20,7 @@ describe('Measure Service: Create Measure', () => {
 
     })
 
-    it.only('Create New Measure, successfull creation', () => {
+    it('Create New Measure, successfull creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
