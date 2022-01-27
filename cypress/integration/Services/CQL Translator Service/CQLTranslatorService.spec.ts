@@ -1,8 +1,8 @@
 export {}
-import {MeasureCQL} from "../../Shared/MeasureCQL"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
 
 
-describe('CQL Translation', () => {
+describe('CQL Translation Service', () => {
 
     beforeEach('Set Access Token',() => {
 
@@ -10,7 +10,7 @@ describe('CQL Translation', () => {
 
     })
 
-    it('CQL Translation, successful 200', () => {
+    it('Successful 200', () => {
 
         cy.clearCookies()
         cy.clearLocalStorage()
@@ -21,7 +21,7 @@ describe('CQL Translation', () => {
                     'disable-list-promotion=true&disable-method-invocation=true&validate-units=true',
                 method: 'PUT',
                 headers: {
-                    authorization: 'Bearer ' + accessToken.value,
+                    //authorization: 'Bearer ' + accessToken.value,
                     'Content-Type': 'text/plain',
                     'Referer': 'https://dev-madie.hcqis.org/measure/61e1d03b1c970b2059dab030/edit/cql-editor',
                     'Cookie': 'BIGipServerdev-madie.hcqis.org_pool=!lMfj+jchkkKRNQnnHpfsqpjhar0QCIcjD4NHLXcBKQr7PK' +

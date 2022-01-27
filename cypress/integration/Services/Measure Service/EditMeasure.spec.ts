@@ -1,7 +1,7 @@
 export {}
 
 
-describe('Edit Measure', () => {
+describe('Measure Service: Edit Measure', () => {
 
     before('Create Measure',() => {
 
