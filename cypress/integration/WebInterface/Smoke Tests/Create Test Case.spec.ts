@@ -8,7 +8,7 @@ import {TestCasesPage} from "../../../Shared/TestCasesPage"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
-let testCaseName = 'TestPatient' + Date.now()
+let testCaseName = 'DENOMFail' + Date.now()
 
 describe('Create Test Case', () => {
     beforeEach('Login', () => {
@@ -27,12 +27,17 @@ describe('Create Test Case', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        //Navigate to Test Cases Page
+        //Navigate to Test Cases Page and create Test Case
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(TestCasesPage.newTestCaseButton).click()
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseName)
         cy.get(TestCasesPage.createTestCaseButton).click()
         cy.get(TestCasesPage.successMsg).should('contain.text', 'Test case saved successfully!')
+
+        //Verify created test case exists on Test Case Page
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.listOfTestCases).contains(testCaseName)
+        cy.log('Test Case created successfully')
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
