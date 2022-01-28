@@ -34,10 +34,33 @@ declare global {
     }
 }
 
-const authUri = Cypress.env('DEV_MADIE_AUTHURI')
-const tokenUrl = authUri + "/v1/token"
-const authnUrl = "https://dev.idp.idm.cms.gov/api/v1/authn"
-const authCodeUrl = authUri + "/v1/authorize"
+let authUri = ''
+let tokenUrl = ''
+let authnUrl = ''
+let authCodeUrl = ''
+let userName = ''
+let password = ''
+let clientId = ''
+let codeChallenge = ''
+let redirectURI = ''
+let codeVerifier = ''
+
+switch (Cypress.env('environment')) {
+
+    case 'dev' :
+        authUri = Cypress.env('DEV_MADIE_AUTHURI')
+        tokenUrl = authUri + "/v1/token"
+        authnUrl = "https://dev.idp.idm.cms.gov/api/v1/authn"
+        authCodeUrl = authUri + "/v1/authorize"
+        userName = Cypress.env('DEV_USERNAME')
+        password = Cypress.env('DEV_PASSWORD')
+        clientId = Cypress.env('DEV_MADIE_CLIENTID')
+        codeChallenge = Cypress.env('DEV_MADIE_CODECHALLENGE')
+        redirectURI = Cypress.env('DEV_MADIE_REDIRECTURI')
+        codeVerifier = Cypress.env('DEV_MADIE_CODEVERIFIER')
+
+        break
+}
 
 export function setAccessTokenCookie() {
 
@@ -52,8 +75,8 @@ export function setAccessTokenCookie() {
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept': 'application/json'
         },
-        body: { username: Cypress.env('DEV_USERNAME'),
-            password: Cypress.env('DEV_PASSWORD'),
+        body: { username: userName,
+            password: password,
             options: {
                 multiOptionalFactorEnroll: false,
                 warnBeforePasswordExpired: true
@@ -67,14 +90,14 @@ export function setAccessTokenCookie() {
 
         cy.log(sessionToken)
 
-        let url = authCodeUrl + '?client_id=' + Cypress.env('DEV_MADIE_CLIENTID') +
-            '&code_challenge=' + Cypress.env('DEV_MADIE_CODECHALLENGE') +
+        let url = authCodeUrl + '?client_id=' + clientId +
+            '&code_challenge=' + codeChallenge +
             '&code_challenge_method=S256' +
             '&response_type=code' +
             '&response_mode=okta_post_message' +
             '&display=page' +
             '&nonce=uxiJab6ycJdNkEZkwbtqnSC1MRuIFCXQATQZSWiBjWdSuuBdbIDCN9EafOYiPaHs' + sessionToken +
-            '&redirect_uri=' + Cypress.env('DEV_MADIE_REDIRECTURI') +
+            '&redirect_uri=' + redirectURI +
             '&sessionToken=' + sessionToken +
             '&state=uQJCnnawAWj9QyaHkVMesAaVXEkWcZMpVfDrQJqdUUPLnuIUprrlN5kRicCI4gaR' +
             '&scope=openid%20email%20profile'
@@ -109,10 +132,10 @@ export function setAccessTokenCookie() {
                 },
                 body: {
                     grant_type: 'authorization_code',
-                    client_id: Cypress.env('DEV_MADIE_CLIENTID'),
-                    redirect_uri: Cypress.env('DEV_MADIE_REDIRECTURI'),
+                    client_id: clientId,
+                    redirect_uri: redirectURI,
                     code: authCode,
-                    code_verifier: Cypress.env('DEV_MADIE_CODEVERIFIER')
+                    code_verifier: codeVerifier
                 }
             }).then((response) => {
 

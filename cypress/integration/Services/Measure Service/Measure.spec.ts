@@ -4,6 +4,13 @@ let measureName = ''
 let CQLLibraryName = ''
 let model = 'QI-Core'
 let measureScoring = ''
+let harpUser = ''
+
+switch (Cypress.env('environment')) {
+    case 'dev' :
+        harpUser = Cypress.env('DEV_USERNAME')
+        break
+}
 
 describe('Measure Service: Create Measure', () => {
 
@@ -28,6 +35,7 @@ describe('Measure Service: Create Measure', () => {
                 body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
             }).then((response) => {
                 expect(response.status).to.eql(201)
+                expect(response.body.createdBy).to.eql(harpUser)
             })
         })
     })
