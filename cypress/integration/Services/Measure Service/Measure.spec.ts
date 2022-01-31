@@ -20,7 +20,7 @@ describe('Measure Service: Create Measure', () => {
 
     })
 
-    it('Create New Measure, successfull creation', () => {
+    it('Create New Measure, successful creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
         measureScoring = 'Cohort'
@@ -40,6 +40,46 @@ describe('Measure Service: Create Measure', () => {
         })
     })
 
+    //Get All Measures
+    it('Get all Measures', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measures',
+                method: 'GET',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(200)
+                expect(response.body).to.not.be.null
+                expect(response.body).to.be.a('array')
+                cy.get(response.body.length)
+                expect(response.body[0].id).to.be.exist
+            })
+        })
+    })
+
+    //Get Measures by User
+    it('Get all Measures created by logged in User', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measures?currentUser=true',
+                method: 'GET',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(200)
+                expect(response.body).to.not.be.null
+                expect(response.body).to.be.a('array')
+                cy.get(response.body.length)
+                expect(response.body[0].id).to.be.exist
+                expect(response.body[0].createdBy).to.eql(harpUser)
+            })
+        })
+    })
 
     //Measure Name Validations
     it('Validation Error: Measure Name empty', () => {
