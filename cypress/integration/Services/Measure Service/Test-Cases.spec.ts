@@ -34,13 +34,13 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     })
 
-    it('Create Test Case', () => {
+    it('Create and Edit Test Case', () => {
 
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
-                        url: '/api/measures/' + id + '/test-cases',
+                    url: '/api/measures/' + id + '/test-cases',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -53,10 +53,32 @@ describe('Measure Service: Test Case Endpoints', () => {
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
+                    cy.writeFile('cypress/downloads/testcaseId', response.body.id)
                 })
+
+                //Edit Test Case
+                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testcaseid) => {
+                cy.request({
+                    url: '/api/measures/' + id + '/test-cases/' + testcaseid,
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'PUT',
+                    body: {
+                        'id' : testcaseid,
+                         'name': "IPPPass",
+                             'series': "WhenBP<120",
+                             'description': "IPP Pass Test BP <120"
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(200)
+                    expect(response.body.id).to.be.exist
+                })
+
             })
         })
     })
+})
 
     it('Get All Test Cases', () => {
 
@@ -136,10 +158,5 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
         })
     })
 })
-
-
-
-
-
 
 
