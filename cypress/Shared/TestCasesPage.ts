@@ -1,4 +1,4 @@
-import {EditMeasurePage} from "./EditMeasurePage";
+import {EditMeasurePage} from "./EditMeasurePage"
 
 export class TestCasesPage {
 
@@ -8,11 +8,14 @@ export class TestCasesPage {
     public static readonly successMsg = '[data-testid=create-test-case-alert]'
     public static readonly listOfTestCases = '.TestCaseList___StyledTr-sc-1iefzo5-8'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
+    public static readonly editTestCase = '[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
+    public static readonly updateTestCaseButton = '[data-testid="create-test-case-button"]'
 
-    public static createTestCase (testCaseName:string, testCaseJson:string)  :void{
+
+    public static createTestCase (testCaseDescription:string, testCaseJson:string)  :void{
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
-        cy.get(this.testCaseDescriptionTextBox).type(testCaseName)
+        cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
@@ -22,7 +25,8 @@ export class TestCasesPage {
 
         //Verify created test case exists on Test Case Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(testCaseName)
+        cy.get(this.listOfTestCases).contains(testCaseDescription)
+
         cy.log('Test Case created successfully')
     }
 }
