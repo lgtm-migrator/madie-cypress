@@ -17,7 +17,6 @@ describe('Measure Service: Create Measure', () => {
     beforeEach('Set Access Token',() => {
 
         cy.setAccessTokenCookie()
-
     })
 
     it('Create New Measure, successful creation', () => {
