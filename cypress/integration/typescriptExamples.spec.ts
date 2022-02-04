@@ -1,5 +1,5 @@
-import { ProductGroup } from '../support'
-import { MyOwnClass } from '../Shared/MyOwnClass'
+//import { ProductGroup } from '../support'
+//import { MyOwnClass } from '../Shared/MyOwnClass'
 
 // describe('Verify Typescript works fine', () => {
 //     beforeEach(function () {

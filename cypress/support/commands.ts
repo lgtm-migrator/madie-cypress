@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import {Environment} from "../Shared/Environment";
+
 export { } // this file needs to be a module
 
 declare global {
@@ -34,10 +36,12 @@ declare global {
     }
 }
 
-const authUri = Cypress.env('DEV_MADIE_AUTHURI')
-const tokenUrl = authUri + "/v1/token"
-const authnUrl = "https://dev.idp.idm.cms.gov/api/v1/authn"
-const authCodeUrl = authUri + "/v1/authorize"
+const authnUrl = Environment.authentication().authnUrl
+const authUri = Environment.authentication().authUri
+const redirectUri = Environment.authentication().redirectUri
+const clientId = Environment.authentication().clientId
+const authCodeUrl = authUri + '/v1/authorize'
+const tokenUrl = authUri + '/v1/token'
 
 export function setAccessTokenCookie() {
 
@@ -52,8 +56,8 @@ export function setAccessTokenCookie() {
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept': 'application/json'
         },
-        body: { username: Cypress.env('DEV_USERNAME'),
-            password: Cypress.env('DEV_PASSWORD'),
+        body: { username: Environment.credentials().harpUser,
+            password: Environment.credentials().password,
             options: {
                 multiOptionalFactorEnroll: false,
                 warnBeforePasswordExpired: true
@@ -67,17 +71,26 @@ export function setAccessTokenCookie() {
 
         cy.log(sessionToken)
 
-        let url = authCodeUrl + '?client_id=' + Cypress.env('DEV_MADIE_CLIENTID') +
-            '&code_challenge=' + Cypress.env('DEV_MADIE_CODECHALLENGE') +
+        let url = authCodeUrl + '?client_id=' + clientId +
+            '&code_challenge=' + 'LBY2kyC5ZfYC9RaG9HOgRjf9i7U-zgmwHLC280r4UfA' +
             '&code_challenge_method=S256' +
             '&response_type=code' +
             '&response_mode=okta_post_message' +
             '&display=page' +
             '&nonce=uxiJab6ycJdNkEZkwbtqnSC1MRuIFCXQATQZSWiBjWdSuuBdbIDCN9EafOYiPaHs' + sessionToken +
-            '&redirect_uri=' + Cypress.env('DEV_MADIE_REDIRECTURI') +
+            '&redirect_uri=' + redirectUri +
             '&sessionToken=' + sessionToken +
-            '&state=uQJCnnawAWj9QyaHkVMesAaVXEkWcZMpVfDrQJqdUUPLnuIUprrlN5kRicCI4gaR' +
+            '&state=iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ' +
             '&scope=openid%20email%20profile'
+
+        console.log(url)
+
+        //test state = iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ
+        //dev state = uQJCnnawAWj9QyaHkVMesAaVXEkWcZMpVfDrQJqdUUPLnuIUprrlN5kRicCI4gaR
+
+
+        //uxiJab6ycJdNkEZkwbtqnSC1MRuIFCXQATQZSWiBjWdSuuBdbIDCN9EafOYiPaHs
+        // yyXuZpOgUEfJrAF9FewMZG2FQHvfzZ0URtM2d883niqVqMZi460Vx8IFNlIN7iwX
 
         cy.request({
             url: url,
@@ -90,6 +103,7 @@ export function setAccessTokenCookie() {
             expect(response.status).to.eql(200)
 
             const resp = response.body
+            console.log(response.body)
             const codeIdx = resp.indexOf("data.code")
             const codeEndIdx = resp.indexOf(";", codeIdx)
             const codeLine = resp.substring(codeIdx, codeEndIdx)
@@ -98,6 +112,7 @@ export function setAccessTokenCookie() {
             const authCode = escapedCode.replace(/\\x([0-9A-Fa-f]{2})/g, function () {
                 return String.fromCharCode(parseInt(arguments[1], 16))
             })
+            cy.log(authCode)
 
             cy.request({
                 url: tokenUrl,
@@ -109,8 +124,8 @@ export function setAccessTokenCookie() {
                 },
                 body: {
                     grant_type: 'authorization_code',
-                    client_id: Cypress.env('DEV_MADIE_CLIENTID'),
-                    redirect_uri: Cypress.env('DEV_MADIE_REDIRECTURI'),
+                    client_id: clientId,
+                    redirect_uri: redirectUri,
                     code: authCode,
                     code_verifier: Cypress.env('DEV_MADIE_CODEVERIFIER')
                 }
