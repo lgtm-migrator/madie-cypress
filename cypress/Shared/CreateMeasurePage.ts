@@ -6,7 +6,7 @@ export class CreateMeasurePage {
     public static readonly createMeasureButton = '[data-testid=create-new-measure-save-button]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
-    public static readonly measureModelDropdown = '#mui-1'
+    public static readonly measureModelDropdown = '#mui-2'
     public static readonly measureModelQICore = '[data-testid="measure-model-option-QI-Core"]'
     public static readonly measureModelFieldLevelError = '#mui-1-helper-text'
     public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name"]'

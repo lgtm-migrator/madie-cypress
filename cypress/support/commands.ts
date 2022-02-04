@@ -36,12 +36,14 @@ declare global {
     }
 }
 
+
 const authnUrl = Environment.authentication().authnUrl
 const authUri = Environment.authentication().authUri
 const redirectUri = Environment.authentication().redirectUri
 const clientId = Environment.authentication().clientId
 const authCodeUrl = authUri + '/v1/authorize'
 const tokenUrl = authUri + '/v1/token'
+
 
 export function setAccessTokenCookie() {
 
@@ -56,8 +58,10 @@ export function setAccessTokenCookie() {
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept': 'application/json'
         },
+
         body: { username: Environment.credentials().harpUser,
             password: Environment.credentials().password,
+
             options: {
                 multiOptionalFactorEnroll: false,
                 warnBeforePasswordExpired: true
