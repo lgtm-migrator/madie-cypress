@@ -1,16 +1,11 @@
 export {}
+import {Environment} from "../../../Shared/Environment"
 
 let measureName = ''
 let CQLLibraryName = ''
 let model = 'QI-Core'
 let measureScoring = ''
-let harpUser = ''
-
-switch (Cypress.env('environment')) {
-    case 'dev' :
-        harpUser = Cypress.env('DEV_USERNAME')
-        break
-}
+let harpUser = Environment.credentials().harpUser
 
 describe('Measure Service: Create Measure', () => {
 

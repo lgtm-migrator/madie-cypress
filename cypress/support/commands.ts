@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import {Environment} from "../Shared/Environment";
+import {Environment} from "../Shared/Environment"
 
 export { } // this file needs to be a module
 
@@ -43,6 +43,7 @@ const redirectUri = Environment.authentication().redirectUri
 const clientId = Environment.authentication().clientId
 const authCodeUrl = authUri + '/v1/authorize'
 const tokenUrl = authUri + '/v1/token'
+const codeVerifier = Cypress.env('MADIE_CODEVERIFIER')
 
 
 export function setAccessTokenCookie() {
@@ -131,7 +132,7 @@ export function setAccessTokenCookie() {
                     client_id: clientId,
                     redirect_uri: redirectUri,
                     code: authCode,
-                    code_verifier: Cypress.env('DEV_MADIE_CODEVERIFIER')
+                    code_verifier: codeVerifier
                 }
             }).then((response) => {
 
