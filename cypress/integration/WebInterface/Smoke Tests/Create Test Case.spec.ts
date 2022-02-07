@@ -8,7 +8,7 @@ let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
 let testCaseName = 'DENOMFail' + Date.now()
-let testCaseJson = 'Encounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)"'
+let testCaseJson = '{ \n' + 'Encounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
 
 describe('Create Test Case', () => {
     beforeEach('Login', () => {
