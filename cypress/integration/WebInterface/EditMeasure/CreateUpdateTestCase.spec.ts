@@ -7,6 +7,7 @@ import {TestCasesPage} from "../../../Shared/TestCasesPage"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
+let testCaseTitle = 'New Title for Auto Test'
 let testCaseName = 'DENOMFail' + Date.now()
 let testCaseJson = 'Encounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)"'
 
@@ -28,10 +29,11 @@ describe('Create Test Case', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Navigate to Test Cases Page and create Test Case
-        TestCasesPage.createTestCase(testCaseName, testCaseJson)
+        TestCasesPage.cuTestCase(testCaseTitle, testCaseName, testCaseJson)
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
 
     })
+
 })

@@ -1,7 +1,7 @@
 
 
 export class MeasuresPage {
-
+    public static readonly measuresButton = '.styles__ExtraButton-sc-147glsa-9 dTZxVT'
     public static clickEditforCreatedMeasure(): void {
         cy.readFile('cypress/downloads/measureId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-measure-'+ fileContents +']').click()
