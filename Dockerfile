@@ -26,3 +26,4 @@ RUN \
 
 COPY ./cypress ./cypress
 COPY ./cypress.json ./cypress.json
+COPY ./tsconfig.json ./tsconfig.json
