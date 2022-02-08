@@ -19,7 +19,7 @@ describe('Create Test Case', () => {
         OktaLogin.Logout()
     })
 
-    it('Edit Measure and Create Test Case', () => {
+    it('Create measure, Edit Measure and Create Test Case', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
@@ -28,6 +28,7 @@ describe('Create Test Case', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Navigate to Test Cases Page and create Test Case
+<<<<<<< Updated upstream:cypress/integration/WebInterface/Smoke Tests/Edit Test Case.spec.ts
         TestCasesPage.createTestCase(testCaseDescription, testCaseJson)
 
         //Click on Edit Test Case Button
@@ -44,6 +45,21 @@ describe('Create Test Case', () => {
         //Verify the updated test case description on Test Cases page
         cy.get(TestCasesPage.listOfTestCases).contains('UpdatedTestCaseDescription')
         cy.log('Test Case description updated successfully')
+=======
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseJson)
+
+        // Navigate to home page
+        cy.get(LandingPage.madieLogo).click()
+
+    })
+    it('Edit and update test case', () => {
+
+        //Click on Edit for Test Case
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //Edit / update Test Case
+        TestCasesPage.updateTestCase(testCaseTitle, testCaseDescription, testCaseJson)
+>>>>>>> Stashed changes:cypress/integration/WebInterface/Smoke Tests/CreateUpdateTestCase.spec.ts
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()

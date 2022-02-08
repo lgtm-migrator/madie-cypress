@@ -1,7 +1,10 @@
 
 
 export class MeasuresPage {
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     public static clickEditforCreatedMeasure(): void {
         cy.readFile('cypress/downloads/measureId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-measure-'+ fileContents +']').click()

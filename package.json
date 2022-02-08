@@ -25,7 +25,22 @@
 		"dev:all:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run dev:all:tests; npm run combine:reports; npm run generateOne:report",
 		"test:all:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run test:all:tests; npm run combine:reports; npm run generateOne:report",
 		"test:all:ui:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run test:all:ui:tests; npm run combine:reports; npm run generateOne:report",
+<<<<<<< Updated upstream
 		"test:all:services:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run test:all:services:tests; npm run combine:reports; npm run generateOne:report"
+=======
+		"test:all:services:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run test:all:services:tests; npm run combine:reports; npm run generateOne:report",
+		"windows:delete:mochawesome": "del mochawesome.json",
+		"windows:delete:reports": "del .\\cypress\\results\\*.json",
+		"windows:cypress:run": "cypress run --spec .\\cypress\\integration\\**\\*",
+		"windows:combine:reports": "npx mochawesome-merge '.\\cypress\\results\\*.json' > mochawesome.json",
+		"windows:test:all:tests": "cypress run --env configFile=test -s 'cypress\\integration\\**\\*.spec.ts' --browser chrome --headed;",
+		"windows::test:all:ui:tests": "cypress run --env configFile=test -s 'cypress\\integration\\WebInterface\\**\\*.spec.ts' --browser chrome --headed;",
+		"windows:dev:all:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\**\\*.spec.ts' --browser chrome --headed;",
+		"windows:dev:all:ui:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\WebInterface\\**\\*.spec.ts' --browser chrome --headed",
+		"windows:dev:all:services:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\Services\\**\\*.spec.ts' --browser chrome --headed;",
+		"windows:dev:all:measure:service:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\Services\\Measure Service\\**\\*.spec.ts' --browser chrome --headed;"
+
+>>>>>>> Stashed changes
 	},
 	"devDependencies": {
 		"@cypress/browserify-preprocessor": "^2.2.4",
