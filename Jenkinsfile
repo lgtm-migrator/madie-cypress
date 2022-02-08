@@ -8,7 +8,7 @@ pipeline{
     }
 
     parameters {
-        choice(choices: ['dev:all:ui:tests:report','dev:all:tests:report'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
+        choice(choices: ['dev:all:ui:tests:report','dev:all:tests:report', 'dev:all:services:tests:report', 'test:all:tests:report', 'test:all:ui:tests:report', 'test:all:services:tests:report'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
         choice(name:'BUILD_CONTAINER', description:'Rebuild Cypress Container?', choices:['no','yes'])
     }
 
@@ -19,6 +19,14 @@ pipeline{
         CYPRESS_TEST_USERNAME=credentials('CYPRESS_TEST_USERNAME')
         CYPRESS_TEST_PASSWORD=credentials('CYPRESS_TEST_PASSWORD')
         CYPRESS_VSAC_API_KEY=credentials('CYPRESS_VSAC_API_KEY')
+        CYPRESS_DEV_MADIE_CLIENTID=credentials('CYPRESS_DEV_MADIE_CLIENTID')
+        CYPRESS_DEV_MADIE_CODECHALLENGE=credentials('CYPRESS_DEV_MADIE_CODECHALLENGE')
+        CYPRESS_DEV_MADIE_REDIRECTURI=credentials('CYPRESS_DEV_MADIE_REDIRECTURI')
+        CYPRESS_DEV_MADIE_AUTHURI=credentials('CYPRESS_DEV_MADIE_AUTHURI')
+        CYPRESS_MADIE_CODEVERIFIER=credentials('CYPRESS_MADIE_CODEVERIFIER')
+        CYPRESS_TEST_MADIE_CLIENTID=credentials('CYPRESS_TEST_MADIE_CLIENTID')
+        CYPRESS_TEST_MADIE_REDIRECTURI=credentials('CYPRESS_TEST_MADIE_REDIRECTURI')
+        CYPRESS_TEST_MADIE_AUTHURI=credentials('CYPRESS_TEST_MADIE_AUTHURI')
         CYPRESS_REPORT_BUCKET=credentials('CYPRESS_REPORT_BUCKET')
     }
 
