@@ -48,11 +48,13 @@ describe('Measure Service: Test Case Endpoints', () => {
                     body: {
                         'name': "DENOMFail",
                         'series': "WhenBP<120",
-                        'description': "DENOME pass Test HB <120"
+                        'description': "DENOME pass Test HB <120",
+                        'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
+                    expect(response.body.json).to.be.exist
                     cy.writeFile('cypress/downloads/testcaseId', response.body.id)
                 })
 
@@ -67,12 +69,14 @@ describe('Measure Service: Test Case Endpoints', () => {
                     body: {
                         'id' : testcaseid,
                          'name': "IPPPass",
-                             'series': "WhenBP<120",
-                             'description': "IPP Pass Test BP <120"
+                         'series': "WhenBP<120",
+                         'description': "IPP Pass Test BP <120",
+                         'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body.id).to.be.exist
+                    expect(response.body.json).to.be.exist
                 })
 
             })
