@@ -14,20 +14,6 @@ export class TestCasesPage {
     public static readonly editTestCaseButton ='[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
     public static readonly cuTestCaseButton = '[data-testid=create-test-case-button]'
 
-/*    public static clickCreateTestCaseButton() : void {
-
-        //setup for grabbing the measure create call
-        cy.intercept('POST', '/api/measure').as('measure')
-
-    public static createTestCase (testCaseDescription:string, testCaseJson:string)  :void{
-        cy.get(this.createMeasureButton).click()
-
-        //saving measureID to file to use later
-        cy.wait('@measure').then(({response}) => {
-            expect(response.statusCode).to.eq(201)
-            cy.writeFile('cypress/downloads/measureId', response.body.id)
-        })
-    }*/
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
@@ -47,25 +33,8 @@ export class TestCasesPage {
         cy.log('Test Case created successfully')
     }
     public static updateTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
-/*        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.newTestCaseButton).click()
-        cy.get(this.testCaseTitle).type(testCaseTitle)
-        cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
-
-        //Add json to the test case
-        cy.get(this.aceEditor).type(testCaseJson)
-
-        //Save new test case
-        cy.get(this.cuTestCaseButton).click()
-        cy.get(this.successMsg).should('contain.text', 'Test case saved successfully!')
-
-        //Verify created test case exists on Test Case Page
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(testCaseDescription)
-        cy.log('Test Case created successfully')*/
 
         //Edit / Update test case title
-        //cy.get(this.editTestCaseButton).click()
         cy.get(this.testCaseTitle).type(testCaseTitle + ' something new to title')
         cy.get(this.testCaseDescriptionTextBox).clear().type('UpdatedTestCaseDescription')
 
