@@ -13,7 +13,7 @@ pipeline{
     }
 
     environment{
-        AWS_ACCOUNT = credentials('HCQIS_DEV')
+        AWS_ACCOUNT = credentials('HCQIS_dev')
         CYPRESS_DEV_USERNAME=credentials('CYPRESS_DEV_USERNAME')
         CYPRESS_DEV_PASSWORD=credentials('CYPRESS_DEV_PASSWORD')
         CYPRESS_TEST_USERNAME=credentials('CYPRESS_TEST_USERNAME')
@@ -43,8 +43,8 @@ pipeline{
       steps{
           sh '''
             docker build -t madie-dev-cypress-ecr .
-            docker tag madie-dev-cypress-ecr:latest ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/mat-dev-cypress-ecr:latest
-            docker push ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/mat-dev-cypress-ecr:latest
+            docker tag madie-dev-cypress-ecr:latest ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/madie-dev-cypress-ecr:latest
+            docker push ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/madie-dev-cypress-ecr:latest
           '''
       }
     }
@@ -52,8 +52,8 @@ pipeline{
     stage('Run Tests') {
         agent {
             docker {
-                image '${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/mat-dev-cypress-ecr:latest'
-		args '-u 0 -v $HOME/.npm:/.npm'
+                image "${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/madie-dev-cypress-ecr:latest"
+		args "-u 0 -v $HOME/.npm:/.npm"
                 reuseNode true
             }
         }
@@ -62,8 +62,6 @@ pipeline{
                 sh '''
                 cd /app/cypress
                 npm run ${TEST_SCRIPT}
-		aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
-		echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
                 tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ . 
                 cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
                 '''
