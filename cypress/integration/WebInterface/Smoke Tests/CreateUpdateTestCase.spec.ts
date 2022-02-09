@@ -3,6 +3,7 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {LandingPage} from "../../../Shared/LandingPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
+import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -36,6 +37,14 @@ describe('Create Test Case', () => {
 
     })
     it('Edit and update test case', () => {
+        //navigate to measures page
+        cy.get(LandingPage.measuresButton).click()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //click tab to get to test cases
+        cy.get(EditMeasurePage.testCasesTab).click()
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()

@@ -14,6 +14,23 @@ export class TestCasesPage {
     public static readonly editTestCaseButton ='[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
     public static readonly cuTestCaseButton = '[data-testid=create-test-case-button]'
 
+    public static clickCreateTestCaseButton() : void {
+
+        //setup for grabbing the measure create call
+        cy.readFile('cypress/downloads/measureId').should('exist').then((id)=> {
+            cy.intercept('POST', '/api/measures/'+ id + '/test-cases').as('testcase')
+
+            cy.get(this.createTestCaseButton).click()
+    
+            //saving testCaseId to file to use later
+            cy.wait('@testcase').then(({response}) => {
+                expect(response.statusCode).to.eq(201)
+                cy.writeFile('cypress/downloads/testCaseId', response.body.id)
+            })
+        })
+
+    }
+
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
@@ -23,8 +40,9 @@ export class TestCasesPage {
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
-        cy.get(this.createTestCaseButton).click()
-        cy.get(this.cuTestCaseButton).click()
+        //cy.get(this.createTestCaseButton).click()
+        //cy.get(this.cuTestCaseButton).click()
+        this.clickCreateTestCaseButton()
         cy.get(this.successMsg).should('contain.text', 'Test case saved successfully!')
 
         //Verify created test case exists on Test Case Page
@@ -34,9 +52,10 @@ export class TestCasesPage {
         cy.log('Test Case created successfully')
     }
     public static updateTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
+        let updatedTitle = testCaseTitle + "some update"
 
         //Edit / Update test case title
-        cy.get(this.testCaseTitle).type(testCaseTitle + ' something new to title')
+        cy.get(this.testCaseTitle).clear().type(updatedTitle)
         cy.get(this.testCaseDescriptionTextBox).clear().type(testCaseDescription + ' '+ 'UpdatedTestCaseDescription')
 
         //Add json to the test case
@@ -49,7 +68,7 @@ export class TestCasesPage {
 
         //Verify edited / updated test case exists on Test Case Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains('testCaseDescription' + ' '+ 'UpdatedTestCaseDescription')
+        cy.get(this.listOfTestCases).contains(updatedTitle)
 
         cy.log('Test Case created successfully')
     }
