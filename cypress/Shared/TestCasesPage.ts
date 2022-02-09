@@ -32,6 +32,7 @@ export class TestCasesPage {
     }
 
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
+
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
         cy.get(this.testCaseTitle).type(testCaseTitle)
@@ -51,15 +52,14 @@ export class TestCasesPage {
 
         cy.log('Test Case created successfully')
     }
-    public static updateTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
-        let updatedTitle = testCaseTitle + "some update"
+    public static updateLastTestCaseCreated (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
 
         //Edit / Update test case title
-        cy.get(this.testCaseTitle).clear().type(updatedTitle)
-        cy.get(this.testCaseDescriptionTextBox).clear().type(testCaseDescription + ' '+ 'UpdatedTestCaseDescription')
+        cy.get(this.testCaseTitle).clear().type(testCaseTitle)
+        cy.get(this.testCaseDescriptionTextBox).clear().type(testCaseDescription)
 
         //Add json to the test case
-        cy.get(this.aceEditor).type(testCaseJson)
+        cy.get(this.aceEditor).clear().type(testCaseJson)
 
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()
@@ -68,9 +68,9 @@ export class TestCasesPage {
 
         //Verify edited / updated test case exists on Test Case Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(updatedTitle)
+        cy.get(this.listOfTestCases).contains(testCaseTitle)
 
-        cy.log('Test Case created successfully')
+        cy.log('Test Case updated successfully')
     }
     public static clickEditforCreatedTestCase(): void {
         cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
