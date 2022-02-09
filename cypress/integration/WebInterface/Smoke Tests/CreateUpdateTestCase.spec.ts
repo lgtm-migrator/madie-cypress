@@ -13,18 +13,27 @@ let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseJson = '{ \n' + 'Encounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
 
 describe('Create Test Case', () => {
-    beforeEach('Login', () => {
+
+    before ('Create Measure', () => {
+
         OktaLogin.Login()
-    })
-
-    afterEach('Logout', () => {
-        OktaLogin.Logout()
-    })
-
-    it('Create measure, Edit Measure and Create Test Case', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+
+        OktaLogin.Logout()
+
+    })
+    beforeEach ('Login', () => {
+        OktaLogin.Login()
+
+    })
+    afterEach ('Login', () => {
+        OktaLogin.Logout()
+
+    })
+
+    it('Create Test Case', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -32,13 +41,8 @@ describe('Create Test Case', () => {
         //Navigate to Test Cases Page and create Test Case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseJson)
 
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
-
     })
     it('Edit and update test case', () => {
-        //navigate to measures page
-        cy.get(LandingPage.measuresButton).click()
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -49,8 +53,11 @@ describe('Create Test Case', () => {
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
+        testCaseTitle = 'Title for Auto TestUPDATED'
+        testCaseDescription = 'DENOMFail' + Date.now() + 'UPDATED'
+        testCaseJson = '{ \n' + 'TESTEncounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
         //Edit / update Test Case
-        TestCasesPage.updateTestCase(testCaseTitle, testCaseDescription, testCaseJson)
+        TestCasesPage.updateLastTestCaseCreated(testCaseTitle, testCaseDescription, testCaseJson)
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
