@@ -17,6 +17,7 @@ export class TestCasesPage {
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
+        cy.get(this.testCaseTitle).type(testCaseTitle)
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
 
         //Add json to the test case
@@ -28,7 +29,7 @@ export class TestCasesPage {
 
         //Verify created test case exists on Test Case Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(testCaseDescription)
+        cy.get(this.listOfTestCases).contains(testCaseTitle)
 
         cy.log('Test Case created successfully')
     }
@@ -36,7 +37,7 @@ export class TestCasesPage {
 
         //Edit / Update test case title
         cy.get(this.testCaseTitle).type(testCaseTitle + ' something new to title')
-        cy.get(this.testCaseDescriptionTextBox).clear().type('UpdatedTestCaseDescription')
+        cy.get(this.testCaseDescriptionTextBox).clear().type(testCaseDescription + ' '+ 'UpdatedTestCaseDescription')
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
@@ -48,7 +49,7 @@ export class TestCasesPage {
 
         //Verify edited / updated test case exists on Test Case Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains('UpdatedTestCaseDescription')
+        cy.get(this.listOfTestCases).contains('testCaseDescription' + ' '+ 'UpdatedTestCaseDescription')
 
         cy.log('Test Case created successfully')
     }
