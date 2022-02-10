@@ -1,4 +1,5 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
+import {LandingPage} from "../../../Shared/LandingPage"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
@@ -41,6 +42,7 @@ describe('Edit Measure', () => {
         //Navigate back to Measures page and verify if the Measure Name is updated
         cy.get(TopNav.measureTab).click()
         MeasuresPage.validateMeasureName(updatedMeasureName)
-
+        // Navigate to home page
+        cy.get(LandingPage.madieLogo).click()
     })
 })
