@@ -2,7 +2,6 @@ import {LandingPage} from "./LandingPage"
 
 export class CreateMeasurePage {
 
-    public static readonly newMeasureButton = '[data-testid=create-new-measure-button]'
     public static readonly createMeasureButton = '[data-testid=create-new-measure-save-button]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
@@ -38,8 +37,7 @@ export class CreateMeasurePage {
     public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
 
         cy.log('Create ' +measureScoring+ ' Measure')
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(this.newMeasureButton).click()
+        cy.get(LandingPage.newMeasureButton).click()
         cy.get(this.measureNameTextbox).type(measureName)
         cy.get(this.measureModelDropdown).click()
         cy.get(this.measureModelQICore).click()
@@ -59,6 +57,7 @@ export class CreateMeasurePage {
                 cy.get(this.measureScoringRatio).click()
                 break
         }
+
         cy.get(this.createMeasureButton).click()
 
         this.clickCreateMeasureButton()

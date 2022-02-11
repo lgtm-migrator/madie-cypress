@@ -20,8 +20,6 @@ export class OktaLogin {
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton).click()
-        //Verify the success message on home page
-        cy.get(LandingPage.loginSuccessmsg).should('contain.text', 'You are successfully logged in')
         cy.log('Login Successful')
     }
 
@@ -29,5 +27,6 @@ export class OktaLogin {
         cy.get(LandingPage.signOutButton).should('be.visible')
         cy.get(LandingPage.signOutButton).click()
         cy.log('Logout Successful')
+
     }
 }

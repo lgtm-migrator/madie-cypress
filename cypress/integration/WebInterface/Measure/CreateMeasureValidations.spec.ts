@@ -15,11 +15,11 @@ describe('Measure Name Validations', () => {
     //Measure Name Validations
     it('Verify error messages when the measure name entered is invalid or empty', () => {
 
-        //Click on Measures Button
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
 
-        //Verify error message when the Measure Name field is empty
+        //Click on New Measure Button
+        cy.get(LandingPage.newMeasureButton).click()
+
+     //Verify error message when the Measure Name field is empty
         cy.get(CreateMeasurePage.measureNameTextbox).focus().blur()
         cy.get(CreateMeasurePage.measureNameFieldLevelError).should('contain.text', 'A measure name is required.')
         //Verify if create measure button is disabled
@@ -46,17 +46,15 @@ describe('Measure Name Validations', () => {
         //Click on cancel button
         cy.get(CreateMeasurePage.cancelButton).click()
 
-        // Navigate to MADiE Landing page
-        cy.get(LandingPage.madieLogo).click()
     })
 
     //CQL Library Name Validations
     it('Verify error messages when the CQL Library Name entered is invalid or empty', () => {
+
         let measureName = 'TestMeasure' + Date.now()
 
-        //Click on Measures Button
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
+        //Click on New Measure Button
+        cy.get(LandingPage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
@@ -104,9 +102,6 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.createMeasureButton).click()
         cy.get(CreateMeasurePage.cqlLibraryNameDuplicateErrorMsg).should('contain.text', 'CQL library with given name already exists')
 
-        // Navigate to MADiE Landing page
-        cy.get(LandingPage.madieLogo).click()
-
     })
 
     //Measure Scoring Validations
@@ -115,9 +110,8 @@ describe('Measure Name Validations', () => {
         let measureName = 'MeasureScoringTest' + Date.now()
         let CqlLibraryName = 'ScoringTestLibrary' + Date.now()
 
-        //Click on Measures Button
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
+       //Click on New Measure Button
+        cy.get(LandingPage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
@@ -127,8 +121,6 @@ describe('Measure Name Validations', () => {
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
 
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 
     //Measure Type Validations
@@ -137,9 +129,9 @@ describe('Measure Name Validations', () => {
         let measureName = 'MeasureTypeTest' + Date.now()
         let CqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
-        //Click on Measures Button
-        cy.get(LandingPage.measuresButton).click()
-        cy.get(CreateMeasurePage.newMeasureButton).click()
+
+        //Click on New Measure Button
+        cy.get(LandingPage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
         cy.get(CreateMeasurePage.measureModelDropdown).focus().blur()
         cy.get(CreateMeasurePage.measureModelFieldLevelError).should('contain.text', 'A measure model is required.')
@@ -149,7 +141,5 @@ describe('Measure Name Validations', () => {
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
 
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 })
