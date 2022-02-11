@@ -42,7 +42,7 @@ describe('Create Test Case', () => {
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseJson)
 
     })
-    it('Edit and update test case', () => {
+/*     it('Edit and update test case', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -53,14 +53,16 @@ describe('Create Test Case', () => {
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
+        //Values for edit / update of test case
         testCaseTitle = 'Title for Auto TestUPDATED'
         testCaseDescription = 'DENOMFail' + Date.now() + 'UPDATED'
         testCaseJson = '{ \n' + 'TESTEncounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
+
         //Edit / update Test Case
         TestCasesPage.updateLastTestCaseCreated(testCaseTitle, testCaseDescription, testCaseJson)
 
         // Navigate to home page
         cy.get(LandingPage.madieLogo).click()
 
-    })
+    }) */
 })
