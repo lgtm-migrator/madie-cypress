@@ -4,15 +4,16 @@ export class TestCasesPage {
 
     public static readonly newTestCaseButton = '.sc-iqseJM'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
+    public static readonly testCaseSeriesTextBox = '.MuiOutlinedInput-root'
+    public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly successMsg = '[data-testid=create-test-case-alert]'
-    public static readonly listOfTestCases = '.TestCaseList___StyledTr-sc-1iefzo5-8'
+    public static readonly testCaseTitleList = '.TestCaseList___StyledTr-sc-1iefzo5-8 > :nth-child(1)'
+    public static readonly testCaseSeriesList = '.TestCaseList___StyledTr-sc-1iefzo5-8 > :nth-child(2)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
     public static readonly editTestCase = '[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
-    public static readonly updateTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
-    public static readonly editTestCaseButton ='[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
-    public static readonly cuTestCaseButton = '[data-testid=create-test-case-button]'
+    public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
 
     public static clickCreateTestCaseButton() : void {
 
@@ -21,55 +22,57 @@ export class TestCasesPage {
             cy.intercept('POST', '/api/measures/'+ id + '/test-cases').as('testcase')
 
             cy.get(this.createTestCaseButton).click()
-    
+
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
                 expect(response.statusCode).to.eq(201)
                 cy.writeFile('cypress/downloads/testCaseId', response.body.id)
             })
         })
-
     }
 
-    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
+
+    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string)  :void{
+
+        //Navigate to Test Cases page and add Test Case details
 
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
         cy.get(this.testCaseTitle).type(testCaseTitle)
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
+        cy.get(this.existingTestCaseSeriesDropdown).click()
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
-        //cy.get(this.createTestCaseButton).click()
-        //cy.get(this.cuTestCaseButton).click()
         this.clickCreateTestCaseButton()
         cy.get(this.successMsg).should('contain.text', 'Test case saved successfully!')
 
-        //Verify created test case exists on Test Case Page
+        //Verify created test case Title and Series exists on Test Cases Page
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(testCaseTitle)
+        cy.get(this.testCaseTitleList).contains(testCaseTitle)
+        cy.get(this.testCaseSeriesList).contains(testCaseSeries)
 
         cy.log('Test Case created successfully')
     }
-    public static updateLastTestCaseCreated (testCaseTitle:string, testCaseDescription:string, testCaseJson:string)  :void{
+    public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries)  :void{
 
         //Edit / Update test case title
-        cy.get(this.testCaseTitle).clear().type(testCaseTitle)
-        cy.get(this.testCaseDescriptionTextBox).clear().type(testCaseDescription)
-
-        //Add json to the test case
-        cy.get(this.aceEditor).clear().type(testCaseJson)
+        cy.get(this.testCaseTitle).clear().type(updatedTestCaseTitle)
+        //Update Test Case Description
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).clear().type(updatedTestCaseDescription)
+        //Update Test Case Series
+        cy.get(TestCasesPage.testCaseSeriesTextBox).clear().type(updatedTestCaseSeries)
+        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
 
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()
         cy.get(this.successMsg).should('contain.text', 'Test case updated successfully!')
-        cy.log('Test Case description updated successfully')
 
-        //Verify edited / updated test case exists on Test Case Page
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(this.listOfTestCases).contains(testCaseTitle)
-
+        //Verify edited / updated test case Title and Series exists on Test Cases Page
+        cy.get(this.testCaseTitleList).contains(updatedTestCaseTitle)
+        cy.get(this.testCaseSeriesList).contains(updatedTestCaseSeries)
         cy.log('Test Case updated successfully')
     }
     public static clickEditforCreatedTestCase(): void {
