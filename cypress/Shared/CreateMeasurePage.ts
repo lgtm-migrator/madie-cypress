@@ -57,6 +57,7 @@ export class CreateMeasurePage {
                 cy.get(this.measureScoringRatio).click()
                 break
         }
+
         cy.get(this.createMeasureButton).click()
 
         this.clickCreateMeasureButton()

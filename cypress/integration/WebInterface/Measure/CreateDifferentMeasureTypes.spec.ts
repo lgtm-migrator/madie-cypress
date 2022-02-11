@@ -48,6 +48,7 @@ describe('Create different Measure types', () => {
         measureScoring = 'Ratio'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
+
     })
 
 })

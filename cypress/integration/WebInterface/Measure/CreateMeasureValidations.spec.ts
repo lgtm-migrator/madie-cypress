@@ -135,5 +135,6 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureScoringCohort).click()
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
+
     })
 })

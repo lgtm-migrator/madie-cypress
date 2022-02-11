@@ -27,5 +27,6 @@ export class OktaLogin {
         cy.get(LandingPage.signOutButton).should('be.visible')
         cy.get(LandingPage.signOutButton).click()
         cy.log('Logout Successful')
+
     }
 }

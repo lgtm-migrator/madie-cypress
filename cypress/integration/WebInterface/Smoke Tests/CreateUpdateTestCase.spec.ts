@@ -49,6 +49,5 @@ describe('Create Test Case', () => {
 
         //Edit / update Test Case
         TestCasesPage.updateTestCase(updatedTestCaseTitle, updatedTestCaseDescription, updatedTestCaseSeries)
-
     })
 })

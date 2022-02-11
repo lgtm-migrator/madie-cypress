@@ -41,5 +41,6 @@ describe('Edit Measure', () => {
         //Navigate back to Measures page and verify if the Measure Name is updated
         cy.get(TopNav.measureTab).click()
         MeasuresPage.validateMeasureName(updatedMeasureName)
+
     })
 })

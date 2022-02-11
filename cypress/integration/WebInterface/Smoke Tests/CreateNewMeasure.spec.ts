@@ -20,7 +20,6 @@ describe('Create New Measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
     })
-
 })
 
 

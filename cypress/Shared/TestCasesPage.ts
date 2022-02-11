@@ -78,6 +78,7 @@ export class TestCasesPage {
     public static clickEditforCreatedTestCase(): void {
         cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
+
         })
     }
 }
