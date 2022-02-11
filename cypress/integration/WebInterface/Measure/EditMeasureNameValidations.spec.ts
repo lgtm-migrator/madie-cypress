@@ -1,5 +1,4 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
-import {LandingPage} from "../../../Shared/LandingPage"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
@@ -51,7 +50,5 @@ describe('Edit Measure Name Validations', () => {
         cy.get(EditMeasurePage.editMeasureSaveButton).click()
         cy.get(EditMeasurePage.editMeasureFieldLevelError).should('contain.text', 'A measure name cannot be more than 500 characters.')
 
-        // Navigate to MADiE Landing page
-        cy.get(LandingPage.madieLogo).click()
     })
 })

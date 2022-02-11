@@ -1,6 +1,6 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {LandingPage} from "../../../Shared/LandingPage"
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+
 
 let measureName = ''
 let CqlLibraryName = ''
@@ -22,9 +22,6 @@ describe('Create different Measure types', () => {
         measureScoring = 'Cohort'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
-
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 
     it('Create Proportion Measure', () => {
@@ -34,9 +31,6 @@ describe('Create different Measure types', () => {
         measureScoring = 'Proportion'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
-
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 
     it('Create Continuous Variable Measure', () => {
@@ -47,8 +41,6 @@ describe('Create different Measure types', () => {
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
 
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 
     it('Create Ratio Measure', () => {
@@ -58,9 +50,6 @@ describe('Create different Measure types', () => {
         measureScoring = 'Ratio'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
-
-        // Navigate to home page
-        cy.get(LandingPage.madieLogo).click()
     })
 
 })
