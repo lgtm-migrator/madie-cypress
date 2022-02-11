@@ -1,5 +1,6 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {LandingPage} from "../../../Shared/LandingPage"
+
 
 let measureName = ''
 let CqlLibraryName = ''
@@ -39,6 +40,7 @@ describe('Create different Measure types', () => {
         measureScoring = 'Continuous Variable'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
+
     })
 
     it('Create Ratio Measure', () => {
@@ -48,7 +50,6 @@ describe('Create different Measure types', () => {
         measureScoring = 'Ratio'
 
         CreateMeasurePage.CreateQICoreMeasure (measureName,CqlLibraryName,measureScoring)
-
     })
 
 })

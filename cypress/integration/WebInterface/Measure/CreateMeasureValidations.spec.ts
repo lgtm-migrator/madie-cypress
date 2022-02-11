@@ -15,10 +15,11 @@ describe('Measure Name Validations', () => {
     //Measure Name Validations
     it('Verify error messages when the measure name entered is invalid or empty', () => {
 
+
         //Click on New Measure Button
         cy.get(LandingPage.newMeasureButton).click()
 
-        //Verify error message when the Measure Name field is empty
+     //Verify error message when the Measure Name field is empty
         cy.get(CreateMeasurePage.measureNameTextbox).focus().blur()
         cy.get(CreateMeasurePage.measureNameFieldLevelError).should('contain.text', 'A measure name is required.')
         //Verify if create measure button is disabled
@@ -44,6 +45,7 @@ describe('Measure Name Validations', () => {
 
         //Click on cancel button
         cy.get(CreateMeasurePage.cancelButton).click()
+
     })
 
     //CQL Library Name Validations
@@ -99,6 +101,7 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.createMeasureButton).click()
         cy.get(CreateMeasurePage.cqlLibraryNameDuplicateErrorMsg).should('contain.text', 'CQL library with given name already exists')
+
     })
 
     //Measure Scoring Validations
@@ -107,7 +110,7 @@ describe('Measure Name Validations', () => {
         let measureName = 'MeasureScoringTest' + Date.now()
         let CqlLibraryName = 'ScoringTestLibrary' + Date.now()
 
-        //Click on New Measure Button
+       //Click on New Measure Button
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
         cy.get(CreateMeasurePage.measureModelDropdown).click()
@@ -117,6 +120,7 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureScoringFieldLevelError).should('contain.text', 'Measure Scoring is required.')
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
+
     })
 
     //Measure Type Validations
@@ -124,6 +128,7 @@ describe('Measure Name Validations', () => {
 
         let measureName = 'MeasureTypeTest' + Date.now()
         let CqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
 
         //Click on New Measure Button
         cy.get(LandingPage.newMeasureButton).click()

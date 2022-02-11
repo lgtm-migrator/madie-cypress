@@ -16,23 +16,33 @@ let updatedTestCaseSeries = 'CMSTestSeries'
 let testCaseJson = '{ \n' + 'Encounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
 
 describe('Create Test Case', () => {
-    beforeEach('Login', () => {
+
+    before ('Create Measure', () => {
+
         OktaLogin.Login()
-    })
-
-    afterEach('Logout', () => {
-        OktaLogin.Logout()
-    })
-
-    it('Create measure, Edit Measure and Create Test Case', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+
+        OktaLogin.Logout()
+
+    })
+    beforeEach ('Login', () => {
+        OktaLogin.Login()
+
+    })
+    afterEach ('Login', () => {
+        OktaLogin.Logout()
+
+    })
+
+    it('Create Test Case', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Navigate to Test Cases Page and create Test Case
+
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
     })
 
@@ -47,7 +57,10 @@ describe('Create Test Case', () => {
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
+        testCaseTitle = 'Title for Auto TestUPDATED'
+        testCaseDescription = 'DENOMFail' + Date.now() + 'UPDATED'
+        testCaseJson = '{ \n' + 'TESTEncounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
         //Edit / update Test Case
+
         TestCasesPage.updateTestCase(updatedTestCaseTitle, updatedTestCaseDescription, updatedTestCaseSeries)
-    })
 })

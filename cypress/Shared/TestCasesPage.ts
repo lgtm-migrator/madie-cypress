@@ -32,9 +32,11 @@ export class TestCasesPage {
     }
 
 
+
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string)  :void{
 
         //Navigate to Test Cases page and add Test Case details
+
 
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(this.newTestCaseButton).click()
@@ -56,6 +58,7 @@ export class TestCasesPage {
 
         cy.log('Test Case created successfully')
     }
+
     public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries)  :void{
 
         //Edit / Update test case title
@@ -66,13 +69,15 @@ export class TestCasesPage {
         cy.get(TestCasesPage.testCaseSeriesTextBox).clear().type(updatedTestCaseSeries)
         cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
 
+
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()
         cy.get(this.successMsg).should('contain.text', 'Test case updated successfully!')
 
-        //Verify edited / updated test case Title and Series exists on Test Cases Page
+      //Verify edited / updated test case Title and Series exists on Test Cases Page
         cy.get(this.testCaseTitleList).contains(updatedTestCaseTitle)
         cy.get(this.testCaseSeriesList).contains(updatedTestCaseSeries)
+
         cy.log('Test Case updated successfully')
     }
     public static clickEditforCreatedTestCase(): void {
