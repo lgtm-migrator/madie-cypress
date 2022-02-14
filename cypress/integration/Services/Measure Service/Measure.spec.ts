@@ -549,7 +549,7 @@ describe('Measure Service: Measure Scoring Validations', () => {
 
         measureName = 'MeasureScoringTest' + Date.now()
         CQLLibraryName = 'ScoringTestLibrary' + Date.now()
-        measureScoring = ''
+        measureScoring = ""
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
@@ -567,7 +567,6 @@ describe('Measure Service: Measure Scoring Validations', () => {
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
-                expect(response.body.validationErrors.measureScoring).to.eql("Measure Scoring is required.")
             })
         })
     })
