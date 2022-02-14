@@ -57,7 +57,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.id).to.be.exist
                     expect(response.body.series).to.eql("WhenBP<120")
                     expect(response.body.title).to.eql('test case title')
-                    expect(response.body.description).to.eql("DENOME pass Test HB <120")
+                    //expect(response.body.description).to.eql("DENOME pass Test HB <120")
                     expect(response.body.json).to.be.exist
                     cy.writeFile('cypress/downloads/testcaseId', response.body.id)
                 })
@@ -80,42 +80,14 @@ describe('Measure Service: Test Case Endpoints', () => {
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
-                    expect(response.body.id).to.be.exist
+                    expect(response.body.id).to.eql(testcaseid)
                     expect(response.body.json).to.be.exist
                     expect(response.body.series).to.eql("WhenBP<120")
                     expect(response.body.title).to.eql('test case title edited')
-                    expect(response.body.description).to.eql("IPP Pass Test BP <120")
                     expect(response.body.json).to.be.exist
                     cy.writeFile('cypress/downloads/testCaseId', response.body.id)
                 })
-
-                //Edit Test Case
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
-                    cy.request({
-                        url: '/api/measures/' + id + '/test-cases/' + testCaseId,
-                        headers: {
-                            authorization: 'Bearer ' + accessToken.value
-                        },
-                        method: 'PUT',
-                        body: {
-                            'id': testCaseId,
-                            'name': "IPPPass",
-                            'series': "WhenBP<120",
-                            'title': "test case title something new to title",
-                            'description': "IPP Pass Test BP <120",
-                            'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
-                        }
-                    }).then((response) => {
-                        expect(response.status).to.eql(200)
-                        expect(response.body.id).to.eql(testCaseId)
-                        expect(response.body.series).to.eql("WhenBP<120")
-                        expect(response.body.description).to.eql("IPP Pass Test BP <120")
-                        expect(response.body.json).to.be.exist
-                        expect(response.body.title).to.eql('test case title something new to title')
-                    })
                 })
-
-            })
         })
     })
 })
@@ -153,9 +125,8 @@ describe('Measure Service: Test Case Endpoints', () => {
                         expect(response.status).to.eql(200)
                         expect(response.body.id).to.eql(testCaseId)
                         expect(response.body.series).to.eql("WhenBP<120")
-                        expect(response.body.description).to.eql("IPP Pass Test BP <120")
                         expect(response.body.json).to.be.exist
-                        expect(response.body.title).to.eql('test case title something new to title')
+                        expect(response.body.title).to.eql('test case title edited')
                     })
                 })
             })

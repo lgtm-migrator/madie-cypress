@@ -36,13 +36,12 @@
 		"windows:dev:all:ui:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\WebInterface\\**\\*.spec.ts' --browser chrome --headed",
 		"windows:dev:all:services:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\Services\\**\\*.spec.ts' --browser chrome --headed;",
 		"windows:dev:all:measure:service:tests": "cypress run --env configFile=dev -s '.\\cypress\\integration\\Services\\Measure Service\\**\\*.spec.ts' --browser chrome --headed;"
-
 	},
 	"devDependencies": {
 		"@cypress/browserify-preprocessor": "^2.2.4",
 		"@types/node": "^12.20.27",
 		"axe-core": "^4.3.3",
-		"cypress": "^9.3.1",
+		"cypress": "^9.4.1",
 		"cypress-axe": "^0.13.0",
 		"cypress-commands": "^1.1.0",
 		"cypress-visual-regression": "^1.5.2",
