@@ -59,7 +59,7 @@ pipeline{
       }
           steps {
               slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - MADiE ${TEST_SCRIPT} Tests Started")
-              container('cypress') {
+              container('Dev-Madie') {
                   script {
                       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                           sh '''
