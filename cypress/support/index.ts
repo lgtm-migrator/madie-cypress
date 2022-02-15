@@ -19,6 +19,7 @@
 import './commands'
 import 'cypress-axe'
 import 'axe-core'
+import cypress = require("cypress");
 const addContext = require('mochawesome/addContext')
 
 require('cypress-commands')
@@ -41,9 +42,8 @@ Cypress.on('test:after:run', (test, runnable) => {
 
 
 Cypress.on('fail', (error, runnable) => {
-    console.log("this is a TEST")
-    console.log(error)
-    process.exit(2)
+    cy.log('this is a test')
+     throw error // marks test as failed but also makes Cypress stop
 })
 
 
