@@ -17,7 +17,7 @@ let testCaseJson = '{ \n' + 'Encounter: "Office Visit union" \n' + 'Id: "Identif
 
 describe('Create Test Case', () => {
 
-    before ('Create Measure', () => {
+    before('Create Measure', () => {
 
         OktaLogin.Login()
 
@@ -27,11 +27,11 @@ describe('Create Test Case', () => {
         OktaLogin.Logout()
 
     })
-    beforeEach ('Login', () => {
+    beforeEach('Login', () => {
         OktaLogin.Login()
 
     })
-    afterEach ('Login', () => {
+    afterEach('Login', () => {
         OktaLogin.Logout()
 
     })
@@ -45,7 +45,7 @@ describe('Create Test Case', () => {
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
     })
-   it('Edit and update test case', () => {
+    it('Edit and update test case', () => {
 
 
         //Click on Edit Measure
@@ -64,7 +64,7 @@ describe('Create Test Case', () => {
 
         //Edit / update Test Case
 
-
         TestCasesPage.updateTestCase(updatedTestCaseTitle, updatedTestCaseDescription, updatedTestCaseSeries)
 
+    })
 })

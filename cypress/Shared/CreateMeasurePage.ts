@@ -2,7 +2,7 @@ import {LandingPage} from "./LandingPage"
 
 export class CreateMeasurePage {
 
-    public static readonly createMeasureButton = '[data-testid=create-new-measure-save-button]'
+    public static readonly createMeasureButton = 'button[data-testid="create-new-measure-save-button"]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
     public static readonly measureModelDropdown = '#mui-1'
@@ -57,7 +57,7 @@ export class CreateMeasurePage {
                 cy.get(this.measureScoringRatio).click()
                 break
         }
-
+        cy.wait(5000)
         cy.get(this.createMeasureButton).click()
 
         this.clickCreateMeasureButton()
