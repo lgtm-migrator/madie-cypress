@@ -60,7 +60,7 @@ pipeline{
               slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - MADiE ${TEST_SCRIPT} Tests Started")
 
               script {
-                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                  catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                       sh '''
                       cd /app/cypress
                       npm run ${TEST_SCRIPT}
