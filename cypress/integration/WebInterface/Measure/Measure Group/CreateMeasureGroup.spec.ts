@@ -9,7 +9,7 @@ let measureScoring = MeasureGroupPage.measureScoringUnit
 
 
 
-describe('Create Test Case', () => {
+describe('Validate Measure Group', () => {
 
     before('Create Measure', () => {
 
