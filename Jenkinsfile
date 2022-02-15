@@ -70,8 +70,8 @@ pipeline{
                                                         ''',
                           returnStatus: true
                       )
-                      if (result.returnStatus != 0) {
-                          currentStage.result = 'FAILURE'
+                      if (result != 0) {
+                          currentBuild.result = 'FAILURE'
                           break
                       }
                   }
