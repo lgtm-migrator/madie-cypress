@@ -4,6 +4,7 @@ import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 
+
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
