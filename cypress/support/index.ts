@@ -25,6 +25,7 @@ require('cypress-commands')
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
+    process.exit(1)
     return true
 })
 
