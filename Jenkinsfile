@@ -61,9 +61,9 @@ pipeline{
 
               script {
                   catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      sh  ''' cd /app/cypress '''
                       result = sh (
                           script: '''
+                                cd /app/cypress
                                 npm run ${TEST_SCRIPT}
                                 ''',
                           returnStatus: true
