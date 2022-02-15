@@ -52,8 +52,7 @@ pipeline{
   stage('Run Tests') {
       agent {
           docker {
-              image "${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/madie-dev-cypress-ecr:latest" 
-	      args "-u 0 -v $HOME/.npm:/.npm"
+              image "${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/madie-dev-cypress-ecr:latest" args "-u 0 -v $HOME/.npm:/.npm"
               reuseNode true
           }
       }
@@ -61,24 +60,22 @@ pipeline{
               slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - MADiE ${TEST_SCRIPT} Tests Started")
 
               script {
-                  catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      result = sh (
-                          script: '''
-                                cd /app/cypress
-                                npm run ${TEST_SCRIPT}
-				echo $?
-				echo "^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                                ''',
-                          returnStatus: true
-                      )
-                        sh  ''' tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-                         cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-                         '''
-                      if (result != 0) {
-                          currentBuild.result = 'FAILURE'
-                          break
-                      }
-                  }
+              sh '''
+                  cd /app/cypress
+                  npm run delete:reports
+                  npm run delete:mochawesome
+                 '''
+              catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                  sh '''
+                      ./node_modules/.bin/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed
+                      				echo $?
+                      				echo "^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                     '''
+              }
+              sh  ''' tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+               cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+               '''
+
               }
           }
       }
