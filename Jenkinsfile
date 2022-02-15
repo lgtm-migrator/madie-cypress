@@ -71,7 +71,7 @@ pipeline{
                                                         ''',
                           returnStatus: true
                       )
-                      if (result != 0) {
+                      if (result.returnStatus != 0) {
                           currentStage.result = 'FAILURE'
                           break
                       }
