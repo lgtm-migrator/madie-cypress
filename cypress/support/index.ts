@@ -41,10 +41,9 @@ Cypress.on('test:after:run', (test, runnable) => {
 
 
 Cypress.on('fail', (error, runnable) => {
-
-    debugger // listening globally
-    process.exit(1)
-
+    console.log("this is a TEST")
+    console.log(error)
+    process.exit(2)
 })
 
 
