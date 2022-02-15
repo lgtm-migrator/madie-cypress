@@ -66,6 +66,8 @@ pipeline{
                           script: '''
                                 cd /app/cypress
                                 npm run ${TEST_SCRIPT}
+				echo $?
+				echo "^^^^^^^^^^^^^^^^^^^^^^^^^^"
                                 ''',
                           returnStatus: true
                       )
