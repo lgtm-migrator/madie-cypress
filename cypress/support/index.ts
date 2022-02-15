@@ -25,11 +25,12 @@ require('cypress-commands')
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
-    return false
+    return true
 })
 
 const addContext = require('mochawesome/addContext')
 
+let faliures =0
 
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
@@ -42,6 +43,8 @@ Cypress.on('test:after:run', (test, runnable) => {
         process.exit(1)
     }
 })
+
+
 
 // Export additional types
 // export * from './Enums'
