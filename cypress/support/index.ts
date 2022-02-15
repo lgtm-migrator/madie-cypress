@@ -29,11 +29,9 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // failing the test
     return false
 })
-let failures = 0
+
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
-        failures++
-        console.log(failures)
         addContext({ test }, {
             title: 'Screenshot',
             value: `assets/${Cypress.spec.name}/${runnable.parent.title} -- ${test.title} (failed).png`
@@ -41,14 +39,14 @@ Cypress.on('test:after:run', (test, runnable) => {
     }
 })
 
-after(() => {
-    console.log(failures)
-    if ( failures > 0 ) {
 
-        process.exit(1)
+Cypress.on('fail', (error, runnable) => {
 
-    }
+    debugger // listening globally
+    process.exit(1)
+
 })
+
 
 
 
