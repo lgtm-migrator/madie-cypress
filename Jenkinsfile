@@ -62,12 +62,19 @@ pipeline{
 
               script {
                   catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                      sh '''
-                      cd /app/cypress
-                      npm run ${TEST_SCRIPT}
-                      tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-                      cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-                      '''
+                      result = sh (
+                          script: '''
+                                                        cd /app/cypress
+                                                        npm run ${TEST_SCRIPT}
+                                                        tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+                                                        cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+                                                        ''',
+                          returnStatus: true
+                      )
+                      if (result != 0) {
+                          currentStage.result = 'FAILURE'
+                          break
+                      }
                   }
               }
           }
