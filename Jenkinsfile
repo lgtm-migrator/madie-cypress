@@ -68,6 +68,8 @@ pipeline{
               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                   sh '''
                       ./node_modules/.bin/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed
+                      				echo $?
+                      				echo "^^^^^^^^^^^^^^^^^^^^^^^^^^"
                      '''
               }
               sh  ''' tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
