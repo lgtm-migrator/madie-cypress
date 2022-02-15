@@ -59,13 +59,15 @@ pipeline{
       }
           steps {
               slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - MADiE ${TEST_SCRIPT} Tests Started")
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                  sh '''
-                  cd /app/cypress
-                  npm run ${TEST_SCRIPT}
-                  tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-                  cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-                  '''
+              script {
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                      sh '''
+                      cd /app/cypress
+                      npm run ${TEST_SCRIPT}
+                      tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+                      cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+                      '''
+                  }
               }
           }
       }
