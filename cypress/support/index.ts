@@ -41,11 +41,6 @@ Cypress.on('test:after:run', (test, runnable) => {
 })
 
 
-Cypress.on('fail', (error, runnable) => {
-    cy.log('this is a test')
-     throw error // marks test as failed but also makes Cypress stop
-})
-
 
 
 
