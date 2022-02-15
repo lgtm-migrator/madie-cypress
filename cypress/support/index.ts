@@ -19,29 +19,34 @@
 import './commands'
 import 'cypress-axe'
 import 'axe-core'
+const addContext = require('mochawesome/addContext')
 
 require('cypress-commands')
+
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
-    process.exit(1)
-    return true
+    return false
 })
-
-const addContext = require('mochawesome/addContext')
-
-let faliures =0
-
+let failures = 0
 Cypress.on('test:after:run', (test, runnable) => {
     if (test.state === 'failed') {
-
+        failures++
+        console.log(failures)
         addContext({ test }, {
             title: 'Screenshot',
             value: `assets/${Cypress.spec.name}/${runnable.parent.title} -- ${test.title} (failed).png`
         })
-        console.error(test)
+    }
+})
+
+after(() => {
+    console.log(failures)
+    if ( failures > 0 ) {
+
         process.exit(1)
+
     }
 })
 
