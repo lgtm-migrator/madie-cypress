@@ -57,16 +57,18 @@ pipeline{
               reuseNode true
           }
       }
-                catchError(stageResult: 'FAILURE') {
+
                       steps {
                           slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - ${TEST_SCRIPT} Tests Started")
-                          sh '''
-                          cd /app/cypress
-                          npm run ${TEST_SCRIPT}
-                          echo $?
-                          '''
+                          catchError(stageResult: 'FAILURE') {
+                              sh '''
+                              cd /app/cypress
+                              npm run ${TEST_SCRIPT}
+                              echo $?
+                              '''
+                          }
                       }
-                }
+
       }
  }
 //    stage('Generate Report') {
