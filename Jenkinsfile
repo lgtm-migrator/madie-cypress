@@ -8,7 +8,7 @@ pipeline{
     }
 
     parameters {
-        choice(choices: ['dev:all:ui:tests:report','dev:all:tests:report', 'dev:all:services:tests:report', 'test:all:tests:report', 'test:all:ui:tests:report', 'test:all:services:tests:report'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
+        choice(choices: ['dev:all:ui:tests','dev:all:tests', 'dev:all:services:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
         choice(name:'BUILD_CONTAINER', description:'Rebuild Cypress Container?', choices:['no','yes'])
     }
 
@@ -57,17 +57,35 @@ pipeline{
               reuseNode true
           }
       }
+                catchError(stageResult: 'FAILURE') {
                       steps {
                           slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - ${TEST_SCRIPT} Tests Started")
                           sh '''
                           cd /app/cypress
-                          npm run dev:all:services:tests
+                          npm run ${TEST_SCRIPT}
                           echo $?
                           '''
                       }
-
+                }
       }
  }
+   stage('Generate Report') {
+
+                       steps {
+                           sh '''
+                           cd /app/cypress
+                           npm run combine:reports
+                           npm run generateOne:report
+                           aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
+                           echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
+                                         tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+                                         cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+                           echo $?
+                           '''
+                       }
+
+       }
+  }
 
   post {
       always{
