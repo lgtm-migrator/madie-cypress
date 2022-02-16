@@ -64,7 +64,6 @@ pipeline{
               sh '''
                   cd /app/cypress
                   npm run delete:reports
-                  npm run delete:mochawesome
                  '''
               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                   sh '''
