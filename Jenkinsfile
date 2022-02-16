@@ -63,6 +63,7 @@ pipeline{
                           catchError(buildResult: 'FAILURE') {
                               sh '''
                               cd /app/cypress
+                              npm run delete:reports
                               npm run ${TEST_SCRIPT}
                               echo $?
                               '''
