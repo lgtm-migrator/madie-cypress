@@ -68,7 +68,7 @@ pipeline{
               catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                   sh '''
                       cd /app/cypress
-                      npx cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed
+                      NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed
                       				echo $?
                       				echo "^^^^^^^^^^^^^^^^^^^^^^^^^^"
                      '''
