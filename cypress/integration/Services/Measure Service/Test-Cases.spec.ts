@@ -104,7 +104,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     method: 'GET',
 
                 }).then((response) => {
-                    expect(response.status).to.eql(400)
+                    expect(response.status).to.eql(200)
                     expect(response.body).to.be.exist
                 })
             })
