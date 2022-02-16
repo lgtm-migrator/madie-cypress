@@ -61,19 +61,9 @@ pipeline{
                           slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - ${TEST_SCRIPT} Tests Started")
                           sh '''
                           cd /app/cypress
-                          npm run delete:reports
-                          '''
-
-                        sh '''
-                        cd /app/cypress
-                        NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed;
-                        echo $?
-                        '''
-
-                          sh '''
-                          cd /app/cypress
-                aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
-                echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
+                          npm run ${TEST_SCRIPT}
+          		aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
+          		echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
                           tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
                           cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
                           '''
