@@ -78,7 +78,7 @@ pipeline{
                           cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
                           '''
                       }
-          }
+
       }
  }
 
