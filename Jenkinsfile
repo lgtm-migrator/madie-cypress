@@ -60,7 +60,7 @@ pipeline{
 
                       steps {
                           slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - ${TEST_SCRIPT} Tests Started")
-                          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                          catchError(buildResult: 'FAILURE') {
                               sh '''
                               cd /app/cypress
                               npm run ${TEST_SCRIPT}
@@ -68,37 +68,37 @@ pipeline{
                               '''
                           }
                       }
+                    post {
+                        always{
+                             sh '''
+                             cd /app/cypress
+                             npm run combine:reports
+                             npm run generateOne:report
+                             aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
+                             echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
+                                           tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+                                           cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+                             echo $?
+                             '''
+                             archiveArtifacts artifacts: "mochawesome-report-${BUILD_NUMBER}.tar.gz"
+                        }
+                    }
 
       }
  }
-//    stage('Generate Report') {
-//
-//                        steps {
-//                            sh '''
-//                            cd /app/cypress
-//                            npm run combine:reports
-//                            npm run generateOne:report
-//                            aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
-//                            echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
-//                                          tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-//                                          cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-//                            echo $?
-//                            '''
-//                        }
-//
-//        }
+
+
+
 
 
   post {
-//       always{
-//         archiveArtifacts artifacts: "mochawesome-report-${BUILD_NUMBER}.tar.gz"
-//       }
       success{
         slackSend(color: "#00ff00", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} Tests Finished, Review report at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html")
       }
+
       failure{
 	sh 'echo fail'
-        slackSend(color: "#ff0000", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} Tests Failed to Run or complete successfully")
+        slackSend(color: "#ff0000", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} You have Test failures or a bad build, please review the Test report: Review report at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html")
       }
   }
 }
