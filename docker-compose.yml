@@ -19,6 +19,7 @@ services:
       - CYPRESS_TEST_MADIE_CLIENTID=${CYPRESS_TEST_MADIE_CLIENTID}
       - CYPRESS_TEST_MADIE_REDIRECTURI=${CYPRESS_TEST_MADIE_REDIRECTURI}
       - CYPRESS_TEST_MADIE_AUTHURI=${CYPRESS_TEST_MADIE_AUTHURI}
+      - NODE_OPTIONS=--max_old_space_size=4096
 
     volumes:
       - ./mochawesome-report:/app/mochawesome-report
