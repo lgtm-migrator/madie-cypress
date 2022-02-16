@@ -61,7 +61,7 @@ pipeline{
                           slackSend(color: "#ffff00", message: "#${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - ${TEST_SCRIPT} Tests Started")
                           sh '''
                           cd /app/cypress
-                          npm run ${TEST_SCRIPT}
+                          npm run dev:all:services:tests
                           echo $?
                           '''
                       }
