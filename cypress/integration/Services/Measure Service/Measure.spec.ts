@@ -45,7 +45,7 @@ describe('Measure Service: Create Measure', () => {
                     authorization: 'Bearer ' + accessToken.value
                 }
             }).then((response) => {
-                expect(response.status).to.eql(400)
+                expect(response.status).to.eql(200)
                 expect(response.body).to.not.be.null
                 expect(response.body).to.be.a('array')
                 cy.get(response.body.length)
