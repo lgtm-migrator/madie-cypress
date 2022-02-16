@@ -28,6 +28,7 @@ pipeline{
         CYPRESS_TEST_MADIE_REDIRECTURI=credentials('CYPRESS_TEST_MADIE_REDIRECTURI')
         CYPRESS_TEST_MADIE_AUTHURI=credentials('CYPRESS_TEST_MADIE_AUTHURI')
         CYPRESS_REPORT_BUCKET=credentials('CYPRESS_REPORT_BUCKET')
+        NODE_OPTIONS=--max_old_space_size=4096
     }
 
  stages {
