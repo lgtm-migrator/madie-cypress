@@ -74,11 +74,8 @@ pipeline{
                              cd /app/cypress
                              npm run combine:reports
                              npm run generateOne:report
-                             aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
-                             echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
-                                           tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-                                           cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-                             echo $?
+                             tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+                             cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
                              '''
                              archiveArtifacts artifacts: "mochawesome-report-${BUILD_NUMBER}.tar.gz"
                         }
@@ -93,12 +90,12 @@ pipeline{
 
   post {
       success{
-        slackSend(color: "#00ff00", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} Tests Finished, Review report at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html")
+        slackSend(color: "#00ff00", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} Tests Finished")
       }
 
       failure{
 	sh 'echo fail'
-        slackSend(color: "#ff0000", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} You have Test failures or a bad build, please review the Test report: Review report at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html")
+        slackSend(color: "#ff0000", message: "${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) ${TEST_SCRIPT} You have Test failures or a bad build, please review")
       }
   }
 }
