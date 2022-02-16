@@ -69,22 +69,22 @@ pipeline{
                 }
       }
  }
-   stage('Generate Report') {
-
-                       steps {
-                           sh '''
-                           cd /app/cypress
-                           npm run combine:reports
-                           npm run generateOne:report
-                           aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
-                           echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
-                                         tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
-                                         cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
-                           echo $?
-                           '''
-                       }
-
-       }
+//    stage('Generate Report') {
+//
+//                        steps {
+//                            sh '''
+//                            cd /app/cypress
+//                            npm run combine:reports
+//                            npm run generateOne:report
+//                            aws s3 sync --acl public-read /app/mochawesome-report/ ${CYPRESS_REPORT_BUCKET}/mochawesome-report-${BUILD_NUMBER}/
+//                            echo "find reports at https://mat-reports.s3.amazonaws.com/mochawesome-report-${BUILD_NUMBER}/mochawesome.html"
+//                                          tar -czf /app/mochawesome-report-${BUILD_NUMBER}.tar.gz -C /app/mochawesome-report/ .
+//                                          cp /app/mochawesome-report-${BUILD_NUMBER}.tar.gz ${WORKSPACE}/
+//                            echo $?
+//                            '''
+//                        }
+//
+//        }
 
 
   post {
