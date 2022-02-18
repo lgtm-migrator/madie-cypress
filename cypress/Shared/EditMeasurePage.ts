@@ -15,6 +15,12 @@ export class EditMeasurePage {
     public static readonly editMeasureCancelButton = '.fa-times-circle'
     public static readonly measureStewardLeftNavTab = '.sc-kfPuZi'
 
+    //Measure CQL Page
+
+    //Measure Groups Page
+    //Scoring drop-down box
+    public static readonly measureScoringDBox = '[data-testid=select-measure-scoring-groups]'
+
     //Measure Steward Page
     public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
     public static readonly measureStewardSaveButton = '[data-testid="measureStewardSave"]'
