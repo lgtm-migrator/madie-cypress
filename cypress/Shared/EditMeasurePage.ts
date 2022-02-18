@@ -19,10 +19,6 @@ export class EditMeasurePage {
     public static readonly measureStewardLeftNavTab = '.sc-kfPuZi'
 
     //Measure CQL Page
-    //cql editor box on page
-    public static readonly cqlEditorTextBox = '.ace_content'
-    //save button on page
-    public static readonly cqlEditorSaveButton = '[data-testid="save-cql-btn"]'
 
     //Measure Groups Page
     //Scoring drop-down box
