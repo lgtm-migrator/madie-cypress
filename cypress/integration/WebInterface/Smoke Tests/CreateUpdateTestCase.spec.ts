@@ -45,6 +45,7 @@ describe('Create Test Case', () => {
         //Navigate to Test Cases Page and create Test Case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
     })
+
     it('Edit and update test case', () => {
 
         //Click on Edit Measure
@@ -55,11 +56,6 @@ describe('Create Test Case', () => {
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
-
-        //Values for edit / update of test case
-        testCaseTitle = 'Title for Auto TestUPDATED'
-        testCaseDescription = 'DENOMFail' + Date.now() + 'UPDATED'
-        testCaseJson = '{ \n' + 'TESTEncounter: "Office Visit union" \n' + 'Id: "Identifier" \n' + 'value: "Visit out of hours (procedure)" \n' + '}'
 
         //Edit / update Test Case
         TestCasesPage.updateTestCase(updatedTestCaseTitle, updatedTestCaseDescription, updatedTestCaseSeries)
