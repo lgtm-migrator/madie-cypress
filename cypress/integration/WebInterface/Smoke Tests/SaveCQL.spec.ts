@@ -26,17 +26,17 @@ describe('Save CQL on CQL Editor Page', () => {
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(CQLEditorPage.cqlEditorTextBox).type('library TestMeasure version \'0.0.014\' {enter}')
-        cy.get(CQLEditorPage.cqlEditorTextBox).type('using FHIR version \'4.0.1\' {enter}')
-        cy.get(CQLEditorPage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers')
-        cy.get(CQLEditorPage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('library TestMeasure version \'0.0.014\' {enter}')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('using FHIR version \'4.0.1\' {enter}')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL
         cy.get(TopNav.measureTab).click()
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(CQLEditorPage.cqlEditorTextBox).should('contain.text', 'library TestMeasure version \'0.0.014\' using FHIR version \'4.0.1\' include FHIRHelpers version \'4.0.001\' called FHIRHelpers' )
+        cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', 'library TestMeasure version \'0.0.014\' using FHIR version \'4.0.1\' include FHIRHelpers version \'4.0.001\' called FHIRHelpers' )
 
     })
 })
