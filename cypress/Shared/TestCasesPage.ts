@@ -16,6 +16,7 @@ export class TestCasesPage {
     public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-case-row"]'
     public static readonly testCaseStatus = 'tbody > tr > :nth-child(4)'
+    public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
 
     public static clickCreateTestCaseButton() : void {
 
@@ -50,7 +51,9 @@ export class TestCasesPage {
         cy.get(this.successMsg).should('contain.text', 'Test case saved successfully!')
 
         //Verify created test case Title and Series exists on Test Cases Page
-        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
+        })
         cy.get(this.testCaseTitleList).contains(testCaseTitle)
         cy.get(this.testCaseSeriesList).contains(testCaseSeries)
 
