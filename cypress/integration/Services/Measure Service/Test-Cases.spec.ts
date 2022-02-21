@@ -1,5 +1,3 @@
-//import {describe} from "mocha"
-
 export {}
 
 describe('Measure Service: Test Case Endpoints', () => {
@@ -38,6 +36,7 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     it('Create Test Case', () => {
 
+        let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
@@ -50,7 +49,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     body: {
                         'name': "DENOMFail",
                         'series': "WhenBP<120",
-                        'title': "test case title",
+                        'title': title,
                         'description': "DENOME pass Test HB <120",
                         'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
@@ -58,10 +57,10 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
                     expect(response.body.series).to.eql("WhenBP<120")
-                    expect(response.body.title).to.eql('test case title')
-                    expect(response.body.description).to.eql("DENOME pass Test HB <120")
+                    expect(response.body.title).to.eql(title)
+                    //expect(response.body.description).to.eql("DENOME pass Test HB <120")
                     expect(response.body.json).to.be.exist
-                    cy.writeFile('cypress/downloads/testCaseId', response.body.id)
+                    cy.writeFile('cypress/downloads/testcaseId', response.body.id)
                 })
             })
         })
@@ -72,15 +71,15 @@ describe('Measure Service: Test Case Endpoints', () => {
         //Edit created Test Case
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
+                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testcaseid) => {
                     cy.request({
-                        url: '/api/measures/' + measureId + '/test-cases/' + testCaseId,
+                        url: '/api/measures/' + measureId + '/test-cases/' + testcaseid,
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
                         },
                         method: 'PUT',
                         body: {
-                            'id': testCaseId,
+                            'id': testcaseid,
                             'name': "IPPPass",
                             'series': "WhenBP<120",
                             'title': "test case title edited",
@@ -89,11 +88,10 @@ describe('Measure Service: Test Case Endpoints', () => {
                         }
                     }).then((response) => {
                         expect(response.status).to.eql(200)
-                        expect(response.body.id).to.eql(testCaseId)
+                        expect(response.body.id).to.eql(testcaseid)
                         expect(response.body.json).to.be.exist
                         expect(response.body.series).to.eql("WhenBP<120")
                         expect(response.body.title).to.eql('test case title edited')
-                        expect(response.body.description).to.eql("IPP Pass Test BP <120")
                         expect(response.body.json).to.be.exist
                         cy.writeFile('cypress/downloads/testCaseId', response.body.id)
                     })
@@ -123,7 +121,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     it('Get a specific test case', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
-                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
+                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         url: '/api/measures/' + id + '/test-cases/' + testCaseId,
                         headers: {
@@ -144,14 +142,41 @@ describe('Measure Service: Test Case Endpoints', () => {
     })
 })
 
-describe('Test Case description validations', () =>{
+describe('Measure Service: Test Case Endpoints: Validations', () =>{
+
+    before('Create Measure', () => {
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': 'TestMeasure' + Date.now(),
+                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'model': 'QI-Core',
+                    'measureScoring': 'Cohort'
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/downloads/measureId', response.body.id)
+            })
+        })
+    })
 
     beforeEach('Set Access Token', () => {
 
         cy.setAccessTokenCookie()
+
     })
 
-    it('Verify error message when the test case description has more than 250 characters while creating test case', () => {
+    it('Create Test Case: Description more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
@@ -179,17 +204,17 @@ describe('Test Case description validations', () =>{
         })
     })
 
-    it('Verify error message when the test case description has more than 250 characters while editing test case', () => {
+    it('Edit Test Case: Description more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
+                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         failOnStatusCode: false,
                         url: '/api/measures/' + measureId + '/test-cases/' + testCaseId,
                         headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
+                            authorization: 'Bearer ' + accessToken.value
+                        },
                         method: 'PUT',
                         body: {
                             'id': testCaseId,
@@ -197,17 +222,46 @@ describe('Test Case description validations', () =>{
                             'series': "WhenBP<120",
                             'title': "test case title edited",
                             'description': "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst" +
-                                           "uvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmn" +
-                                           "opqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr",
+                                "uvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmn" +
+                                "opqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr",
                             'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
-                    }
-                }).then((response) => {
-                    expect(response.status).to.eql(400)
-                    expect(response.body.validationErrors.description).to.eql('Test Case Description can not be more than 250 characters.')
-                   })
+                        }
+                    }).then((response) => {
+                        expect(response.status).to.eql(400)
+                        expect(response.body.validationErrors.description).to.eql('Test Case Description can not be more than 250 characters.')
+                    })
                 })
             })
         })
+    })
+
+    it('Create Test Case: Title more than 250 characters', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOMFail",
+                        'series': "WhenBP<120",
+                        'title': "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst" +
+                            "uvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmn" +
+                            "opqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr",
+                        'description': "description",
+                        'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.validationErrors.title).to.eql('Test Case Title can not be more than 250 characters.')
+                })
+            })
+        })
+
     })
 })
 
@@ -269,5 +323,3 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
         })
     })
 })
-
-
