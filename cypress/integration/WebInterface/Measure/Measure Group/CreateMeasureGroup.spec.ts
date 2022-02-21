@@ -2,6 +2,7 @@ import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
+import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -39,7 +40,7 @@ describe('Validate Measure Group', () => {
         MeasureGroupPage.clickMeasureGroupTab()
 
         //get current value what is in the scoring box
-        cy.get(MeasureGroupPage.measureScoringDBox).find(':selected').should('to.have.value', measureScoring)
+        cy.get(EditMeasurePage.measureScoringDBox).find(':selected').should('to.have.value', measureScoring)
 
 
     })
