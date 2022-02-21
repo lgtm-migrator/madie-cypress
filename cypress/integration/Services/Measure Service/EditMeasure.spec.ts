@@ -41,7 +41,7 @@ describe('Measure Service: Edit Measure', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -68,7 +68,7 @@ describe('Measure Service: Edit Measure', () => {
                 //Verify error message when the measure name is empty
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -94,7 +94,7 @@ describe('Measure Service: Edit Measure', () => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -120,7 +120,7 @@ describe('Measure Service: Edit Measure', () => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -146,7 +146,7 @@ describe('Measure Service: Edit Measure', () => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -175,7 +175,7 @@ describe('Measure Service: Edit Measure', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
@@ -200,7 +200,7 @@ describe('Measure Service: Edit Measure', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
-                    url: '/api/measure',
+                    url: '/api/measures/' +id,
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },

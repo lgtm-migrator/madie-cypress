@@ -59,9 +59,9 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.id).to.be.exist
                     expect(response.body.series).to.eql("WhenBP<120")
                     expect(response.body.title).to.eql('test case title')
-                    //expect(response.body.description).to.eql("DENOME pass Test HB <120")
+                    expect(response.body.description).to.eql("DENOME pass Test HB <120")
                     expect(response.body.json).to.be.exist
-                    cy.writeFile('cypress/downloads/testcaseId', response.body.id)
+                    cy.writeFile('cypress/downloads/testCaseId', response.body.id)
                 })
             })
         })
@@ -72,15 +72,15 @@ describe('Measure Service: Test Case Endpoints', () => {
         //Edit created Test Case
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testcaseid) => {
+                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
                     cy.request({
-                        url: '/api/measures/' + measureId + '/test-cases/' + testcaseid,
+                        url: '/api/measures/' + measureId + '/test-cases/' + testCaseId,
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
                         },
                         method: 'PUT',
                         body: {
-                            'id': testcaseid,
+                            'id': testCaseId,
                             'name': "IPPPass",
                             'series': "WhenBP<120",
                             'title': "test case title edited",
@@ -89,10 +89,11 @@ describe('Measure Service: Test Case Endpoints', () => {
                         }
                     }).then((response) => {
                         expect(response.status).to.eql(200)
-                        expect(response.body.id).to.eql(testcaseid)
+                        expect(response.body.id).to.eql(testCaseId)
                         expect(response.body.json).to.be.exist
                         expect(response.body.series).to.eql("WhenBP<120")
                         expect(response.body.title).to.eql('test case title edited')
+                        expect(response.body.description).to.eql("IPP Pass Test BP <120")
                         expect(response.body.json).to.be.exist
                         cy.writeFile('cypress/downloads/testCaseId', response.body.id)
                     })
@@ -122,7 +123,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     it('Get a specific test case', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
+                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         url: '/api/measures/' + id + '/test-cases/' + testCaseId,
                         headers: {
@@ -150,11 +151,12 @@ describe('Test Case description validations', () =>{
         cy.setAccessTokenCookie()
     })
 
-    it.skip('Verify error message when the test case description has more than 250 characters while creating test case', () => {
+    it('Verify error message when the test case description has more than 250 characters while creating test case', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
                 cy.request({
+                    failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
@@ -181,7 +183,7 @@ describe('Test Case description validations', () =>{
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
+                cy.readFile('cypress/downloads/testCaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         failOnStatusCode: false,
                         url: '/api/measures/' + measureId + '/test-cases/' + testCaseId,
