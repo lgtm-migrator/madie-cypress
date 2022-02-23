@@ -37,6 +37,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     it('Create Test Case', () => {
 
         let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
+        let series = 'test case series ~!@#!@#$$%^&%^&* &()(?><'
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
@@ -48,7 +49,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     method: 'POST',
                     body: {
                         'name': "DENOMFail",
-                        'series': "WhenBP<120",
+                        'series': series,
                         'title': title,
                         'description': "DENOME pass Test HB <120",
                         'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
@@ -56,7 +57,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
-                    expect(response.body.series).to.eql("WhenBP<120")
+                    expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
                     //expect(response.body.description).to.eql("DENOME pass Test HB <120")
                     expect(response.body.json).to.be.exist
@@ -262,6 +263,34 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
             })
         })
 
+    })
+
+    it('Create Test Case: Series more than 250 characters', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOMFail",
+                        'series': "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst" +
+                            "uvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmn" +
+                            "opqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr",
+                        'title': "Title",
+                        'description': "description",
+                        'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.validationErrors.series).to.eql('Test Case Series can not be more than 250 characters.')
+                })
+            })
+        })
     })
 })
 

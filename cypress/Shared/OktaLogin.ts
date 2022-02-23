@@ -1,4 +1,4 @@
-import {LandingPage} from "./LandingPage"
+import {Header} from "./Header"
 import {Environment} from "./Environment"
 
 
@@ -24,8 +24,8 @@ export class OktaLogin {
     }
 
     public static Logout(): void {
-        cy.get(LandingPage.signOutButton).should('be.visible')
-        cy.get(LandingPage.signOutButton).click()
+        cy.get(Header.signOutButton).should('be.visible')
+        cy.get(Header.signOutButton).click()
         cy.log('Logout Successful')
 
     }
