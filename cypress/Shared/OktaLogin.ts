@@ -1,7 +1,6 @@
 import {Header} from "./Header"
 import {Environment} from "./Environment"
 
-
 //MADiE OKTA Login Class
 export class OktaLogin {
 
@@ -25,7 +24,9 @@ export class OktaLogin {
 
     public static Logout(): void {
         cy.get(Header.signOutButton).should('be.visible')
-        cy.get(Header.signOutButton).click()
+        cy.get(Header.signOutButton).click({force:true})
+        cy.wait(2000)
+        cy.get(this.usernameInput).should('be.visible')
         cy.log('Logout Successful')
 
     }

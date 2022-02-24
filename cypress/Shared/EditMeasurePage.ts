@@ -2,7 +2,7 @@ export class EditMeasurePage {
 
     //Main MADiE page
     public static readonly mainMadiePageButton = '.styles__Logo-sc-147g1sa-4'
-    
+
     //Edit Measure tab menu
     public static readonly measureDetailsTab = '[data-testid=measure-details-tab]'
     public static readonly cqlEditorTab = '[data-testid=cql-editor-tab]'
@@ -16,7 +16,7 @@ export class EditMeasurePage {
     public static readonly editMeasureFieldLevelError = '[data-testid="edit-measure-name-error-text"]'
     public static readonly editMeasureSaveButton = '[data-testid="save-edit-measure-name"] > path'
     public static readonly editMeasureCancelButton = '.fa-times-circle'
-    public static readonly measureStewardLeftNavTab = '.sc-kfPuZi'
+    public static readonly measureStewardLeftNavTab = '[class="sc-jJoQJp sc-gWXbKe cqtDRF fdLXpi"]'
 
     //Measure CQL Page
     //cql editor box on page
@@ -26,7 +26,7 @@ export class EditMeasurePage {
 
     //Measure Groups Page
     //Scoring drop-down box
-    public static readonly measureScoringDBox = '[data-testid=select-measure-scoring-groups]'
+    public static readonly measureScoringDBox = '[data-testid="scoring-unit-select"]'
 
     //Measure Steward Page
     public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
