@@ -1,7 +1,6 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TopNav} from "../../../Shared/TopNav"
 

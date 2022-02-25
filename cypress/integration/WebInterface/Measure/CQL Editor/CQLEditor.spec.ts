@@ -4,11 +4,11 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
+import {LandingPage} from "../../../../Shared/LandingPage"
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let measureScoring = MeasureGroupPage.measureScoringUnit
-
 
 
 describe('Validate Measure Group', () => {
@@ -56,7 +56,7 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Race" {enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Sex": {enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Sex" {enter}')
-        
+
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
@@ -70,7 +70,7 @@ describe('Validate Measure Group', () => {
 
 
         //Navigate away from the page
-        cy.get(EditMeasurePage.mainMadiePageButton).click()
+        cy.get(LandingPage.madieLogo).click()
 
         //Navigate back to the CQL Editor page
         MeasuresPage.clickEditforCreatedMeasure()
