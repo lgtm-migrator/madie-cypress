@@ -36,8 +36,9 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     it('Create Test Case', () => {
 
-        let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
-        let series = 'test case series ~!@#!@#$$%^&%^&* &()(?><'
+        let title = 'test case title      ~!@#!@#$$%^&%^&*      &()(?><'
+        let series = 'test case series      ~!@#!@#$$%^&%^&*      &()(?><'
+        let description = 'DENOME pass Test HB <120      ~!@#!@#$$%^&%^&*      &()(?><'
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
@@ -51,7 +52,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                         'name': "DENOMFail",
                         'series': series,
                         'title': title,
-                        'description': "DENOME pass Test HB <120",
+                        'description': description,
                         'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
                 }).then((response) => {
@@ -59,7 +60,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.id).to.be.exist
                     expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
-                    //expect(response.body.description).to.eql("DENOME pass Test HB <120")
+                    expect(response.body.description).to.eql(description)
                     expect(response.body.json).to.be.exist
                     cy.writeFile('cypress/downloads/testcaseId', response.body.id)
                 })

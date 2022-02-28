@@ -7,11 +7,10 @@ export class TestCasesPage {
     public static readonly testCaseSeriesTextBox = '.MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
-    public static readonly successMsg = '[data-testid=create-test-case-alert]'
+    public static readonly successMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseTitleList = 'tbody > tr > :nth-child(2)'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
-    public static readonly editTestCase = '[class="TestCaseList__Button-sc-1iefzo5-2 cIVwpR"]'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
     public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-case-row"]'
@@ -48,7 +47,7 @@ export class TestCasesPage {
         cy.get(this.aceEditor).type(testCaseJson)
 
         this.clickCreateTestCaseButton()
-        cy.get(this.successMsg).should('contain.text', 'Test case saved successfully!')
+        cy.get(this.successMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         //Verify created test case Title and Series exists on Test Cases Page
         cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
