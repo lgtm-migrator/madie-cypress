@@ -1,7 +1,7 @@
-import {OktaLogin} from "../../../Shared/OktaLogin"
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
-import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
-import {MeasuresPage} from "../../../Shared/MeasuresPage"
+import {OktaLogin} from "../../../../Shared/OktaLogin"
+import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
+import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
+import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 
 describe('Edit Measure Name Validations', () => {
 

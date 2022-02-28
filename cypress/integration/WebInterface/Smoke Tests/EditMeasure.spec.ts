@@ -34,7 +34,7 @@ describe('Edit Measure', () => {
         cy.get(EditMeasurePage.saveEditedMeasureName).click()
 
         //Add Measure Steward
-        cy.get(EditMeasurePage.measureStewardLeftNavTab).contains('Steward/Author').click()
+        cy.get(EditMeasurePage.leftPanelMeasureSteward).contains('Steward/Author').click()
         cy.get(EditMeasurePage.measureStewardTextBox).clear().type('SB')
         cy.get(EditMeasurePage.measureStewardSaveButton).click()
         cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')

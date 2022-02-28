@@ -1,5 +1,5 @@
-import {OktaLogin} from "../../../Shared/OktaLogin"
-import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {OktaLogin} from "../../../../Shared/OktaLogin"
+import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 
 
 let measureName = ''
