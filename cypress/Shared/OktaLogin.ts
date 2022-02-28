@@ -11,23 +11,30 @@ export class OktaLogin {
 
     public static Login(): void {
 
-        //navigate to Login page
-        cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
+        //Navigate to Login page and Login with passed harp user and password
+        cy.intercept('POST', 'api/v1/authn').as('login')
 
-        //Login with passed harp user and password
-        cy.get(this.usernameInput, { timeout: 400000 }).should('be.visible')
+        cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
+        cy.get(this.usernameInput, { timeout: 600000 }).should('be.visible')
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton).click()
+        cy.wait('@login').its('response.statusCode').should('eq', 200)
+
         cy.log('Login Successful')
+
     }
 
     public static Logout(): void {
+
+        cy.intercept('GET', '/env-config/oktaConfig.json').as('logout')
+
         cy.get(Header.signOutButton).should('be.visible')
         cy.get(Header.signOutButton).click({force:true})
-        cy.wait(2000)
-        cy.get(this.usernameInput).should('be.visible')
-        cy.log('Logout Successful')
+        cy.get(this.usernameInput, { timeout: 600000 }).should('be.visible')
+        cy.wait('@logout').its('response.statusCode').should('eq', 200)
 
+        cy.log('Logout Successful')
     }
+
 }
