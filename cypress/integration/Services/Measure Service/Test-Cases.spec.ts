@@ -36,9 +36,9 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     it('Create Test Case', () => {
 
-        let title = 'test case title      ~!@#!@#$$%^&%^&*      &()(?><'
-        let series = 'test case series      ~!@#!@#$$%^&%^&*      &()(?><'
-        let description = 'DENOME pass Test HB <120      ~!@#!@#$$%^&%^&*      &()(?><'
+        let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
+        let series = 'test case series ~!@#!@#$$%^&%^&* &()(?><'
+        let description = 'DENOME pass Test HB <120 ~!@#!@#$$%^&%^&* &()(?><'
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
