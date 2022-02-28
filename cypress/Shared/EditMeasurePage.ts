@@ -16,7 +16,10 @@ export class EditMeasurePage {
     public static readonly editMeasureFieldLevelError = '[data-testid="edit-measure-name-error-text"]'
     public static readonly editMeasureSaveButton = '[data-testid="save-edit-measure-name"] > path'
     public static readonly editMeasureCancelButton = '.fa-times-circle'
-    public static readonly measureStewardLeftNavTab = '[class="sc-jJoQJp sc-gWXbKe cqtDRF fdLXpi"]'
+
+    //left panel
+    public static readonly leftPanelMeasureSteward = '[data-testid="leftPanelMeasureSteward"]'
+    public static readonly leftPanelDescription = '[data-testid="leftPanelMeasureDescription"]'
 
     //Measure CQL Page
     //cql editor box on page
@@ -28,9 +31,16 @@ export class EditMeasurePage {
     //Scoring drop-down box
     public static readonly measureScoringDBox = '[data-testid="scoring-unit-select"]'
 
+
+    //Measure Meta Data
     //Measure Steward Page
     public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
     public static readonly measureStewardSaveButton = '[data-testid="measureStewardSave"]'
     public static readonly measureStewardConfirmaionText = '.sc-bqiRlB'
+
+    //Description Page
+    public static readonly measureDescriptionTextBox = '[data-testid="measureDescriptionInput"]'
+    public static readonly measureDescriptionSaveButton = '[data-testid="measureDescriptionSave"]'
+    public static readonly measureDescriptionSuccessMessage = '[data-testid="measureDescriptionSuccess"]'
 
 }
