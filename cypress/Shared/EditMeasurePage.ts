@@ -1,7 +1,9 @@
 export class EditMeasurePage {
 
     //Main MADiE page
-    public static readonly mainMadiePageButton = '.styles__Logo-sc-147g1sa-4'
+    public static readonly mainMadiePageButton = '#main > div > nav > div > div.sc-dkPtRN.evWbfP > a > img'
+    //<img src="https://dev-madie.hcqis.org/madie-layout/2798aee/440c877d753a4666ccb5.svg" alt="MADiE Logo">
+    //#main > div > nav > div > div.sc-dkPtRN.evWbfP > a > img
 
     //Edit Measure tab menu
     public static readonly measureDetailsTab = '[data-testid=measure-details-tab]'
@@ -30,6 +32,7 @@ export class EditMeasurePage {
     //Measure Groups Page
     //Scoring drop-down box
     public static readonly measureScoringDBox = '[data-testid="scoring-unit-select"]'
+    public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
 
 
     //Measure Meta Data
