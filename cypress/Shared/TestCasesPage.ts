@@ -16,6 +16,9 @@ export class TestCasesPage {
     public static readonly executeTestCaseButton = '[data-testid="execute-test-case-row"]'
     public static readonly testCaseStatus = 'tbody > tr > :nth-child(4)'
     public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
+    public static readonly testCaseJsonValidationErrorBtn = '[data-testid="show-json-validation-errors-button"]'
+    public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
+    public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-6'
 
     public static clickCreateTestCaseButton() : void {
 
