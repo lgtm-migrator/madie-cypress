@@ -27,7 +27,7 @@ describe('Validate Measure Group', () => {
         OktaLogin.Login()
 
     })
-    afterEach('Login', () => {
+    afterEach('Logout', () => {
         OktaLogin.Logout()
 
     })

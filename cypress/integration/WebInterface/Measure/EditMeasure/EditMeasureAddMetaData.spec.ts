@@ -26,7 +26,7 @@ describe('Edit Measure: Add Meta Data', () => {
         OktaLogin.Login()
     })
 
-    afterEach('Login', () => {
+    afterEach('Logout', () => {
 
         OktaLogin.Logout()
 
