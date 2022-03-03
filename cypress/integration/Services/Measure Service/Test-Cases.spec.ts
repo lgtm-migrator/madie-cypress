@@ -1,5 +1,7 @@
 export {}
 
+import {TestCaseJson} from "../../../Shared/TestCaseJson"
+
 describe('Measure Service: Test Case Endpoints', () => {
 
     before('Create Measure', () => {
@@ -289,6 +291,124 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
                 }).then((response) => {
                     expect(response.status).to.eql(400)
                     expect(response.body.validationErrors.series).to.eql('Test Case Series can not be more than 250 characters.')
+                })
+            })
+        })
+    })
+})
+
+describe('Test Case Json Validations', () =>{
+
+    before('Create Measure', () => {
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': 'TestMeasure' + Date.now(),
+                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'model': 'QI-Core',
+                    'measureScoring': 'Cohort'
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/downloads/measureId', response.body.id)
+            })
+        })
+    })
+
+    beforeEach('Set Access Token', () => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    it('Enter Valid Test Case Json', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOMFail",
+                        'series': "Test Series",
+                        'title': "Title",
+                        'description': "description",
+                        'json': TestCaseJson.API_TestCaseJson_Valid
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.hapiOperationOutcome.code).to.eql(201)
+                })
+            })
+        })
+
+    })
+
+    it('Enter Invalid Test Case Json and Verify Error Message', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOM_Fail",
+                        'series': "Test_Series",
+                        'title': "Test_Title",
+                        'description': "Test_Description",
+                        'json': TestCaseJson.API_TestCaseJson_InValid
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.hapiOperationOutcome.code).to.eql(400)
+                    expect(response.body.hapiOperationOutcome.message).to.eql('Unable to persist to HAPI FHIR due to errors')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Patient" but found "Account"')
+                })
+            })
+        })
+    })
+
+    it('Enter Patient XML and Verify Error Message', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOM_Fail",
+                        'series': "Test_Series",
+                        'title': "Test_Title",
+                        'description': "Test_Description",
+                        'json': TestCaseJson.TestCase_XML
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.hapiOperationOutcome.code).to.eql(400)
+                    expect(response.body.hapiOperationOutcome.message).to.eql('Unable to persist to HAPI FHIR due to errors')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Failed to parse JSON encoded FHIR content: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
                 })
             })
         })
