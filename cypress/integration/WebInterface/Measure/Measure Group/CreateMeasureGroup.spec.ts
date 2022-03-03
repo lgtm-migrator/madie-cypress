@@ -4,7 +4,6 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
-//import { split } from "cypress/types/lodash"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -39,10 +38,10 @@ describe('Validate Measure Group', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Click on the measure group tab
-        MeasureGroupPage.clickMeasureGroupTab()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //get current value what is in the scoring box
-        cy.get(EditMeasurePage.measureScoringDBox).find(':selected').should('to.have.value', measureScoring)
+        cy.get(MeasureGroupPage.measureScoringSelect).find(':selected').should('to.have.value', measureScoring)
     })
 
     it('Verify values in the scoring drop down box', () => {
@@ -51,7 +50,7 @@ describe('Validate Measure Group', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Click on the measure group tab
-        MeasureGroupPage.clickMeasureGroupTab()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //validate values in the scoring drop down box
         cy.get('#scoring-unit-select').find('option').then(options => {
@@ -114,8 +113,8 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Validate saved message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
-        //navigate to the measure group tab
-        MeasureGroupPage.clickMeasureGroupTab()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
         //validate population definitions are those that were added via CQL
         cy.get('#ipp-expression-select').find('option:nth-child(1)').should('contain.text', 'Initial Population')
 
@@ -177,11 +176,11 @@ describe('Validate Measure Group', () => {
         //Validate saved message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
         //Click on the measure group tab
-        MeasureGroupPage.clickMeasureGroupTab()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
         cy.get('#ipp-expression-select').select('Initial Population') //select the 'Initial Population' option
         //save population definiitong with scoring unit
-        cy.get(EditMeasurePage.saveMeasureGroupDetails).click()
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
@@ -193,14 +192,10 @@ describe('Validate Measure Group', () => {
         //navigate back to the measure group page
         MeasuresPage.clickEditforCreatedMeasure()
         //Click on the measure group tab
-        MeasureGroupPage.clickMeasureGroupTab()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get('#scoring-unit-select').contains('Ratio')
         cy.get('#ipp-expression-select').contains('Initial Population')
 
     }) 
 })
-/*     
-    it('Create Measure Group', () => {
-
-})*/
