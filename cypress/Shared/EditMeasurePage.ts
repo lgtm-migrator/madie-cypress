@@ -30,11 +30,6 @@ export class EditMeasurePage {
     //save button on page
     public static readonly cqlEditorSaveButton = '[data-testid="save-cql-btn"]'
 
-    //Measure Groups Page
-    //Scoring drop-down box
-    public static readonly measureScoringDBox = '[data-testid="scoring-unit-select"]'
-    public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
-
 
     //Measure Meta Data
     //Measure Steward Page
