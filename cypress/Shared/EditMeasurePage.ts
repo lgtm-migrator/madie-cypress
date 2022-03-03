@@ -22,6 +22,7 @@ export class EditMeasurePage {
     //left panel
     public static readonly leftPanelMeasureSteward = '[data-testid="leftPanelMeasureSteward"]'
     public static readonly leftPanelDescription = '[data-testid="leftPanelMeasureDescription"]'
+    public static readonly leftPanelCopyright = '[data-testid="leftPanelMeasureCopyright"]'
 
     //Measure CQL Page
     //cql editor box on page
@@ -45,5 +46,10 @@ export class EditMeasurePage {
     public static readonly measureDescriptionTextBox = '[data-testid="measureDescriptionInput"]'
     public static readonly measureDescriptionSaveButton = '[data-testid="measureDescriptionSave"]'
     public static readonly measureDescriptionSuccessMessage = '[data-testid="measureDescriptionSuccess"]'
+
+    //Copyright Page
+    public static readonly measureCopyrightTextBox = '[data-testid="measureCopyrightInput"]'
+    public static readonly measureCopyrightSaveButton = '[data-testid="measureCopyrightSave"]'
+    public static readonly measureCopyrightSuccessMessage = '[data-testid="measureCopyrightSuccess"]'
 
 }
