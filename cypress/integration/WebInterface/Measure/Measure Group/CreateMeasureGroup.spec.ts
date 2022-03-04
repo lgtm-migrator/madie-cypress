@@ -116,7 +116,9 @@ describe('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //validate population definitions are those that were added via CQL
-        cy.get('#ipp-expression-select').find('option:nth-child(1)').should('contain.text', 'Initial Population')
+        cy.get('#measure-group-population-select-initial-population').find('option:nth-child(1)').should('contain.text', 'Initial Population')
+        //#measure-group-population-select-initial-population
+        //#measure-group-population-select-initial-population > option:nth-child(1)
 
     })
 
@@ -178,7 +180,7 @@ describe('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
-        cy.get('#ipp-expression-select').select('Initial Population') //select the 'Initial Population' option
+        cy.get('#measure-group-population-select-initial-population').select('Initial Population') //select the 'Initial Population' option
         //save population definiitong with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
@@ -195,7 +197,7 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get('#scoring-unit-select').contains('Ratio')
-        cy.get('#ipp-expression-select').contains('Initial Population')
+        cy.get('#measure-group-population-select-initial-population').contains('Initial Population')
 
     }) 
 })
