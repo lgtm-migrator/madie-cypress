@@ -46,6 +46,8 @@ export class TestCasesPage {
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
         cy.get(this.existingTestCaseSeriesDropdown).click()
 
+        //add section to select check boxes with valid values
+
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 

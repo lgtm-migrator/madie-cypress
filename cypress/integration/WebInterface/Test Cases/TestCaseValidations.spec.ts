@@ -102,6 +102,7 @@ describe('Test Case Validations', () => {
     it('Selected check boxes are saved and values are retained on test case creation', () => {
 
         //click edit on measure
+        MeasuresPage.clickEditforCreatedMeasure()
 
         //create test case (check checkboxes during creation)
 
@@ -114,6 +115,7 @@ describe('Test Case Validations', () => {
         //click test case tab
         
         //view / edit test case
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //validate / verify that checkboxes that were checked on test case creation are still checked
 
@@ -134,6 +136,7 @@ describe('Test Case Validations', () => {
         //click test case tab
         
         //view / edit test case
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //validate / verify that checkboxes that were checked on test case creation are still checked
 
@@ -152,6 +155,9 @@ describe('Test Case Validations', () => {
     it('Checkbox selections can not break CMS Measure Rules on test case edit', () => {
 
         //click edit on measure
+
+        //view / edit test case
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //edit test case (attempt to make changes to the selected checkboxes that would break CMS Measure rules)
 
