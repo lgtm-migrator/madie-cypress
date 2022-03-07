@@ -98,6 +98,66 @@ describe('Test Case Validations', () => {
         cy.get(TestCasesPage.testCaseTitleInlineError).contains('Test Case Title cannot be more ' +
             'than 250 characters.')
     })
+
+    it('Selected check boxes are saved and values are retained on test case creation', () => {
+
+        //click edit on measure
+
+        //create test case (check checkboxes during creation)
+
+        //save test case
+
+        //navigate away from measure
+
+        //click on edit measure
+
+        //click test case tab
+        
+        //view / edit test case
+
+        //validate / verify that checkboxes that were checked on test case creation are still checked
+
+    })
+
+    it('Selected check boxes are saved and values are retained on test case edit', () => {
+
+        //click edit on measure
+
+        //edit test case (make changes to the selected checkboxes)
+
+        //save test case
+
+        //navigate away from measure
+
+        //click on edit measure
+
+        //click test case tab
+        
+        //view / edit test case
+
+        //validate / verify that checkboxes that were checked on test case creation are still checked
+
+    })
+
+    it('Checkbox selections can not break CMS Measure Rules on test case creation', () => {
+
+        //click edit on measure
+
+        //create test case (attempt check checkboxes, during creation, that would break CMS Measure rules)
+
+        //verify messaging around invalid selections
+
+    })
+
+    it('Checkbox selections can not break CMS Measure Rules on test case edit', () => {
+
+        //click edit on measure
+
+        //edit test case (attempt to make changes to the selected checkboxes that would break CMS Measure rules)
+
+        //verify messaging around invalid selections
+
+    })
 })
 
 describe('Test Case Json Validations', () => {
