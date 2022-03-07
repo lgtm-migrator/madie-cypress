@@ -122,6 +122,7 @@ describe('Measure Service: Test Case Endpoints', () => {
             })
         })
     })
+
     it('Get a specific test case', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {

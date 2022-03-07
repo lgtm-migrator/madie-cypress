@@ -37,6 +37,7 @@ describe('Edit Measure: Add Meta Data', () => {
         let steward = 'steward'
         let description = 'description'
         let copyright = 'copyright'
+        let disclaimer = 'disclaimer'
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -58,6 +59,12 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureCopyrightTextBox).type(copyright)
         cy.get(EditMeasurePage.measureCopyrightSaveButton).click()
         cy.get(EditMeasurePage.measureCopyrightSuccessMessage).should('be.visible')
+
+        //Disclaimer
+        cy.get(EditMeasurePage.leftPanelDisclaimer).click()
+        cy.get(EditMeasurePage.measureDisclaimerTextBox).type(disclaimer)
+        cy.get(EditMeasurePage.measureDisclaimerSaveButton).click()
+        cy.get(EditMeasurePage.measureDisclaimerSuccessMessage).should('be.visible')
 
         cy.get(Header.measures).click()
 
@@ -81,6 +88,12 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.leftPanelCopyright).click()
         cy.get(EditMeasurePage.measureCopyrightTextBox).invoke('val').then(val =>{
             expect(val).to.eql(copyright)
+        })
+
+        //disclaimer
+        cy.get(EditMeasurePage.leftPanelDisclaimer).click()
+        cy.get(EditMeasurePage.measureDisclaimerTextBox).invoke('val').then(val =>{
+            expect(val).to.eql(disclaimer)
         })
     })
 })
