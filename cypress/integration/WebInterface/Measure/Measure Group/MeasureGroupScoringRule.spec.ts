@@ -16,7 +16,7 @@ describe('Measure Group', () => {
         OktaLogin.Login()
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
         OktaLogin.Logout()
 

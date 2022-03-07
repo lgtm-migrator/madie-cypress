@@ -3,8 +3,24 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
+let measureName = 'TestMeasure' + Date.now()
+let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureScoring = 'Ratio'
 
 describe('Save CQL on CQL Editor Page', () => {
+
+    before('Create Measure', () => {
+
+        OktaLogin.Login()
+
+        //Create New Measure
+        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+        OktaLogin.Logout()
+
+    })
+
     beforeEach('Login',() => {
         OktaLogin.Login()
     })
@@ -15,12 +31,10 @@ describe('Save CQL on CQL Editor Page', () => {
 
     it('Create New Measure and Add CQL to the Measure', () => {
 
-        let measureName = 'TestMeasure' + Date.now()
-        let CqlLibraryName = 'TestLibrary' + Date.now()
-        let measureScoring = 'Ratio'
+
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
+        //CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
 
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -31,7 +45,7 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL
-        cy.get(Header.measures).click()
+        cy.get(EditMeasurePage.mainMadiePageButton).click()
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()

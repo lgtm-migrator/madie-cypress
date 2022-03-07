@@ -23,7 +23,8 @@ describe('Test Case Validations', () => {
         OktaLogin.Login()
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
         OktaLogin.Logout()
 

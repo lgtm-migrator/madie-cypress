@@ -16,7 +16,7 @@ describe('Validate Measure Group', () => {
         OktaLogin.Login()
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
         OktaLogin.Logout()
 
@@ -125,7 +125,7 @@ describe('Validate Measure Group', () => {
     it('Scoring unit and population association saves and persists', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure('NewTestMeasures'+ Date.now() + 1, 'NewLibTestNames'+ Date.now() + 1, measureScoring)
+        //CreateMeasurePage.CreateQICoreMeasureAPI('NewTestMeasures'+ Date.now() + 1, 'NewLibTestNames'+ Date.now() + 1, measureScoring)
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
         //click on the CQL Editor tab
