@@ -2,7 +2,7 @@ import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
-import {TopNav} from "../../../Shared/TopNav"
+import {Header} from "../../../Shared/Header"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -40,7 +40,7 @@ describe('Edit Measure', () => {
         cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')
 
         //Navigate back to Measures page and verify if the Measure Name is updated
-        cy.get(TopNav.measureTab).click()
+        cy.get(Header.measures).click()
         MeasuresPage.validateMeasureName(updatedMeasureName)
 
     })

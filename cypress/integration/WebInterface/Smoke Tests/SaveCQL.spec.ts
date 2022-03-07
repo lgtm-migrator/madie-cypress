@@ -2,7 +2,7 @@ import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
-import {TopNav} from "../../../Shared/TopNav"
+import {Header} from "../../../Shared/Header"
 
 describe('Save CQL on CQL Editor Page', () => {
     beforeEach('Login',() => {
@@ -31,7 +31,7 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL
-        cy.get(TopNav.measureTab).click()
+        cy.get(Header.measures).click()
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
