@@ -4,10 +4,10 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
 
-let measureName = 'TestMeasure' + Date.now() + 1
-let CqlLibraryName = 'TestLibrary' + Date.now() + 1
+let measureName = 'TestMeasure' + Date.now()
+let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
-let updatedMeasureName = 'UpdatedTestMeasure' + Date.now() + 1 
+let updatedMeasureName = 'UpdatedTestMeasure' + Date.now()
 
 describe('Edit Measure', () => {
     before('Create Measure', () => {
