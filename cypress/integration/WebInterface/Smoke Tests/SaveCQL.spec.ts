@@ -11,13 +11,8 @@ describe('Save CQL on CQL Editor Page', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
 
@@ -31,11 +26,6 @@ describe('Save CQL on CQL Editor Page', () => {
 
     it('Create New Measure and Add CQL to the Measure', () => {
 
-
-
-        //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
-
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -45,7 +35,7 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL
-        cy.get(EditMeasurePage.mainMadiePageButton).click()
+        cy.get(Header.mainMadiePageButton).click()
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()

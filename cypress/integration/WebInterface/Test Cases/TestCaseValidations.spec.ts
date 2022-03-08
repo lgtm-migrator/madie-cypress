@@ -20,13 +20,8 @@ describe('Test Case Validations', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
     beforeEach('Login', () => {
@@ -102,6 +97,13 @@ describe('Test Case Validations', () => {
 })
 
 describe('Test Case Json Validations', () => {
+    
+    before('Create Measure', () => {
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+    })
 
     beforeEach('Login', () => {
         OktaLogin.Login()

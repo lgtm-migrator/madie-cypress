@@ -13,12 +13,8 @@ describe('Edit Measure: Add Meta Data', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
     beforeEach('Login', () => {
@@ -66,7 +62,7 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureDisclaimerSaveButton).click()
         cy.get(EditMeasurePage.measureDisclaimerSuccessMessage).should('be.visible')
 
-        cy.get(EditMeasurePage.mainMadiePageButton).click()
+        cy.get(Header.mainMadiePageButton).click()
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()

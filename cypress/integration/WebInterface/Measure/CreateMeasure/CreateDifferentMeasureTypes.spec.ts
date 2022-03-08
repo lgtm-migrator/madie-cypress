@@ -21,7 +21,7 @@ describe('Create different Measure types', () => {
         CqlLibraryName = 'CohortTestLibrary' + Date.now()
         measureScoring = 'Cohort'
 
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
     })
 
     it('Create Proportion Measure', () => {
@@ -30,7 +30,7 @@ describe('Create different Measure types', () => {
         CqlLibraryName = 'ProportionTestLibrary' + Date.now()
         measureScoring = 'Proportion'
 
-        CreateMeasurePage.CreateQICoreMeasureAPI (measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
     })
 
     it('Create Continuous Variable Measure', () => {
@@ -39,7 +39,7 @@ describe('Create different Measure types', () => {
         CqlLibraryName = 'CVTestLibrary' + Date.now()
         measureScoring = 'Continuous Variable'
 
-        CreateMeasurePage.CreateQICoreMeasureAPI (measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
     })
 
@@ -49,7 +49,7 @@ describe('Create different Measure types', () => {
         CqlLibraryName = 'RatioTestLibrary' + Date.now()
         measureScoring = 'Ratio'
 
-        CreateMeasurePage.CreateQICoreMeasureAPI (measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
     })
 
 })

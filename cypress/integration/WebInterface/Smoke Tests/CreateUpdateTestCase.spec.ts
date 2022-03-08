@@ -20,12 +20,8 @@ describe('Create Test Case', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
     beforeEach('Login', () => {

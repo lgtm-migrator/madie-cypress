@@ -1,9 +1,5 @@
 export class EditMeasurePage {
 
-    //Main MADiE page
-    public static readonly mainMadiePageButton = '#main > div > nav > div > div.sc-dkPtRN.evWbfP > a > img'
-    //<img src="https://dev-madie.hcqis.org/madie-layout/2798aee/440c877d753a4666ccb5.svg" alt="MADiE Logo">
-    //#main > div > nav > div > div.sc-dkPtRN.evWbfP > a > img
 
     //Edit Measure tab menu
     public static readonly measureDetailsTab = '[data-testid=measure-details-tab]'

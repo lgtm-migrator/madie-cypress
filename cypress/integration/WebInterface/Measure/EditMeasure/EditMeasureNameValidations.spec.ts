@@ -9,13 +9,8 @@ let measureScoring = 'Ratio'
 describe('Edit Measure Name Validations', () => {
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
 
@@ -28,11 +23,6 @@ describe('Edit Measure Name Validations', () => {
     })
 
     it('Verify error messages when the edit measure name entered is invalid', () => {
-
-
-
-        // Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
         MeasuresPage.clickEditforCreatedMeasure()

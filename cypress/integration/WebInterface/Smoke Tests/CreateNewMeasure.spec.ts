@@ -6,8 +6,6 @@ let measureScoring = 'Ratio'
 
 describe('Create New Measure', () => {
 
-
-
     beforeEach('Login',() => {
         OktaLogin.Login()
     })
@@ -19,7 +17,7 @@ describe('Create New Measure', () => {
     it('Login to Madie and Create New Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
     })
 })

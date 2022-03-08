@@ -12,13 +12,8 @@ let updatedMeasureName = 'UpdatedTestMeasure' + Date.now() + 1
 describe('Edit Measure', () => {
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
 
     })
 
@@ -31,9 +26,6 @@ describe('Edit Measure', () => {
     })
 
     it('Edit Measure Name and verify the measure name is updated on Measures page', () => {
-
-        //Create New Measure
-        //CreateMeasurePage.CreateQICoreMeasureAPI(measureName,CqlLibraryName,measureScoring)
 
         //Edit Measure Name
         MeasuresPage.clickEditforCreatedMeasure()
@@ -52,7 +44,7 @@ describe('Edit Measure', () => {
 
         //Navigate back to Measures page and verify if the Measure Name is updated
         //cy.get(Header.measures).click()
-        cy.get(EditMeasurePage.mainMadiePageButton).click()
+        cy.get(Header.mainMadiePageButton).click()
 
         MeasuresPage.validateMeasureName(updatedMeasureName)
 
