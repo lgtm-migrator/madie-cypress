@@ -15,12 +15,8 @@ describe('Validate Measure Group', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
     })
     beforeEach('Login', () => {

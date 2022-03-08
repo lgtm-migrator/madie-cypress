@@ -19,7 +19,7 @@ describe('Measure Name Validations', () => {
         //Click on New Measure Button
         cy.get(LandingPage.newMeasureButton).click()
 
-     //Verify error message when the Measure Name field is empty
+        //Verify error message when the Measure Name field is empty
         cy.get(CreateMeasurePage.measureNameTextbox).focus().blur()
         cy.get(CreateMeasurePage.measureNameFieldLevelError).should('contain.text', 'A measure name is required.')
         //Verify if create measure button is disabled

@@ -65,4 +65,29 @@ export class CreateMeasurePage {
 
         cy.log( measureScoring+ ' Measure created successfully')
     }
+
+    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string): void {
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': measureName + Date.now(),
+                    'cqlLibraryName': CqlLibraryName + Date.now(),
+                    'model': 'QI-Core',
+                    'measureScoring': measureScoring
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/downloads/measureId', response.body.id)
+            })
+        })
+    }
 }

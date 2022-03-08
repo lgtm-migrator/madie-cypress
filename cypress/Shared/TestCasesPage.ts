@@ -8,7 +8,7 @@ export class TestCasesPage {
     public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly successMsg = '[data-testid="create-test-case-alert"]'
-    public static readonly testCaseTitleList = 'tbody > tr > :nth-child(2)'
+    //public static readonly testCaseTitleList = 'tbody > tr > :nth-child(2)'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
@@ -36,6 +36,12 @@ export class TestCasesPage {
         })
     }
 
+    public static grabValidateTestCaseTitle(testCaseTitle: string) : void{
+        cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
+            cy.get('[data-testid=test-case-row-'+ fileContents +']').should('be.visible').contains(testCaseTitle)
+        })
+    }
+
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string)  :void{
 
         //Navigate to Test Cases page and add Test Case details
@@ -56,7 +62,7 @@ export class TestCasesPage {
         cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
         })
-        cy.get(this.testCaseTitleList).contains(testCaseTitle)
+        this.grabValidateTestCaseTitle(testCaseTitle)
         cy.get(this.testCaseSeriesList).contains(testCaseSeries)
 
         cy.log('Test Case created successfully')
@@ -77,7 +83,7 @@ export class TestCasesPage {
         cy.get(this.successMsg).should('contain.text', 'Test case updated successfully!')
 
         //Verify edited / updated test case Title and Series exists on Test Cases Page
-        cy.get(this.testCaseTitleList).contains(updatedTestCaseTitle)
+        this.grabValidateTestCaseTitle(updatedTestCaseTitle)
         cy.get(this.testCaseSeriesList).contains(updatedTestCaseSeries)
 
         cy.log('Test Case updated successfully')

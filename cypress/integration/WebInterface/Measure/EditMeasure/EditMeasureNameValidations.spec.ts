@@ -2,8 +2,17 @@ import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
+let measureName = 'TestMeasure' + Date.now()
+let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureScoring = 'Ratio'
 
 describe('Edit Measure Name Validations', () => {
+    before('Create Measure', () => {
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+    })
 
     beforeEach('Login',() => {
         OktaLogin.Login()
@@ -14,13 +23,6 @@ describe('Edit Measure Name Validations', () => {
     })
 
     it('Verify error messages when the edit measure name entered is invalid', () => {
-
-        let measureName = 'TestMeasure' + Date.now()
-        let CqlLibraryName = 'TestLibrary' + Date.now()
-        let measureScoring = 'Ratio'
-
-        // Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
         MeasuresPage.clickEditforCreatedMeasure()

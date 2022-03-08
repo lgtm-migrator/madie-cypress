@@ -4,7 +4,7 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
-
+import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = MeasureGroupPage.measureScoringUnit
@@ -13,12 +13,8 @@ describe('Validate Measure Group', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
     })
     beforeEach('Login', () => {
@@ -117,18 +113,16 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //validate population definitions are those that were added via CQL
         cy.get('#measure-group-population-select-initial-population').find('option:nth-child(1)').should('contain.text', 'Initial Population')
-        //#measure-group-population-select-initial-population
-        //#measure-group-population-select-initial-population > option:nth-child(1)
 
     })
 
     it('Scoring unit and population association saves and persists', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure('NewTestMeasures'+ Date.now() + 1, 'NewLibTestNames'+ Date.now() + 1, measureScoring)
+        //CreateMeasurePage.CreateQICoreMeasureAPI('NewTestMeasures'+ Date.now() + 1, 'NewLibTestNames'+ Date.now() + 1, measureScoring)
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
-        //click on the CQL Editor tab
+/*         //click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
         //Enter value in CQL Editor tab
         cy.fixture('cqlData.txt').then((str) => {
@@ -176,7 +170,7 @@ describe('Validate Measure Group', () => {
         //save CQL
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Validate saved message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully') */
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
@@ -190,7 +184,7 @@ describe('Validate Measure Group', () => {
         //validate data is saved in mongo database --> future addition to automated test script
 
         //navigate away from measure group page
-        cy.get(EditMeasurePage.mainMadiePageButton).click()
+        cy.get(Header.mainMadiePageButton).click()
         //navigate back to the measure group page
         MeasuresPage.clickEditforCreatedMeasure()
         //Click on the measure group tab

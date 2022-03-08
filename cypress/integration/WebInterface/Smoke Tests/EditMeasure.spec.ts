@@ -10,6 +10,12 @@ let measureScoring = 'Ratio'
 let updatedMeasureName = 'UpdatedTestMeasure' + Date.now()
 
 describe('Edit Measure', () => {
+    before('Create Measure', () => {
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+    })
 
     beforeEach('Login',() => {
         OktaLogin.Login()
@@ -20,9 +26,6 @@ describe('Edit Measure', () => {
     })
 
     it('Edit Measure Name and verify the measure name is updated on Measures page', () => {
-
-        //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
 
         //Edit Measure Name
         MeasuresPage.clickEditforCreatedMeasure()
@@ -40,7 +43,9 @@ describe('Edit Measure', () => {
         cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')
 
         //Navigate back to Measures page and verify if the Measure Name is updated
-        cy.get(Header.measures).click()
+        //cy.get(Header.measures).click()
+        cy.get(Header.mainMadiePageButton).click()
+
         MeasuresPage.validateMeasureName(updatedMeasureName)
 
     })

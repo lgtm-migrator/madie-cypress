@@ -11,7 +11,7 @@ let measureScoring = 'Ratio'
 let testCaseTitle = 'Title for Auto Test'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries'
-let updatedTestCaseTitle = testCaseTitle + "some update"
+let updatedTestCaseTitle = testCaseTitle + " some update"
 let updatedTestCaseDescription = testCaseDescription + ' '+ 'UpdatedTestCaseDescription'
 let updatedTestCaseSeries = 'CMSTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
@@ -20,12 +20,8 @@ describe('Create Test Case', () => {
 
     before('Create Measure', () => {
 
-        OktaLogin.Login()
-
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, measureScoring)
-
-        OktaLogin.Logout()
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
     })
     beforeEach('Login', () => {
