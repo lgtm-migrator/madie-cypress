@@ -8,7 +8,6 @@ export class TestCasesPage {
     public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly successMsg = '[data-testid="create-test-case-alert"]'
-    //public static readonly testCaseTitleList = 'tbody > tr > :nth-child(2)'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
