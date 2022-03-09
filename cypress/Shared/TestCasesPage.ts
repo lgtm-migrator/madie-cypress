@@ -8,7 +8,6 @@ export class TestCasesPage {
     public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly successMsg = '[data-testid="create-test-case-alert"]'
-    //public static readonly testCaseTitleList = 'tbody > tr > :nth-child(2)'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
@@ -68,14 +67,15 @@ export class TestCasesPage {
         cy.log('Test Case created successfully')
     }
 
-    public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries)  :void{
+    public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries:string)  :void{
 
         //Edit / Update test case title
         cy.get(this.testCaseTitle).clear().type(updatedTestCaseTitle)
         //Update Test Case Description
         cy.get(TestCasesPage.testCaseDescriptionTextBox).clear().type(updatedTestCaseDescription)
         //Update Test Case Series
-        cy.get(TestCasesPage.testCaseSeriesTextBox).clear().type(updatedTestCaseSeries)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).clear()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries)
         cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
 
         //Save edited / updated to test case
