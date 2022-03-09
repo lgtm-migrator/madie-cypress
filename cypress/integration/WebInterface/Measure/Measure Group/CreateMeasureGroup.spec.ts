@@ -120,7 +120,7 @@ describe('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
-        cy.get('#measure-group-population-select-initial-population').select('Initial Population') //select the 'Initial Population' option
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option
         //save population definiitong with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
@@ -136,8 +136,8 @@ describe('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
-        cy.get('#scoring-unit-select').contains('Ratio')
-        cy.get('#measure-group-population-select-initial-population').contains('Initial Population')
+        cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
+        cy.get(MeasureGroupPage.initialPopulationSelect).contains('Initial Population')
 
-    }) 
+    })
 })
