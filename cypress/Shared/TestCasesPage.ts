@@ -58,9 +58,6 @@ export class TestCasesPage {
         cy.get(this.successMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         //Verify created test case Title and Series exists on Test Cases Page
-        cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
-            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
-        })
         this.grabValidateTestCaseTitle(testCaseTitle)
         cy.get(this.testCaseSeriesList).contains(testCaseSeries)
 
