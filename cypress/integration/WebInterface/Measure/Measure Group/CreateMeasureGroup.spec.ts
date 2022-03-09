@@ -54,54 +54,13 @@ describe('Validate Measure Group', () => {
             expect(actual).to.deep.eq(['Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
         })
     })
-    it('Initial Population being populated from CQL', () => {
+    it.only('Initial Population being populated from CQL', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
         //click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
-        // read file
-        cy.fixture('cqlData.txt').then((str) => {
-            // split file by line endings
-            const fileArr = str.split(/\r?\n/);
-            // log file in form of array
-            cy.log(fileArr);
-            // remove new line endings
-            const cqlArr = fileArr.map((line: any) => {
-                const goodLine = line.split('\\n');
-                return goodLine[0];
-            });
-            // log new array
-            cy.log(cqlArr);
-            CQLEditorPage.cqlValues.cqlLibraryV = cqlArr[0]
-            CQLEditorPage.cqlValues.cqlFHIRV = cqlArr[1]
-            CQLEditorPage.cqlValues.cqlIncludeFHIRHelpers = cqlArr[2]
-            CQLEditorPage.cqlValues.cqlIncludeSuppDataEleFHIR4 = cqlArr[3]
-            CQLEditorPage.cqlValues.cqlValueSet = cqlArr[4]
-            CQLEditorPage.cqlValues.cqlValueSetContinued = cqlArr[5]
-            CQLEditorPage.cqlValues.cqlParameter = cqlArr[6]
-            CQLEditorPage.cqlValues.cqlContext = cqlArr[7]
-            CQLEditorPage.cqlValues.cqlDefineIniPop = cqlArr[8]
-            //Enter value in CQL Editor tab
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlLibraryV.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlFHIRV.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlIncludeFHIRHelpers.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlIncludeSuppDataEleFHIR4.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlValueSet.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlValueSetContinued.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlParameter.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlContext.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(CQLEditorPage.cqlValues.cqlDefineIniPop.toString())
-            cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-        })
+        CQLEditorPage.readWriteCQL('cqlCreateMeasureGroup.txt')
         //save CQL
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Validate saved message on page

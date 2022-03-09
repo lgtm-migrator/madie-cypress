@@ -37,7 +37,8 @@ describe('Validate Measure Group', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         //type text in the CQL Editor that will cause error
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('library TESTMEASURE0000000003 version \'0.0.000\'{enter}')
+        CQLEditorPage.readWriteCQL('cqlCQLEditor.txt')
+/*         cy.get(EditMeasurePage.cqlEditorTextBox).type('library TESTMEASURE0000000003 version \'0.0.000\'{enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('using FHIR version \'4.0.1\'{enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers {enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('include SupplementalDataElementsFHIR4 version \'2.0.000\' called SDE {enter}')
@@ -51,7 +52,7 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Race": {enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Race" {enter}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Sex": {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Sex" {enter}')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Sex" {enter}') */
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
