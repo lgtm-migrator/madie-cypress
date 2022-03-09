@@ -41,24 +41,24 @@ describe('Edit Measure: Add Meta Data', () => {
         //Enter meta data
         //Measure Steward
         cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
-        cy.get(EditMeasurePage.measureStewardTextBox).type(steward)
+        cy.get(EditMeasurePage.measureStewardTextBox).clear().type(steward)
         cy.get(EditMeasurePage.measureStewardSaveButton).click()
 
         //Description
         cy.get(EditMeasurePage.leftPanelDescription).click()
-        cy.get(EditMeasurePage.measureDescriptionTextBox).type(description)
+        cy.get(EditMeasurePage.measureDescriptionTextBox).clear().type(description)
         cy.get(EditMeasurePage.measureDescriptionSaveButton).click()
         cy.get(EditMeasurePage.measureDescriptionSuccessMessage).should('be.visible')
 
         //Copyright
         cy.get(EditMeasurePage.leftPanelCopyright).click()
-        cy.get(EditMeasurePage.measureCopyrightTextBox).type(copyright)
+        cy.get(EditMeasurePage.measureCopyrightTextBox).clear().type(copyright)
         cy.get(EditMeasurePage.measureCopyrightSaveButton).click()
         cy.get(EditMeasurePage.measureCopyrightSuccessMessage).should('be.visible')
 
         //Disclaimer
         cy.get(EditMeasurePage.leftPanelDisclaimer).click()
-        cy.get(EditMeasurePage.measureDisclaimerTextBox).type(disclaimer)
+        cy.get(EditMeasurePage.measureDisclaimerTextBox).clear().type(disclaimer)
         cy.get(EditMeasurePage.measureDisclaimerSaveButton).click()
         cy.get(EditMeasurePage.measureDisclaimerSuccessMessage).should('be.visible')
 
