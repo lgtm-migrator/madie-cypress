@@ -22,7 +22,7 @@ export class TestCasesPage {
     public static clickCreateTestCaseButton() : void {
 
         //setup for grabbing the measure create call
-        cy.readFile('cypress/downloads/measureId').should('exist').then((id)=> {
+        cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/'+ id + '/test-cases').as('testcase')
 
             cy.get(this.createTestCaseButton).click()
@@ -30,13 +30,13 @@ export class TestCasesPage {
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
                 expect(response.statusCode).to.eq(201)
-                cy.writeFile('cypress/downloads/testCaseId', response.body.id)
+                cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
         })
     }
 
     public static grabValidateTestCaseTitle(testCaseTitle: string) : void{
-        cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=test-case-row-'+ fileContents +']').should('be.visible').contains(testCaseTitle)
         })
     }
@@ -86,7 +86,7 @@ export class TestCasesPage {
         cy.log('Test Case updated successfully')
     }
     public static clickEditforCreatedTestCase(): void {
-        cy.readFile('cypress/downloads/testCaseId').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
     }
