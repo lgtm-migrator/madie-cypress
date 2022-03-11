@@ -3,6 +3,7 @@ import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
+import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {LandingPage} from "../../../../Shared/LandingPage"
 
@@ -37,21 +38,7 @@ describe('Validate Measure Group', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         //type text in the CQL Editor that will cause error
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('library TESTMEASURE0000000003 version \'0.0.000\'{enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('using FHIR version \'4.0.1\'{enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('include SupplementalDataElementsFHIR4 version \'2.0.000\' called SDE {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('include MATGlobalCommonFunctionsFHIR4 version \'6.1.000\' called Global {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('parameter "Measurement Period" Interval<DateTimeTest> {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('context Patient {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Ethnicity": {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Ethnicity" {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Payer": {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Payer" {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Race": {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Race" {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('define "SDE Sex": {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('SDE."SDE Sex" {enter}')
+        Utilities.readWriteFileData('cqlCQLEditor.txt', EditMeasurePage.cqlEditorTextBox)
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()

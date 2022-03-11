@@ -7,18 +7,6 @@ export class CQLEditorPage {
     //Error marker inside of the CQL Editor window
     public static readonly errorInCQLEditorWindow = 'div.ace_gutter-cell.ace_error'
 
-    public static cqlValues = {
-        cqlLibraryV: '',
-        cqlFHIRV: '',
-        cqlIncludeFHIRHelpers: '',
-        cqlIncludeSuppDataEleFHIR4: '',
-        cqlValueSet: '',
-        cqlValueSetContinued: '',
-        cqlParameter: '', 
-        cqlContext: '',
-        cqlDefineIniPop: ''
-    }
-
     //click action on the tab to get to the CQL Editor
     public static clickCQLEditorTab(): void {
         
