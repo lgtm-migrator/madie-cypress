@@ -1,6 +1,7 @@
 {
     "env": {},
     "chromeWebSecurity": true,
+    "parseSpecialCharSequences":false,
     "pageLoadTimeout": 100000,
     "defaultCommandTimeout": 50000,
     "video": false,

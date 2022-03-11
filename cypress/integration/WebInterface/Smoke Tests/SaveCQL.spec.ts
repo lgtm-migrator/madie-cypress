@@ -3,8 +3,7 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
-import {Utilities} from "../../../Shared/Utilities"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
@@ -31,17 +30,22 @@ describe('Save CQL on CQL Editor Page', () => {
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //CQLEditorPage.readWriteCQL('cqlSaveCQL.txt')
-        Utilities.readWriteFileData('cqlSaveCQL.txt', EditMeasurePage.cqlEditorTextBox)
+
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Navigate to Measures page and verify the saved CQL
         cy.get(Header.mainMadiePageButton).click()
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', 'library TestMeasure version \'0.0.014\' using FHIR version \'4.0.1\' include FHIRHelpers version \'4.0.001\' called FHIRHelpers' )
 
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Expected.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', fileContents)
+        })
     })
 })

@@ -1,0 +1,104 @@
+library EXM124v7QICore4 version '7.0.000'
+
+/*
+Based on CMS124v7 - Cervical Cancer Screening
+*/
+
+/*
+This example is a work in progress and should not be considered a final specification
+or recommendation for guidance. This example will help guide and direct the process
+of finding conventions and usage patterns that meet the needs of the various stakeholders
+in the measure development community.
+*/
+
+using QICore version '4.1.0'
+
+include FHIRHelpers version '4.0.1'
+
+include HospiceQICore4 version '2.0.000' called Hospice
+include AdultOutpatientEncountersQICore4 version '2.0.000' called AdultOutpatientEncounters
+include MATGlobalCommonFunctionsQICore4 version '5.0.000' called Global
+include SupplementalDataElementsQICore4 version '2.0.0' called SDE
+
+codesystem "SNOMEDCT:2017-09": 'http://snomed.info/sct/731000124108' version 'http://snomed.info/sct/731000124108/version/201709'
+
+valueset "ONC Administrative Sex": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1'
+valueset "Race": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836'
+valueset "Ethnicity": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837'
+valueset "Payer": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591'
+valueset "Female": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.560.100.2'
+valueset "Home Healthcare Services": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1016'
+valueset "Hysterectomy with No Residual Cervix": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.198.12.1014'
+valueset "Office Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'
+valueset "Pap Test": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.108.12.1017'
+valueset "Preventive Care Services - Established Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1025'
+valueset "Preventive Care Services-Initial Office Visit, 18 and Up": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1023'
+valueset "HPV Test": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.110.12.1059'
+
+code "Congenital absence of cervix (disorder)": '37687000' from "SNOMEDCT:2017-09" display 'Congenital absence of cervix (disorder)'
+
+parameter "Measurement Period" Interval<DateTime>
+  default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
+
+{home}context Patient
+
+{home}define "SDE Ethnicity":{enter}
+{home}  SDE."SDE Ethnicity"{enter}
+
+{home}define "SDE Payer":{enter}
+{home}  SDE."SDE Payer"{enter}
+
+{home}define "SDE Race":{enter}
+{home}  SDE."SDE Race"{enter}
+
+{home}define "SDE Sex":{enter}
+{home}  SDE."SDE Sex"{enter}
+
+{home}define "Initial Population":
+{home}  Patient.gender = 'female'
+{home}  	and Global."CalendarAgeInYearsAt"(Patient.birthDate, start of "Measurement Period") in Interval[23, 64]
+{home}  	and exists AdultOutpatientEncounters."Qualifying Encounters"
+
+{home}define "Denominator":
+{home}    	"Initial Population"
+
+{home}define "Denominator Exclusion":
+{home}	Hospice."Has Hospice"
+{home}  		or exists "Surgical Absence of Cervix"
+{home} 		or exists "Absence of Cervix"
+
+{home}define "Absence of Cervix":
+{home}	[Condition : "Congenital absence of cervix (disorder)"] NoCervixBirth
+{home}  		where Global."Normalize Interval"(NoCervixBirth.onset) starts before end of "Measurement Period"
+
+{home}define "Surgical Absence of Cervix":
+{home}	[Procedure: "Hysterectomy with No Residual Cervix"] NoCervixHysterectomy
+{home}		where Global."Normalize Interval"(NoCervixHysterectomy.performed) ends before end of "Measurement Period"
+{home}			and NoCervixHysterectomy.status = 'completed'
+
+{home}define "Numerator":
+{home}	exists "Pap Test Within 3 Years"
+{home}		or exists "Pap Test With HPV Within 5 Years"
+
+{home}define "Pap Test with Results":
+{home}	[Observation: "Pap Test"] PapTest
+{home}		where PapTest.value is not null
+{home}			and PapTest.status in {{} 'final', 'amended', 'corrected', 'preliminary' }
+
+{home}define "Pap Test Within 3 Years":
+{home}	"Pap Test with Results" PapTest
+{home}		where Global."Normalize Interval"(PapTest.effective) ends 3 years or less before end of "Measurement Period"
+
+{home}define "PapTest Within 5 Years":
+{home}	( "Pap Test with Results" PapTestOver30YearsOld
+{home}			where Global."CalendarAgeInYearsAt"(Patient.birthDate, start of Global."Normalize Interval"(PapTestOver30YearsOld.effective))>= 30
+{home}				and Global."Normalize Interval"(PapTestOver30YearsOld.effective) ends 5 years or less before end of "Measurement Period"
+{home}	)
+
+{home}define "Pap Test With HPV Within 5 Years":
+{home}	"PapTest Within 5 Years" PapTestOver30YearsOld
+{home}		with [Observation: "HPV Test"] HPVTest
+{home}			such that HPVTest.value is not null
+{home}        and Global."Normalize Interval"(HPVTest.effective) starts within 1 day of start of Global."Normalize Interval"(PapTestOver30YearsOld.effective)
+{home}				and HPVTest.status in {{} 'final', 'amended', 'corrected', 'preliminary' }
+{del}{del}{del}{del}
