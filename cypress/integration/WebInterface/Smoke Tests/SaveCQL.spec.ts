@@ -3,6 +3,8 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
+import {Utilities} from "../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
@@ -29,9 +31,9 @@ describe('Save CQL on CQL Editor Page', () => {
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('library TestMeasure version \'0.0.014\' {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('using FHIR version \'4.0.1\' {enter}')
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('include FHIRHelpers version \'4.0.001\' called FHIRHelpers')
+        //CQLEditorPage.readWriteCQL('cqlSaveCQL.txt')
+        Utilities.readWriteFileData('cqlSaveCQL.txt', EditMeasurePage.cqlEditorTextBox)
+
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Navigate to Measures page and verify the saved CQL

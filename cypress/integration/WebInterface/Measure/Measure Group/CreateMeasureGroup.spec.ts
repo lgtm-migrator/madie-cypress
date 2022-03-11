@@ -4,6 +4,7 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
+import {Utilities} from "../../../../Shared/Utilities"
 import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -54,13 +55,14 @@ describe('Validate Measure Group', () => {
             expect(actual).to.deep.eq(['Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
         })
     })
-    it.only('Initial Population being populated from CQL', () => {
+    it('Initial Population being populated from CQL', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
         //click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
-        CQLEditorPage.readWriteCQL('cqlCreateMeasureGroup.txt')
+        //CQLEditorPage.readWriteCQL('cqlCreateMeasureGroup.txt')
+        Utilities.readWriteFileData('cqlCreateMeasureGroup.txt', EditMeasurePage.cqlEditorTextBox)
         //save CQL
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Validate saved message on page
