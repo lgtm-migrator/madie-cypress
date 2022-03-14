@@ -18,6 +18,7 @@ export class TestCasesPage {
     public static readonly testCaseJsonValidationErrorBtn = '[data-testid="show-json-validation-errors-button"]'
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
     public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-6'
+    public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
 
     public static clickCreateTestCaseButton() : void {
 
@@ -45,8 +46,17 @@ export class TestCasesPage {
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(this.newTestCaseButton).should('be.visible')
+        cy.get(this.newTestCaseButton).should('be.enabled')
         cy.get(this.newTestCaseButton).click()
-        cy.get(this.testCaseTitle).type(testCaseTitle)
+
+        cy.get(this.testCasePopulationList).should('be.visible')
+
+        cy.wait(2000)
+
+        cy.get(this.testCaseTitle).should('be.visible')
+        cy.get(this.testCaseTitle).should('be.enabled')
+        cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
         cy.get(this.existingTestCaseSeriesDropdown).click()
@@ -65,11 +75,17 @@ export class TestCasesPage {
     }
 
     public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries:string)  :void{
+        cy.get(this.testCasePopulationList).should('be.visible')
 
+        cy.wait(2000)
         //Edit / Update test case title
-        cy.get(this.testCaseTitle).clear().type(updatedTestCaseTitle)
+        cy.get(this.testCaseTitle).should('be.visible')
+        cy.get(this.testCaseTitle).should('be.enabled')
+        cy.get(this.testCaseTitle).clear()
+        cy.get(this.testCaseTitle).type(updatedTestCaseTitle)
         //Update Test Case Description
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).clear().type(updatedTestCaseDescription)
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).clear()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(updatedTestCaseDescription)
         //Update Test Case Series
         cy.get(TestCasesPage.testCaseSeriesTextBox).clear()
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries)
