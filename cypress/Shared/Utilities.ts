@@ -4,7 +4,7 @@ import {TestCasesPage} from "../Shared/TestCasesPage"
 export class Utilities {
 
     public static textValues = {
-        dataLines: ''
+        dataLines: null
     }
 
     public static readWriteFileData(file: string, pageResource: any): void{
@@ -15,13 +15,12 @@ export class Utilities {
             cy.log(fileArr);
             // remove new line endings
             const cqlArr = fileArr.map((line: any) => {
-                const goodLine = line.split('\\n'||'\\r');
+                const goodLine = line.split(/[\r\n]+/);
                 return goodLine[0];
             });
             // log new array
             cy.log(cqlArr);
-            let i = null
-            for (i in cqlArr){
+            for (let i in cqlArr){
                 if (cqlArr[i] == '' || cqlArr[i] == null || cqlArr[i] == undefined){
                     cy.get(pageResource).type('{enter}')
                 }
