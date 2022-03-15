@@ -28,10 +28,7 @@ export class OktaLogin {
 
         cy.get(Header.signOutButton).should('be.visible')
         cy.get(Header.signOutButton).click({force:true})
-        cy.location().should((loc) => {
-            expect(loc.pathname.toString()).to.contain('/login')
-        })
-
+        cy.url({ timeout: 100000 }).should('include', '/login')
         cy.log('Logout Successful')
     }
 
