@@ -8,7 +8,7 @@ pipeline{
     }
 
     parameters {
-        choice(choices: ['dev:all:ui:tests','dev:all:tests', 'dev:all:services:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
+        choice(choices: ['dev:all:ui:tests','dev:all:tests', 'dev:measure:editMeasure:ui:tests', 'dev:all:services:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
         choice(name:'BUILD_CONTAINER', description:'Rebuild Cypress Container?', choices:['no','yes'])
     }
 
