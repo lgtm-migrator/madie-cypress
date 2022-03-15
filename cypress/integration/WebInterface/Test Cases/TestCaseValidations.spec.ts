@@ -18,7 +18,7 @@ let testCaseXML = TestCaseJson.TestCase_XML
 let testCaseSeries = 'SBTestSeries'
 let twoFiftyTwoCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'
 
-describe.only('Test Case Validations', () => {
+describe('Test Case Validations', () => {
 
     before('Create Measure', () => {
 
