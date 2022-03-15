@@ -35,4 +35,8 @@ export class Utilities {
             }
         })
     }
+
+    public static waitForElementEnabled = (element: string, timeout: number) => {
+        cy.get(element, { timeout: timeout }).should('be.enabled')
+    }
 }
