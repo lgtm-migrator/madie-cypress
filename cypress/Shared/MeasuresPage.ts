@@ -3,7 +3,7 @@
 
 export class MeasuresPage {
 
-    public static readonly measureList = '.MeasureList___StyledTd-sc-1kfngu9-14'
+    public static readonly measureList = '.MeasureList___StyledTd-sc-1kfngu9-13'
 
     public static clickEditforCreatedMeasure(): void {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
