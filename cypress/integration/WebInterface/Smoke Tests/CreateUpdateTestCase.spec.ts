@@ -8,10 +8,10 @@ import {TestCaseJson} from "../../../Shared/TestCaseJson"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
-let testCaseTitle = 'Title for Auto Test'
+let testCaseTitle = 'Title for Auto Test          !@#$%^&*().         !@#$%^&*()'
 let testCaseDescription = 'DENOMFail' + Date.now()
-let testCaseSeries = 'SBTestSeries'
-let updatedTestCaseTitle = testCaseTitle + " some update"
+let testCaseSeries = 'SBTestSeries        !@#$%^&*()          !@#$%^&*()\''
+let updatedTestCaseTitle = 'Title for Auto Test' + " some update"
 let updatedTestCaseDescription = testCaseDescription + ' '+ 'UpdatedTestCaseDescription'
 let updatedTestCaseSeries = 'CMSTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
