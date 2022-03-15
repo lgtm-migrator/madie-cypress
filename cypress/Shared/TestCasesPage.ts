@@ -36,9 +36,15 @@ export class TestCasesPage {
         })
     }
 
-    public static grabValidateTestCaseTitle(testCaseTitle: string) : void{
+    public static grabValidateTestCaseTitleAndSeries(testCaseTitle: string, testCaseSeries: string) : void{
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
-            cy.get('[data-testid=test-case-row-'+ fileContents +']').should('be.visible').contains(testCaseTitle)
+
+            cy.get('[data-testid=test-case-row-'+ fileContents +']').invoke('text').then(
+                (text) => {
+                expect(text).to.include(testCaseTitle)
+                expect(text).to.include(testCaseSeries)
+            })
+
         })
     }
 
@@ -68,8 +74,7 @@ export class TestCasesPage {
         cy.get(this.successMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         //Verify created test case Title and Series exists on Test Cases Page
-        this.grabValidateTestCaseTitle(testCaseTitle)
-        cy.get(this.testCaseSeriesList).contains(testCaseSeries)
+        this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         cy.log('Test Case created successfully')
     }
@@ -96,8 +101,7 @@ export class TestCasesPage {
         cy.get(this.successMsg).should('contain.text', 'Test case updated successfully!')
 
         //Verify edited / updated test case Title and Series exists on Test Cases Page
-        this.grabValidateTestCaseTitle(updatedTestCaseTitle)
-        cy.get(this.testCaseSeriesList).contains(updatedTestCaseSeries)
+        this.grabValidateTestCaseTitleAndSeries(updatedTestCaseTitle, updatedTestCaseSeries)
 
         cy.log('Test Case updated successfully')
     }
