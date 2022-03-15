@@ -17,7 +17,7 @@ describe('CQL Translation Service', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
-                url: '/cql/translator/cql?showWarnings=false&annotations=true&locators=true&disable-list-demotion=true&' +
+                url: '/api/cql/translator/cql?showWarnings=false&annotations=true&locators=true&disable-list-demotion=true&' +
                     'disable-list-promotion=true&disable-method-invocation=true&validate-units=true',
                 method: 'PUT',
                 headers: {
