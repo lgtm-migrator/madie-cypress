@@ -17,8 +17,7 @@ export class OktaLogin {
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton).click()
-
-        cy.get(MeasuresPage.measureList).should('be.visible')
+        cy.get(MeasuresPage.measureListTitles).should('be.visible')
 
         cy.log('Login Successful')
 
