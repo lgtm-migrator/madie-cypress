@@ -4,6 +4,7 @@ import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Header} from "../../../../Shared/Header"
+import {Utilities} from "../../../../Shared/Utilities";
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -40,6 +41,7 @@ describe('Edit Measure: Add Meta Data', () => {
 
         //Enter meta data
         //Measure Steward
+        Utilities.waitForElementEnabled(EditMeasurePage.leftPanelMeasureSteward, 10000)
         cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
         cy.get(EditMeasurePage.measureStewardTextBox).clear().type(steward)
         cy.get(EditMeasurePage.measureStewardSaveButton).click()
