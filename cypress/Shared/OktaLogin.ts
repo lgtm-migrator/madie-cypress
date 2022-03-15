@@ -17,8 +17,7 @@ export class OktaLogin {
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton).click()
-
-        cy.get(MeasuresPage.measureList).should('be.visible')
+        cy.get(MeasuresPage.measureListTitles).should('be.visible')
 
         cy.log('Login Successful')
 
@@ -28,10 +27,7 @@ export class OktaLogin {
 
         cy.get(Header.signOutButton).should('be.visible')
         cy.get(Header.signOutButton).click({force:true})
-        cy.location().should((loc) => {
-            expect(loc.pathname.toString()).to.contain('/login')
-        })
-
+        //cy.url({ timeout: 100000 }).should('include', '/login')
         cy.log('Logout Successful')
     }
 
