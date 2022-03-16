@@ -1,7 +1,9 @@
-import {Header} from "../../../Shared/Header"
-import {OktaLogin} from "../../../Shared/OktaLogin";
+import {OktaLogin} from "../../../Shared/OktaLogin"
+import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 
-describe('Navigate to CQL Library Page', () => {
+let CQLLibraryName = ''
+
+describe('Create CQL Library', () => {
 
     beforeEach('Login', () => {
 
@@ -14,9 +16,11 @@ describe('Navigate to CQL Library Page', () => {
 
     })
 
-    it('Click on CQL Library Tab and Navigate to CQL Library Page', () => {
+    it('Navigate to CQL Library Page and create New Library', () => {
 
-        cy.get(Header.cqlLibraryTab).click()
-        cy.url().should('include', '/cql-libraries')
+        CQLLibraryName = 'TestLibrary' + Date.now()
+
+       CQLLibraryPage.createCQLLibrary(CQLLibraryName)
+
     })
 })
