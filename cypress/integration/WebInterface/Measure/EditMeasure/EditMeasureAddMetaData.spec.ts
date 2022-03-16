@@ -41,7 +41,7 @@ describe('Edit Measure: Add Meta Data', () => {
 
         //Enter meta data
         //Measure Steward
-        Utilities.waitForElementEnabled(EditMeasurePage.leftPanelMeasureSteward, 10000)
+        Utilities.waitForElementVisible(EditMeasurePage.leftPanelMeasureSteward, 10000)
         cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
         cy.get(EditMeasurePage.measureStewardTextBox).clear().type(steward)
         cy.get(EditMeasurePage.measureStewardSaveButton).click()
