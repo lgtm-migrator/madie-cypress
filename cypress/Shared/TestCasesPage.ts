@@ -7,7 +7,7 @@ export class TestCasesPage {
     public static readonly testCaseSeriesTextBox = '.MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
-    public static readonly successMsg = '[data-testid="create-test-case-alert"]'
+    public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
@@ -17,7 +17,7 @@ export class TestCasesPage {
     public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
     public static readonly testCaseJsonValidationErrorBtn = '[data-testid="show-json-validation-errors-button"]'
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
-    public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-6'
+    public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
 
     public static clickCreateTestCaseButton() : void {
@@ -71,7 +71,7 @@ export class TestCasesPage {
         cy.get(this.aceEditor).type(testCaseJson)
 
         this.clickCreateTestCaseButton()
-        cy.get(this.successMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
+        cy.get(this.confirmationMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         //Verify created test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
@@ -98,7 +98,7 @@ export class TestCasesPage {
 
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()
-        cy.get(this.successMsg).should('contain.text', 'Test case updated successfully!')
+        cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         //Verify edited / updated test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(updatedTestCaseTitle, updatedTestCaseSeries)
