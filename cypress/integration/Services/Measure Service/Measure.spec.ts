@@ -47,9 +47,9 @@ describe('Measure Service: Create Measure', () => {
             }).then((response) => {
                 expect(response.status).to.eql(200)
                 expect(response.body).to.not.be.null
-                expect(response.body).to.be.a('array')
-                cy.get(response.body.length)
-                expect(response.body[0].id).to.be.exist
+                expect(response.body.content).to.be.a('array')
+                cy.get(response.body.content.length)
+                expect(response.body.content[0].id).to.be.exist
             })
         })
     })
@@ -67,10 +67,10 @@ describe('Measure Service: Create Measure', () => {
             }).then((response) => {
                 expect(response.status).to.eql(200)
                 expect(response.body).to.not.be.null
-                expect(response.body).to.be.a('array')
-                cy.get(response.body.length)
-                expect(response.body[0].id).to.be.exist
-                expect(response.body[0].createdBy).to.eql(harpUser)
+                expect(response.body.content).to.be.a('array')
+                cy.get(response.body.content.length)
+                expect(response.body.content[0].id).to.be.exist
+                expect(response.body.content[0].createdBy).to.eql(harpUser)
             })
         })
     })

@@ -151,7 +151,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('contain.text', 'Nothing to see here!')
 
         TestCasesPage.clickCreateTestCaseButton()
-        cy.get(TestCasesPage.successMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
     })
 
     it('Enter Invalid Test Case Json and Verify Error Message', () => {
@@ -173,7 +173,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Patient" but found "Account"')
 
-        cy.get(TestCasesPage.successMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
     })
 
     it('Enter Patient XML and Verify Error Message ', () => {
@@ -195,7 +195,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Failed to parse JSON encoded FHIR content: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
 
-        cy.get(TestCasesPage.successMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
     })
 
 })
