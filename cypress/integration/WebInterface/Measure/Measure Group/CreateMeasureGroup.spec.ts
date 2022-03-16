@@ -70,7 +70,7 @@ describe('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //validate population definitions are those that were added via CQL
-        cy.get('#measure-group-population-select-initial-population').find('option:nth-child(1)').should('contain.text', 'Initial Population')
+        cy.get(MeasureGroupPage.initialPopulationSelect).find('option:nth-child(1)').should('contain.text', 'Initial Population')
 
     })
 
@@ -82,7 +82,7 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option
-        //save population definiitong with scoring unit
+        //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')

@@ -5,12 +5,12 @@ export class MeasureGroupPage {
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
 
     //Populations
-    public static readonly initialPopulationSelect = '#measure-group-population-select-initial-population'
-    public static readonly denominatorSelect = '#measure-group-population-select-denominator'
-    public static readonly denominatorExclusionSelect = '#measure-group-population-select-denominator-exclusion'
-    public static readonly denominatorExceptionSelect = '#measure-group-population-select-denominator-exception'
-    public static readonly numeratorSelect = '#measure-group-population-select-numerator'
-    public static readonly numeratorExclusionSelect = '#measure-group-population-select-numerator-exclusion'
+    public static readonly initialPopulationSelect = '[name="population.initialPopulation"]'
+    public static readonly denominatorSelect = '[name="population.denominator"]'
+    public static readonly denominatorExclusionSelect = '[name="population.denominatorExclusion"]'
+    public static readonly denominatorExceptionSelect = '#population-select-denominator-exception'
+    public static readonly numeratorSelect = '[name="population.numerator"]'
+    public static readonly numeratorExclusionSelect = '[name="population.numeratorExclusion"]'
 
     //Measure Details
     public static readonly measureScoringUnit = "Ratio"
