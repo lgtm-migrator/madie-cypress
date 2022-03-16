@@ -1,8 +1,6 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
-let measureName = 'TestMeasure' + Date.now()
-let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
+
 
 describe('Create New Measure', () => {
 
@@ -15,6 +13,10 @@ describe('Create New Measure', () => {
     })
 
     it('Login to Madie and Create New Measure', () => {
+
+        let measureName = 'TestMeasure' + Date.now()
+        let CqlLibraryName = 'TestLibrary' + Date.now()
+        let measureScoring = 'Ratio'
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
