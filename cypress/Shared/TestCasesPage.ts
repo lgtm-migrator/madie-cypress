@@ -19,6 +19,15 @@ export class TestCasesPage {
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
     public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
+    public static readonly testCasePopulationValuesTable = '[data-testid="test-case-population-list-tbl"]'
+    public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'
+    public static readonly testCaseNUMERCheckBox = '[data-testid="test-population-numerator-expected"]'
+    public static readonly testCaseNUMEXCheckBox = '[data-testid="test-population-numeratorExclusion-expected"]'
+    public static readonly testCaseDENOMCheckBox = '[data-testid="test-population-denominator-expected"]'
+    public static readonly testCaseDENEXCheckBox = '[data-testid="test-population-denominatorExclusion-expected"]'
+    public static readonly testCaseDENEXCEPCheckBox = '[data-testid="test-population-denominatorException-expected"]'
+    public static readonly testCaseMSRPOPLCheckBox = '[data-testid="test-population-measurePopulation-expected"]'
+    public static readonly testCaseMSRPOPLEXCheckBox = '[data-testid="test-population-measurePopul'
 
     public static clickCreateTestCaseButton() : void {
 
