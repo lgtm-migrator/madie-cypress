@@ -46,6 +46,8 @@ describe('Measure Group', () => {
         cy.get(MeasureGroupPage.denominatorExceptionSelect).should('not.exist')
         cy.get(MeasureGroupPage.numeratorSelect).should('not.exist')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('not.exist')
+        cy.get(MeasureGroupPage.measurePopulationSelect).should('not.exist')
+        cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('not.exist')
 
         //Continuous Variable
         cy.get(MeasureGroupPage.measureScoringSelect).select('Continuous Variable')
@@ -57,6 +59,8 @@ describe('Measure Group', () => {
         cy.get(MeasureGroupPage.denominatorExceptionSelect).should('not.exist')
         cy.get(MeasureGroupPage.numeratorSelect).should('not.exist')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('not.exist')
+        cy.get(MeasureGroupPage.measurePopulationSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('be.visible')
 
         //Proportion
         cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
@@ -68,6 +72,8 @@ describe('Measure Group', () => {
         cy.get(MeasureGroupPage.denominatorExceptionSelect).should('be.visible')
         cy.get(MeasureGroupPage.numeratorSelect).should('be.visible')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measurePopulationSelect).should('not.exist')
+        cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('not.exist')
 
         //Ratio
         cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
@@ -79,6 +85,8 @@ describe('Measure Group', () => {
         cy.get(MeasureGroupPage.denominatorExceptionSelect).should('not.exist')
         cy.get(MeasureGroupPage.numeratorSelect).should('be.visible')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measurePopulationSelect).should('not.exist')
+        cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('not.exist')
 
     })
 

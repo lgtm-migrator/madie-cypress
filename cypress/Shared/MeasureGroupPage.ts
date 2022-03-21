@@ -8,9 +8,11 @@ export class MeasureGroupPage {
     public static readonly initialPopulationSelect = '[name="population.initialPopulation"]'
     public static readonly denominatorSelect = '[name="population.denominator"]'
     public static readonly denominatorExclusionSelect = '[name="population.denominatorExclusion"]'
-    public static readonly denominatorExceptionSelect = '#measure-group-population-select-denominator-exception'
+    public static readonly denominatorExceptionSelect = '[name="population.denominatorException"]'
     public static readonly numeratorSelect = '[name="population.numerator"]'
     public static readonly numeratorExclusionSelect = '[name="population.numeratorExclusion"]'
+    public static readonly measurePopulationSelect = '[name="population.measurePopulation"]'
+    public static readonly measurePopulationExclusionSelect = '[name="population.measurePopulationExclusion"]'
 
     //Measure Details
     public static readonly measureScoringUnit = "Ratio"
