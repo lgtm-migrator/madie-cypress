@@ -3,39 +3,15 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
-import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {Header} from "../../../Shared/Header"
 
 let measureName = 'TestMeasure' + (Date.now())
 let CqlLibraryName = 'TestLibrary' + (Date.now())
-let measureScoring = 'Ratio'
 let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
-let testCaseTitle = 'test case title'
-let testCaseDescription = 'DENOMFail' + Date.now()
-let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
-
-let testCaseSeries = 'SBTestSeries'
 
 describe('Test Case Expected Measure Group population values based on initial measure scoring', () => {
-/*     before('Create Measure', () => {
-
-
-
-        //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-    }) */
-/*     beforeEach('Login', () => {
-        OktaLogin.Login()
-
-    })
-    afterEach('Logout', () => {
-        OktaLogin.Logout()
-
-    }) */
-
     it('Validate Population Values check boxes are correct based on measure scoring value that is applied when the measure is initially created (defalut measure group)', () => {
-
+        
         for (let i in measureScoringArray){
             cy.wait(7000)
             OktaLogin.Login()
@@ -146,7 +122,6 @@ describe('Test Case Expected Measure Group population values based on initial me
                 }
                 
             }
-
         }
         //cy.get(Header.mainMadiePageButton).click()
 
