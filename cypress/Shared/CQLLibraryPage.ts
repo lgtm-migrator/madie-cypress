@@ -3,10 +3,10 @@ import {Header} from "./Header"
 export class CQLLibraryPage {
 
     public static readonly createCQLLibraryBtn = '[data-testid="create-new-cql-library-button"]'
-    public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name-text-field"]'
-    public static readonly cqlLibraryModelDropdown = '[class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-182didf"]'
+    public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
+    public static readonly cqlLibraryModelDropdown = '#cqlLibraryModel'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core"]'
-    public static saveCQLLibraryBtn = '[data-testid="create-new-cql-library-save-button"]'
+    public static saveCQLLibraryBtn = '#saveBtn'
     public static readonly cqlLibraryNameList = '.CqlLibraryList___StyledTd-sc-1rv02q7-9'
     public static readonly cqlLibraryModelList = '.CqlLibraryList___StyledTd2-sc-1rv02q7-10'
     public static readonly cqlLibraryNameInvalidError = '[data-testid="cqlLibraryName-helper-text"]'
