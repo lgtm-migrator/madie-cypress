@@ -1,4 +1,5 @@
 import {Environment} from "../../../Shared/Environment"
+import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 
 export {}
 
@@ -23,7 +24,10 @@ describe('CQL Library Service: Create CQL Library', () => {
                 headers: {
                     authorization: 'Bearer ' + accessToken.value
                 },
-                body: {"cqlLibraryName": CQLLibraryName}
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
@@ -70,5 +74,234 @@ describe('CQL Library Service: Create CQL Library', () => {
             })
         })
     })
+})
 
+describe('CQL Library Name validations', () => {
+
+    let apiCQLLibraryName = 'TestLibrary' + Date.now()
+
+    before('Create CQL Library', () => {
+
+        CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
+    })
+
+    beforeEach('Set Access Token', () => {
+
+        cy.setAccessTokenCookie()
+    })
+
+    it('Validation Error: CQL Library Name empty', () => {
+
+        CQLLibraryName = " "
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name is required.')
+            })
+        })
+    })
+
+    it('Validation Error: CQL Library Name has special characters', () => {
+
+        CQLLibraryName = 'Test_Measure'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.')
+            })
+        })
+    })
+
+    it('Validation Error: CQL Library Name does not start with an Upper Case letter', () => {
+
+        CQLLibraryName = 'testMeasure'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.')
+            })
+        })
+    })
+
+    it('Validation Error: CQL Library Name contains spaces', () => {
+
+        CQLLibraryName = 'Test  Measure'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.')
+            })
+        })
+    })
+
+    it('Validation Error: CQL Library Name has only numbers', () => {
+
+        CQLLibraryName = '1234565'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.')
+            })
+        })
+    })
+
+    it('Validation Error: CQL Library Name has more than 255 characters', () => {
+
+        CQLLibraryName = 'Abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvw'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name cannot be more than 255 characters.')
+            })
+        })
+    })
+
+    it('Validation Error: Duplicate CQL Library Name', () => {
+
+        CQLLibraryName = apiCQLLibraryName
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": "QI-Core"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.cqlLibraryName).to.eql('Library name must be unique.')
+            })
+        })
+    })
+})
+
+describe('CQL Library Model Validations', () => {
+
+    beforeEach('Set Access Token', () => {
+
+        cy.setAccessTokenCookie()
+    })
+
+    it('Validation Error: CQL Library Model empty', () => {
+
+        CQLLibraryName = 'TestCqlLibrary' + Date.now()
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": ""
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.model).to.eql('Model must be one of the supported types in MADiE.')
+            })
+        })
+    })
+
+    it('Validation Error: Invalid CQL Library Model', () => {
+
+        CQLLibraryName = 'TestCqlLibrary' + Date.now()
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                failOnStatusCode: false,
+                url: '/api/cql-libraries',
+                method: 'POST',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                body: {
+                    "cqlLibraryName": CQLLibraryName,
+                    "model": 'QI-CoreINVALID'
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(400)
+                expect(response.body.validationErrors.model).to.eql('Model must be one of the supported types in MADiE.')
+            })
+        })
+    })
 })
