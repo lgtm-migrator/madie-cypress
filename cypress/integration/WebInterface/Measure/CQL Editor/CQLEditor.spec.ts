@@ -14,7 +14,7 @@ let measureScoring = MeasureGroupPage.measureScoringUnit
 
 describe('Validate Measure Group', () => {
 
-    beforeEach('Login', () => {
+    beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newMeasureName = measureName + randValue
         let newCqlLibraryName = CqlLibraryName + randValue
