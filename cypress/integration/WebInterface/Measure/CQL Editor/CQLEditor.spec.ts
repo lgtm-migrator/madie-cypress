@@ -128,7 +128,7 @@ describe('Validate Measure Group', () => {
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
-        //Validate error(s) in CQL Editor after saving
+        //Validate the lack of error(s) in CQL Editor
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
         //Navigate away from the page
