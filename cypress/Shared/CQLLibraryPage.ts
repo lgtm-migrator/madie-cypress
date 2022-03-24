@@ -6,11 +6,13 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
     public static readonly cqlLibraryModelDropdown = '#cqlLibraryModel'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core"]'
-    public static saveCQLLibraryBtn = '#saveBtn'
+    public static readonly saveCQLLibraryBtn = '#saveBtn'
     public static readonly cqlLibraryNameList = '.CqlLibraryList___StyledTd-sc-1rv02q7-9'
     public static readonly cqlLibraryModelList = '.CqlLibraryList___StyledTd2-sc-1rv02q7-10'
     public static readonly cqlLibraryNameInvalidError = '[data-testid="cqlLibraryName-helper-text"]'
-    public static readonly cqlLibraryNamenotUniqueError = '[data-testid="cql-library-server-error-alerts"]'
+    public static readonly duplicateCQLLibraryNameError = '[data-testid="cql-library-server-error-alerts"]'
+    public static readonly cqlLibraryModelErrorMsg = '#cqlLibraryModel-helper-text'
+
 
     public static createCQLLibrary (CQLLibraryName: string) : void {
 
