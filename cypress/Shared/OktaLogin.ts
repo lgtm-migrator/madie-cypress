@@ -25,8 +25,8 @@ export class OktaLogin {
 
     public static Logout(): void {
 
-        cy.get(Header.signOutButton).should('be.visible')
-        cy.get(Header.signOutButton).click({force:true})
+        cy.get(Header.userProfileSelect).should('be.visible')
+        cy.get(Header.userProfileSelect).select('Sign Out')
         //cy.url({ timeout: 100000 }).should('include', '/login')
         cy.log('Logout Successful')
     }
