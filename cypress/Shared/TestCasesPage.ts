@@ -21,6 +21,14 @@ export class TestCasesPage {
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
 
     //Test Case Population Values
+    public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'
+    public static readonly testCaseNUMERCheckBox = '[data-testid="test-population-numerator-expected"]'
+    public static readonly testCaseNUMEXCheckBox = '[data-testid="test-population-numeratorExclusion-expected"]'
+    public static readonly testCaseDENOMCheckBox = '[data-testid="test-population-denominator-expected"]'
+    public static readonly testCaseDENEXCheckBox = '[data-testid="test-population-denominatorExclusion-expected"]'
+    public static readonly testCaseDENEXCEPCheckBox = '[data-testid="test-population-denominatorException-expected"]'
+    public static readonly testCaseMSRPOPLCheckBox = '[data-testid="test-population-measurePopulation-expected"]'
+    public static readonly testCaseMSRPOPLEXCheckBox = '[data-testid="test-population-measurePopulationExclusion-expected"]'
     public static readonly testCasePopulationHeaderForNoMeasureGroup = '.GroupPopulations___StyledSpan2-sc-1752rtp-2'
     public static readonly testCasePopulationValuesHeader = '.GroupPopulations___StyledSpan-sc-1752rtp-1'
     public static readonly testCasePopulationValuesTable = '[data-testid="test-case-population-list-tbl"]'
