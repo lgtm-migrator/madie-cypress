@@ -20,7 +20,8 @@ describe('Measure Name Validations', () => {
         cy.get(LandingPage.newMeasureButton).click()
 
         //Verify error message when the Measure Name field is empty
-        cy.get(CreateMeasurePage.measureNameTextbox).focus().blur()
+        cy.get(CreateMeasurePage.measureNameTextbox).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).click()
         cy.get(CreateMeasurePage.measureNameFieldLevelError).should('contain.text', 'A measure name is required.')
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
@@ -60,7 +61,8 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureModelQICore).click()
 
         //Verify error message when the CQL Library Name field is empty
-        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).focus().blur()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).click()
         cy.get(CreateMeasurePage.cqlLibraryNameFieldLevelError).should('contain.text', 'Measure library name is required.')
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
@@ -100,7 +102,10 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureScoringDropdown).click()
         cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.createMeasureButton).click()
-        cy.get(CreateMeasurePage.cqlLibraryNameDuplicateErrorMsg).should('contain.text', 'CQL library with given name already exists')
+        cy.get(CreateMeasurePage.serverErrorMsg).should('contain.text', 'CQL library with given name already exists')
+
+        cy.get(CreateMeasurePage.serverErrorMsgCloseIcon).click()
+        cy.get(CreateMeasurePage.cancelButton).click()
 
     })
 
@@ -121,6 +126,8 @@ describe('Measure Name Validations', () => {
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
 
+        cy.get(CreateMeasurePage.cancelButton).click()
+
     })
 
     //Measure Type Validations
@@ -140,6 +147,8 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureScoringCohort).click()
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
+
+        cy.get(CreateMeasurePage.cancelButton).click()
 
     })
 })

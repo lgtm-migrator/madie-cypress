@@ -5,19 +5,21 @@ export class CreateMeasurePage {
     public static readonly createMeasureButton = 'button[data-testid="create-new-measure-save-button"]'
     public static readonly cancelButton = '[data-testid=create-new-measure-cancel-button]'
     public static readonly measureNameTextbox = '[data-testid=measure-name-text-field]'
-    public static readonly measureModelDropdown = '#mui-1'
+    public static readonly measureModelDropdown = '#model-select'
     public static readonly measureModelQICore = '[data-testid="measure-model-option-QI-Core"]'
-    public static readonly measureModelFieldLevelError = '#mui-1-helper-text'
+    public static readonly measureModelFieldLevelError = '.MuiFormHelperText-root'
     public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name"]'
     public static readonly measureNameFieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
-    public static readonly cqlLibraryNameDuplicateErrorMsg = '[data-testid="server-error-alerts"]'
+    public static readonly serverErrorMsg = '[data-testid="server-error-alerts"]'
+    public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"] [data-testid="CloseIcon"]'
     public static readonly measureScoringDropdown = '#measureScoring'
-    public static readonly measureScoringFieldLevelError = '#measureScoring-helper-text'
+    public static readonly measureScoringFieldLevelError = '.MuiFormHelperText-root'
     public static readonly measureScoringCohort = '[data-testid=measure-scoring-option-Cohort]'
     public static readonly measureScoringContinuousVariable = '[data-testid="measure-scoring-option-Continuous Variable"]'
     public static readonly measureScoringProportion = '[data-testid=measure-scoring-option-Proportion]'
     public static readonly measureScoringRatio = '[data-testid=measure-scoring-option-Ratio]'
+
 
 
     public static clickCreateMeasureButton() : void {
@@ -58,7 +60,7 @@ export class CreateMeasurePage {
                 cy.get(this.measureScoringRatio).click()
                 break
         }
-        cy.wait(5000)
+
         cy.get(this.createMeasureButton).click()
 
         this.clickCreateMeasureButton()
