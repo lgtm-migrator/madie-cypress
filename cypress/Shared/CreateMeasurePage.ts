@@ -1,3 +1,4 @@
+import { is } from "cypress/types/bluebird"
 import {LandingPage} from "./LandingPage"
 
 export class CreateMeasurePage {
@@ -35,9 +36,9 @@ export class CreateMeasurePage {
         })
     }
 
-    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
+    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string | string[]) : void {
 
-        cy.log('Create ' +measureScoring+ ' Measure')
+        cy.log('Create ' +measureScoring.toString()+ ' Measure')
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(this.measureNameTextbox).type(measureName)
         cy.get(this.measureModelDropdown).click()
@@ -63,10 +64,10 @@ export class CreateMeasurePage {
 
         this.clickCreateMeasureButton()
 
-        cy.log( measureScoring+ ' Measure created successfully')
+        cy.log( measureScoring.toString()+ ' Measure created successfully')
     }
 
-    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string): void {
+    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string | string[]): void {
         cy.setAccessTokenCookie()
 
         //Create New Measure
@@ -81,7 +82,7 @@ export class CreateMeasurePage {
                     'measureName': measureName + Date.now(),
                     'cqlLibraryName': CqlLibraryName + Date.now(),
                     'model': 'QI-Core',
-                    'measureScoring': measureScoring
+                    'measureScoring': measureScoring.toString()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)

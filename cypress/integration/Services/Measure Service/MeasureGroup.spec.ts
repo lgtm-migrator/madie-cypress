@@ -32,7 +32,6 @@ describe('Measure Service: Test Case Endpoints', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
-                // cy.get('[data-testid=edit-measure-'+ fileContents +']').click()
                 cy.request({
                     url: '/api/measures/' + fileContents + '/groups/',
                     method: 'POST',
@@ -54,7 +53,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.population.initialPopulation).to.eql('IPP')
                     expect(response.body.population.numerator).to.eql('Numerator')
                     expect(response.body.population.denominator).to.eql('Denominator')
-                    // expect(response.body.createdBy).to.eql(harpUser)
+                    expect(response.body.createdBy).to.eql(harpUser)
                 })
             })
         })
@@ -69,7 +68,6 @@ describe('Measure Service: Test Case Endpoints', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
-                // cy.get('[data-testid=edit-measure-'+ fileContents +']').click()
                 cy.request({
                     url: '/api/measures/' + fileContents + '/groups/',
                     method: 'PUT',
@@ -93,7 +91,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.population.numerator).to.eql('Numerator')
                     expect(response.body.population.numeratorExclusion).to.eql('Numerator Exclusion')
                     expect(response.body.population.denominator).to.eql('Denominator')
-                    // expect(response.body.createdBy).to.eql(harpUser)
+                    expect(response.body.createdBy).to.eql(harpUser)
                 })
             })
         })

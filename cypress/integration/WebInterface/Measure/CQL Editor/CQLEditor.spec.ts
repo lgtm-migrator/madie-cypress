@@ -22,16 +22,14 @@ describe('Validate Measure Group', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
         OktaLogin.Login()
-        cy.wait(1000)
 
     })
     afterEach('Logout', () => {
         OktaLogin.Logout()
-        cy.wait(1000)
 
     })
 
-    it('Verify errors appear on CQL Editor page and in the CQL Editor object on save and on tab / page load', () => {
+    it('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -71,7 +69,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it('Verify errors appear on CQL Editor page and in the CQL Editor object on save and on tab / page load, when included library is not found', () => {
+    it('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is not found', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -110,7 +108,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it('Verify no appear on CQL Editor page and in the CQL Editor object on save and on tab / page load, when included library is found', () => {
+    it('Verify no errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is found', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
