@@ -19,7 +19,8 @@ export class TestCasesPage {
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
     public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
-    public static readonly testCasePopulationValuesTable = '[data-testid="test-case-population-list-tbl"]'
+
+    //Test Case Population Values
     public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'
     public static readonly testCaseNUMERCheckBox = '[data-testid="test-population-numerator-expected"]'
     public static readonly testCaseNUMEXCheckBox = '[data-testid="test-population-numeratorExclusion-expected"]'
@@ -28,7 +29,16 @@ export class TestCasesPage {
     public static readonly testCaseDENEXCEPCheckBox = '[data-testid="test-population-denominatorException-expected"]'
     public static readonly testCaseMSRPOPLCheckBox = '[data-testid="test-population-measurePopulation-expected"]'
     public static readonly testCaseMSRPOPLEXCheckBox = '[data-testid="test-population-measurePopulationExclusion-expected"]'
-    
+    public static readonly testCasePopulationHeaderForNoMeasureGroup = '.GroupPopulations___StyledSpan2-sc-1752rtp-2'
+    public static readonly testCasePopulationValuesHeader = '.GroupPopulations___StyledSpan-sc-1752rtp-1'
+    public static readonly testCasePopulationValuesTable = '[data-testid="test-case-population-list-tbl"]'
+    public static readonly testCasePopulationValues = '.TestCasePopulationList___StyledTr-sc-iww9ze-3'
+    public static readonly initialPopulationRow = '[data-testid="test-row-population-id-initialPopulation"]'
+    public static readonly numeratorRow = '[data-testid="test-row-population-id-numerator"]'
+    public static readonly numeratorExclusionRow = '[data-testid="test-row-population-id-numeratorExclusion"]'
+    public static readonly denominatorRow = '[data-testid="test-row-population-id-denominator"]'
+    public static readonly denominatorExclusionRow = '[data-testid="test-row-population-id-denominatorExclusion"]'
+
     public static clickCreateTestCaseButton() : void {
 
         //setup for grabbing the measure create call
@@ -50,9 +60,9 @@ export class TestCasesPage {
 
             cy.get('[data-testid=test-case-row-'+ fileContents +']').invoke('text').then(
                 (text) => {
-                expect(text).to.include(testCaseTitle)
-                expect(text).to.include(testCaseSeries)
-            })
+                    expect(text).to.include(testCaseTitle)
+                    expect(text).to.include(testCaseSeries)
+                })
 
         })
     }
