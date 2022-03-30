@@ -314,19 +314,6 @@ export class Utilities {
                 break
             }
             case 'Cohort': {
-                //verify the correct populations are displayed and not displayed
- /*                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .should('not.exist')
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .should('not.exist')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .should('not.exist')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .should('not.exist')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .should('not.exist') */
                 break
 
             }
