@@ -14,10 +14,14 @@ export class MeasureGroupPage {
     public static readonly measurePopulationSelect = '[name="population.measurePopulation"]'
     public static readonly measurePopulationExclusionSelect = '[name="population.measurePopulationExclusion"]'
 
+
     //Measure Details
     public static readonly measureScoringUnit = "Ratio"
 
     //saved message
     public static readonly successfulSaveMeasureGroupMsg = '.MuiAlert-message.css-1w0ym84'
+
+    //update button
+    public static readonly confirmScoreUnitValueUpdateBtn = '[data-testid="group-form-update-btn"]'
 
 }
