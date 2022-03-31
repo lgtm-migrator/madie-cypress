@@ -1,12 +1,9 @@
 export {}
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
-import {Environment} from "../../../Shared/Environment"
-
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
 let measureScoring = 'Proportion'
-let harpUser = Environment.credentials().harpUser
 
 describe('Measure Service: Test Case Endpoints', () => {
 
@@ -20,15 +17,15 @@ describe('Measure Service: Test Case Endpoints', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newMeasureName = measureName + randValue
         let newCqlLibraryName = CqlLibraryName + randValue
+
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
 
     })
-    it('Create meassure group', () => {
+    it('Create Proportion measure group', () => {
         let PopIniPop = 'IPP'
         let PopNum = 'Numerator'
         let PopDenom = 'Denominator'
-        let measureTstScoring = 'Cohort'
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
@@ -39,7 +36,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": measureTstScoring, 
+                        "scoring": measureScoring,
                         "population": { 
                             "initialPopulation": PopIniPop, 
                             "numerator": PopNum, 
@@ -49,17 +46,16 @@ describe('Measure Service: Test Case Endpoints', () => {
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
-                    expect(response.body.scoring).to.eql('Cohort')
+                    expect(response.body.scoring).to.eql(measureScoring)
                     expect(response.body.population.initialPopulation).to.eql('IPP')
                     expect(response.body.population.numerator).to.eql('Numerator')
                     expect(response.body.population.denominator).to.eql('Denominator')
-                    expect(response.body.createdBy).to.eql(harpUser)
                 })
             })
         })
     })
 
-    it.only('Update meassure group', () => {
+    it('Update measure group to Ratio', () => {
         let PopIniPop = 'IPP'
         let PopNum = 'Numerator'
         let PopNumExc = 'Numerator Exclusion'
@@ -91,7 +87,6 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.population.numerator).to.eql('Numerator')
                     expect(response.body.population.numeratorExclusion).to.eql('Numerator Exclusion')
                     expect(response.body.population.denominator).to.eql('Denominator')
-                    expect(response.body.createdBy).to.eql(harpUser)
                 })
             })
         })
