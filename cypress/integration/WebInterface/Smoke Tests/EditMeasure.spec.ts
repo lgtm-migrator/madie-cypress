@@ -32,7 +32,6 @@ describe('Edit Measure', () => {
 
         cy.get(EditMeasurePage.editMeasurePen).click()
         cy.get(EditMeasurePage.editMeasureTextBox).clear()
-        cy.wait(100)
         cy.get(EditMeasurePage.editMeasureTextBox).type(updatedMeasureName)
         cy.get(EditMeasurePage.saveEditedMeasureName).click()
 
@@ -40,7 +39,7 @@ describe('Edit Measure', () => {
         cy.get(EditMeasurePage.leftPanelMeasureSteward).contains('Steward/Author').click()
         cy.get(EditMeasurePage.measureStewardTextBox).clear().type('SB')
         cy.get(EditMeasurePage.measureStewardSaveButton).click()
-        cy.get(EditMeasurePage.measureStewardConfirmaionText).should('contain.text', 'Measure Steward Information Saved Successfully')
+        cy.get(EditMeasurePage.measureStewardSuccessMessage).should('contain.text', 'Measure Steward Information Saved Successfully')
 
         //Navigate back to Measures page and verify if the Measure Name is updated
         cy.get(Header.mainMadiePageButton).click()
