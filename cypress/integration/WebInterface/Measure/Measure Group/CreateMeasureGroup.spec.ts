@@ -12,19 +12,14 @@ let measureScoring = MeasureGroupPage.measureScoringUnit
 
 describe('Validate Measure Group', () => {
 
-    before('Create Measure', () => {
-
+    beforeEach('Create measure and Login', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
-
-    })
-    beforeEach('Login', () => {
-
         OktaLogin.Login()
     })
 
     afterEach('Login', () => {
-
+        cy.wait(2000)
         OktaLogin.Logout()
 
     })
@@ -78,10 +73,22 @@ describe('Validate Measure Group', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //read and write CQL from flat file
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(1000)
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //select a population definition
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
+        cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
+        cy.get(MeasureGroupPage.numeratorSelect).select('SDE Race') //select the 'SDE Race' option for Numerator
+        cy.wait(1000)
         //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
