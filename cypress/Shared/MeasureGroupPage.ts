@@ -35,7 +35,7 @@ export class MeasureGroupPage {
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
@@ -45,11 +45,11 @@ export class MeasureGroupPage {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(this.initialPopulationSelect).select('SDE Ethnicity')
-        cy.get(this.denominatorSelect).select('SDE Payer')
-        cy.get(this.denominatorExclusionSelect).select('SDE Race')
-        cy.get(this.numeratorSelect).select('Initial Population')
-        cy.get(this.numeratorExclusionSelect).select('SDE Ethnicity')
+        cy.get(this.initialPopulationSelect).select('ipp')
+        cy.get(this.denominatorSelect).select('denom')
+        cy.get(this.denominatorExclusionSelect).select('denom')
+        cy.get(this.numeratorSelect).select('num')
+        cy.get(this.numeratorExclusionSelect).select('num')
         cy.get(this.saveMeasureGroupDetails).click()
 
         //validation successful save message
