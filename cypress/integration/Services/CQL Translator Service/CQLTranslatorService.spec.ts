@@ -12,16 +12,14 @@ describe('CQL Translation Service', () => {
 
     it('Successful 200', () => {
 
-        cy.clearCookies()
-        cy.clearLocalStorage()
-
         cy.getCookie('accessToken').then((accessToken) => {
+            console.log(accessToken)
             cy.request({
                 url: '/api/cql/translator/cql?showWarnings=false&annotations=true&locators=true&disable-list-demotion=true&' +
                     'disable-list-promotion=true&disable-method-invocation=true&validate-units=true',
                 method: 'PUT',
                 headers: {
-                    //authorization: 'Bearer ' + accessToken.value,
+                    authorization: 'Bearer ' + accessToken.value,
                     'Content-Type': 'text/plain',
                     'Referer': 'https://dev-madie.hcqis.org/measure/61e1d03b1c970b2059dab030/edit/cql-editor',
                     'Cookie': 'BIGipServerdev-madie.hcqis.org_pool=!lMfj+jchkkKRNQnnHpfsqpjhar0QCIcjD4NHLXcBKQr7PK' +
