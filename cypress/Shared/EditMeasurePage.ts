@@ -8,7 +8,7 @@ export class EditMeasurePage {
     public static readonly testCasesTab = '[data-testid=patients-tab]'
 
     //Measure Details
-    public static readonly editMeasurePen = 'path'
+    public static readonly editMeasurePen = '.InlineEdit___StyledPencilIcon-sc-infirb-2'
     public static readonly editMeasureTextBox = '[data-testid="inline-edit-input"]'
     public static readonly saveEditedMeasureName = '.fa-check-circle > path'
     public static readonly editMeasureFieldLevelError = '[data-testid="edit-measure-name-error-text"]'
