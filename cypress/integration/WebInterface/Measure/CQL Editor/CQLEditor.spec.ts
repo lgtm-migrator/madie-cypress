@@ -5,14 +5,14 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
-import {LandingPage} from "../../../../Shared/LandingPage"
+import {Header} from "../../../../Shared/Header"
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let measureScoring = MeasureGroupPage.measureScoringUnit
 
 
-describe('Validate Measure Group', () => {
+describe('CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -53,7 +53,7 @@ describe('Validate Measure Group', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 5:13 | Member SDE Sex not found for type null.")
 
         //Navigate away from the page
-        cy.get(LandingPage.madieLogo).click()
+        cy.get(Header.measures).click()
 
         //Navigate back to the CQL Editor page
         MeasuresPage.clickEditforCreatedMeasure()
@@ -93,7 +93,7 @@ describe('Validate Measure Group', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
 
         //Navigate away from the page
-        cy.get(LandingPage.madieLogo).click()
+        cy.get(Header.measures).click()
 
         //Navigate back to the CQL Editor page
         MeasuresPage.clickEditforCreatedMeasure()
@@ -130,7 +130,7 @@ describe('Validate Measure Group', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
         //Navigate away from the page
-        cy.get(LandingPage.madieLogo).click()
+        cy.get(Header.measures).click()
 
         //Navigate back to the CQL Editor page
         MeasuresPage.clickEditforCreatedMeasure()
