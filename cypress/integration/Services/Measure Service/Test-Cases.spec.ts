@@ -332,7 +332,7 @@ describe('Test Case Json Validations', () =>{
 
     })
 
-    it('Enter Valid Test Case Json', () => {
+    it.skip('Enter Valid Test Case Json', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
@@ -381,7 +381,7 @@ describe('Test Case Json Validations', () =>{
                     expect(response.status).to.eql(201)
                     expect(response.body.hapiOperationOutcome.code).to.eql(400)
                     expect(response.body.hapiOperationOutcome.message).to.eql('Unable to persist to HAPI FHIR due to errors')
-                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Patient" but found "Account"')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Bundle" but found "Account"')
                 })
             })
         })

@@ -1,0 +1,18 @@
+library SimpleFhirMeasure version '0.0.001'
+
+using FHIR version '4.0.1'
+
+include FHIRHelpers version '4.0.001' called FHIRHelpers
+
+parameter "Measurement Period" Interval<DateTime>
+
+context Patient
+
+define "ipp":
+  exists ["Encounter"] E where E.period.start during "Measurement Period"
+
+define "denom":
+  "ipp"
+
+define "num":
+  exists ["Encounter"] E where E.status ~ 'finished'

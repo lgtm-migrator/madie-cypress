@@ -171,7 +171,7 @@ describe('Test Case Json Validations', () => {
 
         TestCasesPage.clickCreateTestCaseButton()
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
-        cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Patient" but found "Account"')
+        cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Bundle" but found "Account"')
 
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
     })
