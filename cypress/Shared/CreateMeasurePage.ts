@@ -1,4 +1,5 @@
 import {LandingPage} from "./LandingPage"
+import {MeasuresPage} from "./MeasuresPage";
 
 export class CreateMeasurePage {
 
@@ -64,6 +65,8 @@ export class CreateMeasurePage {
         cy.get(this.createMeasureButton).click()
 
         this.clickCreateMeasureButton()
+
+        cy.get(MeasuresPage.measureListTitles).should('be.visible')
 
         cy.log( measureScoring+ ' Measure created successfully')
     }
