@@ -32,7 +32,7 @@ export class EditMeasurePage {
     //Measure Steward Page
     public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
     public static readonly measureStewardSaveButton = '[data-testid="measureStewardSave"]'
-    public static readonly measureStewardConfirmaionText = '.sc-bqiRlB'
+    public static readonly measureStewardSuccessMessage = '[data-testid="measureStewardSuccess"]'
 
     //Description Page
     public static readonly measureDescriptionTextBox = '[data-testid="measureDescriptionInput"]'
