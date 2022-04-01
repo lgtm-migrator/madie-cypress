@@ -110,7 +110,7 @@ describe('Test Case Expected Measure Group population values based on initial me
 
     })
 
-    it.only('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
+    it('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
 
                 //Click on Edit Measure
                 MeasuresPage.clickEditforCreatedMeasure()
@@ -138,6 +138,8 @@ describe('Test Case Expected Measure Group population values based on initial me
                 //create test case
                 cy.wait(1000)
                 TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+                cy.get(EditMeasurePage.testCasesTab).click()
+                TestCasesPage.clickEditforCreatedTestCase()
                 cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
                 cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
                 cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
@@ -161,41 +163,12 @@ describe('Test Case Expected Measure Group population values based on initial me
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
                 cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
-
                 //navigate back to the test case tab
                 cy.get(EditMeasurePage.testCasesTab).click()
-
+                TestCasesPage.clickEditforCreatedTestCase()
                 //confirm that check boxes that were checked are no longer checked
                 cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
-                cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
-                cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('not.be.checked')
-                cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
-                cy.get(TestCasesPage.testCaseDENEXCheckBox).should('not.be.checked')
-
-                    
-/*                 for (let i in measureScoringArray){
-                    //log, in cypress, the measure score value
-                    cy.log((measureScoringArray[i].valueOf()).toString())
-                    //select scoring unit on measure
-                    cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
-                    //based on the scoring unit value, select a value for all population fields
-                    Utilities.validationMeasureGroupSaveAll((measureScoringArray[i].valueOf()).toString())                
-                    //save measure group
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                    //validation message after attempting to save
-                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
-                        .then(($message) => {
-                            if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                                cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
-                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
-                            }
-                            else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
-                            }
-                       })
-                } */
-                //navigate back to main measure page
+                //navigate back to the main measures page
                 cy.get(Header.mainMadiePageButton).click()
 
     })
