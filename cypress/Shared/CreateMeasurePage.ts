@@ -62,8 +62,6 @@ export class CreateMeasurePage {
                 break
         }
 
-        cy.get(this.createMeasureButton).click()
-
         this.clickCreateMeasureButton()
 
         cy.get(MeasuresPage.measureListTitles).should('be.visible')
