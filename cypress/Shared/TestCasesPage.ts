@@ -4,8 +4,10 @@ export class TestCasesPage {
 
     public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"] > .sc-iqseJM'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
-    public static readonly testCaseSeriesTextBox = '.MuiOutlinedInput-root'
-    public static readonly existingTestCaseSeriesDropdown = '#mui-2-option-0'
+    public static readonly testCaseSeriesTextBox = '#mui-4'//'.MuiOutlinedInput-root'
+    //<input aria-invalid="false" autocomplete="off" type="text" class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1uvydh2" aria-autocomplete="list" aria-expanded="false" autocapitalize="none" spellcheck="false" role="combobox" maxlength="250" value="" id="mui-4">
+    //#mui-4
+    public static readonly existingTestCaseSeriesDropdown = '#mui-4-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
@@ -83,6 +85,8 @@ export class TestCasesPage {
         cy.get(this.testCaseTitle).should('be.enabled')
         cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.wait(1000)
+        cy.get(this.testCaseSeriesTextBox).click().focus()
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
         cy.get(this.existingTestCaseSeriesDropdown).click()
 
