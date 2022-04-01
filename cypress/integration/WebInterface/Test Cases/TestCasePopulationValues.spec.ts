@@ -6,10 +6,16 @@ import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {Utilities} from "../../../Shared/Utilities"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {Header} from "../../../Shared/Header"
+import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 let measureName = 'TestMeasure' + (Date.now())
 let CqlLibraryName = 'TestLibrary' + (Date.now())
 let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
+
+let testCaseTitle = 'test case title'
+let testCaseDescription = 'DENOMFail' + Date.now()
+let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
+let testCaseSeries = 'SBTestSeries'
 
 describe('Test Case Expected Measure Group population values based on initial measure scoring', () => {
 
@@ -118,6 +124,49 @@ describe('Test Case Expected Measure Group population values based on initial me
                 cy.get(EditMeasurePage.cqlEditorSaveButton).click()
                 //Click on the measure group tab
                 cy.get(EditMeasurePage.measureGroupsTab).click()
+                //log, in cypress, the measure score value
+                cy.log((measureScoringArray[0].valueOf()).toString())
+                //select scoring unit on measure
+                cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[0].valueOf()).toString())
+                //based on the scoring unit value, select a value for all population fields
+                Utilities.validationMeasureGroupSaveAll((measureScoringArray[0].valueOf()).toString())                
+                //save measure group
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                //validation message after attempting to save
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+                //create test case
+                TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+                cy.get(TestCasesPage.testCaseIPPCheckBox).check()
+                cy.get(TestCasesPage.testCaseNUMERCheckBox).check()
+                cy.get(TestCasesPage.testCaseNUMEXCheckBox).check()
+                cy.get(TestCasesPage.testCaseDENOMCheckBox).check()
+                cy.get(TestCasesPage.testCaseDENEXCheckBox).check()
+                cy.get(TestCasesPage.createTestCaseButton).click()
+                cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+                //navigate back to the measure group tab / page and...
+                //change score unit value and save / update measure with new value
+                cy.get(EditMeasurePage.measureGroupsTab).click()
+                //log, in cypress, the measure score value
+                cy.log((measureScoringArray[1].valueOf()).toString())
+                //select scoring unit on measure
+                cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+                //based on the scoring unit value, select a value for all population fields
+                Utilities.validationMeasureGroupSaveAll((measureScoringArray[1].valueOf()).toString())                
+                //save measure group
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                //validation message after attempting to save
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
+                cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+                //navigate back to the test case tab
+                cy.get(EditMeasurePage.testCasesTab).click()
+
+                //confirm that check boxes that were checked are no longer checked
+                expect(TestCasesPage.testCaseIPPCheckBox)
+
                     
                 for (let i in measureScoringArray){
                     //log, in cypress, the measure score value
