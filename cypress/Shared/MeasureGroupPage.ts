@@ -47,7 +47,6 @@ export class MeasureGroupPage {
 
         cy.get(this.initialPopulationSelect).select('ipp')
         cy.get(this.denominatorSelect).select('denom')
-        cy.get(this.denominatorExclusionSelect).select('denom')
         cy.get(this.numeratorSelect).select('num')
         cy.get(this.numeratorExclusionSelect).select('num')
         cy.get(this.saveMeasureGroupDetails).click()
@@ -57,4 +56,33 @@ export class MeasureGroupPage {
         cy.get(this.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
     }
 
+    public static createMeasureGroupforRatioMeasure () : void {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add CQL
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+
+        //Create Measure Group
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
+        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorSelect).select('num')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).select('num')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+    }
 }
