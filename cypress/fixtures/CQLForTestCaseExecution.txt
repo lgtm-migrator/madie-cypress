@@ -16,3 +16,8 @@ define "denom":
 
 define "num":
   exists ["Encounter"] E where E.status ~ 'finished'
+
+define "numeratorExclusion":
+    "num"
+
+
