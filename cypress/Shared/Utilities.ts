@@ -320,4 +320,8 @@ export class Utilities {
             
         }
     }
+
+    public static validateMeasureGroup (measureScoreValue: string | string[], mgPVTestType: string): void {
+        
+    }
 }
