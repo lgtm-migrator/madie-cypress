@@ -6,6 +6,7 @@ import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 describe('CQL Library Validations', () => {
 
     let apiCQLLibraryName = 'TestLibrary' + Date.now()
+    let CQLLibraryName = 'TestLibrary' + Date.now()
 
     before('Create CQL Library', () => {
 
@@ -66,15 +67,41 @@ describe('CQL Library Validations', () => {
     })
 
     it('CQL Library Model Validations', () => {
-
-        let CQLLibraryName = 'TestLibrary' + Date.now()
-
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
         //Verify error message for empty CQL Library Model
         cy.get(Header.cqlLibraryTab).click()
         cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
-        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName)
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().blur()
         cy.get(CQLLibraryPage.cqlLibraryModelErrorMsg).should('contain.text', 'A CQL library model is required.')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
+    })
+
+    it('Create new CQL Library Creation with CQL', () =>{
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        //navigate to the CQL Libaray page and create new CQL Library
+        cy.get(Header.cqlLibraryTab).click()
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/CQLLibrary.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        CQLLibraryPage.clickCreateLibraryButton()
+
+
+    })
+
+    it('Update new CQL Library Creation with CQL', () =>{
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let UpdatedCQLLibraryName = CQLLibraryName +randValue+ "updated"
+        //navigate to the CQL Libaray page and create new CQL Library
+        cy.get(Header.cqlLibraryTab).click()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        
+        
     })
 })

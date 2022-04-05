@@ -1,0 +1,60 @@
+library AdvancedIllnessandFrailtyExclusion_QICore4 version '5.0.000'
+using QICore version '4.1.0'
+include FHIRHelpers version
+include MATGlobalCommonFunctions_QICore4 version '5.0.000' called Global
+codesystem "LOINC": 'http://loinc.org'
+valueset "Acute Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1083'
+valueset "Advanced Illness": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.110.12.1082'
+valueset "Care Services in Long-Term Residential Facility": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1014'
+valueset "Dementia Medications": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.196.12.1510'
+valueset "ED": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1085'
+valueset "Frailty Device": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.118.12.1300'
+valueset "Frailty Diagnosis": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.113.12.1074'
+valueset "Frailty Encounter": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1088'
+valueset "Frailty Symptom": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.113.12.1075'
+valueset "Nonacute Inpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1084'
+valueset "Nursing Facility Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1012'
+valueset "Observation": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1086'
+valueset "Outpatient": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1087'
+code "Birth date": '21112-8' from "LOINC" display 'Birth date'
+parameter "Measurement Period" Interval<DateTime>
+  default Interval[@2019-01-01T00:00:00.0, @2020-01-01T00:00:00.0)
+{home}context Patient
+{home}define "Advanced Illness Diagnoses":
+{home}    [Condition: "Advanced Illness"] AdvancedIllnessDiagnosis
+{home}define "Long Term Care Periods During Measurement Period":
+{home}	( [Encounter: "Care Services in Long-Term Residential Facility"]
+{home}		union [Encounter: "Nursing Facility Visit"] ) LongTermFacilityEncounter
+{home}		where LongTermFacilityEncounter.period overlaps "Measurement Period"
+{home}		return LongTermFacilityEncounter.period
+{home}			intersect "Measurement Period"
+{home}define "Dementia Medications In Year Before or During Measurement Period":
+{home}	["MedicationDispense": "Dementia Medications"] DementiaMed
+{home}		where DementiaMed.whenHandedOver during day of Interval[
+{home}            ( start of "Measurement Period" - 1 year ), end of "Measurement Period"
+{home}        ]
+{home}define "Has Criteria Indicating Frailty":
+{home}	exists ( [DeviceRequest: "Frailty Device"] FrailtyDeviceOrder
+{home}			where FrailtyDeviceOrder.authoredOn during "Measurement Period"
+{home}	)
+{home}		or exists ( [DeviceUseStatement: "Frailty Device"] FrailtyDeviceUse
+{home}				where Global."Normalize Interval"(FrailtyDeviceUse.timing) overlaps "Measurement Period"
+{home}		)
+{home}		or exists ( [Condition: "Frailty Diagnosis"] FrailtyDiagnosis
+{home}				where Global."Prevalence Period"(FrailtyDiagnosis) overlaps "Measurement Period"
+{home}		)
+{home}		or exists ( [Encounter: "Frailty Encounter"] FrailtyEncounter
+{home}				where FrailtyEncounter.period overlaps "Measurement Period"
+{home}		)
+{home}		or exists ( [Observation: "Frailty Symptom"] FrailtySymptomObservation
+{home}				where Global."Normalize Interval"(FrailtySymptomObservation.effective) overlaps "Measurement Period"
+{home}		)
+{home}define "Has Spent More Than 90 Days in Long Term Care":
+{home}	"Days Spent in Long Term Care During Measurement Period" > 90
+{home}define "Days Spent in Long Term Care During Measurement Period":
+{home}	"CumulativeDays"("Long Term Care Periods During Measurement Period")
+{home}define function "CumulativeDays"(Intervals List<Interval<DateTime>> ):
+{home}	Sum((collapse Intervals)CollapsedInterval
+{home}			return all duration in days of CollapsedInterval
+{home}	)
+{del}{del}{del}{del}
