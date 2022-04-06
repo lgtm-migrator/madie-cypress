@@ -19,6 +19,7 @@ export class TestCasesPage {
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
     public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
+    public static readonly testCaseExecutionError = '[data-testid="display-tests-error"]'
 
     //Test Case Population Values
     public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'

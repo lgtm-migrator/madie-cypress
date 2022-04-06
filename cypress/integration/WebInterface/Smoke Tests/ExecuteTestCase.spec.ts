@@ -62,7 +62,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.get('[data-testid="display-tests-error"]').should('contain.text', 'Unable to calculate test case.')
+        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'Unable to calculate test case.')
 
     })
 
@@ -77,8 +77,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        //Need to revisit the status after bug fix
-        //cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'fail')
+        cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'NA')
     })
 
     it('Execute Test Case without all Expected values and verify execution status', () => {
