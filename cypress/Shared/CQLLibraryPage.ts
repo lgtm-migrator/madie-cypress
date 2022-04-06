@@ -68,9 +68,22 @@ export class CQLLibraryPage {
         })
     }
     public static clickEditforCreatedLibrary(): void {
+
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
         cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').click()
         })
     }
+
+    public static validateCQLLibraryName(expectedValue: string): void {
+
+        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+            let element = cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').parent()
+            element.parent().should('contain', expectedValue)
+
+        })
+    }
+
 }
 
