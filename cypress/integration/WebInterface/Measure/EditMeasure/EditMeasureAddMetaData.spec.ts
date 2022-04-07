@@ -35,6 +35,7 @@ describe('Edit Measure: Add Meta Data', () => {
         let description = 'description'
         let copyright = 'copyright'
         let disclaimer = 'disclaimer'
+        let rationale = 'rationale'
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -64,6 +65,12 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureDisclaimerSaveButton).click()
         cy.get(EditMeasurePage.measureDisclaimerSuccessMessage).should('be.visible')
 
+        //Rationale
+        cy.get(EditMeasurePage.leftPanelRationale).click()
+        cy.get(EditMeasurePage.measureRationaleTextBox).clear().type(rationale)
+        cy.get(EditMeasurePage.measureRationaleSaveButton).click()
+        cy.get(EditMeasurePage.measureRationaleSuccessMessage).should('be.visible')
+
         cy.get(Header.mainMadiePageButton).click()
 
         //Click on Edit Measure
@@ -75,23 +82,34 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureStewardTextBox).invoke('val').then(val =>{
             expect(val).to.eql(steward)
         })
+        cy.log('Measure Steward added successfully')
 
         //description
         cy.get(EditMeasurePage.leftPanelDescription).click()
         cy.get(EditMeasurePage.measureDescriptionTextBox).invoke('val').then(val =>{
             expect(val).to.eql(description)
         })
+        cy.log('Measure Description added successfully')
 
         //copyright
         cy.get(EditMeasurePage.leftPanelCopyright).click()
         cy.get(EditMeasurePage.measureCopyrightTextBox).invoke('val').then(val =>{
             expect(val).to.eql(copyright)
         })
+        cy.log('Measure Copyright added successfully')
 
         //disclaimer
         cy.get(EditMeasurePage.leftPanelDisclaimer).click()
         cy.get(EditMeasurePage.measureDisclaimerTextBox).invoke('val').then(val =>{
             expect(val).to.eql(disclaimer)
         })
+        cy.log('Measure Disclaimer added successfully')
+
+        //rationale
+        cy.get(EditMeasurePage.leftPanelRationale).click()
+        cy.get(EditMeasurePage.measureRationaleTextBox).invoke('val').then(val =>{
+            expect(val).to.eql(rationale)
+        })
+        cy.log('Measure Rationale added successfully')
     })
 })

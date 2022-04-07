@@ -298,4 +298,30 @@ describe('Measure Service: Edit Measure', () => {
             })
         })
     })
+
+    it('Add Meta Data Rationale to the measure', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+                cy.request({
+                    url: '/api/measures/' +id,
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'PUT',
+                    body: {
+                        'id': id,
+                        'measureName': 'UpdatedTestMeasure' + Date.now(),
+                        'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
+                        'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
+                        'model': 'QI-Core',
+                        'measureScoring': 'Ratio',
+                        'measureMetaData': {"rationale": "rationale"}
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(200)
+                })
+            })
+        })
+    })
 })
