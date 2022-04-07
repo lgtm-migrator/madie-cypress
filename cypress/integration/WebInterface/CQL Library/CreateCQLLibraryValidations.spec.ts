@@ -1,6 +1,7 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
+import {Utilities} from "../../../Shared/Utilities"
 
 
 describe('CQL Library Validations', () => {
@@ -8,12 +9,8 @@ describe('CQL Library Validations', () => {
     let apiCQLLibraryName = 'TestLibrary' + Date.now()
     let CQLLibraryName = 'TestLibrary' + Date.now()
 
-    before('Create CQL Library', () => {
-
+    beforeEach('Create CQL Library and Login', () => {
         CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
-    })
-
-    beforeEach('Login', () => {
         OktaLogin.Login()
 
     })
@@ -77,7 +74,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
     })
 
-    it('Create new CQL Library Creation with CQL', () =>{
+    it.only('Create new CQL Library Creation with CQL', () =>{
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         //navigate to the CQL Libaray page and create new CQL Library
         cy.get(Header.cqlLibraryTab).click()
@@ -89,6 +86,9 @@ describe('CQL Library Validations', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
         CQLLibraryPage.clickCreateLibraryButton()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )
+
 
 
     })
@@ -100,8 +100,13 @@ describe('CQL Library Validations', () => {
         cy.get(Header.cqlLibraryTab).click()
         CQLLibraryPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
+        cy.readFile('cypress/fixtures/CQLLibrary.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        //CQLLibraryPage.clickUpdateLibraryButton()
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
-        
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )  
         
     })
 })
