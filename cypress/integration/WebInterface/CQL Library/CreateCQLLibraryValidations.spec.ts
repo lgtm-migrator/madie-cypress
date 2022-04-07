@@ -1,6 +1,7 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
+import {Utilities} from "../../../Shared/Utilities"
 
 
 describe('CQL Library Validations', () => {
@@ -8,17 +9,16 @@ describe('CQL Library Validations', () => {
     let apiCQLLibraryName = 'TestLibrary' + Date.now()
     let CQLLibraryName = 'TestLibrary' + Date.now()
 
-    before('Create CQL Library', () => {
-
-        CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
-    })
-
-    beforeEach('Login', () => {
+    beforeEach('Create CQL Library and Login', () => {
+        let randValueAPICQLLIbraryName = (Math.floor((Math.random() * 1000) + 1))
+        let apiCQLLibraryNameBE = apiCQLLibraryName + randValueAPICQLLIbraryName
+        CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryNameBE)
         OktaLogin.Login()
 
     })
     afterEach('Logout', () => {
         OktaLogin.Logout()
+        cy.wait(1000)
 
     })
 
@@ -58,7 +58,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
 
         //Verify error message for duplicate CQL Library Name
-        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(apiCQLLibraryName)
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type('TestLibrary')
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
@@ -89,6 +89,9 @@ describe('CQL Library Validations', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
         CQLLibraryPage.clickCreateLibraryButton()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )
+
 
 
     })
@@ -100,8 +103,13 @@ describe('CQL Library Validations', () => {
         cy.get(Header.cqlLibraryTab).click()
         CQLLibraryPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
+        cy.readFile('cypress/fixtures/CQLLibrary.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        //CQLLibraryPage.clickUpdateLibraryButton()
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
-        
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )  
         
     })
 })
