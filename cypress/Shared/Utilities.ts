@@ -37,6 +37,29 @@ export class Utilities {
             }
         })
     }
+    public static validateCQL(file: string, pageResource: any): void{
+        cy.fixture(file).then((str) => {
+            // split file by line endings
+            const fileArr = str.split(/\r?\n/);
+            // log file in form of array
+            cy.log(fileArr);
+            // remove new line endings
+            const cqlArr = fileArr.map((line: any) => {
+                const goodLine = line.split(/[\r\n]+/);
+                return goodLine[0];
+            });
+            // log new array
+            cy.log(cqlArr);
+            for (let i in cqlArr){
+                this.textValues.dataLines = cqlArr[i]
+                cy.get(pageResource)
+                    .should('contain.text', this.textValues.dataLines)
+                this.textValues.dataLines = null
+
+            }
+
+        })
+    }
 
     public static waitForElementEnabled = (element: string, timeout: number) => {
         cy.get(element, { timeout: timeout }).should('be.enabled')
