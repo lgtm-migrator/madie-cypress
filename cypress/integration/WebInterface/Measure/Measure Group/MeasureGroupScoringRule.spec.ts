@@ -36,6 +36,13 @@ describe('Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        //measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox)
+            .then(($message) => {
+                expect($message.val().toString()).to.equal('MeasureGroup Description value')
+            })
+
         //cohort
         cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
 
