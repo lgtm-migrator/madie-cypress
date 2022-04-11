@@ -116,7 +116,7 @@ describe('CQL Editor', () => {
         //Click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
 
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR_.txt').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
