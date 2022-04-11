@@ -42,6 +42,9 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
             
         for (let i in measureScoringArray){
             //log, in cypress, the measure score value
@@ -84,6 +87,9 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
         for (let i in measureScoringArray){
             //log, in cypress, the measure score value
@@ -114,6 +120,9 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
         for (let i in measureScoringArray){
             //log, in cypress, the measure score value

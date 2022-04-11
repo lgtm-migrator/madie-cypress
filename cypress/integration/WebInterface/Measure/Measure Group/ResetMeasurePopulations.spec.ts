@@ -46,6 +46,9 @@ describe('Reset Measure Populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        //measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
         //Add Measure Populations for Ratio Measure
         cy.get(MeasureGroupPage.initialPopulationSelect).select('SDE Ethnicity')
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Payer')
@@ -56,6 +59,12 @@ describe('Reset Measure Populations', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        //verify the measure group's description before reset
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox)
+            .then(($message) => {
+                expect($message.val().toString()).to.equal('MeasureGroup Description value')
+            })
 
         //Verify the Populations before reset
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','SDE Ethnicity')
@@ -68,6 +77,12 @@ describe('Reset Measure Populations', () => {
         //Reset Measure Scoring to Proportion
         cy.log('Reset Measure Scoring')
         cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
+
+        //verify the measure group's description after reset
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox)
+            .then(($message) => {
+                expect($message.val().toString()).to.equal('MeasureGroup Description value')
+            })
 
         //verify the populations after reset
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Select Initial Population')

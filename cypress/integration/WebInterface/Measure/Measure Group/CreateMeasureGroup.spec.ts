@@ -69,7 +69,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it('Scoring unit and population association saves and persists', () => {
+    it('Scoring unit and population association saves and persists with a Measure Gropu Description', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -84,6 +84,8 @@ describe('Validate Measure Group', () => {
         cy.wait(1000)
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+        //fill in a description value
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
         //select a population definition
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
@@ -106,6 +108,52 @@ describe('Validate Measure Group', () => {
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
         cy.get(MeasureGroupPage.initialPopulationSelect).contains('Initial Population')
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox)
+            .then(($message) => {
+                expect($message.val().toString()).to.equal('MeasureGroup Description value')
+            })
+    
 
+    })
+
+    it('Scoring unit and population association saves and persists without Measure Group Description', () => {
+
+        //click on Edit button to edit measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //read and write CQL from flat file
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(1000)
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        
+        //select a population definition
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
+        cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
+        cy.get(MeasureGroupPage.numeratorSelect).select('SDE Race') //select the 'SDE Race' option for Numerator
+        cy.wait(1000)
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        //validate data is saved in mongo database --> future addition to automated test script
+
+        //navigate away from measure group page
+        cy.get(Header.mainMadiePageButton).click()
+        //navigate back to the measure group page
+        MeasuresPage.clickEditforCreatedMeasure()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        //verify that the population and the scoring unit that was saved, together, appears
+        cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
+        cy.get(MeasureGroupPage.initialPopulationSelect).contains('Initial Population')
+        
     })
 })

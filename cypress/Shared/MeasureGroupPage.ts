@@ -18,7 +18,10 @@ export class MeasureGroupPage {
     public static readonly measurePopulationSelect = '[name="population.measurePopulation"]'
     public static readonly measurePopulationExclusionSelect = '[name="population.measurePopulationExclusion"]'
 
-    //Measure Details
+    //Measure group description
+    public static readonly measureGroupDescriptionBox = '[name="groupDescription"]'
+
+    //Measure score Details
     public static readonly measureScoringUnit = "Ratio"
 
     //saved message
