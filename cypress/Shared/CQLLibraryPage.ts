@@ -14,6 +14,10 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryNameInvalidError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly duplicateCQLLibraryNameError = '[data-testid="cql-library-server-error-alerts"]'
     public static readonly cqlLibraryModelErrorMsg = '#cqlLibraryModel-helper-text'
+    public static readonly successfulCQLSaveNoErrors = '[data-testid=cql-library-success-alert]'
+
+    //Error marker inside of the CQL Editor window
+    public static readonly errorInCQLEditorWindow = 'div.ace_gutter-cell.ace_error'
 
 
     public static createCQLLibrary (CQLLibraryName: string) : void {
