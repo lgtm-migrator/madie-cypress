@@ -135,7 +135,7 @@ export class TestCasesPage {
 
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {

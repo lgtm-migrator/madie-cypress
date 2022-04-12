@@ -670,9 +670,25 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
                     })
                 })
             })
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        failOnStatusCode: false,
+                        url: '/api/measures/' + id,
+                        headers: {
+                            authorization: 'Bearer ' + accessToken.value
+                        },
+                        method: 'GET',
+    
+                        }).then((response) => {
+                            expect(response.status).to.eql(404)
+                    })
+
+                })
+            })
         })
         //attempt to update measure that does not belong to user
-        it.only('Attempt to update / delete measure that does not belong to current user', () => {
+        it.skip('Attempt to update / delete measure that does not belong to current user', () => {
             cy.clearCookies()
             cy.clearLocalStorage()
             //set local user that does not own the measure
@@ -714,28 +730,25 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
         })
         //attempt to update / delete measure that does not exist
         it('Attempt to update / delete measure that does not exist', () => {
-            measureName = 'TestMeasure' + Date.now()
-            CQLLibraryName = 'TestCql' + Date.now()
             measureScoring = 'Cohort' 
                     
             cy.getCookie('accessToken').then((accessToken) => {
                 cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                     cy.request({
+                        failOnStatusCode: false,
                         url: '/api/measures/'+id+'1',
                         method: 'PUT',
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        body: {"id": id+1, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
                         }).then((response) => {
-                            expect(response.status).to.eql(404)
+                            expect(response.status).to.eql(400)
                     })
                 })
             })
         })
         it('After updating / deleting measure, test cases should be unavailable, too', () => {
-            measureName = 'TestMeasure' + Date.now()
-            CQLLibraryName = 'TestCql' + Date.now()
             measureScoring = 'Cohort'
 
             let title = 'someTitleValue'
@@ -762,6 +775,7 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
             cy.getCookie('accessToken').then((accessToken) => {
                 cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                     cy.request({
+                        failOnStatusCode: false,
                         url: '/api/measures/' + id,
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
@@ -769,8 +783,7 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
                         method: 'GET',
     
                         }).then((response) => {
-                            expect(response.status).to.eql(200)
-                            expect(response.body.active).to.eql(false)
+                            expect(response.status).to.eql(404)
                     })
 
                 })
@@ -779,6 +792,7 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
                 cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                     cy.readFile('cypress/fixtures/testcaseId').should('exist').then((testCaseId) => {
                         cy.request({
+                            failOnStatusCode: false,
                             url: '/api/measures/' + id + '/test-cases/' + testCaseId,
                             headers: {
                                 authorization: 'Bearer ' + accessToken.value
@@ -786,7 +800,7 @@ describe.only('Update measure to set the delete flag to "false" tests', () => {
                             method: 'GET',
     
                         }).then((response) => {
-                            expect(response.status).to.eql(403)
+                            expect(response.status).to.eql(404)
                         })
                     })
                 })
