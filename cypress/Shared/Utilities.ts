@@ -343,4 +343,63 @@ export class Utilities {
             
         }
     }
+    public static validateMeasureGroup (measureScoreValue: any | any[], mgPVTestType: string | string[]): void {
+        //log, in cypress, the test type value
+        cy.log((mgPVTestType.valueOf()).toString())
+
+        switch ((mgPVTestType.valueOf()).toString()){
+            case "all": {
+                //log, in cypress, the measure score value
+                cy.log((mgPVTestType.valueOf()).toString())
+                this.validationMeasureGroupSaveAll((measureScoreValue.valueOf()).toString())                
+                //save measure group
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                //validation message after attempting to save
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
+                    .then(($message) => {
+                        if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                            cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+                            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+                        }
+                        else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+                        }
+                   })
+                break
+            }
+            case 'wOReq': {
+                this.validationMeasureGroupSaveWithoutRequired((measureScoreValue.valueOf()).toString())                
+                //save measure group button is not enabled
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
+                break
+            }
+            case 'wOOpt': {
+                //based on the scoring unit value, select a value for all population fields
+                this.validationMeasureGroupSaveWithoutOptional((measureScoreValue.valueOf()).toString())
+                if ((measureScoreValue.valueOf()).toString() == 'Cohort') {
+                    //save measure group button is not enabled
+                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
+                }
+                else {
+                    cy.wait(1000)
+                    //save measure group
+                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                    //validation message after attempting to save
+                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
+                        .then(($message) => {
+                            if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                                cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+                            }
+                            else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+                            }
+                        })
+                    } 
+                    break
+            }
+        }        
+    }
 }

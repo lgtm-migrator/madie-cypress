@@ -9,6 +9,7 @@ import {Utilities} from "../../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
+let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 
 
 describe('Validate Measure Group', () => {
@@ -47,26 +48,13 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
             
         for (let i in measureScoringArray){
-            //log, in cypress, the measure score value
-            cy.log((measureScoringArray[i].valueOf()).toString())
-            //select scoring unit on measure
-            cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
-            //based on the scoring unit value, select a value for all population fields
-            Utilities.validationMeasureGroupSaveAll((measureScoringArray[i].valueOf()).toString())                
-            //save measure group
-            cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-            //validation message after attempting to save
-            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
-                .then(($message) => {
-                    if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
-                        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
-                    }
-                    else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
-                    }
-               })
+            for (let j in mgPVTestType){
+                //log, in cypress, the measure score value
+                cy.log((measureScoringArray[i].valueOf()).toString())
+                //select scoring unit on measure
+                cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
+                Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
+            }
         }
         //navigate back to main measure page
         cy.get(Header.mainMadiePageButton).click()
@@ -92,14 +80,13 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
         for (let i in measureScoringArray){
-            //log, in cypress, the measure score value
-            cy.log((measureScoringArray[i].valueOf()).toString())
-            //select scoring unit on measure
-            cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
-            //based on the scoring unit value, select a value for all population fields
-            Utilities.validationMeasureGroupSaveWithoutRequired((measureScoringArray[i].valueOf()).toString())                
-            //save measure group button is not enabled
-            cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
+            for (let j in mgPVTestType){
+                //log, in cypress, the measure score value
+                cy.log((measureScoringArray[i].valueOf()).toString())
+                //select scoring unit on measure
+                cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
+                Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
+            }
         }
         //navigate back to main measure page
         cy.get(Header.mainMadiePageButton).click()
@@ -125,34 +112,13 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
         for (let i in measureScoringArray){
-            //log, in cypress, the measure score value
-            cy.log((measureScoringArray[i].valueOf()).toString())
-            //select scoring unit on measure
-            cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
-            //based on the scoring unit value, select a value for all population fields
-            Utilities.validationMeasureGroupSaveWithoutOptional((measureScoringArray[i].valueOf()).toString())
-            if ((measureScoringArray[i].valueOf()).toString() == 'Cohort') {
-                //save measure group button is not enabled
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
+            for (let j in mgPVTestType){
+                //log, in cypress, the measure score value
+                cy.log((measureScoringArray[i].valueOf()).toString())
+                //select scoring unit on measure
+                cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[i].valueOf()).toString())
+                Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
             }
-            else {
-                cy.wait(1000)
-                //save measure group
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                //validation message after attempting to save
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
-                    .then(($message) => {
-                        if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                            cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
-                            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
-                        }
-                        else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
-                        }
-                    })
-
-                } 
         }
         //navigate back to main measure page
         cy.get(Header.mainMadiePageButton).click()
