@@ -1,11 +1,19 @@
 export {}
 import {Environment} from "../../../Shared/Environment"
+import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
+import {TestCasesPage} from "../../../Shared/TestCasesPage"
 
 let measureName = ''
+let newMeasureName = ''
 let CQLLibraryName = ''
+let newCQLLibraryName = ''
 let model = 'QI-Core'
 let measureScoring = ''
 let harpUser = Environment.credentials().harpUser
+let measureNameU = 'TestMeasure' + Date.now() + 1
+let CqlLibraryNameU = 'TestLibrary' + Date.now() + 1
+let measureScoringU = MeasureGroupPage.measureScoringUnit
 
 describe('Measure Service: Create Measure', () => {
 
@@ -13,7 +21,7 @@ describe('Measure Service: Create Measure', () => {
 
         cy.setAccessTokenCookie()
     })
-
+    //create measure
     it('Create New Measure, successful creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
@@ -24,7 +32,7 @@ describe('Measure Service: Create Measure', () => {
                 url: '/api/measure',
                 method: 'POST',
                 headers: {
-                    authorization: 'Bearer ' + accessToken.value
+                    Authorization: 'Bearer ' + accessToken.value
                 },
                 body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "measureScoring": measureScoring}
             }).then((response) => {
@@ -633,6 +641,157 @@ describe('Measure Service: Authentication', () => {
             })
         })
     })
+})
+describe.only('Update measure to set the delete flag to "false" tests', () => {
+    beforeEach('Set access token and create a new measure to run update against', () =>{
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureNameU + randValue
+        newCQLLibraryName = CqlLibraryNameU + randValue
+        cy.setAccessTokenCookie()
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
+
+    })
+        //update / delete measure
+        it('Update / delete measure', () => {
+            measureScoring = 'Cohort'    
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/'+id,
+                        method: 'PUT',
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken.value
+                        },
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                    }).then((response) => {
+                        expect(response.status).to.eql(200)
+                        expect(response.body).to.eql("Measure updated successfully.")
+                    })
+                })
+            })
+        })
+        //attempt to update measure that does not belong to user
+        it.only('Attempt to update / delete measure that does not belong to current user', () => {
+            cy.clearCookies()
+            cy.clearLocalStorage()
+            //set local user that does not own the measure
+            cy.setAccessTokenCookieALT()
+            measureScoring = 'Cohort' 
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/'+id,
+                        method: 'PUT',
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken.value
+                        },
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        }).then((response) => {
+                            expect(response.status).to.eql(403)
+                    })
+                })
+            })
+            cy.clearCookies()
+            cy.clearLocalStorage()
+            cy.setAccessTokenCookie()
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/' + id,
+                        headers: {
+                            authorization: 'Bearer ' + accessToken.value
+                        },
+                        method: 'GET',
+    
+                        }).then((response) => {
+                            expect(response.status).to.eql(200)
+                            expect(response.body.active).to.eql(true)
+                    })
+
+                })
+            })
+        })
+        //attempt to update / delete measure that does not exist
+        it('Attempt to update / delete measure that does not exist', () => {
+            measureName = 'TestMeasure' + Date.now()
+            CQLLibraryName = 'TestCql' + Date.now()
+            measureScoring = 'Cohort' 
+                    
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/'+id+'1',
+                        method: 'PUT',
+                        headers: {
+                            authorization: 'Bearer ' + accessToken.value
+                        },
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        }).then((response) => {
+                            expect(response.status).to.eql(404)
+                    })
+                })
+            })
+        })
+        it('After updating / deleting measure, test cases should be unavailable, too', () => {
+            measureName = 'TestMeasure' + Date.now()
+            CQLLibraryName = 'TestCql' + Date.now()
+            measureScoring = 'Cohort'
+
+            let title = 'someTitleValue'
+            let series = 'SomeSeriesValue'
+            let description = 'SomeDescription'
+
+
+            TestCasesPage.CreateTestCaseAPI(title, series, description)
+                    
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/'+id,
+                        method: 'PUT',
+                        headers: {
+                            authorization: 'Bearer ' + accessToken.value
+                        },
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        }).then((response) => {
+                            expect(response.status).to.eql(200)
+                    })
+                })
+            })
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.request({
+                        url: '/api/measures/' + id,
+                        headers: {
+                            authorization: 'Bearer ' + accessToken.value
+                        },
+                        method: 'GET',
+    
+                        }).then((response) => {
+                            expect(response.status).to.eql(200)
+                            expect(response.body.active).to.eql(false)
+                    })
+
+                })
+            })
+            cy.getCookie('accessToken').then((accessToken) => {
+                cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                    cy.readFile('cypress/fixtures/testcaseId').should('exist').then((testCaseId) => {
+                        cy.request({
+                            url: '/api/measures/' + id + '/test-cases/' + testCaseId,
+                            headers: {
+                                authorization: 'Bearer ' + accessToken.value
+                            },
+                            method: 'GET',
+    
+                        }).then((response) => {
+                            expect(response.status).to.eql(403)
+                        })
+                    })
+                })
+            })
+        })
 })
 
 
