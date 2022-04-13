@@ -690,7 +690,7 @@ describe('Measure Service: Update Delete Flag', () => {
             })
         })
         //attempt to update measure that does not belong to user
-        it('Attempt to update / delete measure that does not belong to current user', () => {
+        it.only('Attempt to update / delete measure that does not belong to current user', () => {
 
             CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
 
@@ -706,7 +706,7 @@ describe('Measure Service: Update Delete Flag', () => {
                         headers: {
                             Authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoringU, "active": false}
                         }).then((response) => {
                             expect(response.status).to.eql(403)
                     })

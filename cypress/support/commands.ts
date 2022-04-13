@@ -76,6 +76,7 @@ export function setAccessTokenCookie() {
         const sessionToken = response.body.sessionToken
 
         cy.log(sessionToken)
+        cy.log(Environment.credentials().harpUser)
 
         let url = authCodeUrl + '?client_id=' + clientId +
             '&code_challenge=' + 'LBY2kyC5ZfYC9RaG9HOgRjf9i7U-zgmwHLC280r4UfA' +
@@ -175,6 +176,7 @@ export function setAccessTokenCookieALT() {
         const sessionToken = response.body.sessionToken
 
         cy.log(sessionToken)
+        cy.log(Environment.credentials().harpUserALT)
 
         let url = authCodeUrl + '?client_id=' + clientId +
             '&code_challenge=' + 'LBY2kyC5ZfYC9RaG9HOgRjf9i7U-zgmwHLC280r4UfA' +
