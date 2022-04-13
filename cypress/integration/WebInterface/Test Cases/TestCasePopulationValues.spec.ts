@@ -167,8 +167,6 @@ describe('Test Case Expected Measure Group population values based on initial me
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'This change ' +
                     'will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
-        cy.pause()
-
                 cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population ' +
                     'details for this group updated successfully.')
