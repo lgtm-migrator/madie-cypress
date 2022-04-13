@@ -21,6 +21,8 @@ export class EditMeasurePage {
     public static readonly leftPanelCopyright = '[data-testid="leftPanelMeasureCopyright"]'
     public static readonly leftPanelDisclaimer = '[data-testid="leftPanelMeasureDisclaimer"]'
     public static readonly leftPanelRationale = '[data-testid="leftPanelMeasureRationale"]'
+    public static readonly leftPanelAuthor = '[data-testid="leftPanelMeasureAuthor"]'
+    public static readonly leftPanelGuidance = '[data-testid="leftPanelMeasureGuidance"]'
 
     //Measure CQL Page
     //cql editor box on page
@@ -54,4 +56,14 @@ export class EditMeasurePage {
     public static readonly measureRationaleTextBox = '[data-testid="measureRationaleInput"]'
     public static readonly measureRationaleSaveButton = '[data-testid="measureRationaleSave"]'
     public static readonly measureRationaleSuccessMessage = '[data-testid="measureRationaleSuccess"]'
+
+    //Author Page
+    public static readonly measureAuthorTextBox = '[data-testid="measureAuthorInput"]'
+    public static readonly measureAuthorSaveButton = '[data-testid="measureAuthorSave"]'
+    public static readonly measureAuthorSuccessMessage = '[data-testid="measureAuthorSuccess"]'
+
+    //Guidance Page
+    public static readonly measureGuidanceTextBox = '[data-testid="measureGuidanceInput"]'
+    public static readonly measureGuidanceSaveButton = '[data-testid="measureGuidanceSave"]'
+    public static readonly measureGuidanceSuccessMessage = '[data-testid="measureGuidanceSuccess"]'
 }
