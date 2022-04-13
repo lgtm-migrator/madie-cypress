@@ -382,7 +382,6 @@ export class Utilities {
                     cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
                 }
                 else {
-                    cy.wait(1000)
                     //save measure group
                     cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
                     //validation message after attempting to save
