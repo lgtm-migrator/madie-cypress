@@ -32,12 +32,6 @@ declare global {
     namespace Cypress {
         interface Chainable {
             setAccessTokenCookie()
-        }
-    }
-}
-declare global {
-    namespace Cypress {
-        interface Chainable {
             setAccessTokenCookieALT()
         }
     }
