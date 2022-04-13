@@ -37,6 +37,8 @@ describe('Edit Measure: Add Meta Data', () => {
         let copyright = 'copyright'
         let disclaimer = 'disclaimer'
         let rationale = 'rationale'
+        let author = 'author'
+        let guidance = 'guidance'
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -71,6 +73,18 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureRationaleTextBox).clear().type(rationale)
         cy.get(EditMeasurePage.measureRationaleSaveButton).click()
         cy.get(EditMeasurePage.measureRationaleSuccessMessage).should('be.visible')
+
+        //Author
+        cy.get(EditMeasurePage.leftPanelAuthor).click()
+        cy.get(EditMeasurePage.measureAuthorTextBox).clear().type(author)
+        cy.get(EditMeasurePage.measureAuthorSaveButton).click()
+        cy.get(EditMeasurePage.measureAuthorSuccessMessage).should('be.visible')
+
+        //Guidance
+        cy.get(EditMeasurePage.leftPanelGuidance).click()
+        cy.get(EditMeasurePage.measureGuidanceTextBox).clear().type(guidance)
+        cy.get(EditMeasurePage.measureGuidanceSaveButton).click()
+        cy.get(EditMeasurePage.measureGuidanceSuccessMessage).should('be.visible')
 
         cy.get(Header.mainMadiePageButton).click()
 
@@ -112,5 +126,19 @@ describe('Edit Measure: Add Meta Data', () => {
             expect(val).to.eql(rationale)
         })
         cy.log('Measure Rationale added successfully')
+
+        //author
+        cy.get(EditMeasurePage.leftPanelAuthor).click()
+        cy.get(EditMeasurePage.measureAuthorTextBox).invoke('val').then(val =>{
+            expect(val).to.eql(author)
+        })
+        cy.log('Measure Author added successfully')
+
+        //guidance
+        cy.get(EditMeasurePage.leftPanelGuidance).click()
+        cy.get(EditMeasurePage.measureGuidanceTextBox).invoke('val').then(val =>{
+            expect(val).to.eql(guidance)
+        })
+        cy.log('Measure Guidance added successfully')
     })
 })
