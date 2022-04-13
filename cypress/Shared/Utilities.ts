@@ -90,7 +90,6 @@ export class Utilities {
                 cy.get(TestCasesPage.testCasePopulationValuesTable)
                     .should('not.have.value', 'MSRPOPLEX')
                 cy.get(Header.mainMadiePageButton).click()
-                cy.wait(7000)
                 break
             }
             case 'Proportion': {
@@ -111,7 +110,6 @@ export class Utilities {
                 cy.get(TestCasesPage.testCasePopulationValuesTable)
                     .should('not.have.value', 'MSRPOPLEX')
                 cy.get(Header.mainMadiePageButton).click()
-                cy.wait(7000)
                 break
             }
             case 'Continuous Variable': {
@@ -134,7 +132,6 @@ export class Utilities {
                 cy.get(TestCasesPage.testCasePopulationValuesTable)
                     .should('not.have.value', 'DENEXCEP')
                 cy.get(Header.mainMadiePageButton).click()
-                cy.wait(7000)
                 break
             }
             case 'Cohort': {
@@ -155,7 +152,6 @@ export class Utilities {
                 cy.get(TestCasesPage.testCasePopulationValuesTable)
                     .should('not.have.value', 'MSRPOPLEX')
                 cy.get(Header.mainMadiePageButton).click()
-                cy.wait(7000)
                 break
 
             }
@@ -166,6 +162,7 @@ export class Utilities {
         switch ((measureScoreValue.valueOf()).toString()){
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
                 cy.get(MeasureGroupPage.initialPopulationSelect)
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
@@ -182,6 +179,7 @@ export class Utilities {
             }
             case 'Proportion': {
                 //verify the correct populations are displayed and not displayed
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
                 cy.get(MeasureGroupPage.initialPopulationSelect)
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
@@ -198,6 +196,7 @@ export class Utilities {
             }
             case 'Continuous Variable': {
                 //verify the correct populations are displayed and not displayed
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
                 cy.get(MeasureGroupPage.initialPopulationSelect)
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.measurePopulationSelect)
@@ -218,6 +217,7 @@ export class Utilities {
             }
             case 'Cohort': {
                 //verify the correct populations are displayed and not displayed
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
                 cy.get(MeasureGroupPage.initialPopulationSelect)
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
