@@ -3,6 +3,7 @@ import {Environment} from "../../../Shared/Environment"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
+import { userInfo } from "os"
 
 let measureName = ''
 let newMeasureName = ''
@@ -14,6 +15,7 @@ let harpUser = Environment.credentials().harpUser
 let measureNameU = 'TestMeasure' + Date.now() + 1
 let CqlLibraryNameU = 'TestLibrary' + Date.now() + 1
 let measureScoringU = MeasureGroupPage.measureScoringUnit
+let defaultUser = ''
 
 // describe('Measure Service: Create Measure', () => {
 //
@@ -649,9 +651,10 @@ describe('Measure Service: Update Delete Flag', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureNameU + randValue
         newCQLLibraryName = CqlLibraryNameU + randValue
-        cy.setAccessTokenCookie()
+        let userToken = 'default'
+        //cy.setAccessTokenCookie()
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
+        defaultUser = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU, userToken)
 
     })
         //update / delete measure
@@ -665,7 +668,7 @@ describe('Measure Service: Update Delete Flag', () => {
                         headers: {
                             Authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false, "createdBy": defaultUser}
                     }).then((response) => {
                         expect(response.status).to.eql(200)
                         expect(response.body).to.eql("Measure updated successfully.")
@@ -690,10 +693,12 @@ describe('Measure Service: Update Delete Flag', () => {
             })
         })
         //attempt to update measure that does not belong to user
-        it.only('Attempt to update / delete measure that does not belong to current user', () => {
+        it('Attempt to update / delete measure that does not belong to current user', () => {
+            let userToken = 'default'
 
-            CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
-
+            let user = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU, userToken)
+            cy.clearCookies()
+            cy.clearLocalStorage()
             //set local user that does not own the measure
             cy.setAccessTokenCookieALT()
 
@@ -706,7 +711,7 @@ describe('Measure Service: Update Delete Flag', () => {
                         headers: {
                             Authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoringU, "active": false}
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoringU, "active": false, "createdBy": user}
                         }).then((response) => {
                             expect(response.status).to.eql(403)
                     })
@@ -744,7 +749,7 @@ describe('Measure Service: Update Delete Flag', () => {
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id+1, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        body: {"id": id+1, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false, "createdBy": defaultUser}
                         }).then((response) => {
                             expect(response.status).to.eql(400)
                     })
@@ -769,7 +774,7 @@ describe('Measure Service: Update Delete Flag', () => {
                         headers: {
                             authorization: 'Bearer ' + accessToken.value
                         },
-                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false}
+                        body: {"id": id, "measureName": newMeasureName, "cqlLibraryName": newCQLLibraryName, "model": model, "measureScoring": measureScoring, "active": false, "createdBy": defaultUser}
                         }).then((response) => {
                             expect(response.status).to.eql(200)
                     })
