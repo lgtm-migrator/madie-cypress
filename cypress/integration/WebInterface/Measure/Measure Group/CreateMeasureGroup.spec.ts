@@ -9,18 +9,27 @@ import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = MeasureGroupPage.measureScoringUnit
-let userToken = 'default'
+
 
 describe('Validate Measure Group', () => {
 
-    beforeEach('Create measure and Login', () => {
+    before('Create measure', () => {
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring, userToken)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+        //create another Measure
+        CqlLibraryName = 'TestLibrary2' + Date.now()
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring, true)
+    })
+
+    beforeEach('Login', () => {
+
         OktaLogin.Login()
+
     })
 
     afterEach('Login', () => {
-        cy.wait(2000)
+
         OktaLogin.Logout()
 
     })
@@ -70,7 +79,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it('Scoring unit and population association saves and persists with a Measure Gropu Description', () => {
+    it('Scoring unit and population association saves and persists with a Measure Group Description', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -82,8 +91,9 @@ describe('Validate Measure Group', () => {
         })
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(1000)
+
         //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
@@ -91,8 +101,9 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
         cy.get(MeasureGroupPage.numeratorSelect).select('SDE Race') //select the 'SDE Race' option for Numerator
-        cy.wait(1000)
+
         //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
@@ -113,14 +124,14 @@ describe('Validate Measure Group', () => {
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
-    
+
 
     })
 
     it('Scoring unit and population association saves and persists without Measure Group Description', () => {
 
         //click on Edit button to edit measure
-        MeasuresPage.clickEditforCreatedMeasure()
+        MeasuresPage.clickEditforCreatedMeasure(true)
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
         //read and write CQL from flat file
@@ -129,16 +140,18 @@ describe('Validate Measure Group', () => {
         })
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(1000)
+
         //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
         
         //select a population definition
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
         cy.get(MeasureGroupPage.numeratorSelect).select('SDE Race') //select the 'SDE Race' option for Numerator
-        cy.wait(1000)
+
         //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')

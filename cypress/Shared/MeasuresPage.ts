@@ -6,8 +6,15 @@ export class MeasuresPage {
     public static readonly measureListTitles = '.MeasureList___StyledTd-sc-1kfngu9-13'
 
 
-    public static clickEditforCreatedMeasure(): void {
-        cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+    public static clickEditforCreatedMeasure(secondMeasure?: boolean): void {
+        let filePath = 'cypress/fixtures/measureId'
+
+        if (secondMeasure === true)
+        {
+            filePath = 'cypress/fixtures/measureId2'
+        }
+
+        cy.readFile(filePath).should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-measure-'+ fileContents +']').click()
         })
     }

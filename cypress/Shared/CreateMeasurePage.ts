@@ -70,18 +70,18 @@ export class CreateMeasurePage {
         cy.log( measureScoring+ ' Measure created successfully')
     }
 
-    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, userToken: string): string {
+    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, twoMeasures?: boolean, altUser?: boolean): string {
         let user = ''
-        //cy.setAccessTokenCookie()
-        switch (userToken){
-            case 'default':
-                cy.setAccessTokenCookie()
-                user = Environment.credentials().harpUser
-                break
-            case 'alt':
-                cy.setAccessTokenCookieALT()
-                user = Environment.credentials().harpUserALT
-                break
+
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
         }
 
         //Create New Measure
@@ -102,7 +102,15 @@ export class CreateMeasurePage {
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                if (twoMeasures === true)
+                {
+                    cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+                }
+                else
+                {
+                    cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                }
+
             })
         })
         return user
