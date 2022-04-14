@@ -18,10 +18,9 @@ describe('Validate Measure Group', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newMeasureName = measureName + randValue
         let newCqlLibraryName = CqlLibraryName + randValue
-        let userToken = 'default'
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3], userToken)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
         OktaLogin.Login()
 
     })

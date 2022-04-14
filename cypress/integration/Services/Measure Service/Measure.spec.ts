@@ -651,9 +651,8 @@ describe('Measure Service: Update Delete Flag', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureNameU + randValue
         newCQLLibraryName = CqlLibraryNameU + randValue
-        let userToken = 'default'
 
-        defaultUser = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU, userToken)
+        defaultUser = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
 
     })
         //update / delete measure
@@ -693,9 +692,9 @@ describe('Measure Service: Update Delete Flag', () => {
         })
         //attempt to update measure that does not belong to user
         it('Attempt to update / delete measure that does not belong to current user', () => {
-            let userToken = 'default'
 
-            let user = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU, userToken)
+            newCQLLibraryName = 'TestLibrary2' + Date.now() + 1
+            let user = CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureScoringU)
             cy.clearCookies()
             cy.clearLocalStorage()
             //set local user that does not own the measure
