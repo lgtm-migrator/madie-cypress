@@ -14,17 +14,23 @@ let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 
 describe('Validate Measure Group', () => {
 
-    beforeEach('Create measure and login', () => {
+    before('Create measure', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newMeasureName = measureName + randValue
         let newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
+
+    })
+
+    beforeEach('Login', () => {
+
         OktaLogin.Login()
 
     })
     afterEach('Logout', () => {
+
         OktaLogin.Logout()
 
     })
@@ -56,8 +62,6 @@ describe('Validate Measure Group', () => {
                 Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
             }
         }
-        //navigate back to main measure page
-        cy.get(Header.mainMadiePageButton).click()
 
     })
 

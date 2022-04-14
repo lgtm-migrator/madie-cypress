@@ -353,6 +353,8 @@ export class Utilities {
                 cy.log((mgPVTestType.valueOf()).toString())
                 this.validationMeasureGroupSaveAll((measureScoreValue.valueOf()).toString())                
                 //save measure group
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
                 cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
                 //validation message after attempting to save
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')

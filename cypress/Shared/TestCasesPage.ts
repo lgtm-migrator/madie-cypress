@@ -126,6 +126,7 @@ export class TestCasesPage {
     public static clickEditforCreatedTestCase(): void {
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.enabled')
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
     }
