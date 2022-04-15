@@ -118,7 +118,7 @@ describe('Test Case Validations', () => {
 describe('Test Case Json Validations', () => {
     
     before('Create Measure', () => {
-
+        CqlLibraryName = 'TestLibrary2' + Date.now()
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
 
@@ -151,7 +151,6 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('contain.text', 'Nothing to see here!')
 
         TestCasesPage.clickCreateTestCaseButton()
-        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
     })
 
     it('Enter Invalid Test Case Json and Verify Error Message', () => {
@@ -169,7 +168,7 @@ describe('Test Case Json Validations', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(invalidTestCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        cy.get(TestCasesPage.createTestCaseButton).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Bundle" but found "Account"')
 
@@ -191,7 +190,7 @@ describe('Test Case Json Validations', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseXML)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        cy.get(TestCasesPage.createTestCaseButton).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
         cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'Failed to parse request body as JSON resource. Error was: Failed to parse JSON encoded FHIR content: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
 

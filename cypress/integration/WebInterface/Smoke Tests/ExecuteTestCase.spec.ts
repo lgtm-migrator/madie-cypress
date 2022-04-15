@@ -57,7 +57,6 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
         TestCasesPage.clickCreateTestCaseButton()
-        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')

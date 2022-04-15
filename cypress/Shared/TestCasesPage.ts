@@ -45,6 +45,7 @@ export class TestCasesPage {
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/'+ id + '/test-cases').as('testcase')
+            cy.intercept('PUT', '/api/measures/' + id).as('putMeasures')
 
             cy.get(this.createTestCaseButton).click()
 
@@ -52,6 +53,13 @@ export class TestCasesPage {
             cy.wait('@testcase').then(({response}) => {
                 expect(response.statusCode).to.eq(201)
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
+            })
+
+            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully! ' +
+                'Redirecting back to Test Cases...')
+
+            cy.wait('@putMeasures').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
             })
         })
     }
@@ -126,6 +134,7 @@ export class TestCasesPage {
     public static clickEditforCreatedTestCase(): void {
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.enabled')
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
     }
