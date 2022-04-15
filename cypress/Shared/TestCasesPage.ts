@@ -98,7 +98,6 @@ export class TestCasesPage {
         cy.get(this.aceEditor).type(testCaseJson)
 
         this.clickCreateTestCaseButton()
-        cy.get(this.confirmationMsg).should('contain.text', 'Test case created successfully! Redirecting back to Test Cases...')
 
         //Verify created test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
