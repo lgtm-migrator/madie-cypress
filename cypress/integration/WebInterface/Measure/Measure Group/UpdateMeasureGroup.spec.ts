@@ -14,17 +14,15 @@ let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 
 describe('Validate Measure Group', () => {
 
-    before('Create measure', () => {
+
+    beforeEach('Login', () => {
+
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newMeasureName = measureName + randValue
         let newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
-
-    })
-
-    beforeEach('Login', () => {
 
         OktaLogin.Login()
 
@@ -37,6 +35,8 @@ describe('Validate Measure Group', () => {
 
     it('All population selections are saved to the database', () => {
 
+
+
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -48,6 +48,7 @@ describe('Validate Measure Group', () => {
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
+
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Measure group description
@@ -92,8 +93,6 @@ describe('Validate Measure Group', () => {
                 Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
             }
         }
-        //navigate back to main measure page
-        cy.get(Header.mainMadiePageButton).click()
 
     })
 
@@ -124,8 +123,6 @@ describe('Validate Measure Group', () => {
                 Utilities.validateMeasureGroup((measureScoringArray[i].valueOf()).toString(), mgPVTestType[j])
             }
         }
-        //navigate back to main measure page
-        cy.get(Header.mainMadiePageButton).click()
 
     })
 })
