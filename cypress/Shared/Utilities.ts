@@ -173,6 +173,7 @@ export class Utilities {
                     .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race')
+                    .contains('SDE Race')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .select('Surgical Absence of Cervix')
                 break
@@ -189,7 +190,7 @@ export class Utilities {
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .select('SDE Ethnicity')
                 cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race')
+                    .select('SDE Race').contains('SDE Race')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .select('Surgical Absence of Cervix')
                 break
@@ -305,7 +306,7 @@ export class Utilities {
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race')
+                    .select('SDE Race').contains('SDE Race')
                 break
             }
             case 'Proportion': {
@@ -315,7 +316,7 @@ export class Utilities {
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .select('SDE Sex')
                 cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race')
+                    .select('SDE Race').contains('SDE Race')
                 break
             }
             case 'Continuous Variable': {
@@ -355,7 +356,7 @@ export class Utilities {
                 //save measure group
                 cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
                 cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus().click()
                 //validation message after attempting to save
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
