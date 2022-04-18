@@ -24,7 +24,7 @@ export class CQLLibraryPage {
     //Version and Draft CQL Library
     public static readonly versionLibraryRadioButton = '[name="type"]'
     public static readonly createVersionContinueButton = '[data-testid="create-version-continue-button"] > :nth-child(1)'
-    public static readonly successfulVersionMsg = '.MuiAlert-message'
+    public static readonly VersionDraftMsgs = '.MuiAlert-message.css-1w0ym84'
     public static readonly cqlLibraryVersionList = ':nth-child(1) > .CqlLibraryList___StyledTd3-sc-1rv02q7-12 > p'
     public static readonly updateDraftedLibraryTextBox = '[data-testid="cql-library-name-text-field"]'
     public static readonly createDraftContinueBtn = '[data-testid="create-draft-continue-button"]'
