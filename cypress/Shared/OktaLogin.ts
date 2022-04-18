@@ -13,6 +13,7 @@ export class OktaLogin {
     public static Login(): void {
 
         cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
+        cy.url({ timeout: 100000 }).should('include', '/login')
         cy.get(this.usernameInput, { timeout: 600000 }).should('be.visible')
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
