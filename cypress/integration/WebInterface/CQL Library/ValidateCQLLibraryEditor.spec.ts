@@ -98,6 +98,8 @@ describe('Validate CQL on CQL Library page', () => {
         })
 
         //save the value in the CQL Editor
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')

@@ -386,7 +386,9 @@ export class Utilities {
                 }
                 else {
                     //save measure group
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus().click()
                     //validation message after attempting to save
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
