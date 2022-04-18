@@ -2,25 +2,25 @@ import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 
+let apiCQLLibraryName = ''
+
 describe('Validate CQL on CQL Library page', () => {
 
-    let apiCQLLibraryName = 'TestLibrary' + Date.now()
 
-    before('Create CQL library', () => {
 
+    beforeEach('Create CQL library', () => {
+
+        apiCQLLibraryName = 'TestLibrary' + Date.now()
         //Create CQL Library
         CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
-    })
-
-    beforeEach('Login', () => {
 
         OktaLogin.Login()
 
     })
+
     afterEach('Logout', () => {
 
         OktaLogin.Logout()
-        cy.wait(1000)
 
     })
 
