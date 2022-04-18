@@ -1,10 +1,12 @@
 import {Header} from "./Header"
+import {Environment} from "./Environment"
 
 export class CQLLibraryPage {
 
     public static readonly createCQLLibraryBtn = '[data-testid="create-new-cql-library-button"]'
     public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
     public static readonly cqlLibraryModelDropdown = '#cqlLibraryModel'
+    public static readonly allLibrariesBtn = '[data-testid="all-cql-libraries-tab"]'
     //cql Library editor box on page
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core"]'
@@ -18,6 +20,14 @@ export class CQLLibraryPage {
 
     //Error marker inside of the CQL Editor window
     public static readonly errorInCQLEditorWindow = 'div.ace_gutter-cell.ace_error'
+
+    //Version and Draft CQL Library
+    public static readonly versionLibraryRadioButton = '[name="type"]'
+    public static readonly createVersionContinueButton = '[data-testid="create-version-continue-button"] > :nth-child(1)'
+    public static readonly successfulVersionMsg = '.MuiAlert-message'
+    public static readonly cqlLibraryVersionList = ':nth-child(1) > .CqlLibraryList___StyledTd3-sc-1rv02q7-12 > p'
+    public static readonly updateDraftedLibraryTextBox = '[data-testid="cql-library-name-text-field"]'
+    public static readonly createDraftContinueBtn = '[data-testid="create-draft-continue-button"]'
 
 
     public static createCQLLibrary (CQLLibraryName: string) : void {
@@ -49,28 +59,52 @@ export class CQLLibraryPage {
         })
     }
 
-    public static createCQLLibraryAPI (apiCQLLibraryName: string) : void {
-        cy.setAccessTokenCookie()
+    public static createCQLLibraryAPI(CqlLibraryName: string, twoLibraries?: boolean, altUser?: boolean): string {
+        let user = ''
 
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+
+        //Create New CQL Library
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
                 url: '/api/cql-libraries',
-                method: 'POST',
                 headers: {
                     authorization: 'Bearer ' + accessToken.value
                 },
+                method: 'POST',
                 body: {
-                    "cqlLibraryName": apiCQLLibraryName,
-                    "model": "QI-Core"
+                    'cqlLibraryName': CqlLibraryName,
+                    'model': 'QI-Core',
+                    'createdBy': user
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                expect(response.body.cqlLibraryName).to.eql(apiCQLLibraryName)
-                cy.writeFile('cypress/fixtures/cqlLibraryId', response.body.id)
+                expect(response.body.cqlLibraryName).to.eql(CqlLibraryName)
+                if (twoLibraries === true)
+                {
+                    cy.writeFile('cypress/fixtures/cqlLibraryId2', response.body.id)
+                }
+                else
+                {
+                    cy.writeFile('cypress/fixtures/cqlLibraryId', response.body.id)
+                }
+
             })
         })
+        return user
     }
+
+
     public static clickEditforCreatedLibrary(): void {
 
         //Navigate to CQL Library Page
@@ -86,6 +120,39 @@ export class CQLLibraryPage {
             let element = cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').parent()
             element.parent().should('contain', expectedValue)
 
+        })
+    }
+
+    public static clickVersionforCreatedLibrary(secondLibrary?: boolean): void {
+
+        let filePath = 'cypress/fixtures/cqlLibraryId'
+
+        if (secondLibrary === true)
+        {
+            filePath = 'cypress/fixtures/cqlLibraryId2'
+        }
+
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
+        cy.readFile(filePath).should('exist').then((fileContents) => {
+            cy.get('[data-testid="create-new-version-'+ fileContents +'-button"]').click()
+        })
+    }
+
+    public static validateVersionNumber(expectedValue: string, versionNumber: string): void {
+        cy.readFile('cypress/fixtures/cqlLIbraryId').should('exist').then((fileContents) => {
+
+            let element = cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').parent()
+            element.parent().should('contain', expectedValue).children().eq(2).should('contain', versionNumber)
+        })
+    }
+
+    public static clickDraftforCreatedLibrary(): void {
+
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
+        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+            cy.get('[data-testid="create-new-draft-'+ fileContents +'-button"]').click()
         })
     }
 

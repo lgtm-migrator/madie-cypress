@@ -1,6 +1,6 @@
 import {Header} from "./Header"
 import {Environment} from "./Environment"
-import {MeasuresPage} from "./MeasuresPage";
+import {LandingPage} from "./LandingPage";
 
 //MADiE OKTA Login Class
 export class OktaLogin {
@@ -17,8 +17,7 @@ export class OktaLogin {
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton).click()
-        cy.get(MeasuresPage.measureListTitles).should('be.visible')
-
+        cy.get(LandingPage.newMeasureButton).should('be.visible')
         cy.log('Login Successful')
 
     }
