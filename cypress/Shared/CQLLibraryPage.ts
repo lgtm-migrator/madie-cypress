@@ -155,6 +155,5 @@ export class CQLLibraryPage {
             cy.get('[data-testid="create-new-draft-'+ fileContents +'-button"]').click()
         })
     }
-
 }
 

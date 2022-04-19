@@ -20,6 +20,7 @@ describe('Edit CQL Library', () => {
     beforeEach('Set Access Token', () => {
 
         cy.setAccessTokenCookie()
+
     })
 
     it('Edit CQL Library : Successful Update', () => {

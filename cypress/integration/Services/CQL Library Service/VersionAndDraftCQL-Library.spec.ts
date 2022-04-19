@@ -90,5 +90,4 @@ describe('Version and Draft CQL Library', () => {
             })
         })
     })
-
 })
