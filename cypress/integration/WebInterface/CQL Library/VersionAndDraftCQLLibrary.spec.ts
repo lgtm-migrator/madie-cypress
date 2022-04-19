@@ -4,7 +4,7 @@ import {Header} from "../../../Shared/Header"
 
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
-let updatedCqlLibraryName = 'UpdatedTestLibrary' + Date.now()
+let updatedCqlLibraryName = ''
 
 describe('Add Version and Draft to CQL Library', () => {
 
@@ -47,6 +47,8 @@ describe('Add Version and Draft to CQL Library', () => {
 
     it('Add Draft to the versioned Library', () => {
 
+        updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
+
         CQLLibraryPage.clickDraftforCreatedLibrary()
         cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
         cy.get(CQLLibraryPage.createDraftContinueBtn).click()
@@ -74,7 +76,7 @@ describe('Validate Draft', () => {
     beforeEach('Login', () => {
 
         //Create CQL Library
-        CqlLibraryOne = 'TestLibrary1' + Date.now()
+        CqlLibraryOne = 'TestLibraryOne' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
 
         OktaLogin.Login()
@@ -90,6 +92,7 @@ describe('Validate Draft', () => {
    it('User cannot create a draft of a draft that already exists, while the version is still open', () => {
 
         let versionNumber = '1.0.000'
+       updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
 
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
