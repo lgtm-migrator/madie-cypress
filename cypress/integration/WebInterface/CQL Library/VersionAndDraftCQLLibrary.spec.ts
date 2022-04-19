@@ -25,7 +25,7 @@ describe('Add Version and Draft to CQL Library', () => {
 
     })
 
-    afterEach('Login', () => {
+    afterEach('Logout', () => {
 
         OktaLogin.Logout()
 
@@ -83,7 +83,7 @@ describe('Validate Draft', () => {
 
     })
 
-    afterEach('Login', () => {
+    afterEach('Logout', () => {
 
         OktaLogin.Logout()
 
