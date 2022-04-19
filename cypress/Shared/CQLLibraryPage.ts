@@ -28,6 +28,7 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryVersionList = ':nth-child(1) > .CqlLibraryList___StyledTd3-sc-1rv02q7-12 > p'
     public static readonly updateDraftedLibraryTextBox = '[data-testid="cql-library-name-text-field"]'
     public static readonly createDraftContinueBtn = '[data-testid="create-draft-continue-button"]'
+    public static readonly editLibraryErrorMsgAfterVersion = '.CreateEditCqlLibrary__InfoAlert-sc-4o3bpi-2'
 
 
     public static createCQLLibrary (CQLLibraryName: string) : void {

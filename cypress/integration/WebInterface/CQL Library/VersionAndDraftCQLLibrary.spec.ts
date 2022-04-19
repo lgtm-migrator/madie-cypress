@@ -71,7 +71,7 @@ describe('Add Version and Draft to CQL Library', () => {
     })
 })
 
-describe('Validate Draft', () => {
+describe('Draft and Version Validations', () => {
 
     beforeEach('Login', () => {
 
@@ -114,5 +114,22 @@ describe('Validate Draft', () => {
         cy.get(CQLLibraryPage.createDraftContinueBtn).click()
         cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'Cannot draft resource CQL Library. A draft already exists for the CQL Library Group.')
    })
+
+    it('Verify the CQL Library updates are restricted after Version is created', () => {
+
+        let versionNumber = '1.0.000'
+        updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
+
+        CQLLibraryPage.clickVersionforCreatedLibrary()
+
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibraryPage.createVersionContinueButton).click()
+        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.log('Version Created Successfully')
+
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
+    })
 
 })
