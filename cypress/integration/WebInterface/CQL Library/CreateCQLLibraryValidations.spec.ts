@@ -91,9 +91,6 @@ describe('CQL Library Validations', () => {
         CQLLibraryPage.clickCreateLibraryButton()
         CQLLibraryPage.clickEditforCreatedLibrary()
         Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )
-
-
-
     })
 
     it('Update new CQL Library Creation with CQL', () =>{
