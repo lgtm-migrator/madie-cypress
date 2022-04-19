@@ -56,4 +56,4 @@ parameter "Measurement Period" Interval<DateTime>
 {home}	Sum((collapse Intervals)CollapsedInterval
 {home}			return all duration in days of CollapsedInterval
 {home}	)
-{del}{del}{del}{del}
+{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{backspace}{backspace}
