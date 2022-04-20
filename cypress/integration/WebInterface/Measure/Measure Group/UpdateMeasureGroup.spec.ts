@@ -33,6 +33,12 @@ describe('Validate Measure Group', () => {
 
     })
 
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoringArray[3])
+
+    })
+
     it('All population selections are saved to the database', () => {
 
 

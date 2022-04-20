@@ -1,5 +1,8 @@
-export {}
+import {Utilities} from "../../../Shared/Utilities"
 
+export {}
+let measureName = 'TestMeasure' + Date.now()
+let cqlLibraryName = 'TestCql' + Date.now()
 
 describe('Measure Service: Edit Measure', () => {
 
@@ -16,15 +19,15 @@ describe('Measure Service: Edit Measure', () => {
                 },
                 method: 'POST',
                 body: {
-                    'measureName': 'TestMeasure' + Date.now(),
-                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'measureName': measureName,
+                    'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/downloads/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
     })
@@ -35,11 +38,17 @@ describe('Measure Service: Edit Measure', () => {
 
     })
 
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+
+    })
+
     it('Update Measure details', () => {
 
         //Update Measure details
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -64,7 +73,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Verify error message when the measure name is empty', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 //Verify error message when the measure name is empty
                 cy.request({
                     failOnStatusCode: false,
@@ -91,7 +100,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Verify error message when the measure name does not contain at least 1 letter', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' +id,
@@ -117,7 +126,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Verify error message when the measure name contains underscore', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' +id,
@@ -143,7 +152,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Verify error message when the measure name is over 500 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' +id,
@@ -173,7 +182,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Save CQL to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -198,7 +207,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Measure Steward to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -224,7 +233,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Description to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -250,7 +259,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Copyright to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -276,7 +285,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Disclaimer to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -302,7 +311,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Rationale to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -328,7 +337,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Author to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {
@@ -354,7 +363,7 @@ describe('Measure Service: Edit Measure', () => {
     it('Add Meta Data Guidance to the measure', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
                     headers: {

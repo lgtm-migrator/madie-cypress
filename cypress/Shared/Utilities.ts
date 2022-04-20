@@ -1,9 +1,44 @@
-import { type } from "os";
-import {EditMeasurePage} from "../Shared/EditMeasurePage"
-import {TestCasesPage} from "../Shared/TestCasesPage"
-import {Header} from "../Shared/Header"
-import {MeasureGroupPage} from "../Shared/MeasureGroupPage"
+import {TestCasesPage} from "./TestCasesPage"
+import {Header} from "./Header"
+import {MeasureGroupPage} from "./MeasureGroupPage"
+
 export class Utilities {
+
+    public static deleteMeasure(measureName: string, cqlLibraryName: string, measureScoring: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
+
+        let path = 'cypress/fixtures/measureId'
+
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+        }
+
+        if (deleteSecondMeasure)
+        {
+            path = 'cypress/fixtures/measureId2'
+        }
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(path).should('exist').then((id) => {
+                cy.request({
+                    url: '/api/measures/'+id,
+                    method: 'PUT',
+                    headers: {
+                        Authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName,
+                        "measureScoring": measureScoring, "model": 'QI-Core', "active": false}
+                }).then((response) => {
+                    expect(response.status).to.eql(200)
+                    expect(response.body).to.eql("Measure updated successfully.")
+                })
+            })
+        })
+    }
 
     public static textValues = {
         dataLines: null
@@ -345,6 +380,7 @@ export class Utilities {
             
         }
     }
+
     public static validateMeasureGroup (measureScoreValue: any | any[], mgPVTestType: string | string[]): void {
         //log, in cypress, the test type value
         cy.log((mgPVTestType.valueOf()).toString())

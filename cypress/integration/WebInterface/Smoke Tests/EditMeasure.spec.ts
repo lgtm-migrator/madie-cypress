@@ -3,6 +3,7 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
+import {Utilities} from "../../../Shared/Utilities";
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -23,6 +24,12 @@ describe('Edit Measure', () => {
 
     afterEach('Logout', () => {
         OktaLogin.Logout()
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+
     })
 
     it('Edit Measure Name and verify the measure name is updated on Measures page', () => {

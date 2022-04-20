@@ -4,6 +4,7 @@ import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
+import {Utilities} from "../../../Shared/Utilities";
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -30,6 +31,12 @@ describe('Create Test Case', () => {
     })
     afterEach('Logout', () => {
         OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 

@@ -10,14 +10,16 @@ import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let measureScoring = MeasureGroupPage.measureScoringUnit
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 
 describe('CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
-        let newMeasureName = measureName + randValue
-        let newCqlLibraryName = CqlLibraryName + randValue
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
@@ -26,6 +28,12 @@ describe('CQL Editor', () => {
     })
     afterEach('Logout', () => {
         OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
 
     })
 

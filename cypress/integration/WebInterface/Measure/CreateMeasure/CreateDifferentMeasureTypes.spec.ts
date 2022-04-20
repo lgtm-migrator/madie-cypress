@@ -1,5 +1,6 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
+import {Utilities} from "../../../../Shared/Utilities";
 
 
 let measureName = ''
@@ -13,6 +14,8 @@ describe('Create different Measure types', () => {
 
     afterEach('Logout', () => {
         OktaLogin.Logout()
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
     })
 
     it('Create Cohort Measure', () => {

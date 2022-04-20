@@ -4,7 +4,7 @@ import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Header} from "../../../../Shared/Header"
-import {Utilities} from "../../../../Shared/Utilities";
+import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -26,6 +26,12 @@ describe('Edit Measure: Add Meta Data', () => {
     afterEach('Logout', () => {
 
         OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 

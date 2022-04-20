@@ -1,12 +1,20 @@
+import {Utilities} from "../../../Shared/Utilities"
+import {TestCaseJson} from "../../../Shared/TestCaseJson"
+
 export {}
 
-import {TestCaseJson} from "../../../Shared/TestCaseJson"
+let measureName = 'TestMeasure' + Date.now()
+let cqlLibraryName = 'TestCql' + Date.now()
+
+
 
 describe('Measure Service: Test Case Endpoints', () => {
 
     before('Create Measure', () => {
 
         cy.setAccessTokenCookie()
+
+
 
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
@@ -17,15 +25,15 @@ describe('Measure Service: Test Case Endpoints', () => {
                 },
                 method: 'POST',
                 body: {
-                    'measureName': 'TestMeasure' + Date.now(),
-                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'measureName': measureName,
+                    'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/downloads/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
     })
@@ -36,6 +44,12 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     })
 
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+
+    })
+
     it('Create Test Case', () => {
 
         let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
@@ -43,7 +57,7 @@ describe('Measure Service: Test Case Endpoints', () => {
         let description = 'DENOME pass Test HB <120 ~!@#!@#$$%^&%^&* &()(?><'
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {
@@ -64,7 +78,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     expect(response.body.title).to.eql(title)
                     expect(response.body.description).to.eql(description)
                     expect(response.body.json).to.be.exist
-                    cy.writeFile('cypress/downloads/testcaseId', response.body.id)
+                    cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
                 })
             })
         })
@@ -74,8 +88,8 @@ describe('Measure Service: Test Case Endpoints', () => {
 
         //Edit created Test Case
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testcaseid) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((measureId) => {
+                cy.readFile('cypress/fixtures/testcaseId').should('exist').then((testcaseid) => {
                     cy.request({
                         url: '/api/measures/' + measureId + '/test-cases/' + testcaseid,
                         headers: {
@@ -97,7 +111,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                         expect(response.body.series).to.eql("WhenBP<120")
                         expect(response.body.title).to.eql('test case title edited')
                         expect(response.body.json).to.be.exist
-                        cy.writeFile('cypress/downloads/testCaseId', response.body.id)
+                        cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
                     })
                 })
             })
@@ -107,7 +121,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     it('Get All Test Cases', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {
@@ -125,8 +139,8 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     it('Get a specific test case', () => {
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.readFile('cypress/fixtures/testcaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         url: '/api/measures/' + id + '/test-cases/' + testCaseId,
                         headers: {
@@ -153,6 +167,9 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
 
         cy.setAccessTokenCookie()
 
+        measureName = 'TestMeasure' + Date.now()
+        cqlLibraryName = 'TestCql' + Date.now()
+
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
@@ -162,15 +179,15 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
                 },
                 method: 'POST',
                 body: {
-                    'measureName': 'TestMeasure' + Date.now(),
-                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'measureName': measureName,
+                    'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/downloads/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
     })
@@ -181,10 +198,16 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
 
     })
 
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+
+    })
+
     it('Create Test Case: Description more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -212,8 +235,8 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     it('Edit Test Case: Description more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((measureId) => {
-                cy.readFile('cypress/downloads/testcaseId').should('exist').then((testCaseId) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((measureId) => {
+                cy.readFile('cypress/fixtures/testcaseId').should('exist').then((testCaseId) => {
                     cy.request({
                         failOnStatusCode: false,
                         url: '/api/measures/' + measureId + '/test-cases/' + testCaseId,
@@ -243,7 +266,7 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     it('Create Test Case: Title more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -272,7 +295,7 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     it('Create Test Case: Series more than 250 characters', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -304,6 +327,9 @@ describe('Test Case Json Validations', () =>{
 
         cy.setAccessTokenCookie()
 
+        measureName = 'TestMeasure' + Date.now()
+        cqlLibraryName = 'TestCql' + Date.now()
+
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
@@ -313,15 +339,15 @@ describe('Test Case Json Validations', () =>{
                 },
                 method: 'POST',
                 body: {
-                    'measureName': 'TestMeasure' + Date.now(),
-                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'measureName': measureName,
+                    'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/downloads/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
     })
@@ -332,10 +358,16 @@ describe('Test Case Json Validations', () =>{
 
     })
 
-    it.skip('Enter Valid Test Case Json', () => {
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+
+    })
+
+    it('Enter Valid Test Case Json', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -362,7 +394,7 @@ describe('Test Case Json Validations', () =>{
     it('Enter Invalid Test Case Json and Verify Error Message', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -390,7 +422,7 @@ describe('Test Case Json Validations', () =>{
     it('Enter Patient XML and Verify Error Message', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
                     url: '/api/measures/' + id + '/test-cases',
@@ -422,6 +454,9 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
 
         cy.setAccessTokenCookie()
 
+        measureName = 'TestMeasure' + Date.now()
+        cqlLibraryName = 'TestCql' + Date.now()
+
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({
@@ -431,15 +466,15 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
                 },
                 method: 'POST',
                 body: {
-                    'measureName': 'TestMeasure' + Date.now(),
-                    'cqlLibraryName': 'TestCql' + Date.now(),
+                    'measureName': measureName,
+                    'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/downloads/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
     })
@@ -450,10 +485,16 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
 
     })
 
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+
+    })
+
     it('Bad Access Token', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/downloads/measureId').should('exist').then((id) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {

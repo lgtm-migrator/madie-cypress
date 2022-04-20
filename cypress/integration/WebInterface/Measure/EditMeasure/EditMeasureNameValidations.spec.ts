@@ -2,6 +2,8 @@ import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
+import {Utilities} from "../../../../Shared/Utilities"
+
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
@@ -20,6 +22,12 @@ describe('Edit Measure Name Validations', () => {
 
     afterEach('Logout', () => {
         OktaLogin.Logout()
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+
     })
 
     it('Verify error messages when the edit measure name entered is invalid', () => {

@@ -1,9 +1,10 @@
+import {Utilities} from "../../../Shared/Utilities";
+
 export {}
 import {Environment} from "../../../Shared/Environment"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
-import { userInfo } from "os"
 
 let measureName = ''
 let newMeasureName = ''
@@ -22,6 +23,11 @@ describe('Measure Service: Create Measure', () => {
     beforeEach('Set Access Token',() => {
 
         cy.setAccessTokenCookie()
+    })
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CQLLibraryName, measureScoring)
+
     })
     //create measure
     it('Create New Measure, successful creation', () => {
@@ -236,23 +242,11 @@ describe('Measure Service: Create different Measure types', () => {
         CQLLibraryName = 'CohortTestLibrary' + Date.now()
         measureScoring = 'Cohort'
         model = 'QI-Core'
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                method: 'POST',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                body: {
-                    "measureName": measureName,
-                    "cqlLibraryName": CQLLibraryName,
-                    "model": model,
-                    "measureScoring": measureScoring
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-            })
-        })
+
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CQLLibraryName, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CQLLibraryName, measureScoring)
+
     })
 
     it('Create Proportion Measure', () => {
@@ -260,23 +254,11 @@ describe('Measure Service: Create different Measure types', () => {
         CQLLibraryName = 'ProportionTestLibrary' + Date.now()
         measureScoring = 'Proportion'
         model = 'QI-Core'
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                method: 'POST',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                body: {
-                    "measureName": measureName,
-                    "cqlLibraryName": CQLLibraryName,
-                    "model": model,
-                    "measureScoring": measureScoring
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-            })
-        })
+
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CQLLibraryName, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CQLLibraryName, measureScoring)
+
     })
 
     it('Create Continuous Variable Measure', () => {
@@ -284,23 +266,11 @@ describe('Measure Service: Create different Measure types', () => {
         CQLLibraryName = 'CVTestLibrary' + Date.now()
         measureScoring = 'Continuous Variable'
         model = 'QI-Core'
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                method: 'POST',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                body: {
-                    "measureName": measureName,
-                    "cqlLibraryName": CQLLibraryName,
-                    "model": model,
-                    "measureScoring": measureScoring
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-            })
-        })
+
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CQLLibraryName, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CQLLibraryName, measureScoring)
+
     })
 
     it('Create Ratio Measure', () => {
@@ -308,23 +278,11 @@ describe('Measure Service: Create different Measure types', () => {
         CQLLibraryName = 'RatioTestLibrary' + Date.now()
         measureScoring = 'Ratio'
         model = 'QI-Core'
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                method: 'POST',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                body: {
-                    "measureName": measureName,
-                    "cqlLibraryName": CQLLibraryName,
-                    "model": model,
-                    "measureScoring": measureScoring
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-            })
-        })
+
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CQLLibraryName, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CQLLibraryName, measureScoring)
+
     })
 
 })
@@ -733,6 +691,8 @@ describe('Measure Service: Update Delete Flag', () => {
 
                 })
             })
+
+            Utilities.deleteMeasure(newMeasureName, newCQLLibraryName, measureScoringU)
         })
         //attempt to update / delete measure that does not exist
         it('Attempt to update / delete measure that does not exist', () => {
