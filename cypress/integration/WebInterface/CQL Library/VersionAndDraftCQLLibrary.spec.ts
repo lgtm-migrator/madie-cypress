@@ -4,6 +4,7 @@ import {Header} from "../../../Shared/Header"
 
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
+let CqlLibraryOther = ''
 let updatedCqlLibraryName = ''
 
 describe('Add Version and Draft to CQL Library', () => {
@@ -79,6 +80,9 @@ describe('Draft and Version Validations', () => {
         CqlLibraryOne = 'TestLibraryOne' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
 
+        CqlLibraryOther = 'AnotherLibrary' + Date.now()
+        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOther, true, false)
+
         OktaLogin.Login()
 
     })
@@ -92,7 +96,7 @@ describe('Draft and Version Validations', () => {
    it('User cannot create a draft of a draft that already exists, while the version is still open', () => {
 
         let versionNumber = '1.0.000'
-       updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
+        updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
 
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
@@ -130,6 +134,23 @@ describe('Draft and Version Validations', () => {
 
         CQLLibraryPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
+    })
+
+    it('Draft cannot be saved with a name that exists for a different library', () => {
+        let versionNumber = '1.0.000'
+        CQLLibraryPage.clickVersionforCreatedLibrary()
+
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibraryPage.createVersionContinueButton).click()
+        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.log('Version Created Successfully')
+
+        CQLLibraryPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(CqlLibraryOther)
+        cy.get(CQLLibraryPage.createDraftContinueBtn).click()
+        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'Requested Cql Library cannot be drafted. Library name must be unique.')
+        cy.log('Draft was not created due to the attempt to use the name of an already existing Library')
     })
 
 })
