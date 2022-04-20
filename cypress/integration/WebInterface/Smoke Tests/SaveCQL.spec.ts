@@ -4,6 +4,7 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
 import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
+import {Utilities} from "../../../Shared/Utilities";
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
@@ -23,6 +24,12 @@ describe('Save CQL on CQL Editor Page', () => {
 
     afterEach('Logout', () => {
         OktaLogin.Logout()
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+
     })
 
     it('Create New Measure and Add CQL to the Measure', () => {

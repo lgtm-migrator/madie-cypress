@@ -1,9 +1,13 @@
+import {Utilities} from "../../../Shared/Utilities";
+
 export {}
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
 let measureScoring = 'Proportion'
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 describe('Measure Service: Test Case Endpoints', () => {
 
@@ -12,11 +16,17 @@ describe('Measure Service: Test Case Endpoints', () => {
         cy.setAccessTokenCookie()
     })
 
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+
+    })
+
     before('Create Measure', () => {
         
         let randValue = (Math.floor((Math.random() * 1000) + 1))
-        let newMeasureName = measureName + randValue
-        let newCqlLibraryName = CqlLibraryName + randValue
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)

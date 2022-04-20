@@ -5,7 +5,6 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {Utilities} from "../../../Shared/Utilities"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
-import {Header} from "../../../Shared/Header"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 let measureName = 'TestMeasure' + (Date.now())
@@ -16,13 +15,15 @@ let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
 let testCaseSeries = 'SBTestSeries'
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 describe('Test Case Expected Measure Group population values based on initial measure scoring', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
-        let newMeasureName = measureName + randValue
-        let newCqlLibraryName = CqlLibraryName + randValue
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
@@ -32,6 +33,12 @@ describe('Test Case Expected Measure Group population values based on initial me
     afterEach('Logout', () => {
 
         OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 

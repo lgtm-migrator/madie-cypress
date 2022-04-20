@@ -7,7 +7,8 @@ import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now()
-let CqlLibraryName = 'TestLibrary' + Date.now()
+let CqlLibraryName1 = 'TestLibrary' + Date.now()
+let CqlLibraryName2 = 'TestLibrary2' + Date.now()
 let measureScoring = MeasureGroupPage.measureScoringUnit
 
 
@@ -15,11 +16,10 @@ describe('Validate Measure Group', () => {
 
     before('Create measure', () => {
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1, measureScoring)
 
         //create another Measure
-        CqlLibraryName = 'TestLibrary2' + Date.now()
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2, measureScoring, true)
     })
 
     beforeEach('Login', () => {
@@ -31,6 +31,14 @@ describe('Validate Measure Group', () => {
     afterEach('Login', () => {
 
         OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName1, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName2, measureScoring, true)
 
     })
 
