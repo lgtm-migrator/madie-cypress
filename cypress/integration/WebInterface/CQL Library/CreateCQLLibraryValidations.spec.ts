@@ -1,24 +1,19 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
-import {Utilities} from "../../../Shared/Utilities"
 
+let CQLLibraryName = 'TestLibrary' + Date.now()
 
 describe('CQL Library Validations', () => {
 
-    let apiCQLLibraryName = 'TestLibrary' + Date.now()
-    let CQLLibraryName = 'TestLibrary' + Date.now()
+    beforeEach('Login', () => {
 
-    beforeEach('Create CQL Library and Login', () => {
-        let randValueAPICQLLIbraryName = (Math.floor((Math.random() * 1000) + 1))
-        let apiCQLLibraryNameBE = apiCQLLibraryName + randValueAPICQLLIbraryName
-        CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryNameBE)
         OktaLogin.Login()
 
     })
     afterEach('Logout', () => {
+
         OktaLogin.Logout()
-        cy.wait(1000)
 
     })
 
@@ -85,28 +80,49 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
-        cy.readFile('cypress/fixtures/CQLLibrary.txt').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
+
         CQLLibraryPage.clickCreateLibraryButton()
+
+        cy.get(Header.cqlLibraryTab).click()
+
         CQLLibraryPage.clickEditforCreatedLibrary()
-        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )
+
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', CQLLibraryName+randValue)
+
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
+            expect(text.length).to.equal(1775)
+        })
+
     })
 
     it('Update new CQL Library Creation with CQL', () =>{
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let UpdatedCQLLibraryName = CQLLibraryName +randValue+ "updated"
-        //navigate to the CQL Libaray page and create new CQL Library
+        CQLLibraryPage.createCQLLibrary(UpdatedCQLLibraryName)
+        //navigate to the CQL Libaray page
         cy.get(Header.cqlLibraryTab).click()
+
         CQLLibraryPage.clickEditforCreatedLibrary()
+
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
-        cy.readFile('cypress/fixtures/CQLLibrary.txt').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
-        //CQLLibraryPage.clickUpdateLibraryButton()
+
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        cy.get(Header.cqlLibraryTab).click()
+
         CQLLibraryPage.clickEditforCreatedLibrary()
-        Utilities.validateCQL('CQLLibraryExpected.txt', CQLLibraryPage.cqlLibraryEditorTextBox )  
+
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', UpdatedCQLLibraryName)
+
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
+            expect(text.length).to.equal(1775)
+        })
         
     })
 })

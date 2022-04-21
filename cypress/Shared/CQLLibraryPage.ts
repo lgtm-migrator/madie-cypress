@@ -1,5 +1,6 @@
 import {Header} from "./Header"
 import {Environment} from "./Environment"
+import {EditMeasurePage} from "./EditMeasurePage";
 
 export class CQLLibraryPage {
 
@@ -111,7 +112,15 @@ export class CQLLibraryPage {
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
         cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+
+            cy.intercept('GET', '/api/cql-libraries/' + fileContents).as('cqlLibrary')
+
             cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').click()
+
+            cy.wait('@cqlLibrary').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+            })
+
         })
     }
 
