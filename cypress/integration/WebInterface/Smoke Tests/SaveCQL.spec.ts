@@ -4,7 +4,7 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
 import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
-import {Utilities} from "../../../Shared/Utilities";
+import {Utilities} from "../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoring = 'Ratio'
@@ -41,7 +41,7 @@ describe('Save CQL on CQL Editor Page', () => {
         cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
-
+        
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
@@ -51,8 +51,8 @@ describe('Save CQL on CQL Editor Page', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Expected.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', fileContents)
+        cy.get(EditMeasurePage.cqlEditorTextBox).invoke('text').then((text) => {
+            expect(text.length).to.equal(2906)
         })
     })
 })
