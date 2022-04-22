@@ -128,9 +128,15 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseNUMEXCheckBox).click()
 
         //Save updated test case
-        cy.get(TestCasesPage.cuTestCaseButton).click()
-        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
-
+        cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+            cy.intercept('PUT', '/api/measures/' + fileContents).as('putMeasures')
+            cy.get(TestCasesPage.cuTestCaseButton).click()
+            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+            cy.url({ timeout: 100000 }).should('include', '/edit/test-cases')    
+            cy.wait('@putMeasures').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+            })
+        })
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()

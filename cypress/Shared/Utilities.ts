@@ -86,6 +86,7 @@ export class Utilities {
             // log new array
             cy.log(cqlArr);
             this.waitForElementVisible(pageResource, 3000)
+            cy.get(pageResource).invoke('show')
             for (let i in cqlArr){
                 this.textValues.dataLines = cqlArr[i]
                 cy.log(this.textValues.dataLines)
