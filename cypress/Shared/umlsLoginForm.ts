@@ -15,8 +15,6 @@ export class umlsLoginForm {
     public static retrieveAndEnterAPIKey() : void {
         
         cy.get(this.apiTextInput).type(Environment.credentials().umls_API_KEY)
-/*         cy.readFile('cypress/fixtures/UMLS_API.txt').should('exist').then((fileContents) => {
-            cy.get(this.apiTextInput).type(fileContents)
-        }) */
+
     }
 }
