@@ -1,4 +1,5 @@
 import {CQLEditorPage} from "./CQLEditorPage"
+import {Environment} from "./Environment"
 
 export class umlsLoginForm {
     //the form, itself, and related buttons and fields
@@ -12,8 +13,10 @@ export class umlsLoginForm {
     
     //retrieve API kiey
     public static retrieveAndEnterAPIKey() : void {
-        cy.readFile('cypress/fixtures/UMLS_API.txt').should('exist').then((fileContents) => {
+        
+        cy.get(this.apiTextInput).type(Environment.credentials().umls_API_KEY)
+/*         cy.readFile('cypress/fixtures/UMLS_API.txt').should('exist').then((fileContents) => {
             cy.get(this.apiTextInput).type(fileContents)
-        })
+        }) */
     }
 }
