@@ -31,7 +31,6 @@ describe('Add Version and Draft to CQL Library', () => {
     it('Add Version to the CQL Library', () => {
 
         let versionNumber = '1.0.000'
-
         CQLLibraryPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
