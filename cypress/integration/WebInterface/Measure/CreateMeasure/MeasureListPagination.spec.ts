@@ -1,0 +1,113 @@
+import {OktaLogin} from "../../../../Shared/OktaLogin"
+import {MeasuresPage} from "../../../../Shared/MeasuresPage"
+
+let measureName  = []
+let CqlLibraryName  = []
+let measureScoring = 'Ratio'
+let measureIds = []
+
+describe('Measure List Pagination', () => {
+
+    before('Create Measures and Login', () => {
+
+        cy.setAccessTokenCookie()
+
+        let fileContents = ''
+
+        for (let i = 0; i <= 15; i++) {
+
+            measureName [i] = 'TestMeasure' + i + Date.now()
+            CqlLibraryName [i] = 'TestLibrary' + i + Date.now()
+
+            cy.getCookie('accessToken').then((accessToken) => {
+
+                cy.request({
+                    url: '/api/measure',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'measureName': measureName[i],
+                        'cqlLibraryName': CqlLibraryName[i],
+                        'model': 'QI-Core',
+                        'measureScoring': measureScoring,
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    measureIds [i] = response.body.id
+                    fileContents = fileContents + measureIds[i] + ','
+                    cy.writeFile('cypress/fixtures/measureId', fileContents)
+
+                })
+            })
+        }
+
+        OktaLogin.Login()
+    })
+
+    after('Cleanup Measures and Logout', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+
+            let idsList = ''
+
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+
+                idsList = fileContents.split(',')
+
+                for(let j=0; j < idsList.length-1; j++) {
+
+                    let id = idsList[j]
+
+                    cy.log('ID is : ' + id)
+
+                    cy.request({
+                        url: '/api/measures/' + id,
+                        method: 'PUT',
+                        headers: {
+                            Authorization: 'Bearer ' + accessToken.value
+                        },
+                        body: {
+                            "id": id, "measureName": measureName[j], "cqlLibraryName": CqlLibraryName[j] + 1,
+                            "measureScoring": measureScoring, "model": 'QI-Core', "active": false
+                        }
+
+                    }).then((response) => {
+                        expect(response.status).to.eql(200)
+                        expect(response.body).to.eql("Measure updated successfully.")
+                    })
+                }
+
+            })
+
+        })
+
+        OktaLogin.Logout()
+    })
+
+    it('Verify Pagination', () => {
+
+        //Verify URL before clicking on Next button
+        cy.url().should('not.include','page=2')
+        //Click on Next Button
+        cy.get(MeasuresPage.paginationNextButton).click( {force:true})
+        //Verify if Next Page loaded
+        cy.url().should('include','page=2')
+
+        //Click on Previous Button
+        cy.get(MeasuresPage.paginationPreviousButton).click()
+        //Verify if Previous Page loaded
+        cy.url().should('include','page=1')
+
+        //Verify pagination limit before change
+        cy.get(MeasuresPage.paginationLimitSelect).should('contain', '10')
+        cy.get(MeasuresPage.paginationLimitSelect).click()
+        //Change pagination limit to 25
+        cy.get(MeasuresPage.paginationLimitEquals25).click( {force:true} )
+        //Verify pagination limit after change
+        cy.get(MeasuresPage.paginationLimitSelect).should('contain', '25')
+
+    })
+})

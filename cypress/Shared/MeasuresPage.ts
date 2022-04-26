@@ -6,6 +6,12 @@ export class MeasuresPage {
     public static readonly measureListTitles = '.MeasureList___StyledTd-sc-1kfngu9-13'
     public static readonly allMeasuresTab = '[data-testid=all-measures-tab]'
 
+    //Pagination
+    public static readonly paginationNextButton = '[data-testid="NavigateNextIcon"]'
+    public static readonly paginationPreviousButton = '[data-testid=NavigateBeforeIcon]'
+    public static readonly paginationLimitSelect = '#pagination-limit-select'
+    public static readonly paginationLimitEquals25 = '[data-value="25"]'
+
 
     public static clickEditforCreatedMeasure(secondMeasure?: boolean): void {
         let filePath = 'cypress/fixtures/measureId'
