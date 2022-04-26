@@ -107,11 +107,16 @@ export class CQLLibraryPage {
     }
 
 
-    public static clickEditforCreatedLibrary(): void {
+    public static clickEditforCreatedLibrary(secondLibrary?: boolean): void {
+        let filePath = 'cypress/fixtures/cqlLibraryId'
 
+        if (secondLibrary === true)
+        {
+            filePath = 'cypress/fixtures/cqlLibraryId2'
+        }
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
-        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+        cy.readFile(filePath).should('exist').then((fileContents) => {
 
             cy.intercept('GET', '/api/cql-libraries/' + fileContents).as('cqlLibrary')
 
@@ -160,6 +165,8 @@ export class CQLLibraryPage {
     public static clickDraftforCreatedLibrary(): void {
 
         //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).should('exist')
+        cy.get(Header.cqlLibraryTab).should('be.visible')  
         cy.get(Header.cqlLibraryTab).click()
         cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
             cy.get('[data-testid="create-new-draft-'+ fileContents +'-button"]').click()

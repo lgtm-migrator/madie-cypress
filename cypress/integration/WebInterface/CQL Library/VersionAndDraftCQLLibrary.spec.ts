@@ -9,18 +9,14 @@ let updatedCqlLibraryName = ''
 
 describe('Add Version and Draft to CQL Library', () => {
 
-    before('Create CQL Library', () => {
-
+    beforeEach('Craete CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
-
+        
         //Create Measure with Alternate User
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryTwo, true, true)
-    })
-
-    beforeEach('Login', () => {
 
         OktaLogin.Login()
 
@@ -36,9 +32,24 @@ describe('Add Version and Draft to CQL Library', () => {
 
         let versionNumber = '1.0.000'
 
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('exist')
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('be.enabled')          
         cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+
+        cy.get(CQLLibraryPage.createVersionContinueButton).should('exist')
+        cy.get(CQLLibraryPage.createVersionContinueButton).should('be.visible')
         cy.get(CQLLibraryPage.createVersionContinueButton).click()
         cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
         CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
@@ -48,17 +59,63 @@ describe('Add Version and Draft to CQL Library', () => {
 
     it('Add Draft to the versioned Library', () => {
 
+        let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        CQLLibraryPage.clickVersionforCreatedLibrary()
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('exist')
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('be.enabled')          
+        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+
+        cy.get(CQLLibraryPage.createVersionContinueButton).should('exist')
+        cy.get(CQLLibraryPage.createVersionContinueButton).should('be.visible')
+        cy.get(CQLLibraryPage.createVersionContinueButton).click()
+        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.log('Version Created Successfully')
 
         CQLLibraryPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('exist')
+        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('be.visible')
+        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('be.enabled')
         cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
+
+        cy.get(CQLLibraryPage.createDraftContinueBtn).should('exist')
+        cy.get(CQLLibraryPage.createDraftContinueBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createDraftContinueBtn).should('be.enabled') 
         cy.get(CQLLibraryPage.createDraftContinueBtn).click()
+
         cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
         cy.get(CQLLibraryPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
         cy.log('Draft Created Successfully')
     })
 
     it('Verify non Library owner unable to create Version', () => {
+
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
+
+        //Navigate to All Libraries tab
+        cy.get(CQLLibraryPage.allLibrariesBtn).click()
+
+        CQLLibraryPage.clickEditforCreatedLibrary(true)
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
@@ -97,6 +154,15 @@ describe('Draft and Version Validations', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
@@ -123,6 +189,15 @@ describe('Draft and Version Validations', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
@@ -138,6 +213,15 @@ describe('Draft and Version Validations', () => {
 
     it('Draft cannot be saved with a name that exists for a different library', () => {
         let versionNumber = '1.0.000'
+        CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled') 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
         CQLLibraryPage.clickVersionforCreatedLibrary()
 
         cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()

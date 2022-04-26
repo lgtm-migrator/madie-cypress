@@ -151,16 +151,45 @@ describe('Test Case Json Validations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
+        cy.get(EditMeasurePage.testCasesTab).should('exist')
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
+
+        cy.get(TestCasesPage.newTestCaseButton).should('exist')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')        
         cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')        
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle)
+
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')          
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('be.visible')
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
+
+        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).should('exist')
+        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).should('be.visible')
         cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
 
         //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).should('exist')
+        cy.get(TestCasesPage.aceEditor).should('be.visible')
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
+
+        cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).should('exist')
+        cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).should('be.visible')
+        cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).should('be.enabled')
         cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
+
+        cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('exist')
+        cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('be.visible')
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('contain.text', 'Nothing to see here!')
 
         TestCasesPage.clickCreateTestCaseButton()
