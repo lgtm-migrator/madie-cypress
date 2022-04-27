@@ -1,6 +1,5 @@
 import {Header} from "./Header"
 import {Environment} from "./Environment"
-import {EditMeasurePage} from "./EditMeasurePage";
 
 export class CQLLibraryPage {
 
@@ -30,6 +29,8 @@ export class CQLLibraryPage {
     public static readonly updateDraftedLibraryTextBox = '[data-testid="cql-library-name-text-field"]'
     public static readonly createDraftContinueBtn = '[data-testid="create-draft-continue-button"]'
     public static readonly editLibraryErrorMsgAfterVersion = '.CreateEditCqlLibrary__InfoAlert-sc-4o3bpi-2'
+    public static readonly versionErrorMsg = '[data-testid=create-version-error-message]'
+    public static readonly versionCancelBtn = '[data-testid="create-version-cancel-button"]'
 
 
     public static createCQLLibrary (CQLLibraryName: string) : void {
@@ -86,6 +87,52 @@ export class CQLLibraryPage {
                 body: {
                     'cqlLibraryName': CqlLibraryName,
                     'model': 'QI-Core',
+                    'createdBy': user,
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                expect(response.body.cqlLibraryName).to.eql(CqlLibraryName)
+                if (twoLibraries === true)
+                {
+                    cy.writeFile('cypress/fixtures/cqlLibraryId2', response.body.id)
+                }
+                else
+                {
+                    cy.writeFile('cypress/fixtures/cqlLibraryId', response.body.id)
+                }
+
+            })
+        })
+        return user
+    }
+
+    public static createCQLLibraryWithValidCQL(CqlLibraryName: string, twoLibraries?: boolean, altUser?: boolean): string {
+        let user = ''
+
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+
+        //Create New CQL Library
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/cql-libraries',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'cqlLibraryName': CqlLibraryName,
+                    'model': 'QI-Core',
+                    'cql': "library TESTMEASURE0000000003 version '0.0.000'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\nparameter \"Measurement Period\" Interval<DateTimeTest>\ncontext Patient\ndefine \"SDE Ethnicity\":\nSDE.\"SDE Ethnicity\"\ndefine \"SDE Payer\":\nSDE.\"SDE Payer\"\ndefine \"SDE Race\":\nSDE.\"SDE Race\"\ndefine \"SDE Sex\":\nSDE.\"SDE Sex\"",
                     'createdBy': user
                 }
             }).then((response) => {
@@ -104,6 +151,37 @@ export class CQLLibraryPage {
             })
         })
         return user
+    }
+
+
+    public static createCQLLibraryWithInvalidCQL(CqlLibraryName: string): void {
+
+        cy.setAccessTokenCookie()
+
+        //Create New CQL Library
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/cql-libraries',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'cqlLibraryName': CqlLibraryName,
+                    'model': 'QI-Core',
+                    'cql': "library TESTMEASURE0000000003 version '0.0.000'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\nparameter \"Measurement Period\" Interval<DateTimeTest>\ncontext Patient\ndefine \"SDE Ethnicity\":\nSDE.\"SDE Ethnicity\"\ndefine \"SDE Payer\":\nSDE.\"SDE Payer\"\ndefine \"SDE Race\":\nSDE.\"SDE Race\"\ndefine \"SDE Sex\":\nSDE.\"SDE Sex\"",
+                    'cqlErrors': true
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                expect(response.body.cqlLibraryName).to.eql(CqlLibraryName)
+                expect(response.body.cqlErrors).to.eql(true)
+
+                cy.writeFile('cypress/fixtures/cqlLibraryId', response.body.id)
+            })
+        })
+
     }
 
 
