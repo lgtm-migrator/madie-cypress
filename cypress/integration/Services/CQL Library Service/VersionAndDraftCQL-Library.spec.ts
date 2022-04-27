@@ -17,11 +17,11 @@ describe('Version and Draft CQL Library', () => {
 
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
 
         //Create Measure with Alternate User
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
     })
 
     it('Add Version to the CQL Library', () => {
@@ -99,7 +99,7 @@ describe('Draft and Version Validations', () => {
         cy.setAccessTokenCookie()
 
         CqlLibraryOne = 'TestLibraryOne' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
     })
 
     it('Verify the CQL Library updates are restricted after Version is created', () => {
@@ -192,7 +192,7 @@ describe('Version CQL Library with invalid CQL', () => {
         cy.setAccessTokenCookie()
 
         CqlLibraryOne = 'CQLLibraryWithInvalidCQL' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithInvalidCQL(CqlLibraryOne)
+        CQLLibraryPage.createAPICQLLibraryWithInvalidCQL(CqlLibraryOne)
 
     })
 

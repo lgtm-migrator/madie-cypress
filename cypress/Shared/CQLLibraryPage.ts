@@ -107,7 +107,7 @@ export class CQLLibraryPage {
         return user
     }
 
-    public static createCQLLibraryWithValidCQL(CqlLibraryName: string, twoLibraries?: boolean, altUser?: boolean): string {
+    public static createAPICQLLibraryWithValidCQL(CqlLibraryName: string, twoLibraries?: boolean, altUser?: boolean): string {
         let user = ''
 
         if (altUser)
@@ -154,7 +154,7 @@ export class CQLLibraryPage {
     }
 
 
-    public static createCQLLibraryWithInvalidCQL(CqlLibraryName: string): void {
+    public static createAPICQLLibraryWithInvalidCQL(CqlLibraryName: string): void {
 
         cy.setAccessTokenCookie()
 
