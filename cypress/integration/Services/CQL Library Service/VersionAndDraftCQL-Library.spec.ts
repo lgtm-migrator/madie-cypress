@@ -17,14 +17,14 @@ describe('Version and Draft CQL Library', () => {
 
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
+        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
 
         //Create Measure with Alternate User
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryTwo, true, true)
+        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
     })
 
-    it.skip('Add Version to the CQL Library', () => {
+    it('Add Version to the CQL Library', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
@@ -45,7 +45,7 @@ describe('Version and Draft CQL Library', () => {
         })
     })
 
-    it.skip('Add Draft to the Versioned Library', () => {
+    it('Add Draft to the Versioned Library', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
@@ -70,7 +70,7 @@ describe('Version and Draft CQL Library', () => {
         })
     })
 
-    it.skip('Verify non Library owner unable to create Version', () => {
+    it('Verify non Library owner unable to create Version', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId2').should('exist').then((cqlLibraryId2) => {
@@ -99,10 +99,10 @@ describe('Draft and Version Validations', () => {
         cy.setAccessTokenCookie()
 
         CqlLibraryOne = 'TestLibraryOne' + Date.now()
-        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
+        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
     })
 
-    it.skip('Verify the CQL Library updates are restricted after Version is created', () => {
+    it('Verify the CQL Library updates are restricted after Version is created', () => {
 
         //Add Version to the CQL Library
         cy.getCookie('accessToken').then((accessToken) => {
@@ -148,3 +148,76 @@ describe('Draft and Version Validations', () => {
     })
 
 })
+
+describe('Version CQL Library without CQL', () => {
+
+    before('Set Access Token and create CQL Library', () => {
+
+        cy.setAccessTokenCookie()
+
+        CqlLibraryOne = 'CQLLibraryWithoutCQL' + Date.now()
+        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
+
+    })
+
+    it('User can not version CQL Library if there is no CQL', () => {
+
+        //Add Version to the CQL Library
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/cql-libraries/version/' + cqlLibraryId + '?isMajor=true',
+                    method: 'PUT',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+
+                }).then((response) => {
+                    expect(response.status).to.eql(500)
+                    expect(response.body.error).to.eql('Internal Server Error')
+
+                })
+
+            })
+        })
+    })
+
+})
+
+describe('Version CQL Library with invalid CQL', () => {
+
+    before('Set Access Token and create CQL Library', () => {
+
+        cy.setAccessTokenCookie()
+
+        CqlLibraryOne = 'CQLLibraryWithInvalidCQL' + Date.now()
+        CQLLibraryPage.createCQLLibraryWithInvalidCQL(CqlLibraryOne)
+
+    })
+
+    it('User can not version the CQL library if the CQL has errors', () => {
+
+        //Add Version to the CQL Library
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/cql-libraries/version/' + cqlLibraryId + '?isMajor=true',
+                    method: 'PUT',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.message).to.eql('User ' + harpUser + ' cannot version resource CQL Library with id: ' + cqlLibraryId + ' as the Cql has errors in it')
+
+                })
+
+            })
+        })
+    })
+
+})
+
