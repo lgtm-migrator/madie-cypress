@@ -9,15 +9,17 @@ let updatedCqlLibraryName = ''
 
 describe('Add Version and Draft to CQL Library', () => {
 
+    before('Create CQL Library using ALT user', () => {
+        //Create Measure with Alternate User
+        CqlLibraryTwo = 'TestLibrary2' + Date.now()
+        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryTwo, true, true)
+    })
+
     beforeEach('Craete CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
         
-        //Create Measure with Alternate User
-        CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryTwo, true, true)
-
         OktaLogin.Login()
 
     })
@@ -130,14 +132,16 @@ describe('Add Version and Draft to CQL Library', () => {
 
 describe('Draft and Version Validations', () => {
 
-    beforeEach('Login', () => {
+    before('Create CQL Library', () => {
+        //create a single use CQL Library
+        CqlLibraryOther = 'Another' + Date.now()
+        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOther)
+    })
 
-        //Create CQL Library
-        CqlLibraryOne = 'TestLibraryOne' + Date.now()
+    beforeEach('Craete CQL Library and Login', () => {
+        //Create CQL Library with Regular User
+        CqlLibraryOne = 'TestLibrary1' + Date.now()
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
-
-        CqlLibraryOther = 'AnotherLibrary' + Date.now()
-        CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOther, true, false)
 
         OktaLogin.Login()
 
@@ -188,6 +192,7 @@ describe('Draft and Version Validations', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
+
         CQLLibraryPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
@@ -211,8 +216,13 @@ describe('Draft and Version Validations', () => {
     })
 
     it('Draft cannot be saved with a name that exists for a different library', () => {
+        
+
+
         let versionNumber = '1.0.000'
+
         CQLLibraryPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(CqlLibraryOne)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
         cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
