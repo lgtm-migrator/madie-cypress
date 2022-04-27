@@ -12,13 +12,13 @@ describe('Add Version and Draft to CQL Library', () => {
     before('Create CQL Library using ALT user', () => {
         //Create Measure with Alternate User
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
     })
 
     beforeEach('Craete CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
         
         OktaLogin.Login()
 
@@ -102,13 +102,13 @@ describe('Draft and Version Validations', () => {
     before('Create CQL Library', () => {
         //create a single use CQL Library
         CqlLibraryOther = 'Another' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOther)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOther)
     })
 
     beforeEach('Craete CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithValidCQL(CqlLibraryOne)
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
 
         OktaLogin.Login()
 
@@ -209,7 +209,7 @@ describe('Version CQL Library with errors', () => {
 
         //Create CQL Library
         CqlLibraryOther = 'CQLLibraryWithErrors' + Date.now()
-        CQLLibraryPage.createCQLLibraryWithInvalidCQL(CqlLibraryOther)
+        CQLLibraryPage.createAPICQLLibraryWithInvalidCQL(CqlLibraryOther)
 
         OktaLogin.Login()
 
