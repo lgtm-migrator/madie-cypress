@@ -30,7 +30,7 @@ describe('Add Version and Draft to CQL Library', () => {
 
     })
 
-    it('Add Version to the CQL Library', () => {
+    it.skip('Add Version to the CQL Library', () => {
 
         let versionNumber = '1.0.000'
         CQLLibraryPage.clickEditforCreatedLibrary()
@@ -58,7 +58,7 @@ describe('Add Version and Draft to CQL Library', () => {
 
     })
 
-    it('Add Draft to the versioned Library', () => {
+    it.skip('Add Draft to the versioned Library', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
@@ -100,7 +100,7 @@ describe('Add Version and Draft to CQL Library', () => {
         cy.log('Draft Created Successfully')
     })
 
-    it('Verify non Library owner unable to create Version', () => {
+    it.skip('Verify non Library owner unable to create Version', () => {
 
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
@@ -153,7 +153,7 @@ describe('Draft and Version Validations', () => {
 
     })
 
-   it('User cannot create a draft of a draft that already exists, while the version is still open', () => {
+   it.skip('User cannot create a draft of a draft that already exists, while the version is still open', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
@@ -188,7 +188,7 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'Cannot draft resource CQL Library. A draft already exists for the CQL Library Group.')
    })
 
-    it('Verify the CQL Library updates are restricted after Version is created', () => {
+    it.skip('Verify the CQL Library updates are restricted after Version is created', () => {
 
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
@@ -215,7 +215,7 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
     })
 
-    it('Draft cannot be saved with a name that exists for a different library', () => {
+    it.skip('Draft cannot be saved with a name that exists for a different library', () => {
         
 
 

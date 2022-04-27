@@ -24,7 +24,7 @@ describe('Version and Draft CQL Library', () => {
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryTwo, true, true)
     })
 
-    it('Add Version to the CQL Library', () => {
+    it.skip('Add Version to the CQL Library', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
@@ -45,7 +45,7 @@ describe('Version and Draft CQL Library', () => {
         })
     })
 
-    it('Add Draft to the Versioned Library', () => {
+    it.skip('Add Draft to the Versioned Library', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
@@ -70,7 +70,7 @@ describe('Version and Draft CQL Library', () => {
         })
     })
 
-    it('Verify non Library owner unable to create Version', () => {
+    it.skip('Verify non Library owner unable to create Version', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/cqlLibraryId2').should('exist').then((cqlLibraryId2) => {
@@ -102,7 +102,7 @@ describe('Draft and Version Validations', () => {
         CQLLibraryPage.createCQLLibraryAPI(CqlLibraryOne)
     })
 
-    it('Verify the CQL Library updates are restricted after Version is created', () => {
+    it.skip('Verify the CQL Library updates are restricted after Version is created', () => {
 
         //Add Version to the CQL Library
         cy.getCookie('accessToken').then((accessToken) => {
