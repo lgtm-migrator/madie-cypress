@@ -77,7 +77,7 @@ describe('CQL Editor', () => {
 
     })
 
-    it('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is not found', () => {
+    it.only('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is not found', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -151,8 +151,7 @@ describe('CQL Editor', () => {
 
     })
 
-    it.only('Graceful error msg if model is missing in CQL', () => {
-        let errArray: any[] = []
+    it('Graceful error msg if model is missing in CQL', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
