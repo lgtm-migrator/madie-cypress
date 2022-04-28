@@ -150,4 +150,32 @@ describe('CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
+
+    it.only('Graceful error msg if model is missing in CQL', () => {
+        let errArray: any[] = []
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR_model_error.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)/**/
+        })
+
+        //save the value in the CQL Editor
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Validate message on page
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        //Validate error(s) in CQL Editor after saving
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'Model Type and version are required')
+
+
+
+    })
 })
