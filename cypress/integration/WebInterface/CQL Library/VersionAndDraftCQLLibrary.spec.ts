@@ -15,7 +15,7 @@ describe('Add Version and Draft to CQL Library', () => {
         CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
     })
 
-    beforeEach('Craete CQL Library and Login', () => {
+    beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
         CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
@@ -221,7 +221,45 @@ describe('Version CQL Library with errors', () => {
 
     })
 
-    it('User can not version the CQL library if the CQL has errors', () => {
+    it('User can not version the CQL library if the CQL has ELM translation errors', () => {
+
+        cy.get(Header.cqlLibraryTab).click()
+        CQLLibraryPage.clickEditforCreatedLibrary()
+
+        //Verify CQL ELM translation errors
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 1:3 | Could not resolve identifier SDE in the current library.ELM: 5:13 | Member SDE Sex not found for type null.")
+
+        CQLLibraryPage.clickVersionforCreatedLibrary()
+        cy.get(CQLLibraryPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
+
+        //Click on cancel version button
+        cy.get(CQLLibraryPage.versionCancelBtn).click()
+    })
+
+    it('User can not version the CQL library if the CQL has parsing errors', () => {
+
+        CQLLibraryPage.clickEditforCreatedLibrary()
+
+        //Clear the text in CQL Library Editor
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
+
+        //Add valid CQL
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+
+        //Add parsing error to the valid CQL
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('tdysfdfjch')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+
+        //Verify CQL parsing errors
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'using', 'include', 'public', 'private', 'parameter', 'codesystem', 'valueset', 'code', 'concept', 'define', 'context'}")
 
         CQLLibraryPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibraryPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
