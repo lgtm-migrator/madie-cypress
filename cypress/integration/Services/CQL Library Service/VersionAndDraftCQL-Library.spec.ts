@@ -45,6 +45,58 @@ describe('Version and Draft CQL Library', () => {
         })
     })
 
+    it('User can not draft CQL Library if the CQL Library naming validations fail', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/cql-libraries/draft/' + cqlLibraryId,
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": cqlLibraryId,
+                        "cqlLibraryName": "testLibrary",
+                        "model": "QI-Core"
+                    }
+
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.validationErrors.cqlLibraryName).to.eql("Library name must start with an upper case letter, followed by alpha-numeric character(s) and must not contain spaces or other special characters.")
+
+                })
+            })
+        })
+    })
+
+    it('User can not draft CQL Library if the CQL Library name is empty', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((cqlLibraryId) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/cql-libraries/draft/' + cqlLibraryId,
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": cqlLibraryId,
+                        "cqlLibraryName": "",
+                        "model": "QI-Core"
+                    }
+
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.validationErrors.cqlLibraryName).to.eql("Library name is required.")
+
+                })
+            })
+        })
+    })
+
     it('Add Draft to the Versioned Library', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
