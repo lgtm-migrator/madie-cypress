@@ -343,10 +343,10 @@ export class Utilities {
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .select('SDE Sex')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race').contains('SDE Race')
+                cy.get(MeasureGroupPage.denominatorExceptionSelect)
+                    .should('not.exist')
                 break
             }
             case 'Proportion': {
@@ -357,6 +357,12 @@ export class Utilities {
                     .select('SDE Sex')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race').contains('SDE Race')
+                cy.get(MeasureGroupPage.denominatorExceptionSelect)
+                    .select('Select Denominator Exception ( Leave selected for no population )')
+                cy.get(MeasureGroupPage.denominatorExclusionSelect)
+                    .select('Select Denominator Exclusion ( Leave selected for no population )')
+                cy.get(MeasureGroupPage.numeratorExclusionSelect)
+                    .select('Select Numerator Exclusion ( Leave selected for no population )') 
                 break
             }
             case 'Continuous Variable': {
@@ -410,7 +416,7 @@ export class Utilities {
                             cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                             cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                         }
-                        else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') && (measureScoreValue !=  MeasureGroupPage.measureScoringSelect.valueOf())) {
+                        else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                             expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                         }
                    })
@@ -438,12 +444,12 @@ export class Utilities {
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                         .then(($message) => {
-                            if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                            if (($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                                 cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                             }
-                            else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+                            else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                                expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                             }
                         })
                     } 

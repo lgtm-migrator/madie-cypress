@@ -285,4 +285,53 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
 
     })
+
+    //removing optional
+    it('Test Case Population value options are limited to those that are only defined from Measure Group -- Measure Group updated to exclude fields after initially created with optional and required fields', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //read and write CQL from flat file
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        //setup measure group so that only the required fields / populations are defined / has values
+        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'all')
+        //create test case
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+        //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
+        cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
+        cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'IPP')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMER')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENOM')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMEX')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEX')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
+        //go back and update measure group to contain values for all of the population fields
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'wOOpt')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+        //confirm that test case now has all of the population check boxes available
+        cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
+        cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'IPP')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMER')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENOM')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'NUMEX')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
+
+    })
 })
