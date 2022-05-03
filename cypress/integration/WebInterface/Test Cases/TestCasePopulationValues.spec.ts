@@ -206,7 +206,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
 
     })
-    it('Test Case Population value options are limited to those that are only defined from Measure Group -- only required Populations on Measure Group', () => {
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -238,7 +238,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
     })
-    it('Test Case Population value options are limited to those that are only defined from Measure Group -- Measure Group updated to include fields after initially created with just the required fields', () => {
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -287,7 +287,7 @@ describe('Test Case Expected Measure Group population values based on initial me
     })
 
     //removing optional
-    it('Test Case Population value options are limited to those that are only defined from Measure Group -- Measure Group updated to exclude fields after initially created with optional and required fields', () => {
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
