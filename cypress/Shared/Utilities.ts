@@ -1,6 +1,8 @@
 import {TestCasesPage} from "./TestCasesPage"
 import {Header} from "./Header"
 import {MeasureGroupPage} from "./MeasureGroupPage"
+import {EditMeasurePage} from "./EditMeasurePage"
+import { exit } from "process"
 
 export class Utilities {
 
@@ -273,6 +275,7 @@ export class Utilities {
             }
             
         }
+        cy.get(EditMeasurePage.measureGroupsTab).click()
     }
 
     public static validationMeasureGroupSaveWithoutRequired (measureScoreValue: string | string[]): void {
@@ -340,10 +343,10 @@ export class Utilities {
                     .select('SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .select('SDE Sex')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race').contains('SDE Race')
+                cy.get(MeasureGroupPage.denominatorExceptionSelect)
+                    .should('not.exist')
                 break
             }
             case 'Proportion': {
@@ -354,6 +357,12 @@ export class Utilities {
                     .select('SDE Sex')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race').contains('SDE Race')
+                cy.get(MeasureGroupPage.denominatorExceptionSelect)
+                    .select('Select Denominator Exception ( Leave selected for no population )')
+                cy.get(MeasureGroupPage.denominatorExclusionSelect)
+                    .select('Select Denominator Exclusion ( Leave selected for no population )')
+                cy.get(MeasureGroupPage.numeratorExclusionSelect)
+                    .select('Select Numerator Exclusion ( Leave selected for no population )') 
                 break
             }
             case 'Continuous Variable': {
@@ -393,18 +402,22 @@ export class Utilities {
                 this.validationMeasureGroupSaveAll((measureScoreValue.valueOf()).toString())                
                 //save measure group
                 cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+                this.waitForElementVisible(MeasureGroupPage.saveMeasureGroupDetails, 3000)
                 cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus().click()
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus()
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
                 //validation message after attempting to save
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
+                this.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                     .then(($message) => {
-                        if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                        if (($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                             cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                             cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                         }
-                        else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+                        else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                            expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                         }
                    })
                 break
@@ -431,12 +444,12 @@ export class Utilities {
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                         .then(($message) => {
-                            if ($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
+                            if (($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                                 cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                             }
-                            else if ( $message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel') {
-                                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+                            else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                                expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                             }
                         })
                     } 

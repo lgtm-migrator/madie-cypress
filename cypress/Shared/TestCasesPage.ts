@@ -2,10 +2,10 @@ import {EditMeasurePage} from "./EditMeasurePage"
 
 export class TestCasesPage {
 
-    public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"] > .sc-iqseJM'
+    public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'// > .sc-iqseJM'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
-    public static readonly existingTestCaseSeriesDropdown = '#mui-4-option-0'
+    public static readonly existingTestCaseSeriesDropdown = '#mui-6-option-0'//'#mui-4-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
@@ -92,6 +92,7 @@ export class TestCasesPage {
         cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
+        cy.get(this.existingTestCaseSeriesDropdown).should('be.visible')
         cy.get(this.existingTestCaseSeriesDropdown).click()
 
         //Add json to the test case
