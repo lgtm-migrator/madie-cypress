@@ -38,8 +38,7 @@ describe('Edit CQL Library', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core",
-                        "draft": true
+                        "model": "QI-Core"
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
