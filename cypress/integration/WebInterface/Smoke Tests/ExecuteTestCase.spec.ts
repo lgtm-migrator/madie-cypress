@@ -104,6 +104,8 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.cuTestCaseButton).click()
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
+        cy.get(EditMeasurePage.testCasesTab).click()
+
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
@@ -132,7 +134,9 @@ describe('Execute Test Case', () => {
             cy.intercept('PUT', '/api/measures/' + fileContents).as('putMeasures')
             cy.get(TestCasesPage.cuTestCaseButton).click()
             cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
-            cy.url({ timeout: 100000 }).should('include', '/edit/test-cases')    
+            cy.url({ timeout: 100000 }).should('include', '/edit/test-cases')
+
+            cy.get(EditMeasurePage.testCasesTab).click()
             cy.wait('@putMeasures').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
             })

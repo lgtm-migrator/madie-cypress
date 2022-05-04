@@ -88,6 +88,7 @@ export class CQLLibraryPage {
                     'cqlLibraryName': CqlLibraryName,
                     'model': 'QI-Core',
                     'createdBy': user,
+                    'cql': ""
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)

@@ -55,8 +55,9 @@ export class TestCasesPage {
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
 
-            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully! ' +
-                'Redirecting back to Test Cases...')
+            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully!')
+
+            cy.get(EditMeasurePage.testCasesTab).click()
 
             cy.wait('@putMeasures').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
@@ -125,6 +126,8 @@ export class TestCasesPage {
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()
         cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+
+        cy.get(EditMeasurePage.testCasesTab).click()
 
         //Verify edited / updated test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(updatedTestCaseTitle, updatedTestCaseSeries)
