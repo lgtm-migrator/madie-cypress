@@ -1,6 +1,7 @@
 version: '3.3'
 services: 
   ui-e2e-dev:
+    ipc: host
     image: madie
     tty: true
     build: .
