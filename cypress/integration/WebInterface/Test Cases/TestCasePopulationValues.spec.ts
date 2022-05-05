@@ -232,7 +232,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
     })
-    it.only('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
