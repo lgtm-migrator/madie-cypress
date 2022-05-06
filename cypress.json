@@ -1,6 +1,5 @@
 {
     "env": {},
-    "screenshotOnRunFailure": false,
     "chromeWebSecurity": true,
     "parseSpecialCharSequences":false,
     "pageLoadTimeout": 100000,
