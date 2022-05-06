@@ -252,7 +252,11 @@ describe('Version CQL Library with errors', () => {
 
         //Add parsing error to the valid CQL
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('tdysfdfjch')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 

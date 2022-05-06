@@ -20,6 +20,10 @@ export class TestCasesPage {
     public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
     public static readonly testCaseExecutionError = '[data-testid="display-tests-error"]'
+    public static readonly runTestButton = '[data-testid="run-test-case-button"]'
+    public static readonly testCalculationResults = '[data-testid=calculation-results]'
+    public static readonly testCalculationResultsLineTwo = '[data-testid="calculation-results"] > div > :nth-child(2)'
+    public static readonly testCalculationError = '[data-testid="calculation-error-alert"]'
 
     //Test Case Population Values
     public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'

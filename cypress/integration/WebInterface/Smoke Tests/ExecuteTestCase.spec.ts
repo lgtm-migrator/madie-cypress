@@ -5,7 +5,7 @@ import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
-import {Utilities} from "../../../Shared/Utilities";
+import {Utilities} from "../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -68,7 +68,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'Unable to calculate test case.')
+        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'Cannot read properties of null (reading \'map\')')
 
     })
 
