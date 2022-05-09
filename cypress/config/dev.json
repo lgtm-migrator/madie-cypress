@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://dev-madie.hcqis.org",
   "screenshotsFolder": "mochawesome-report/assets",
-  "numTestsKeptInMemory": 5,
+  "numTestsKeptInMemory": 0,
   "env": {
     "environment": "dev",
     "type": "base"
