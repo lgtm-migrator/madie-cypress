@@ -55,6 +55,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.newTestCaseButton).click()
         cy.get(TestCasesPage.testCasePopulationHeaderForNoMeasureGroup).should('contain.text', 'No populations for current scoring. Please make sure at least one measure group has been created.')
     })
+
     it('Validate Population Values check boxes are correct based on measure scoring value that is applied, when the measure is initially created (defalut measure group)', () => {
 
         cy.log((measureScoringArray[3].valueOf()).toString())
@@ -78,6 +79,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
 
     })
+
     it('Validate notification that a reset of population values, on test cases, will occur once the completed save / update of the scoring value is executed', () => {
 
         //Click on Edit Measure
@@ -116,6 +118,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         }
 
     })
+
     it('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
 
         //Click on Edit Measure
@@ -277,6 +280,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
 
     })
+
     it('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -324,6 +328,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
 
     })
+
     it('Verify Test Case population dependencies for Proportion Measures', () => {
 
         //Click on Edit Measure
