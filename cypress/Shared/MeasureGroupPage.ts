@@ -1,6 +1,7 @@
 import {MeasuresPage} from "./MeasuresPage"
 import {EditMeasurePage} from "./EditMeasurePage"
 import {CQLEditorPage} from "./CQLEditorPage"
+import { Environment } from "./Environment"
 
 export class MeasureGroupPage {
 
@@ -87,5 +88,69 @@ export class MeasureGroupPage {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
+    }
+    public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean): string {
+        let user = ''
+        let measurePath = ''
+        let measureGroupPath = ''
+        let measureScoring = 'Proportion'
+        let PopIniPop = 'SDE Payer'
+        let PopNum = 'SDE Race'
+        let PopDenom = 'SDE Sex'
+        let PopDenex = 'Absence of Cervix'
+        let PopDenexcep = 'SDE Ethnicity'
+        let PopNumex = 'Surgical Absence of Cervix'
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+        if (twoMeasureGroups === true)
+        {
+            measurePath = 'cypress/fixtures/measureId2'
+            measureGroupPath = 'cypress/fixtures/groupId2'
+            //cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+        }
+        else
+        {
+            measurePath = 'cypress/fixtures/measureId'
+            measureGroupPath = 'cypress/fixtures/groupId'
+            //cy.writeFile('cypress/fixtures/measureId', response.body.id)
+        }
+
+        //Add Measure Group to the Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(measurePath).should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "scoring": measureScoring,
+                        "population": 
+                        {
+                            "initialPopulation": PopIniPop,
+                            "denominator": PopDenom,
+                            "denominatorExclusion": PopDenex,
+                            "denominatorException": PopDenexcep,
+                            "numerator": PopNum,
+                            "numeratorExclusion": PopNumex
+                        }
+                    }
+                }).then((response) => {
+                        expect(response.status).to.eql(201)
+                        expect(response.body.id).to.be.exist
+                        cy.writeFile(measureGroupPath, response.body.id)
+                })
+            })
+        })
+        return user
     }
 }

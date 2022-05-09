@@ -22,7 +22,7 @@ describe('Delete Measure', () => {
         //Create Measure with Alternate User
         measureTwo = 'TestMeasure2' + Date.now()
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, CqlLibraryTwo, measureScoring, true, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, CqlLibraryTwo, measureScoring, null, true, true)
     })
 
     beforeEach('Login', () => {
