@@ -20,6 +20,15 @@ function getConfigurationByFile (file) {
 }
 const browserify = require('@cypress/browserify-preprocessor')
 module.exports = (on, config) => {
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.name === 'chrome') {
+      launchOptions.args.push('--disable-web-security')
+      launchOptions.args.push('--disable-site-isolation-trials')
+      launchOptions.args.push('--max_old_space_size=1500')
+      launchOptions.args.push('--disable-dev-shm-usage')
+      return launchOptions
+    }
+  })
   const file = config.env.configFile
   const options = {
     browserifyOptions: {
