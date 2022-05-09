@@ -27,16 +27,19 @@ describe('Test Case Expected Measure Group population values based on initial me
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, newCqlLibraryName, measureScoringArray[3], measureCQL)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
         OktaLogin.Login()
 
     })
+
     afterEach('Logout and Clean up Measures', () => {
 
         OktaLogin.Logout()
-        let randValue = (Math.floor((Math.random() * 1000) + 1))
-        newCqlLibraryName = CqlLibraryName + randValue
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
+
+            let randValue = (Math.floor((Math.random() * 1000) + 1))
+            let newCqlLibraryName = CqlLibraryName + randValue
+
+            Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
 
     })
 
