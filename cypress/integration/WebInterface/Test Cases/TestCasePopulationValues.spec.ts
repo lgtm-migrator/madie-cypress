@@ -30,15 +30,15 @@ describe('Test Case Expected Measure Group population values based on initial me
         OktaLogin.Login()
 
     })
-    afterEach('Logout', () => {
+
+    afterEach('Logout and Clean up Measures', () => {
 
         OktaLogin.Logout()
 
-    })
+            let randValue = (Math.floor((Math.random() * 1000) + 1))
+            let newCqlLibraryName = CqlLibraryName + randValue
 
-    after('Clean up', () => {
-
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
+            Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
 
     })
 
@@ -327,4 +327,89 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
 
     })
+
+    it('Verify Test Case population dependencies for Proportion Measures', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //read and write CQL from flat file
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        //log, in cypress, the measure score value
+        cy.log((measureScoringArray[3].valueOf()).toString())
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
+        //based on the scoring unit value, select a value for all population fields
+        Utilities.validationMeasureGroupSaveAll((measureScoringArray[3].valueOf()).toString())
+        //save measure group
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation message after attempting to save
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        //create test case
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+        //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
+        cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
+        cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
+
+        cy.log('Select DENOM and verify IPP is checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+
+        cy.log('Uncheck IPP and verify DENOM is unchecked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
+
+        //Select DENOM again
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+
+        cy.log('Uncheck DENOM and verify IPP is not unchecked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+
+        cy.log('Select Numerator and verify if DENOM and IPP are checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+
+        cy.log('Uncheck DENOM and verify if Numerator is unchecked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
+
+        //Check Numerator again
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+
+        cy.log('Uncheck Numerator and verify if Denom is not unchecked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+
+        //Check Numerator again
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+
+        cy.log('Uncheck IPP and verify if DENOM and Numerator are unchecked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
+
+        cy.log('Select Numerator Exclusion and verify IPP, Numerator and Denominator are selected')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+    })
+
 })
