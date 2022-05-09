@@ -70,7 +70,7 @@ export class CreateMeasurePage {
         cy.log( measureScoring+ ' Measure created successfully')
     }
 
-    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, twoMeasures?: boolean, altUser?: boolean): string {
+    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, measureCQL?: string, twoMeasures?: boolean, altUser?: boolean): string {
         let user = ''
 
         if (altUser)
@@ -97,7 +97,8 @@ export class CreateMeasurePage {
                     'cqlLibraryName': CqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': measureScoring,
-                    'createdBy': user
+                    'createdBy': user,
+                    'cql': measureCQL                    
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)

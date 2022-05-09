@@ -2,7 +2,6 @@ import {TestCasesPage} from "./TestCasesPage"
 import {Header} from "./Header"
 import {MeasureGroupPage} from "./MeasureGroupPage"
 import {EditMeasurePage} from "./EditMeasurePage"
-import { exit } from "process"
 
 export class Utilities {
 

@@ -19,7 +19,7 @@ describe('Validate Measure Group', () => {
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1, measureScoring)
 
         //create another Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2, measureScoring, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2, measureScoring, null, true)
     })
 
     beforeEach('Login', () => {

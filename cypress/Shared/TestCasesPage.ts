@@ -1,4 +1,5 @@
 import {EditMeasurePage} from "./EditMeasurePage"
+import { Environment } from "./Environment"
 
 export class TestCasesPage {
 
@@ -9,7 +10,7 @@ export class TestCasesPage {
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
-    public static readonly aceEditor = '#ace-editor-wrapper > .ace_scroller > .ace_content'
+    public static readonly aceEditor = '.ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
     public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-cases-button"]'
@@ -145,12 +146,36 @@ export class TestCasesPage {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
     }
-    public static CreateTestCaseAPI(title: string, series: string, description: string): void {
-        cy.setAccessTokenCookie()
+    public static CreateTestCaseAPI(title: string, series: string, description: string, jsonValue?: string, twoTestCases?: boolean, altUser?: boolean): string {
+        let user = ''
+        let measurePath = ''
+        let testCasePath = ''
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+        if (twoTestCases === true)
+        {
+            measurePath = 'cypress/fixtures/measureId2'
+            testCasePath = 'cypress/fixtures/testcaseId2'
+            //cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+        }
+        else
+        {
+            measurePath = 'cypress/fixtures/measureId'
+            testCasePath = 'cypress/fixtures/testcaseId'
+            //cy.writeFile('cypress/fixtures/measureId', response.body.id)
+        }
 
         //Add Test Case to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+            cy.readFile(measurePath).should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' + id + '/test-cases',
                     headers: {
@@ -162,7 +187,8 @@ export class TestCasesPage {
                         'series': series,
                         'title': title,
                         'description': description,
-                        'json': "{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
+                        'json': jsonValue
+                        //"{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
@@ -170,10 +196,10 @@ export class TestCasesPage {
                     expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
                     expect(response.body.description).to.eql(description)
-                    expect(response.body.json).to.be.exist
-                    cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
+                    cy.writeFile(testCasePath, response.body.id)
                 })
             })
         })
+        return user
     }
 }
