@@ -38,7 +38,7 @@ describe('Read only for measure, measure group, and test cases that user does no
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring, true, true)
 
     })
     it('Measure fields on detail page are not editable', () =>{
