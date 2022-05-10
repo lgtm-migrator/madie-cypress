@@ -226,8 +226,8 @@ describe('Version CQL Library without CQL', () => {
                     }
 
                 }).then((response) => {
-                    expect(response.status).to.eql(500)
-                    expect(response.body.error).to.eql('Internal Server Error')
+                    expect(response.status).to.eql(400)
+                    expect(response.body.message).to.eql('User ' +harpUser+ ' cannot version resource CQL Library with id: ' +cqlLibraryId+ ' as there is no associated Cql with this library')
 
                 })
 

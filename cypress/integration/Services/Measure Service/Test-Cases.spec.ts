@@ -3,7 +3,7 @@ import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 export {}
 
-let measureName = 'TestMeasure' + Date.now()
+let measureName = 'TestMeasure' + Date.now() 
 let cqlLibraryName = 'TestLibrary' + Date.now()
 let modelType = 'QI-Core'
 let measureScoring = 'Proportion'
@@ -16,7 +16,7 @@ let PopDenex = 'Absence of Cervix'
 let PopDenexcep = 'SDE Ethnicity'
 let PopNumex = 'Surgical Absence of Cervix'
 
-let TCName = 'TCName'
+let TCName = 'TCName' + Date.now()
 let TCSeries = 'SBTestSeries'
 let TCTitle = 'test case title'
 let TCDescription = 'DENOMFail1651609688032'
@@ -382,12 +382,10 @@ describe('Test Case population values based on Measure Group population definiti
 })
 
 describe('Measure Service: Test Case Endpoints', () => {
-
+    let randValue = (Math.floor((Math.random() * 2000) + 3))
+    let cqlLibraryNameDeux = cqlLibraryName + randValue + 2 
     before('Create Measure', () => {
-
         cy.setAccessTokenCookie()
-
-
 
         //Create New Measure
         cy.getCookie('accessToken').then((accessToken) => {
@@ -399,7 +397,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                 method: 'POST',
                 body: {
                     'measureName': measureName,
-                    'cqlLibraryName': cqlLibraryName,
+                    'cqlLibraryName': cqlLibraryNameDeux,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort'
                 }
@@ -419,12 +417,12 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryNameDeux, 'Cohort')
 
     })
 
     it('Create Test Case', () => {
-
+        let randValue = (Math.floor((Math.random() * 2000) + 3))
         let title = 'test case title ~!@#!@#$$%^&%^&* &()(?><'
         let series = 'test case series ~!@#!@#$$%^&%^&* &()(?><'
         let description = 'DENOME pass Test HB <120 ~!@#!@#$$%^&%^&* &()(?><'
@@ -438,7 +436,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                     },
                     method: 'POST',
                     body: {
-                        'name': "DENOMFail",
+                        'name': TCName + randValue + 4,
                         'series': series,
                         'title': title,
                         'description': description,
