@@ -2,7 +2,6 @@ version: '3.3'
 services: 
   ui-e2e-dev:
     ipc: host
-    shm_size: 1024M
     image: madie
     tty: true
     build: .
@@ -25,7 +24,7 @@ services:
       - CYPRESS_TEST_MADIE_CLIENTID=${CYPRESS_TEST_MADIE_CLIENTID}
       - CYPRESS_TEST_MADIE_REDIRECTURI=${CYPRESS_TEST_MADIE_REDIRECTURI}
       - CYPRESS_TEST_MADIE_AUTHURI=${CYPRESS_TEST_MADIE_AUTHURI}
-      - NODE_OPTIONS=--max_old_space_size=8192
+      - NODE_OPTIONS=${NODE_OPTIONS}
 
     volumes:
       - ./mochawesome-report:/app/mochawesome-report
