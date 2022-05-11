@@ -3,7 +3,7 @@ import {Utilities} from "../Shared/Utilities"
 
 export class MeasuresPage {
 
-    public static readonly measureListTitles = '.MeasureList___StyledTd-sc-1kfngu9-13'
+    public static readonly measureListTitles = '[data-testid=table-body] > :nth-child(1)'
     public static readonly allMeasuresTab = '[data-testid=all-measures-tab]'
 
     //Pagination
