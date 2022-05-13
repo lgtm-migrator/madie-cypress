@@ -234,7 +234,7 @@ export class CQLLibraryPage {
     }
 
     public static validateVersionNumber(expectedValue: string, versionNumber: string): void {
-        cy.readFile('cypress/fixtures/cqlLIbraryId').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
 
             let element = cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').parent()
             element.parent().should('contain', expectedValue).children().eq(2).should('contain', versionNumber)
