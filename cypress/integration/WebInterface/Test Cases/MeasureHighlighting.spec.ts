@@ -14,34 +14,31 @@ let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 describe('Measure Highlighting', () => {
 
 
-    beforeEach('Create Measure and Login', () => {
-
+    beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
-        let newMeasureName = measureName + randValue
-        let newCqlLibraryName = CqlLibraryName + randValue
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[0])
-
         OktaLogin.Login()
 
     })
-    afterEach('Logout', () => {
+
+    afterEach('Logout and Clean up Measures', () => {
 
         OktaLogin.Logout()
-
-    })
-
-    afterEach('Clean up', () => {
 
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(measureName, newCqlLibraryName, measureScoringArray[0])
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
 
     })
 

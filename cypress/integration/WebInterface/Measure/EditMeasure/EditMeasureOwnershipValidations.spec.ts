@@ -41,6 +41,7 @@ describe('Read only for measure, measure group, and test cases that user does no
         Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring, true, true)
 
     })
+
     it('Measure fields on detail page are not editable', () =>{
 
         //page loads
@@ -86,9 +87,8 @@ describe('Read only for measure, measure group, and test cases that user does no
         cy.get(EditMeasurePage.leftPanelGuidance).click()
         cy.get(EditMeasurePage.measureGuidanceTextBox).should('not.exist')
 
-
-
     })
+
     it('CQL value on the measure CQL Editor tab cannot be changed', () =>{
 
         //navigate to the all measures tab
@@ -127,7 +127,7 @@ describe('Read only for measure, measure group, and test cases that user does no
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
 
-        cy.readFile('cypress/fixtures/testCaseId2').should('exist').then((fileContents) => {
+        cy.readFile('cypress/fixtures/testcaseId2').should('exist').then((fileContents) => {
             //confirm that edit button for test case is not available
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('not.exist')
 
