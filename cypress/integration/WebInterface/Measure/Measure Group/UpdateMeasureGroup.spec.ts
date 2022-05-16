@@ -1,4 +1,3 @@
-import {Header} from "../../../../Shared/Header"
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
@@ -10,38 +9,34 @@ let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
-
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 describe('Validate Measure Group', () => {
 
-
-    beforeEach('Login', () => {
-
+    beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
-        let newMeasureName = measureName + randValue
-        let newCqlLibraryName = CqlLibraryName + randValue
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
-
         OktaLogin.Login()
 
     })
-    afterEach('Logout', () => {
+
+    afterEach('Logout and Clean up Measures', () => {
 
         OktaLogin.Logout()
 
-    })
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
 
-    after('Clean up', () => {
-
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoringArray[3])
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 
     it('All population selections are saved to the database', () => {
-
-
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -72,7 +67,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it('Validate that required populations have to have a selected value before measure group can be saved', () => {
+    it.only('Validate that required populations have to have a selected value before measure group can be saved', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()

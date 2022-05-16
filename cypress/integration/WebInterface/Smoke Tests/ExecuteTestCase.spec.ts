@@ -51,8 +51,6 @@ describe('Execute Test Case', () => {
 
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 
-        cy.wait(2000)
-
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })

@@ -38,7 +38,7 @@ describe('Test Case Expected Measure Group population values based on initial me
             let randValue = (Math.floor((Math.random() * 1000) + 1))
             let newCqlLibraryName = CqlLibraryName + randValue
 
-            Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
+            Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 

@@ -3,7 +3,7 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
-import {Utilities} from "../../../Shared/Utilities";
+import {Utilities} from "../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()

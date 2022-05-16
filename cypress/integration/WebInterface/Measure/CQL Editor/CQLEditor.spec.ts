@@ -13,7 +13,6 @@ let measureScoring = MeasureGroupPage.measureScoringUnit
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-
 describe('CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
@@ -26,12 +25,13 @@ describe('CQL Editor', () => {
         OktaLogin.Login()
 
     })
-    afterEach('Logout', () => {
+
+    afterEach('Logout and Clean up Measures', () => {
+
         OktaLogin.Logout()
 
-    })
-
-    after('Clean up', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
 
