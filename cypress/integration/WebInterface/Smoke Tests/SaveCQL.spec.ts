@@ -28,7 +28,7 @@ describe('Save CQL on CQL Editor Page', () => {
 
     after('Clean up', () => {
 
-        //Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 
