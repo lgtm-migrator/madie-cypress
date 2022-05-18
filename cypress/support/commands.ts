@@ -33,6 +33,7 @@ declare global {
         interface Chainable {
             setAccessTokenCookie()
             setAccessTokenCookieALT()
+            setUMLSTGTCookie()
         }
     }
 }
@@ -75,8 +76,6 @@ export function setAccessTokenCookie() {
         expect(response.status).to.eql(200)
         const sessionToken = response.body.sessionToken
 
-        cy.log(sessionToken)
-        cy.log(Environment.credentials().harpUser)
 
         let url = authCodeUrl + '?client_id=' + clientId +
             '&code_challenge=' + 'LBY2kyC5ZfYC9RaG9HOgRjf9i7U-zgmwHLC280r4UfA' +
@@ -90,14 +89,6 @@ export function setAccessTokenCookie() {
             '&state=iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ' +
             '&scope=openid%20email%20profile'
 
-        console.log(url)
-
-        //test state = iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ
-        //dev state = uQJCnnawAWj9QyaHkVMesAaVXEkWcZMpVfDrQJqdUUPLnuIUprrlN5kRicCI4gaR
-
-
-        //uxiJab6ycJdNkEZkwbtqnSC1MRuIFCXQATQZSWiBjWdSuuBdbIDCN9EafOYiPaHs
-        // yyXuZpOgUEfJrAF9FewMZG2FQHvfzZ0URtM2d883niqVqMZi460Vx8IFNlIN7iwX
 
         cy.request({
             url: url,
@@ -147,6 +138,7 @@ export function setAccessTokenCookie() {
         })
     })
 }
+
 export function setAccessTokenCookieALT() {
 
     cy.clearCookies()
@@ -175,9 +167,6 @@ export function setAccessTokenCookieALT() {
         expect(response.status).to.eql(200)
         const sessionToken = response.body.sessionToken
 
-        cy.log(sessionToken)
-        cy.log(Environment.credentials().harpUserALT)
-
         let url = authCodeUrl + '?client_id=' + clientId +
             '&code_challenge=' + 'LBY2kyC5ZfYC9RaG9HOgRjf9i7U-zgmwHLC280r4UfA' +
             '&code_challenge_method=S256' +
@@ -189,15 +178,6 @@ export function setAccessTokenCookieALT() {
             '&sessionToken=' + sessionToken +
             '&state=iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ' +
             '&scope=openid%20email%20profile'
-
-        console.log(url)
-
-        //test state = iTIppKJsrKTXektB6F1h1dRsQEaDCjlTD3xtjDbYKZ1FlPFKVcq1u7FRuPgPMqxZ
-        //dev state = uQJCnnawAWj9QyaHkVMesAaVXEkWcZMpVfDrQJqdUUPLnuIUprrlN5kRicCI4gaR
-
-
-        //uxiJab6ycJdNkEZkwbtqnSC1MRuIFCXQATQZSWiBjWdSuuBdbIDCN9EafOYiPaHs
-        // yyXuZpOgUEfJrAF9FewMZG2FQHvfzZ0URtM2d883niqVqMZi460Vx8IFNlIN7iwX
 
         cy.request({
             url: url,
@@ -219,7 +199,6 @@ export function setAccessTokenCookieALT() {
             const authCode = escapedCode.replace(/\\x([0-9A-Fa-f]{2})/g, function () {
                 return String.fromCharCode(parseInt(arguments[1], 16))
             })
-            cy.log(authCode)
 
             cy.request({
                 url: tokenUrl,
@@ -248,6 +227,32 @@ export function setAccessTokenCookieALT() {
     })
 }
 
+export function setUMLSTGTCookie() {
+
+    cy.request({
+        url: 'https://utslogin.nlm.nih.gov/cas/v1/api-key',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept': '*/*'
+        },
+
+        body: { apikey: Environment.credentials().umls_API_KEY
+        },
+        failOnStatusCode: false
+    }).then((response) => {
+        expect(response.status).to.eql(201)
+
+        const location = response.headers.location.toString()
+        const locationArray = location.split("/")
+        const tgt = locationArray[6]
+
+        //setting the cookie value to be grabbed for umls authentication
+        cy.setCookie('UMLS_TGT', tgt)
+    })
+}
+
 /**
  * Checks whether the subject contains the provided text
  *
@@ -259,4 +264,7 @@ Cypress.Commands.add('setAccessTokenCookie', () => {
 })
 Cypress.Commands.add('setAccessTokenCookieALT', () => {
     return setAccessTokenCookieALT()
+})
+Cypress.Commands.add('setUMLSTGTCookie', () => {
+    return setUMLSTGTCookie()
 })
