@@ -5,7 +5,7 @@ import {EditMeasurePage} from "./EditMeasurePage"
 
 export class Utilities {
 
-    public static deleteMeasure(measureName: string, cqlLibraryName: string, measureScoring: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
+    public static deleteMeasure(measureName: string, cqlLibraryName: string, measureScoring: string, measurementPeriodStart: string, measurementPeriodEnd: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
 
         let path = 'cypress/fixtures/measureId'
 
@@ -32,7 +32,7 @@ export class Utilities {
                         Authorization: 'Bearer ' + accessToken.value
                     },
                     body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName,
-                        "measureScoring": measureScoring, "model": 'QI-Core', "active": false}
+                        "measureScoring": measureScoring, "model": 'QI-Core', "measurementPeriodStart": measurementPeriodStart, "measurementPeriodEnd": measurementPeriodEnd,"active": false}
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body).to.eql("Measure updated successfully.")
@@ -287,6 +287,13 @@ export class Utilities {
                     .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .select('Surgical Absence of Cervix')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
+                cy.get(MeasureGroupPage.initialPopulationSelect)
+                    .contains('Select Initial Population')
+                cy.get(MeasureGroupPage.denominatorSelect)
+                    .contains('Select Denominator')
+                cy.get(MeasureGroupPage.numeratorSelect)
+                    .contains('Select Numerator')
                 break
             }
             case 'Proportion': {
@@ -297,6 +304,13 @@ export class Utilities {
                     .select('SDE Ethnicity')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .select('Surgical Absence of Cervix')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
+                cy.get(MeasureGroupPage.initialPopulationSelect)
+                    .contains('Select Initial Population')
+                cy.get(MeasureGroupPage.denominatorSelect)
+                    .contains('Select Denominator')
+                cy.get(MeasureGroupPage.numeratorSelect)
+                    .contains('Select Numerator')
                 break
             }
             case 'Continuous Variable': {
@@ -313,6 +327,11 @@ export class Utilities {
                     .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .should('not.exist')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
+                cy.get(MeasureGroupPage.initialPopulationSelect)
+                    .contains('Select Initial Population')
+                cy.get(MeasureGroupPage.measurePopulationSelect)
+                    .contains('Select Measure Population')
                 break
             }
             case 'Cohort': {
@@ -327,6 +346,9 @@ export class Utilities {
                     .should('not.exist')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .should('not.exist')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
+                cy.get(MeasureGroupPage.initialPopulationSelect)
+                    .contains('Select Initial Population')
                 break
 
             }

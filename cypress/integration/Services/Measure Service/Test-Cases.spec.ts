@@ -159,8 +159,9 @@ describe('Test Case population values based on Measure Group population definiti
     })
 
     after('Clean up',() => {
-
-        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring)
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
 
     })
     it('Test Case population value check boxes match that of the measure group definitons -- all are defined', () => {
@@ -416,8 +417,9 @@ describe('Measure Service: Test Case Endpoints', () => {
     })
 
     after('Clean up',() => {
-
-        Utilities.deleteMeasure(measureName, cqlLibraryNameDeux, 'Cohort')
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryNameDeux, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
 
     })
 
@@ -570,8 +572,9 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     })
 
     after('Clean up',() => {
-
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
 
     })
 
@@ -730,8 +733,9 @@ describe('Test Case Json Validations', () =>{
     })
 
     after('Clean up',() => {
-
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
 
     })
 
@@ -858,7 +862,9 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
 
     })
 

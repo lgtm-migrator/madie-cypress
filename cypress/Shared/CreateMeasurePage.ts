@@ -98,7 +98,9 @@ export class CreateMeasurePage {
                     'model': 'QI-Core',
                     'measureScoring': measureScoring,
                     'createdBy': user,
-                    'cql': measureCQL                    
+                    'cql': measureCQL,
+                    'measurementPeriodStart': "2023-01-01T00:00:00.000+00:00",
+                    'measurementPeriodEnd': "2023-12-31T00:00:00.000+00:00",                    
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)

@@ -39,8 +39,9 @@ describe('Measure Service: Edit Measure', () => {
     })
 
     after('Clean up',() => {
-
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
 
     })
 

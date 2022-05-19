@@ -31,8 +31,10 @@ describe('Validate Measure Group', () => {
 
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3], measurementPeriodStart, measurementPeriodEnd)
 
     })
 
@@ -55,8 +57,8 @@ describe('Validate Measure Group', () => {
         //Measure group description
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
             
-        for (let i in measureScoringArray){
-            for (let j in mgPVTestType){
+        for (let j in mgPVTestType){
+            for (let i in measureScoringArray){
                 //log, in cypress, the measure score value
                 cy.log((measureScoringArray[i].valueOf()).toString())
                 //select scoring unit on measure
@@ -67,7 +69,7 @@ describe('Validate Measure Group', () => {
 
     })
 
-    it.only('Validate that required populations have to have a selected value before measure group can be saved', () => {
+    it('Validate that required populations have to have a selected value before measure group can be saved', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -85,8 +87,8 @@ describe('Validate Measure Group', () => {
         //Measure group description
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
-        for (let i in measureScoringArray){
-            for (let j in mgPVTestType){
+        for (let j in mgPVTestType){
+            for (let i in measureScoringArray){
                 //log, in cypress, the measure score value
                 cy.log((measureScoringArray[i].valueOf()).toString())
                 //select scoring unit on measure
@@ -115,8 +117,8 @@ describe('Validate Measure Group', () => {
         //Measure group description
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
                     
-        for (let i in measureScoringArray){
-            for (let j in mgPVTestType){
+        for (let j in mgPVTestType){
+            for (let i in measureScoringArray){
                 //log, in cypress, the measure score value
                 cy.log((measureScoringArray[i].valueOf()).toString())
                 //select scoring unit on measure
