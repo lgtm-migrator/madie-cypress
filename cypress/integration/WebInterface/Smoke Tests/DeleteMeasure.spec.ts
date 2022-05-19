@@ -38,8 +38,9 @@ describe('Delete Measure', () => {
     })
 
     after('Clean up', () => {
-
-        Utilities.deleteMeasure(measureTwo, CqlLibraryTwo, measureScoring, true, true)
+        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
+        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
+        Utilities.deleteMeasure(measureTwo, CqlLibraryTwo, measureScoring, measurementPeriodStart, measurementPeriodEnd, true, true)
 
     })
 
