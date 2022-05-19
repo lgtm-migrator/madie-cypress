@@ -3,7 +3,7 @@ import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
-import {Utilities} from "../../../../Shared/Utilities";
+import {Utilities} from "../../../../Shared/Utilities"
 
 
 let measureName = 'TestMeasure' + Date.now()

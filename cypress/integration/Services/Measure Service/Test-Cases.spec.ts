@@ -3,7 +3,7 @@ import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 export {}
 
-let measureName = 'TestMeasure' + Date.now() 
+let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestLibrary' + Date.now()
 let modelType = 'QI-Core'
 let measureScoring = 'Proportion'
@@ -40,12 +40,14 @@ describe('Test Case population values based on Measure Group population definiti
                     'cqlLibraryName': cqlLibraryName,
                     'model': modelType,
                     'measureScoring': measureScoring,
+                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                     'cql': measureCQL
                 }
             }).then((response) => {
-                    expect(response.status).to.eql(201)
-                    expect(response.body.id).to.be.exist
-                    cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
             })
         })
 
@@ -59,20 +61,20 @@ describe('Test Case population values based on Measure Group population definiti
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "population":
+                            {
+                                "initialPopulation": PopIniPop,
+                                "denominator": PopDenom,
+                                "denominatorExclusion": PopDenex,
+                                "denominatorException": PopDenexcep,
+                                "numerator": PopNum,
+                                "numeratorExclusion": PopNumex
+                            }
                     }
                 }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile('cypress/fixtures/groupId', response.body.id)
                 })
             })
         })
@@ -135,18 +137,18 @@ describe('Test Case population values based on Measure Group population definiti
                                         "expected": false,
                                         "actual": false
                                     }
-                
+
                                 ]
                             }]
                         }
                     }).then((response) => {
-                            expect(response.status).to.eql(201)
-                            expect(response.body.id).to.be.exist
-                            expect(response.body.series).to.eql(TCSeries)
-                            expect(response.body.title).to.eql(TCTitle)
-                            expect(response.body.description).to.eql(TCDescription)
-                            expect(response.body.json).to.be.exist
-                            cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
+                        expect(response.status).to.eql(201)
+                        expect(response.body.id).to.be.exist
+                        expect(response.body.series).to.eql(TCSeries)
+                        expect(response.body.title).to.eql(TCTitle)
+                        expect(response.body.description).to.eql(TCDescription)
+                        expect(response.body.json).to.be.exist
+                        cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
                     })
                 })
             })
@@ -159,6 +161,7 @@ describe('Test Case population values based on Measure Group population definiti
     })
 
     after('Clean up',() => {
+
         let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
         let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
         Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
@@ -175,17 +178,17 @@ describe('Test Case population values based on Measure Group population definiti
                         },
                         method: 'GET',
                     }).then((response) => {
-                            expect(response.status).to.eql(200)
-                            expect(response.body.id).to.eql(testCaseId)
-                            expect(response.body.series).to.eql(TCSeries)
-                            expect(response.body.json).to.be.exist
-                            expect(response.body.title).to.eql(TCTitle)
-                            expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
-                            expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
-                            expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
-                            expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
-                            expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
-                            expect(response.body['groupPopulations'][0].populationValues[5].name).to.eq('numeratorExclusion')
+                        expect(response.status).to.eql(200)
+                        expect(response.body.id).to.eql(testCaseId)
+                        expect(response.body.series).to.eql(TCSeries)
+                        expect(response.body.json).to.be.exist
+                        expect(response.body.title).to.eql(TCTitle)
+                        expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
+                        expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
+                        expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
+                        expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
+                        expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
+                        expect(response.body['groupPopulations'][0].populationValues[5].name).to.eq('numeratorExclusion')
                     })
                 })
             })
@@ -204,19 +207,19 @@ describe('Test Case population values based on Measure Group population definiti
                         body: {
                             "id":groupIdFc,
                             "scoring": measureScoring,
-                            "population": 
-                            {
-                                "initialPopulation": PopIniPop,
-                                "denominator": PopDenom,
-                                "denominatorExclusion": PopDenex,
-                                "denominatorException": PopDenexcep,
-                                "numerator": PopNum
-                            }
+                            "population":
+                                {
+                                    "initialPopulation": PopIniPop,
+                                    "denominator": PopDenom,
+                                    "denominatorExclusion": PopDenex,
+                                    "denominatorException": PopDenexcep,
+                                    "numerator": PopNum
+                                }
                         }
 
                     }).then((response) => {
-                            expect(response.status).to.eql(200)
-                            expect(response.body.id).to.be.exist
+                        expect(response.status).to.eql(200)
+                        expect(response.body.id).to.be.exist
                     })
                 })
             })
@@ -231,17 +234,17 @@ describe('Test Case population values based on Measure Group population definiti
                         },
                         method: 'GET',
                     }).then((response) => {
-                            expect(response.status).to.eql(200)
-                            expect(response.body.id).to.eql(testCaseId)
-                            expect(response.body.series).to.eql(TCSeries)
-                            expect(response.body.json).to.be.exist
-                            expect(response.body.title).to.eql(TCTitle)
-                            expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
-                            expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
-                            expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
-                            expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
-                            expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
-                            expect(response.body['groupPopulations'][0].populationValues[5]).does.not.exist
+                        expect(response.status).to.eql(200)
+                        expect(response.body.id).to.eql(testCaseId)
+                        expect(response.body.series).to.eql(TCSeries)
+                        expect(response.body.json).to.be.exist
+                        expect(response.body.title).to.eql(TCTitle)
+                        expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
+                        expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
+                        expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
+                        expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
+                        expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
+                        expect(response.body['groupPopulations'][0].populationValues[5]).does.not.exist
                     })
                 })
             })
@@ -258,20 +261,20 @@ describe('Test Case population values based on Measure Group population definiti
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "population":
+                            {
+                                "initialPopulation": PopIniPop,
+                                "denominator": PopDenom,
+                                "denominatorExclusion": PopDenex,
+                                "denominatorException": PopDenexcep,
+                                "numerator": PopNum,
+                                "numeratorExclusion": PopNumex
+                            }
                     }
                 }).then((response) => {
-                        expect(response.status).to.eql(200)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
+                    expect(response.status).to.eql(200)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile('cypress/fixtures/groupId', response.body.id)
                 })
             })
         })
@@ -336,18 +339,18 @@ describe('Test Case population values based on Measure Group population definiti
                                             "expected": false,
                                             "actual": false
                                         }
-                
+
                                     ]
                                 }]
                             }
                         }).then((response) => {
-                                expect(response.status).to.eql(200)
-                                expect(response.body.id).to.be.exist
-                                expect(response.body.series).to.eql(TCSeries)
-                                expect(response.body.title).to.eql(TCTitle)
-                                expect(response.body.description).to.eql(TCDescription)
-                                expect(response.body.json).to.be.exist
-                                cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
+                            expect(response.status).to.eql(200)
+                            expect(response.body.id).to.be.exist
+                            expect(response.body.series).to.eql(TCSeries)
+                            expect(response.body.title).to.eql(TCTitle)
+                            expect(response.body.description).to.eql(TCDescription)
+                            expect(response.body.json).to.be.exist
+                            cy.writeFile('cypress/fixtures/testcaseId', response.body.id)
                         })
                     })
                 })
@@ -364,17 +367,17 @@ describe('Test Case population values based on Measure Group population definiti
                         },
                         method: 'GET',
                     }).then((response) => {
-                            expect(response.status).to.eql(200)
-                            expect(response.body.id).to.eql(testCaseId)
-                            expect(response.body.series).to.eql(TCSeries)
-                            expect(response.body.json).to.be.exist
-                            expect(response.body.title).to.eql(TCTitle)
-                            expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
-                            expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
-                            expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
-                            expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
-                            expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
-                            expect(response.body['groupPopulations'][0].populationValues[5].name).to.eq('numeratorExclusion')
+                        expect(response.status).to.eql(200)
+                        expect(response.body.id).to.eql(testCaseId)
+                        expect(response.body.series).to.eql(TCSeries)
+                        expect(response.body.json).to.be.exist
+                        expect(response.body.title).to.eql(TCTitle)
+                        expect(response.body.groupPopulations[0].populationValues[0].name).to.eq('initialPopulation')
+                        expect(response.body['groupPopulations'][0].populationValues[1].name).to.eq('denominator')
+                        expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
+                        expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
+                        expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
+                        expect(response.body['groupPopulations'][0].populationValues[5].name).to.eq('numeratorExclusion')
                     })
                 })
             })
@@ -384,7 +387,7 @@ describe('Test Case population values based on Measure Group population definiti
 
 describe('Measure Service: Test Case Endpoints', () => {
     let randValue = (Math.floor((Math.random() * 2000) + 3))
-    let cqlLibraryNameDeux = cqlLibraryName + randValue + 2 
+    let cqlLibraryNameDeux = cqlLibraryName + randValue + 2
     before('Create Measure', () => {
         cy.setAccessTokenCookie()
 
@@ -400,6 +403,8 @@ describe('Measure Service: Test Case Endpoints', () => {
                     'measureName': measureName,
                     'cqlLibraryName': cqlLibraryNameDeux,
                     'model': 'QI-Core',
+                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
@@ -417,6 +422,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     })
 
     after('Clean up',() => {
+
         let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
         let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
         Utilities.deleteMeasure(measureName, cqlLibraryNameDeux, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
@@ -555,6 +561,8 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
                     'measureName': measureName,
                     'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
+                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
@@ -572,6 +580,7 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     })
 
     after('Clean up',() => {
+
         let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
         let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
         Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
@@ -716,6 +725,8 @@ describe('Test Case Json Validations', () =>{
                     'measureName': measureName,
                     'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
+                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {
@@ -733,6 +744,7 @@ describe('Test Case Json Validations', () =>{
     })
 
     after('Clean up',() => {
+
         let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
         let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
         Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
@@ -844,6 +856,8 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
                     'measureName': measureName,
                     'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
+                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                     'measureScoring': 'Cohort'
                 }
             }).then((response) => {

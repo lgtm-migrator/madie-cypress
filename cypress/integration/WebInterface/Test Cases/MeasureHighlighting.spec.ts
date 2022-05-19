@@ -61,8 +61,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
@@ -96,8 +95,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         TestCasesPage.clickCreateTestCaseButton()
 
@@ -125,8 +123,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         TestCasesPage.clickCreateTestCaseButton()
 
@@ -134,8 +131,6 @@ describe('Measure Highlighting', () => {
 
         cy.get(TestCasesPage.runTestButton).click()
 
-        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'Cannot read properties of null (reading \'map\')')
+        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'An error occurred fetching the measure bundle')
     })
 })
-
-

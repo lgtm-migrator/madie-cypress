@@ -59,6 +59,8 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2020')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/2021')
 
         //Verify error message when the CQL Library Name field is empty
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).click()
@@ -151,4 +153,88 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.cancelButton).click()
 
     })
+})
+
+describe('Measurement Period Validations', () => {
+
+    let measureName = 'TestMeasure' + Date.now()
+    let CqlLibraryName = 'TestLibrary' + Date.now()
+
+    beforeEach('Login',() => {
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout', () => {
+        OktaLogin.Logout()
+    })
+
+    it('Verify error message when the Measurement Period end date is after the start date', () => {
+
+        cy.get(LandingPage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/1999')
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2022')
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date should be greater than measurement period start date.')
+        cy.get(CreateMeasurePage.cancelButton).click()
+
+    })
+
+    it('Verify error message when the Measurement Period start and end dates are empty', () => {
+
+        cy.get(LandingPage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).focus().blur()
+        cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Measurement period start date is required')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).focus().blur()
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date is required')
+        cy.get(CreateMeasurePage.cancelButton).click()
+    })
+
+    it('Verify error message when the Measurement Period start and end dates are not in valid range', () => {
+
+        cy.get(LandingPage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('01/01/1800')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Start date should be between the years 1900 and 2099.')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/1800')
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).click()
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'End date should be between the years 1900 and 2099.')
+        cy.get(CreateMeasurePage.cancelButton).click()
+    })
+
+    it('Verify error message when the Measurement Period start and end date format is not valid', () => {
+
+        cy.get(LandingPage.newMeasureButton).click()
+        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
+        cy.get(CreateMeasurePage.measureModelDropdown).click()
+        cy.get(CreateMeasurePage.measureModelQICore).click()
+        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
+        cy.get(CreateMeasurePage.measureScoringDropdown).click()
+        cy.get(CreateMeasurePage.measureScoringCohort).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('2020/01/02')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).click()
+        cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Invalid date format. (mm/dd/yyyy)')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('2021/01/02')
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).click()
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Invalid date format. (mm/dd/yyyy)')
+        cy.get(CreateMeasurePage.cancelButton).click()
+
+    })
+
 })

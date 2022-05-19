@@ -21,7 +21,10 @@ export class CreateMeasurePage {
     public static readonly measureScoringContinuousVariable = '[data-testid="measure-scoring-option-Continuous Variable"]'
     public static readonly measureScoringProportion = '[data-testid=measure-scoring-option-Proportion]'
     public static readonly measureScoringRatio = '[data-testid=measure-scoring-option-Ratio]'
-
+    public static readonly measurementPeriodStartDate = '[name=measurementPeriodStart]'
+    public static readonly measurementPeriodEndDate = '[name=measurementPeriodEnd]'
+    public static readonly measurementPeriodStartDateError = '[data-testid=measurementPeriodStart-helper-text]'
+    public static readonly measurementPeriodEndDateError = '[data-testid=measurementPeriodEnd-helper-text]'
 
 
     public static clickCreateMeasureButton() : void {
@@ -62,6 +65,9 @@ export class CreateMeasurePage {
                 cy.get(this.measureScoringRatio).click()
                 break
         }
+
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2020')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/2021')
 
         this.clickCreateMeasureButton()
 

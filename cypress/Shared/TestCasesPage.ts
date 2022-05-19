@@ -6,7 +6,7 @@ export class TestCasesPage {
     public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'// > .sc-iqseJM'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
-    public static readonly existingTestCaseSeriesDropdown = '#mui-6-option-0'//'#mui-4-option-0'
+    public static readonly existingTestCaseSeriesDropdown = '#mui-6'//'#mui-4-option-0'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
@@ -49,8 +49,8 @@ export class TestCasesPage {
 
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
-            cy.intercept('POST', '/api/measures/'+ id + '/test-cases').as('testcase')
-            cy.intercept('PUT', '/api/measures/' + id).as('putMeasures')
+            cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
+            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
 
             cy.get(this.createTestCaseButton).click()
 
@@ -64,7 +64,7 @@ export class TestCasesPage {
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
-            cy.wait('@putMeasures').then(({response}) => {
+            cy.wait('@getMeasures').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
             })
         })
@@ -97,9 +97,7 @@ export class TestCasesPage {
         cy.get(this.testCaseTitle).should('be.enabled')
         cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(this.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(this.existingTestCaseSeriesDropdown).should('be.visible')
-        cy.get(this.existingTestCaseSeriesDropdown).click()
+        cy.get(this.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
@@ -125,8 +123,7 @@ export class TestCasesPage {
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(updatedTestCaseDescription)
         //Update Test Case Series
         cy.get(TestCasesPage.testCaseSeriesTextBox).clear()
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries).type('{enter}')
 
         //Save edited / updated to test case
         cy.get(this.cuTestCaseButton).click()

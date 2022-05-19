@@ -31,6 +31,8 @@ describe('Measure List Pagination', () => {
                         'measureName': measureName[i],
                         'cqlLibraryName': CqlLibraryName[i],
                         'model': 'QI-Core',
+                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
                         'measureScoring': measureScoring,
                     }
                 }).then((response) => {
@@ -71,7 +73,8 @@ describe('Measure List Pagination', () => {
                         },
                         body: {
                             "id": id, "measureName": measureName[j], "cqlLibraryName": CqlLibraryName[j] + 1,
-                            "measureScoring": measureScoring, "model": 'QI-Core', "active": false
+                            "measureScoring": measureScoring, "model": 'QI-Core', "active": false, "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
+                            "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
                         }
 
                     }).then((response) => {
