@@ -3,8 +3,6 @@ import {Header} from "../../../../Shared/Header"
 import {Utilities} from "../../../../Shared/Utilities"
 import {umlsLoginForm} from "../../../../Shared/umlsLoginForm"
 
-
-
 describe('Tests surrounding the abilty to log into UMLS', () => {
 
     beforeEach('Login',() => {

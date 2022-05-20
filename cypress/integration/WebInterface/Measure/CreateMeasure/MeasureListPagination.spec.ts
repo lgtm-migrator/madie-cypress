@@ -5,6 +5,9 @@ let measureName  = []
 let CqlLibraryName  = []
 let measureScoring = 'Ratio'
 let measureIds = []
+const now = require('dayjs')
+let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
+let mpEndDate = now().format('YYYY-MM-DD')
 
 describe('Measure List Pagination', () => {
 
@@ -31,6 +34,8 @@ describe('Measure List Pagination', () => {
                         'measureName': measureName[i],
                         'cqlLibraryName': CqlLibraryName[i],
                         'model': 'QI-Core',
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureScoring': measureScoring,
                     }
                 }).then((response) => {
@@ -71,7 +76,8 @@ describe('Measure List Pagination', () => {
                         },
                         body: {
                             "id": id, "measureName": measureName[j], "cqlLibraryName": CqlLibraryName[j] + 1,
-                            "measureScoring": measureScoring, "model": 'QI-Core', "active": false
+                            "measureScoring": measureScoring, "model": 'QI-Core', "active": false, "measurementPeriodStart": mpStartDate,
+                            "measurementPeriodEnd": mpEndDate
                         }
 
                     }).then((response) => {

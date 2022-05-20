@@ -37,10 +37,8 @@ describe('Read only for measure, measure group, and test cases that user does no
     })
 
     after('Clean up', () => {
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd, true, true)
+        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring,true, true)
 
     })
 

@@ -38,9 +38,7 @@ describe('Measure Highlighting', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0], measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
 
     })
 
@@ -61,8 +59,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
@@ -96,8 +93,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         TestCasesPage.clickCreateTestCaseButton()
 
@@ -125,8 +121,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         TestCasesPage.clickCreateTestCaseButton()
 
@@ -134,8 +129,6 @@ describe('Measure Highlighting', () => {
 
         cy.get(TestCasesPage.runTestButton).click()
 
-        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'Cannot read properties of null (reading \'map\')')
+        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'An error occurred fetching the measure bundle')
     })
 })
-
-

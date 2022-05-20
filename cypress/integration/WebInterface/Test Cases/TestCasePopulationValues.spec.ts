@@ -35,12 +35,10 @@ describe('Test Case Expected Measure Group population values based on initial me
 
         OktaLogin.Logout()
 
-            let randValue = (Math.floor((Math.random() * 1000) + 1))
-            let newCqlLibraryName = CqlLibraryName + randValue
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
 
-            let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-            let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-            Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3], measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 
@@ -115,7 +113,7 @@ describe('Test Case Expected Measure Group population values based on initial me
                     else if (i == 0){
                         expect($message.text()).to.equal('Population details for this group saved successfully.')
                     }
-               })
+                })
         }
 
     })
@@ -183,7 +181,7 @@ describe('Test Case Expected Measure Group population values based on initial me
 
         cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
             cy.intercept('GET', '/api/measures/' + fileContents + '/test-cases').as('testCase')
-            cy.intercept('PUT', '/api/measures/' + fileContents).as('putMeasures')
+            cy.intercept('GET', '/api/measures/' + fileContents).as('getMeasures')
 
             //navigate back to the test case tab
             cy.get(EditMeasurePage.testCasesTab).click()
@@ -194,7 +192,7 @@ describe('Test Case Expected Measure Group population values based on initial me
                 expect(response.statusCode).to.eq(200)
             })
 
-            cy.wait('@putMeasures').then(({response}) => {
+            cy.wait('@getMeasures').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
             })
         })

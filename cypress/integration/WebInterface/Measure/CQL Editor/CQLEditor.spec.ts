@@ -33,9 +33,7 @@ describe('CQL Editor', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
 
     })
 
@@ -174,7 +172,7 @@ describe('CQL Editor', () => {
         //Validate error(s) in CQL Editor after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'Model Type and version are required')
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'ELM: 1:37 | Exception')
 
     })
 })

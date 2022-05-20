@@ -4,7 +4,7 @@ import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
-import {Utilities} from "../../../Shared/Utilities";
+import {Utilities} from "../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -36,9 +36,7 @@ describe('Test Case Validations', () => {
 
     after('Clean up', () => {
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 
@@ -125,7 +123,7 @@ describe('Test Case Validations', () => {
 })
 
 describe('Test Case Json Validations', () => {
-    
+
     before('Create Measure', () => {
         CqlLibraryName = 'TestLibrary2' + Date.now()
         //Create New Measure
@@ -143,9 +141,8 @@ describe('Test Case Json Validations', () => {
     })
 
     after('Clean up', () => {
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 
@@ -160,26 +157,22 @@ describe('Test Case Json Validations', () => {
 
         cy.get(TestCasesPage.newTestCaseButton).should('exist')
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')        
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
         cy.get(TestCasesPage.testCaseTitle).should('exist')
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')        
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle)
 
         cy.get(TestCasesPage.testCaseDescriptionTextBox).should('exist')
         cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.visible')
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')          
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
 
         cy.get(TestCasesPage.testCaseSeriesTextBox).should('exist')
         cy.get(TestCasesPage.testCaseSeriesTextBox).should('be.visible')
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).should('exist')
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).should('be.visible')
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).should('exist')
@@ -207,8 +200,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.newTestCaseButton).click()
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle)
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(invalidTestCaseJson)
@@ -229,8 +221,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.newTestCaseButton).click()
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle)
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseXML)

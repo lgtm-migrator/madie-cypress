@@ -14,29 +14,30 @@ let testCaseTitle = 'Title for Auto Test'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
+let newMeasureName = ''
+let newCqlLibraryName = ''
 
 describe('Execute Test Case', () => {
 
-    before('Create Measure', () => {
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoringArray[0])
-
-    })
-    beforeEach('Login', () => {
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[0])
         OktaLogin.Login()
 
     })
-    afterEach('Logout', () => {
+
+    afterEach('Logout and Clean up Measures', () => {
+
         OktaLogin.Logout()
 
-    })
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
 
-    after('Clean up', () => {
-
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoringArray[0], measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 
@@ -57,8 +58,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries)
-        cy.get(TestCasesPage.existingTestCaseSeriesDropdown).click()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
@@ -68,7 +68,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'Cannot read properties of null (reading \'map\')')
+        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'An error occurred fetching the measure bundle')
 
     })
 
@@ -77,22 +77,55 @@ describe('Execute Test Case', () => {
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
-        //Navigate to Test cases Page
+        //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        TestCasesPage.clickCreateTestCaseButton()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'NA')
+        cy.wait(1000)
+        cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'fail')
     })
 
     it('Execute Test Case without all Expected values and verify execution status', () => {
 
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
+        //Add Measure Group
+        MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
-        //Navigate to Test cases Page
+        //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        TestCasesPage.clickCreateTestCaseButton()
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -109,35 +142,53 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
+        cy.wait(1000)
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'fail')
 
     })
 
     it('Execute Test Case with all Expected values and verify execution status', () => {
 
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
+        //Add Measure Group
+        MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
-        //Navigate to Test cases Page
+        //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        TestCasesPage.clickCreateTestCaseButton()
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
         //Select the Expected Value
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).click()
         cy.get(TestCasesPage.testCaseDENOMCheckBox).click()
         cy.get(TestCasesPage.testCaseNUMEXCheckBox).click()
 
         //Save updated test case
         cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
-            cy.intercept('PUT', '/api/measures/' + fileContents).as('putMeasures')
+            cy.intercept('GET', '/api/measures/' + fileContents).as('getMeasures')
             cy.get(TestCasesPage.cuTestCaseButton).click()
             cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
             cy.url({ timeout: 100000 }).should('include', '/edit/test-cases')
 
             cy.get(EditMeasurePage.testCasesTab).click()
-            cy.wait('@putMeasures').then(({response}) => {
+            cy.wait('@getMeasures').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
             })
         })
@@ -147,5 +198,4 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
 
     })
-
 })
