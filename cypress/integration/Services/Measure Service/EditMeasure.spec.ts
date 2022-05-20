@@ -6,6 +6,9 @@ let cqlLibraryName = 'TestCql' + Date.now()
 let randValue = (Math.floor((Math.random() * 1000) + 1))
 let newMeasureName = measureName + randValue
 let newCQLLibraryName = cqlLibraryName + randValue
+const now = require('dayjs')
+let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
+let mpEndDate = now().format('YYYY-MM-DD')
 
 describe('Measure Service: Edit Measure', () => {
 
@@ -26,8 +29,8 @@ describe('Measure Service: Edit Measure', () => {
                     'cqlLibraryName': cqlLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort',
-                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                    "measurementPeriodStart": mpStartDate,
+                    "measurementPeriodEnd": mpEndDate
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
@@ -45,9 +48,7 @@ describe('Measure Service: Edit Measure', () => {
 
     after('Clean up',() => {
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
 
     })
 
@@ -68,8 +69,8 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureScoring': 'Ratio'
                     }
                 }).then((response) => {
@@ -98,8 +99,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -126,8 +127,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -154,8 +155,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -186,8 +187,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -214,8 +215,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
@@ -241,8 +242,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"measureSteward": "SemanticBits"}
                     }
                 }).then((response) => {
@@ -269,8 +270,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"description": "SemanticBits"}
                     }
                 }).then((response) => {
@@ -297,8 +298,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"copyright": "copyright"}
                     }
                 }).then((response) => {
@@ -325,8 +326,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"disclaimer": "disclaimer"}
                     }
                 }).then((response) => {
@@ -353,8 +354,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"rationale": "rationale"}
                     }
                 }).then((response) => {
@@ -381,8 +382,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"author": "author"}
                     }
                 }).then((response) => {
@@ -409,8 +410,8 @@ describe('Measure Service: Edit Measure', () => {
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
                         'measureScoring': 'Ratio',
-                        "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate,
                         'measureMetaData': {"guidance": "guidance"}
                     }
                 }).then((response) => {
@@ -440,8 +441,8 @@ describe('Measurement Period Validations', () => {
                     'cqlLibraryName': newCQLLibraryName,
                     'model': 'QI-Core',
                     'measureScoring': 'Cohort',
-                    "measurementPeriodStart": "2022-01-01T05:00:00.000+0000",
-                    "measurementPeriodEnd": "2023-01-01T05:00:00.000+0000"
+                    "measurementPeriodStart": mpStartDate,
+                    "measurementPeriodEnd": mpEndDate
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
@@ -459,12 +460,10 @@ describe('Measurement Period Validations', () => {
 
     after('Clean up',() => {
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = cqlLibraryName + randValue
 
-        Utilities.deleteMeasure(measureName, newCqlLibraryName, 'Cohort', measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(measureName, newCqlLibraryName, 'Cohort')
 
     })
 
@@ -484,8 +483,8 @@ describe('Measurement Period Validations', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
                         'model': 'QI-Core',
-                        "measurementPeriodStart": "2023-01-01T05:00:00.000+0000",
-                        "measurementPeriodEnd": "2022-01-01T05:00:00.000+0000",
+                        "measurementPeriodStart": mpEndDate,
+                        "measurementPeriodEnd": mpStartDate,
                         'measureScoring': 'Ratio'
                     }
                 }).then((response) => {

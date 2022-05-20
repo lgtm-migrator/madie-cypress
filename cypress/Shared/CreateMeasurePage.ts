@@ -44,6 +44,10 @@ export class CreateMeasurePage {
 
     public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
 
+        const now = require('dayjs')
+        let mpStartDate = now().subtract('1', 'year').format('MM/DD/YYYY')
+        let mpEndDate = now().format('MM/DD/YYYY')
+
         cy.log('Create ' +measureScoring+ ' Measure')
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(this.measureNameTextbox).type(measureName)
@@ -66,8 +70,8 @@ export class CreateMeasurePage {
                 break
         }
 
-        cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2020')
-        cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/2021')
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).type(mpStartDate)
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).type(mpEndDate)
 
         this.clickCreateMeasureButton()
 
@@ -77,7 +81,11 @@ export class CreateMeasurePage {
     }
 
     public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, measureCQL?: string, twoMeasures?: boolean, altUser?: boolean): string {
+
         let user = ''
+        const now = require('dayjs')
+        let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
+        let mpEndDate = now().format('YYYY-MM-DD')
 
         if (altUser)
         {
@@ -105,8 +113,8 @@ export class CreateMeasurePage {
                     'measureScoring': measureScoring,
                     'createdBy': user,
                     'cql': measureCQL,
-                    'measurementPeriodStart': "2023-01-01T00:00:00.000+00:00",
-                    'measurementPeriodEnd': "2023-12-31T00:00:00.000+00:00",                    
+                    'measurementPeriodStart': mpStartDate + "T00:00:00.000+00:00",
+                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000+00:00",
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)

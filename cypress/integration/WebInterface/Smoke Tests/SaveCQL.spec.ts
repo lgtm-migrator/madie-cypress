@@ -3,7 +3,7 @@ import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {Header} from "../../../Shared/Header"
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -28,9 +28,7 @@ describe('Save CQL on CQL Editor Page', () => {
 
     after('Clean up', () => {
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
 

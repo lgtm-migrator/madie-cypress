@@ -38,9 +38,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3], measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
 
     })
 

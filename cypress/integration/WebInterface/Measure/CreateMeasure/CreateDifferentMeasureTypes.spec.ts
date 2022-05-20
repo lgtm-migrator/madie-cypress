@@ -1,7 +1,6 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
-import {Utilities} from "../../../../Shared/Utilities";
-
+import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = ''
 let CqlLibraryName = ''
@@ -14,9 +13,8 @@ describe('Create different Measure types', () => {
 
     afterEach('Logout', () => {
         OktaLogin.Logout()
-        let measurementPeriodStart = "2023-01-01T00:00:00.000+00:00"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000+00:00"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
     })
 
     it('Create Cohort Measure', () => {
