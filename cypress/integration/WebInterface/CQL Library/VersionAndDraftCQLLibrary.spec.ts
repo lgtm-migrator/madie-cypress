@@ -1,6 +1,7 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 import {Header} from "../../../Shared/Header"
+import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
 
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
@@ -34,17 +35,17 @@ describe('Add Version and Draft to CQL Library', () => {
 
         let versionNumber = '1.0.000'
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
 
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('exist')
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('be.enabled')          
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('be.enabled')
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
 
-        cy.get(CQLLibraryPage.createVersionContinueButton).should('exist')
-        cy.get(CQLLibraryPage.createVersionContinueButton).should('be.visible')
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.get(CQLLibrariesPage.createVersionContinueButton).should('exist')
+        cy.get(CQLLibrariesPage.createVersionContinueButton).should('be.visible')
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
 
     })
@@ -54,31 +55,31 @@ describe('Add Version and Draft to CQL Library', () => {
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('exist')
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).should('be.enabled')          
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('be.enabled')
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
 
-        cy.get(CQLLibraryPage.createVersionContinueButton).should('exist')
-        cy.get(CQLLibraryPage.createVersionContinueButton).should('be.visible')
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.get(CQLLibrariesPage.createVersionContinueButton).should('exist')
+        cy.get(CQLLibrariesPage.createVersionContinueButton).should('be.visible')
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
 
-        CQLLibraryPage.clickDraftforCreatedLibrary()
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('exist')
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('be.visible')
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).should('be.enabled')
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
+        CQLLibrariesPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('exist')
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.visible')
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.enabled')
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
 
-        cy.get(CQLLibraryPage.createDraftContinueBtn).should('exist')
-        cy.get(CQLLibraryPage.createDraftContinueBtn).should('be.visible')
-        cy.get(CQLLibraryPage.createDraftContinueBtn).should('be.enabled') 
-        cy.get(CQLLibraryPage.createDraftContinueBtn).click()
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('exist')
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.visible')
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.enabled')
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
 
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
-        cy.get(CQLLibraryPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
+        cy.get(CQLLibrariesPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
         cy.log('Draft Created Successfully')
     })
 
@@ -89,10 +90,10 @@ describe('Add Version and Draft to CQL Library', () => {
 
         //Navigate to All Libraries tab
         cy.get(CQLLibraryPage.allLibrariesBtn).click()
-        CQLLibraryPage.clickVersionforCreatedLibrary(true)
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
+        CQLLibrariesPage.clickVersionforCreatedLibrary(true)
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
     })
 
 })
@@ -125,25 +126,25 @@ describe('Draft and Version Validations', () => {
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
 
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
 
-        CQLLibraryPage.clickDraftforCreatedLibrary()
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
-        cy.get(CQLLibraryPage.createDraftContinueBtn).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
-        cy.get(CQLLibraryPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
+        CQLLibrariesPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
+        cy.get(CQLLibrariesPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
         cy.log('Draft Created Successfully')
 
-        CQLLibraryPage.clickDraftforCreatedLibrary()
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName + '1')
-        cy.get(CQLLibraryPage.createDraftContinueBtn).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'Cannot draft resource CQL Library. A draft already exists for the CQL Library Group.')
+        CQLLibrariesPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName + '1')
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'Cannot draft resource CQL Library. A draft already exists for the CQL Library Group.')
     })
 
     it('Verify the CQL Library updates are restricted after Version is created', () => {
@@ -151,16 +152,16 @@ describe('Draft and Version Validations', () => {
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
 
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
-        cy.get(CQLLibraryPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
+        CQLLibrariesPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibrariesPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
     })
 
     it('Draft cannot be saved with a name that exists for a different library', () => {
@@ -168,24 +169,24 @@ describe('Draft and Version Validations', () => {
 
         let versionNumber = '1.0.000'
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
 
-        cy.get(CQLLibraryPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibraryPage.createVersionContinueButton).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibraryPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
 
-        CQLLibraryPage.clickDraftforCreatedLibrary()
-        cy.get(CQLLibraryPage.updateDraftedLibraryTextBox).clear().type(CqlLibraryOther)
-        cy.get(CQLLibraryPage.createDraftContinueBtn).click()
-        cy.get(CQLLibraryPage.VersionDraftMsgs).should('contain.text', 'Requested Cql Library cannot be drafted. Library name must be unique.')
+        CQLLibrariesPage.clickDraftforCreatedLibrary()
+        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(CqlLibraryOther)
+        cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
+        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'Requested Cql Library cannot be drafted. Library name must be unique.')
         cy.log('Draft was not created due to the attempt to use the name of an already existing Library')
     })
 
     it('User can not version CQL Library if there is no CQL', () => {
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         //Clear the text in CQL Library Editor
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
@@ -194,11 +195,11 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get('.MuiDialogContent-root > :nth-child(2) > :nth-child(4)').should('contain.text', 'Versioning cannot be done as there is no associated Cql with this library')
 
         //Click on cancel version button
-        cy.get(CQLLibraryPage.versionCancelBtn).click()
+        cy.get(CQLLibrariesPage.versionCancelBtn).click()
     })
 
 })
@@ -224,23 +225,23 @@ describe('Version CQL Library with errors', () => {
     it('User can not version the CQL library if the CQL has ELM translation errors', () => {
 
         cy.get(Header.cqlLibraryTab).click()
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         //Verify CQL ELM translation errors
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 1:3 | Could not resolve identifier SDE in the current library.ELM: 5:13 | Member SDE Sex not found for type null.")
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
-        cy.get(CQLLibraryPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
+        cy.get(CQLLibrariesPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
 
         //Click on cancel version button
-        cy.get(CQLLibraryPage.versionCancelBtn).click()
+        cy.get(CQLLibrariesPage.versionCancelBtn).click()
     })
 
     it('User can not version the CQL library if the CQL has parsing errors', () => {
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         //Clear the text in CQL Library Editor
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
@@ -265,11 +266,11 @@ describe('Version CQL Library with errors', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'using', 'include', 'public', 'private', 'parameter', 'codesystem', 'valueset', 'code', 'concept', 'define', 'context'}")
 
-        CQLLibraryPage.clickVersionforCreatedLibrary()
-        cy.get(CQLLibraryPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
+        CQLLibrariesPage.clickVersionforCreatedLibrary()
+        cy.get(CQLLibrariesPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')
 
         //Click on cancel version button
-        cy.get(CQLLibraryPage.versionCancelBtn).click()
+        cy.get(CQLLibrariesPage.versionCancelBtn).click()
     })
 
 })
