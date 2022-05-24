@@ -6,6 +6,7 @@ import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {Header} from "../../../../Shared/Header"
+import {umlsLoginForm} from "../../../../Shared/umlsLoginForm";
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
@@ -174,5 +175,103 @@ describe('CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'ELM: 1:37 | Exception')
 
+    })
+})
+
+describe('CQL Editor: valueSet', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        OktaLogin.Login(false)
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+
+    })
+
+    it('UMLS Error: User Not Logged in', () => {
+
+        //Click on Edit Button
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        cy.get(CQLEditorPage.umlsMessage).should('be.visible')
+        cy.get(CQLEditorPage.umlsMessage).should('contain.text', 'Please log in to UMLS!')
+
+    })
+
+    it('Value Sets are valid', () => {
+
+        umlsLoginForm.UMLSLogin()
+
+        //Click on Edit Button
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        cy.get(CQLEditorPage.umlsMessage).should('be.visible')
+        cy.get(CQLEditorPage.umlsMessage).should('contain.text', 'Value Set is valid!')
+
+    })
+
+    it('Value Set Invalid', () => {
+
+        umlsLoginForm.UMLSLogin()
+
+        //Click on Edit Button
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/EXM124v7QICore4EntryInvalidValueSet.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        cy.get(CQLEditorPage.umlsMessage).should('not.exist')
+
+         //Validate error(s) in CQL Editor window
+        cy.scrollTo('top')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{pageUp}')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(5).invoke
+            ('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            "ELM: 1:103 | Request failed with status code 404 for oid = 2.16.840.1.113883.3.464.1003.110.12.1059999 " +
+            "location = 36:1-36:103")
     })
 })

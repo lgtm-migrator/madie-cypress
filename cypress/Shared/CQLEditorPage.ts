@@ -1,4 +1,4 @@
-import {EditMeasurePage} from "../Shared/EditMeasurePage"
+import {EditMeasurePage} from "./EditMeasurePage"
 export class CQLEditorPage {
 
     //success save message without errors
@@ -6,6 +6,9 @@ export class CQLEditorPage {
 
     //Error marker inside of the CQL Editor window
     public static readonly errorInCQLEditorWindow = 'div.ace_gutter-cell.ace_error'
+
+    //UMLS Not Logged in Error
+    public static readonly umlsMessage = '[data-testid="valueset-success"]'
 
     //click action on the tab to get to the CQL Editor
     public static clickCQLEditorTab(): void {
