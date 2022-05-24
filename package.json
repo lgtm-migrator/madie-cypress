@@ -22,6 +22,7 @@
 		"dev:all:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/**/*.spec.ts' --browser chrome --headed;",
 		"dev:measure:editMeasure:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Measure/EditMeasure/**/*.spec.ts' --browser chrome --headed;",
 		"dev:all:services:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed;",
+		"dev:services:measureService:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/Measure Service/**/*.spec.ts' --browser chrome --headed;",
 		"dev:all:measure:service:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/Measure Service/**/*.spec.ts' --browser chrome --headed;",
 		"dev:all:ui:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run dev:all:ui:tests; npm run combine:reports; npm run generateOne:report",
 		"dev:all:services:tests:report": "npm run delete:reports; npm run delete:mochawesome; npm run dev:all:services:tests; npm run combine:reports; npm run generateOne:report",
