@@ -1,6 +1,7 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
+import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
 
 let CQLLibraryName = 'TestLibrary' + Date.now()
 
@@ -88,7 +89,7 @@ describe('CQL Library Validations', () => {
 
         cy.get(Header.cqlLibraryTab).click()
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', CQLLibraryName+randValue)
 
@@ -105,7 +106,7 @@ describe('CQL Library Validations', () => {
         //navigate to the CQL Libaray page
         cy.get(Header.cqlLibraryTab).click()
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
         cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
@@ -120,7 +121,7 @@ describe('CQL Library Validations', () => {
 
         cy.get(Header.cqlLibraryTab).click()
 
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', UpdatedCQLLibraryName)
 

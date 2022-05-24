@@ -1,6 +1,7 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 import {Header} from "../../../Shared/Header"
+import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
 
 let CQLLibraryName = 'TestLibrary' + Date.now()
 let updatedCQLLibraryName= 'UpdatedTestLibrary' + Date.now()
@@ -23,7 +24,7 @@ describe('Edit Measure', () => {
     it('Edit CQL Library Name and verify the library is updated on CQL Library page', () => {
 
         //Edit CQL Library Name
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(updatedCQLLibraryName)
@@ -33,6 +34,6 @@ describe('Edit Measure', () => {
         //Navigate back to CQL Library page and verify if the Library Name is updated
         cy.get(Header.cqlLibraryTab).click()
 
-        CQLLibraryPage.validateCQLLibraryName(updatedCQLLibraryName)
+        CQLLibrariesPage.validateCQLLibraryName(updatedCQLLibraryName)
     })
 })

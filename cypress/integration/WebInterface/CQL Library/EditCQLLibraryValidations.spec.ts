@@ -1,5 +1,6 @@
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 import {OktaLogin} from "../../../Shared/OktaLogin"
+import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
 
 let CQLLibraryName = 'TestLibrary' + Date.now()
 
@@ -21,7 +22,7 @@ describe('Edit Measure', () => {
     it('Verify error messages when the edit CQL Library name entered is invalid', () => {
 
         //Click on Edit button, Verify error message when the CQL Library Name field is empty
-        CQLLibraryPage.clickEditforCreatedLibrary()
+        CQLLibrariesPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).focus().blur()
         cy.get(CQLLibraryPage.cqlLibraryNameInvalidError).should('contain.text', 'Library name is required.')
