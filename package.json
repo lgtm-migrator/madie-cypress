@@ -18,6 +18,7 @@
 		"dev:all:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/**/*.spec.ts' --browser chrome --headed;",
 		"dev:ui:testCases:testCasePopulationValues": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Test Cases/TestCasePopulationValues.spec.ts' --browser chrome --headed;",
 		"dev:ui:cqllibrary:versionAndDraftCQLLibrary": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/CQL Library/VersionAndDraftCQLLibrary.spec.ts' --browser chrome --headed;",
+		"dev:ui:cqllibrary:cqlEditor": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/CQL Library/CQL Editor/**/*.spec.ts' --browser chrome --headed;",
 		"dev:ui:smoketests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Smoke Tests/**/*' --browser chrome --headed;",
 		"dev:all:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/**/*.spec.ts' --browser chrome --headed;",
 		"dev:measure:editMeasure:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Measure/EditMeasure/**/*.spec.ts' --browser chrome --headed;",

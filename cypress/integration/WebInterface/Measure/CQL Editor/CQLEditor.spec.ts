@@ -14,7 +14,7 @@ let measureScoring = MeasureGroupPage.measureScoringUnit
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-describe('CQL Editor', () => {
+describe('Measure: CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -178,7 +178,7 @@ describe('CQL Editor', () => {
     })
 })
 
-describe('CQL Editor: valueSet', () => {
+describe('Measure: CQL Editor: valueSet', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))

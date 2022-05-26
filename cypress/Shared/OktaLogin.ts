@@ -38,7 +38,7 @@ export class OktaLogin {
         cy.get(Header.userProfileSelect).should('be.visible')
         cy.get(Header.userProfileSelect).click()
         cy.get(Header.userProfileSelectSignOutOption).should('be.visible')
-        cy.get(Header.userProfileSelectSignOutOption).click()
+        cy.get(Header.userProfileSelectSignOutOption).click({ force: true })
 
         cy.log('Logout Successful')
     }
