@@ -335,7 +335,6 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
     beforeEach('Set Access Token',() => {
 
         OktaLogin.Login(true)
-        //cy.setAccessTokenCookie()
 
     })
 
