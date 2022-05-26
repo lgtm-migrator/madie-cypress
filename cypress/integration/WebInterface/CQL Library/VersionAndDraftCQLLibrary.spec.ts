@@ -20,7 +20,7 @@ describe('Add Version and Draft to CQL Library', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
         CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
-        
+
         OktaLogin.Login()
 
     })
@@ -262,9 +262,15 @@ describe('Version CQL Library with errors', () => {
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
         //Verify CQL parsing errors
+        cy.scrollTo('top')
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'using', 'include', 'public', 'private', 'parameter', 'codesystem', 'valueset', 'code', 'concept', 'define', 'context'}")
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(7).invoke
+        ('show').click({force:true, multiple: true})
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'using', 'include', 'public', 'private', 'parameter', " +
+            "'codesystem', 'valueset', 'code', 'concept', 'define', 'context'}")
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibrariesPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')

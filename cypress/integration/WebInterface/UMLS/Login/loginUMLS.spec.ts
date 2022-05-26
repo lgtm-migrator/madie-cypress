@@ -64,7 +64,7 @@ describe('Tests surrounding the abilty to log into UMLS', () => {
 
     })
 
-    it('Proper error is returning when an invalid API is uesed.', () => {
+    it('Proper error is returning when an invalid API is used.', () => {
         //umls login link appears and is available to click, at the top of the page
         cy.get(Header.umlsLoginButton).should('exist')
         cy.get(Header.umlsLoginButton).should('be.visible')
