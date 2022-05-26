@@ -197,8 +197,6 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
     })
 
     after('Clean up',() => {
-        let measurementPeriodStart = "2023-01-01T00:00:00.000Z"
-        let measurementPeriodEnd = "2023-12-31T00:00:00.000Z"
         Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
@@ -274,110 +272,4 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
         })
     })
 
-})
-describe('Measure Bundle end point returns cqlErrors as true', () => {
-    before('Create Measure',() => {
-
-        cy.setAccessTokenCookie()
-        //Create New Measure
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                method: 'POST',
-                body: {
-                    'measureName': measureName,
-                    'cqlLibraryName': CqlLibraryName,
-                    'model': model,
-                    'measureScoring': measureScoring,
-                    'cql': invalidmeasureCQL,
-                    'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
-                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z"
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-                expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/fixtures/measureId', response.body.id)
-            })
-        })
-
-        //create Measure Group
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/fixtures/measureId').should('exist').then((retrievedMeasureID) => {
-                cy.request({
-                    url: '/api/measures/' + retrievedMeasureID + '/groups/',
-                    method: 'POST',
-                    headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
-                    body: {
-                        "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
-                    }
-                }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
-                })
-            })
-        })
-    })
-
-    beforeEach('Set Access Token',() => {
-
-        OktaLogin.Login(true)
-
-    })
-
-    after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
-
-    })
-    it('Log into the UI and save Measure CQL', () => {
-        //Navigate away from the page
-        cy.get(Header.measures).click()
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the CQL Editor tab
-        CQLEditorPage.clickCQLEditorTab()
-
-        //making some minor and invalid change to the Measure CQL
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('some invalid value')
-
-        //save the value in the CQL Editor
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        OktaLogin.Logout()
-        cy.setAccessTokenCookie()
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
-                cy.request({
-                    failOnStatusCode: false,
-                    url: '/api/measures/' + id,
-                    headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
-                    method: 'GET',
-
-                    }).then((response) => {
-                        expect(response.status).to.eql(200)
-                        expect(response.body.cqlErrors).to.eql(true)
-
-                })
-
-            })
-        })
-    })
 })
