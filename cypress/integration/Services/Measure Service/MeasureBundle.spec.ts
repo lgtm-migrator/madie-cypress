@@ -131,7 +131,8 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL'
         })
     })
 })
-/* describe.only('Measure Bundle end point returns nothing with Measure CQL missing FHIRHelpers include line', () => {
+//this automated test is being skipped until the resolution of bugs 4334 and 4337 (more work *may* be necessary -- depends on fix)
+describe.skip('Measure Bundle end point returns nothing with Measure CQL missing FHIRHelpers include line', () => {
     before('Create Measure',() => {
 
         cy.setAccessTokenCookie()
@@ -198,7 +199,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL'
     after('Clean up',() => {
         let measurementPeriodStart = "2023-01-01T00:00:00.000Z"
         let measurementPeriodEnd = "2023-12-31T00:00:00.000Z"
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, measurementPeriodStart, measurementPeriodEnd)
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
     })
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
@@ -235,7 +236,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL'
             })
         })
     })
-}) */
+})
 describe('Measure Bundle end point returns 403 if measure was not created by current user', () => {
     let measureName = 'MeasureName ' + Date.now()
     let CqlLibraryName = 'CQLLibraryName' + Date.now()
