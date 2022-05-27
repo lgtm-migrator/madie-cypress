@@ -113,8 +113,8 @@ export class CreateMeasurePage {
                     'measureScoring': measureScoring,
                     'createdBy': user,
                     'cql': measureCQL,
-                    'measurementPeriodStart': mpStartDate + "T00:00:00.000+00:00",
-                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000+00:00",
+                    'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
+                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z",
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
