@@ -15,6 +15,7 @@ export class CreateMeasurePage {
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly serverErrorMsg = '[data-testid="server-error-alerts"]'
     public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"] [data-testid="CloseIcon"]'
+    public static readonly serverErrorMsgMeasureCreation = '[data-testid="server-error-msg"]'
     public static readonly measureScoringDropdown = '#measureScoring'
     public static readonly measureScoringFieldLevelError = '.MuiFormHelperText-root'
     public static readonly measureScoringCohort = '[data-testid=measure-scoring-option-Cohort]'
@@ -25,6 +26,8 @@ export class CreateMeasurePage {
     public static readonly measurementPeriodEndDate = '[name=measurementPeriodEnd]'
     public static readonly measurementPeriodStartDateError = '[data-testid=measurementPeriodStart-helper-text]'
     public static readonly measurementPeriodEndDateError = '[data-testid=measurementPeriodEnd-helper-text]'
+    //body > div.MuiModal-root.MuiDialog-root.css-126xj0f > div.MuiDialog-container.MuiDialog-scrollPaper.css-ekeie0 > div > div > div.alert-text > p
+    //<p class="MuiTypography-root MuiTypography-body2 css-68o8xu" data-testid="server-error-msg">Measurement period end date should be greater than measurement period start date.</p>
 
 
     public static clickCreateMeasureButton() : void {
