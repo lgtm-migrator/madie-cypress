@@ -12,7 +12,8 @@ export class CQLEditorPage {
 
     //click action on the tab to get to the CQL Editor
     public static clickCQLEditorTab(): void {
-        
+
+        cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab)
         .invoke('removeAttr', 'target')
         .click()

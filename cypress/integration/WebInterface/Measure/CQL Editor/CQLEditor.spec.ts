@@ -78,7 +78,8 @@ describe('Measure: CQL Editor', () => {
 
     })
 
-    it('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is not found', () => {
+    it('Verify errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when ' +
+        'included library is not found', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -97,9 +98,17 @@ describe('Measure: CQL Editor', () => {
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
         //Validate error(s) in CQL Editor after saving
+        cy.scrollTo('top')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{pageUp}')
+
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
+        ('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
 
         //Navigate away from the page
         cy.get(Header.measures).click()
@@ -112,8 +121,12 @@ describe('Measure: CQL Editor', () => {
 
         //Validate error(s) in CQL Editor persists after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
+        ('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
 
     })
 
@@ -172,7 +185,10 @@ describe('Measure: CQL Editor', () => {
 
         //Validate error(s) in CQL Editor after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
+        ('show').click({force:true, multiple: true})
+
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'ELM: 1:37 | Exception')
 
     })
