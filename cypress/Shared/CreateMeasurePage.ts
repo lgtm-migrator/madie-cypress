@@ -15,6 +15,7 @@ export class CreateMeasurePage {
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly serverErrorMsg = '[data-testid="server-error-alerts"]'
     public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"] [data-testid="CloseIcon"]'
+    public static readonly serverErrorMsgMeasureCreation = '[data-testid="server-error-msg"]'
     public static readonly measureScoringDropdown = '#measureScoring'
     public static readonly measureScoringFieldLevelError = '.MuiFormHelperText-root'
     public static readonly measureScoringCohort = '[data-testid=measure-scoring-option-Cohort]'

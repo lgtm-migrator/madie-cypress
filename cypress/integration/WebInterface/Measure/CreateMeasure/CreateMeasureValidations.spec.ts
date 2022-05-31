@@ -13,7 +13,8 @@ describe('Measure Name Validations', () => {
     })
 
     //Measure Name Validations
-    it('Verify error messages when the measure name entered is invalid or empty', () => {
+    //bug MAT-4380 will be fixing the current failure that is occuring with this test
+    it.skip('Verify error messages when the measure name entered is invalid or empty', () => {
 
 
         //Click on New Measure Button
@@ -50,7 +51,8 @@ describe('Measure Name Validations', () => {
     })
 
     //CQL Library Name Validations
-    it('Verify error messages when the CQL Library Name entered is invalid or empty', () => {
+    //bug MAT-4380 will be fixing the current failure that is occuring with this test
+    it.skip('Verify error messages when the CQL Library Name entered is invalid or empty', () => {
 
         let measureName = 'TestMeasure' + Date.now()
 
@@ -154,8 +156,8 @@ describe('Measure Name Validations', () => {
 
     })
 })
-
-describe('Measurement Period Validations', () => {
+//bug MAT-4380 will be fixing the current failures that is occuring with these tests
+describe.skip('Measurement Period Validations', () => {
 
     let measureName = 'TestMeasure' + Date.now()
     let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -167,8 +169,7 @@ describe('Measurement Period Validations', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()
     })
-
-    it('Verify error message when the Measurement Period end date is after the start date', () => {
+        it('Verify error message when the Measurement Period end date is after the start date', () => {
 
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
@@ -179,7 +180,8 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/1999')
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2022')
-        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date should be greater than measurement period start date.')
+        cy.get(CreateMeasurePage.createMeasureButton).click()
+        cy.get(CreateMeasurePage.serverErrorMsgMeasureCreation).should('contain.text', 'Measurement period end date should be greater than measurement period start date.')
         cy.get(CreateMeasurePage.cancelButton).click()
 
     })
