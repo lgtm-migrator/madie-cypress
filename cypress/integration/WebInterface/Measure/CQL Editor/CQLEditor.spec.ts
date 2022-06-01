@@ -189,8 +189,7 @@ describe('Measure: CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
         ('show').click({force:true, multiple: true})
 
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            'ELM: 1:37 | Model Type and version are required')
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', 'ELM: 1:37 | Exception')
 
     })
 })
