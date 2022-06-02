@@ -250,6 +250,7 @@ describe('Version CQL Library with errors', () => {
         cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{home}')
 
         //Add parsing error to the valid CQL
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('tdysfdfjch')
@@ -269,8 +270,7 @@ describe('Version CQL Library with errors', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(7).invoke
         ('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'using', 'include', 'public', 'private', 'parameter', " +
-            "'codesystem', 'valueset', 'code', 'concept', 'define', 'context'}")
+            "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'define', 'context'}")
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibrariesPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')

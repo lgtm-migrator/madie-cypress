@@ -363,7 +363,7 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
     })
 
 })
-describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+describe('Measure Bundle end point returns 409 when the measure is missing a group', () => {
 
     before('Create Measure',() => {
 

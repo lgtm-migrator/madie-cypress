@@ -18,8 +18,6 @@ describe('Validate Measure Group', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1, measureScoring)
 
-        //create another Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2, measureScoring, null, true)
     })
 
     beforeEach('Login', () => {
@@ -38,7 +36,6 @@ describe('Validate Measure Group', () => {
 
         Utilities.deleteMeasure(measureName, CqlLibraryName1, measureScoring)
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName2, measureScoring,true)
 
     })
 
@@ -86,7 +83,35 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).find('option:nth-child(1)').should('contain.text', 'Initial Population')
 
     })
+})
+describe('Validate Measure Group -- scoring and populations', () => {
+    before('Create measure', () => {
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1+4, measureScoring)
 
+        //create another Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2+5, measureScoring, null, true)
+    })
+
+    beforeEach('Login', () => {
+
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Login', () => {
+
+        OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName1+4, measureScoring)
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName2+5, measureScoring,true)
+
+    })
     it('Scoring unit and population association saves and persists with a Measure Group Description', () => {
 
         //click on Edit button to edit measure

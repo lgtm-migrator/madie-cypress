@@ -68,6 +68,8 @@ describe('Measure Highlighting', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.get(TestCasesPage.runTestButton).should('be.visible')
+        cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
         cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
@@ -98,37 +100,10 @@ describe('Measure Highlighting', () => {
         TestCasesPage.clickCreateTestCaseButton()
 
         TestCasesPage.clickEditforCreatedTestCase()
-
+        cy.get(TestCasesPage.runTestButton).should('be.visible')
+        cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
         cy.get(TestCasesPage.testCalculationError).should('contain.text', 'Cannot read properties of null (reading \'entry\')')
-    })
-
-    it('Verify error message when the Measure group is not added', () => {
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
-
-        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
-
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        TestCasesPage.clickCreateTestCaseButton()
-
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        cy.get(TestCasesPage.runTestButton).click()
-
-        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'An error occurred fetching the measure bundle')
     })
 })

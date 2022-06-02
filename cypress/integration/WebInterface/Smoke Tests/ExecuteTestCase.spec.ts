@@ -41,10 +41,11 @@ describe('Execute Test Case', () => {
 
     })
 
-    it('Execute Test Case without Measure Group and verify execution status', () => {
+    it('Verify that the Execute Test Case button is disabled when Measure has no Group', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
+
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -66,9 +67,8 @@ describe('Execute Test Case', () => {
         TestCasesPage.clickCreateTestCaseButton()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.get(TestCasesPage.testCaseExecutionError).should('contain.text', 'An error occurred fetching the measure bundle')
+        cy.get(TestCasesPage.executeTestCaseButton).should('not.be.enabled')
+
 
     })
 
