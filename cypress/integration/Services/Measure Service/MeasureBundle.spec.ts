@@ -27,7 +27,7 @@ let PopDenex = 'Absence of Cervix'
 let PopDenexcep = 'SDE Ethnicity'
 let PopNumex = 'Surgical Absence of Cervix'
 
-describe('Measure Bundle end point returns expected data with valid Measure CQL', () => {
+describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -133,7 +133,94 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL'
         })
     })
 })
-//this automated test is being skipped until the resolution of bugs 4334 and 4337 (more work *may* be necessary -- depends on fix)
+describe('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
+
+    before('Create Measure',() => {
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': measureName,
+                    'cqlLibraryName': CqlLibraryName+1,
+                    'model': model,
+                    'measureScoring': measureScoring,
+                    'cql': measureCQL,
+                    'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
+                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
+            })
+        })
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((retrievedMeasureID) => {
+                cy.request({
+                    url: '/api/measures/' + retrievedMeasureID + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "scoring": measureScoring,
+                        "population": 
+                        {
+                            "initialPopulation": PopIniPop,
+                            "denominator": PopDenom,
+                            "denominatorExclusion": PopDenex,
+                            "denominatorException": PopDenexcep,
+                            "numerator": PopNum,
+                            "numeratorExclusion": PopNumex
+                        }
+                    }
+                }).then((response) => {
+                        expect(response.status).to.eql(201)
+                        expect(response.body.id).to.be.exist
+                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
+                })
+            })
+        })
+    })
+
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    after('Clean up',() => {
+        Utilities.deleteMeasure(measureName, CqlLibraryName+1, measureScoring)
+
+    })
+    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/bundles',
+                    method: 'GET',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(409)
+                })
+            })
+        })
+    })
+})
+//this automated test is being skipped until the resolution of bug 4370 (more work *may* be necessary -- depends on fix)
 describe.skip('Measure Bundle end point returns nothing with Measure CQL missing FHIRHelpers include line', () => {
     before('Create Measure',() => {
 
@@ -275,4 +362,64 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
         })
     })
 
+})
+describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+
+    before('Create Measure',() => {
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': measureName,
+                    'cqlLibraryName': CqlLibraryName+2,
+                    'model': model,
+                    'measureScoring': measureScoring,
+                    'cql': measureCQL,
+                    'elmJson': elmJson,
+                    'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
+                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z"
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                cy.writeFile('cypress/fixtures/measureId', response.body.id)
+            })
+        })
+    })
+
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    after('Clean up',() => {
+        Utilities.deleteMeasure(measureName, CqlLibraryName+2, measureScoring)
+
+    })
+    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/bundles',
+                    method: 'GET',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(409)
+                })
+            })
+        })
+    })
 })
