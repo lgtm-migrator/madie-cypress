@@ -21,6 +21,7 @@
 		"dev:ui:cqllibrary:cqlEditor": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/CQL Library/CQL Editor/**/*.spec.ts' --browser chrome --headed;",
 		"dev:ui:smoketests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Smoke Tests/**/*' --browser chrome --headed;",
 		"dev:all:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/**/*.spec.ts' --browser chrome --headed;",
+		"dev:ui:measure:cqlEditor": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Measure/CQL Editor/**/*.spec.ts' --browser chrome --headed;",
 		"dev:measure:editMeasure:ui:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/WebInterface/Measure/EditMeasure/**/*.spec.ts' --browser chrome --headed;",
 		"dev:all:services:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/**/*.spec.ts' --browser chrome --headed;",
 		"dev:services:measureService:tests": "NO_COLOR=1 $(npm bin)/cypress run --env configFile=dev --spec 'cypress/integration/Services/Measure Service/**/*.spec.ts' --browser chrome --headed;",
