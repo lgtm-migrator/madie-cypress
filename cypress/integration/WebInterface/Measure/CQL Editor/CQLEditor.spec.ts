@@ -174,7 +174,7 @@ describe('Measure: CQL Editor', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR_model_error.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)/**/
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
         //save the value in the CQL Editor
@@ -184,6 +184,11 @@ describe('Measure: CQL Editor', () => {
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
         //Validate error(s) in CQL Editor after saving
+
+        cy.scrollTo('top')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{pageUp}')
+
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
@@ -284,7 +289,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
 
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(5).invoke
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(6).invoke
             ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
