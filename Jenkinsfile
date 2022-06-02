@@ -8,7 +8,7 @@ pipeline{
     }
 
     parameters {
-        choice(choices: ['dev:all:ui:tests','dev:all:tests','dev:ui:smoketests', 'dev:measure:editMeasure:ui:tests', 'dev:ui:testCases:testCasePopulationValues','dev:ui:cqllibrary:versionAndDraftCQLLibrary','dev:all:services:tests','dev:services:measureService:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
+        choice(choices: ['dev:all:ui:tests','dev:all:tests','dev:ui:smoketests', 'dev:ui:cqllibrary:cqlEditor', 'dev:ui:measure:cqlEditor', 'dev:measure:editMeasure:ui:tests', 'dev:ui:testCases:testCasePopulationValues','dev:ui:cqllibrary:versionAndDraftCQLLibrary','dev:all:services:tests','dev:services:measureService:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
         choice(name:'BUILD_CONTAINER', description:'Rebuild Cypress Container?', choices:['no','yes'])
     }
 
