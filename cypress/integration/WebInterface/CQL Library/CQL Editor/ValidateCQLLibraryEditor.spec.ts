@@ -235,7 +235,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
 
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(0).invoke
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(1).invoke
         ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
