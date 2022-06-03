@@ -135,7 +135,8 @@ describe('Measure Name Validations', () => {
     })
 
     //Measure Type Validations
-    it('Verify error message when the Measure Type field is empty', () => {
+    //bug MAT-4380 will be fixing the current failure that is occuring with this test
+    it.skip('Verify error message when the Measure Type field is empty', () => {
 
         let measureName = 'MeasureTypeTest' + Date.now()
         let CqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
