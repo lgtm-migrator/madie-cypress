@@ -190,10 +190,16 @@ describe('Draft and Version Validations', () => {
 
         //Clear the text in CQL Library Editor
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
 
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get('.MuiDialogContent-root > :nth-child(2) > :nth-child(4)').should('contain.text', 'Versioning cannot be done as there is no associated Cql with this library')
