@@ -90,7 +90,8 @@ describe('Terminology Service: Value Set: Authentication', () => {
 
     })
 
-    it('GET valueSet: TGT is invalid', () => {
+    //skipping this test until https://jira.cms.gov/browse/MAT-4398 is resolved or the requirements for this case change
+    it.skip('GET valueSet: TGT is invalid', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.getCookie('UMLS_TGT').then((tgt) => {
@@ -106,6 +107,7 @@ describe('Terminology Service: Value Set: Authentication', () => {
                         oid: '2.16.840.1.11356762.1.4.1'
                     }
                 }).then((response) => {
+
                     expect(response.status).to.eql(401)
                     expect(response.statusText).to.eql('Unauthorized')
                     expect(response.isOkStatusCode).to.eql(false)
