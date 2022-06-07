@@ -13,6 +13,16 @@ let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
 let invalidTestCaseJson = TestCaseJson.TestCaseJson_Invalid
+let vTCJsonWithOutBundleId = '{{} "resourceType": "Bundle", "meta": {{}   "versionId": "1",' +
+' "lastUpdated": "2022-03-30T19:02:32.620+00:00"  },  "type": "collection",  "entry": [ {{}   "fullUrl": "http://local/Encounter",' +
+' "resource": {{} "resourceType": "Encounter","meta": {{} "versionId": "1","lastUpdated": "2021-10-13T03:34:10.160+00:00","source":"#nEcAkGd8PRwPP5fA"},' +
+' "text": {{} "status": "generated","div":"<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Sep 9th 2021 for Asthma<a name=\\"mm\\"/></div>\"},' +
+' "status": "finished","class": {{} "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode","code": "IMP","display":"inpatient encounter"},' +
+' "type": [ {{} "text": "OutPatient"} ],"subject": {{} "reference": "Patient/1"},"participant": [ {{} "individual": {{} "reference": "Practitioner/30164",' +
+' "display": "Dr John Doe"}} ],"period": {{} "start": "2023-09-10T03:34:10.054Z"}}}, {{} "fullUrl": "http://local/Patient","resource": {{} "resourceType":'+
+' "Patient","text": {{} "status": "generated","div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"},"identifier":' +
+' [ {{} "system": "http://clinfhir.com/fhir/NamingSystem/identifier","value": "20181011LizzyHealth"} ],"name": [ {{} "use": "official",' +
+' "text": "Lizzy Health","family": "Health","given": [ "Lizzy" ]} ],"gender": "female","birthDate": "2000-10-11"}} ]}'
 let testCaseXML = TestCaseJson.TestCase_XML
 let testCaseSeries = 'SBTestSeries'
 let twoFiftyTwoCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'
@@ -58,7 +68,7 @@ describe('Test Case Validations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -100,7 +110,7 @@ describe('Test Case Validations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -188,7 +198,7 @@ describe('Test Case Json Validations', () => {
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('be.visible')
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('contain.text', 'Nothing to see here!')
 
-        TestCasesPage.clickCreateTestCaseButton()
+        TestCasesPage.clickCreateTestCaseButton(true)
     })
 
     it('Enter Invalid Test Case Json and Verify Error Message', () => {
@@ -232,5 +242,138 @@ describe('Test Case Json Validations', () => {
 
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
     })
+    it('Create test case w/Json missing BundleId ', () => {
 
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, vTCJsonWithOutBundleId, false)
+    })
+    it('Create test case w/Json not missing BundleId ', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+
+    })
+
+    it('Update test case w/Json missing BundleId ', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+        
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+        
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //setup for grabbing the measure create call
+        cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
+            cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
+            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
+        
+            cy.get(TestCasesPage.createTestCaseButton).click()
+        
+            //saving testCaseId to file to use later
+            cy.wait('@testcase').then(({response}) => {
+                expect(response.statusCode).to.eq(201)
+                cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
+            })
+
+            cy.get(EditMeasurePage.testCasesTab).click()
+
+            cy.wait('@getMeasures').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+            })
+        })
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(vTCJsonWithOutBundleId)
+
+        cy.get(TestCasesPage.createTestCaseButton).click()
+
+        cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case updated successfully! Bundle ID has been auto generated')
+        
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        cy.wait('@getMeasures').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+        })
+        
+        //Verify created test case Title and Series exists on Test Cases Page
+        TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+        
+        cy.log('Test Case updated successfully')
+
+    })
+    it('Update test case w/Json not missing BundleId ', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+                
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+                
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        
+        //setup for grabbing the measure create call
+        cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
+            cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
+            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
+                
+            cy.get(TestCasesPage.createTestCaseButton).click()
+                
+            //saving testCaseId to file to use later
+            cy.wait('@testcase').then(({response}) => {
+                expect(response.statusCode).to.eq(201)
+                cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
+            })
+        
+            cy.get(EditMeasurePage.testCasesTab).click()
+        
+            cy.wait('@getMeasures').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+            })
+        })
+        TestCasesPage.clickEditforCreatedTestCase()
+        
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
+        
+        cy.get(TestCasesPage.createTestCaseButton).click()
+        
+        cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case updated successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
+                
+        cy.get(EditMeasurePage.testCasesTab).click()
+        
+        cy.wait('@getMeasures').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+        })
+                
+        //Verify created test case Title and Series exists on Test Cases Page
+        TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+                
+        cy.log('Test Case updated successfully')
+    })
 })
