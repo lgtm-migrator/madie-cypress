@@ -45,7 +45,7 @@ export class TestCasesPage {
     public static readonly denominatorRow = '[data-testid="test-row-population-id-denominator"]'
     public static readonly denominatorExclusionRow = '[data-testid="test-row-population-id-denominatorExclusion"]'
 
-    public static clickCreateTestCaseButton() : void {
+    public static clickCreateTestCaseButton(withBundleId?:boolean) : void {
 
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
@@ -59,9 +59,13 @@ export class TestCasesPage {
                 expect(response.statusCode).to.eq(201)
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
-
-            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully!')
-
+            if (withBundleId){
+                cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
+            }
+            else {
+                cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle ID has been auto generated')
+            }    
+    
             cy.get(EditMeasurePage.testCasesTab).click()
 
             cy.wait('@getMeasures').then(({response}) => {
@@ -82,8 +86,10 @@ export class TestCasesPage {
         })
     }
 
-    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string)  :void{
+    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string, withBundleId?:boolean)  :void{
 
+        if ((withBundleId == undefined) || (withBundleId === null)){withBundleId = false}
+        
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -102,7 +108,9 @@ export class TestCasesPage {
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
-        this.clickCreateTestCaseButton()
+        this.clickCreateTestCaseButton(withBundleId)
+
+
 
         //Verify created test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
