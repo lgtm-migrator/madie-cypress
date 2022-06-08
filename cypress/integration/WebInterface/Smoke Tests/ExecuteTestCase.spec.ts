@@ -64,7 +64,7 @@ describe('Execute Test Case', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        TestCasesPage.clickCreateTestCaseButton(true)
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('not.be.enabled')
@@ -94,7 +94,7 @@ describe('Execute Test Case', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        TestCasesPage.clickCreateTestCaseButton(true)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -111,7 +111,9 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
-        cy.wait(1000)
+
+        cy.get(TestCasesPage.testCaseStatus).should('exist')
+        cy.get(TestCasesPage.testCaseStatus).should('be.visible')
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'fail')
     })
 
@@ -137,10 +139,10 @@ describe('Execute Test Case', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        TestCasesPage.clickCreateTestCaseButton(true)
 
+        cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')        
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).click()
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
 

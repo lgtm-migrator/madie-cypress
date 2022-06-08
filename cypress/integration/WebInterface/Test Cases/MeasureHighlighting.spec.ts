@@ -64,7 +64,7 @@ describe('Measure Highlighting', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton()
+        TestCasesPage.clickCreateTestCaseButton(true)
 
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -97,13 +97,30 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
-        TestCasesPage.clickCreateTestCaseButton()
+        cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
+            cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
+            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
+
+            cy.get(TestCasesPage.createTestCaseButton).click()
+
+            //saving testCaseId to file to use later
+            cy.wait('@testcase').then(({response}) => {
+                expect(response.statusCode).to.eq(201)
+                cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
+            })
+
+            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully!')  
+    
+            cy.get(EditMeasurePage.testCasesTab).click()
+
+            cy.wait('@getMeasures').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+            })
+        })
 
         TestCasesPage.clickEditforCreatedTestCase()
         cy.get(TestCasesPage.runTestButton).should('be.visible')
-        cy.get(TestCasesPage.runTestButton).should('be.enabled')
-        cy.get(TestCasesPage.runTestButton).click()
+        cy.get(TestCasesPage.runTestButton).should('be.disabled')
 
-        cy.get(TestCasesPage.testCalculationError).should('contain.text', 'Cannot read properties of null (reading \'entry\')')
     })
 })

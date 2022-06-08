@@ -272,8 +272,7 @@ describe('Version CQL Library with errors', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
 
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(7).invoke
-        ('show').click({force:true, multiple: true})
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('exist')
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('not.be.empty')
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('not.be.null')
