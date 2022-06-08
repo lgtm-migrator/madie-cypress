@@ -224,7 +224,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.readFile('cypress/fixtures/ValueSetTestingEntryInValid.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
-
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
@@ -234,10 +234,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
-
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).eq(1).invoke
-        ('show').click({force:true, multiple: true})
-
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             'ELM: 1:102 | Request failed with status code 404 for oid = ' +
             '2.16.840.1.113883.3.464.1003.110.12.105900 location = 18:1-18:102')

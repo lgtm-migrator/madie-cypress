@@ -263,7 +263,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
     })
 
-    it('Value Set Invalid', () => {
+    it.skip('Value Set Invalid', () => {
 
         umlsLoginForm.UMLSLogin()
 
