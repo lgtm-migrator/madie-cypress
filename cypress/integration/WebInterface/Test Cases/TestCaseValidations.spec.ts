@@ -1,6 +1,8 @@
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
+import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
@@ -375,5 +377,89 @@ describe('Test Case Json Validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
                 
         cy.log('Test Case updated successfully')
+    })
+})
+
+describe('Test Case Execute Test Case button validations', () => {
+    before('Create Measure', () => {
+        CqlLibraryName = 'TestLibrary2' + Date.now()
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+
+    })
+
+    beforeEach('Login', () => {
+        OktaLogin.Login()
+
+    })
+    afterEach('Logout', () => {
+        OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+
+    })
+    it.only('Run / Execute Test Case button is disabled  -- CQL Errors', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add CQL
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{home}')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('adjfajsdfljafja;lsdjf')
+        
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        
+        //Create Measure Group
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
+        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorSelect).select('num')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).select('num')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+
+        TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.runTestButton).should('be.disabled')
+
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
+        cy.wait(10000)
+
+
+    })
+
+    it('Run / Execute Test Case button is disabled  -- Missing group / population selections', () => {
+    })
+
+    it('Run / Execute Test Case button is disabled  -- Invalid TC Json', () => {
+    })
+
+    it('Run / Execute Test Case button is disabled  -- missing TC Json', () => {
+    })
+
+    it('Run / Execute Test Case actual results in Population Values table', () => {
     })
 })
