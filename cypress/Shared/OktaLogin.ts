@@ -14,10 +14,15 @@ export class OktaLogin {
     public static Login(umlsLogin?: boolean) {
 
         cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
-        cy.url({ timeout: 100000 }).should('include', '/login')
-        cy.get(this.usernameInput, { timeout: 600000 }).should('be.visible')
+        cy.url({ timeout: 1000000 }).should('include', '/login')
+        cy.get(this.usernameInput, { timeout: 1000000 }).should('be.enabled')
+        cy.get(this.usernameInput, { timeout: 1000000 }).should('be.visible')
+        cy.get(this.passwordInput, { timeout: 1000000 }).should('be.enabled')
+        cy.get(this.passwordInput, { timeout: 1000000 }).should('be.visible')
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
+        cy.get(this.signInButton, { timeout: 1000000 }).should('be.enabled')
+        cy.get(this.signInButton, { timeout: 1000000 }).should('be.visible')
         cy.get(this.signInButton).click()
         cy.get(LandingPage.newMeasureButton).should('be.visible')
         cy.log('Login Successful')
@@ -34,9 +39,10 @@ export class OktaLogin {
 
 
     public static Logout(): void {
-
+        cy.get(Header.userProfileSelect, { timeout: 1000000 }).should('be.visible')
         cy.get(Header.userProfileSelect).should('be.visible')
         cy.get(Header.userProfileSelect).click()
+        cy.get(Header.userProfileSelectSignOutOption, { timeout: 1000000 }).should('be.visible')
         cy.get(Header.userProfileSelectSignOutOption).should('be.visible')
         cy.get(Header.userProfileSelectSignOutOption).click({ force: true })
 

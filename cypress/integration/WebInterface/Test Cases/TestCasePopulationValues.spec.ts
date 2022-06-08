@@ -147,7 +147,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -248,7 +248,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         //setup measure group so that only the required fields / populations are defined / has values
         Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'wOOpt')
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
@@ -296,7 +296,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         //setup measure group so that only the required fields / populations are defined / has values
         Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'all')
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that test case now has all pertinent details -- all check boxes for the population fields are checked
@@ -357,7 +357,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
