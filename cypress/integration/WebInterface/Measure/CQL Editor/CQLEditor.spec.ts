@@ -262,9 +262,8 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get(CQLEditorPage.umlsMessage).should('contain.text', 'Value Set is valid!')
 
     })
-    //skipping due to current eorror can't be found with the increase of errors that are now being returned in the CQL Editor
-    //additional time will need to be spent to have cypress find error
-    it.skip('Value Set Invalid', () => {
+
+    it('Value Set Invalid', () => {
 
         umlsLoginForm.UMLSLogin()
 
@@ -290,7 +289,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
 
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(6).invoke
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(5).invoke
             ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
