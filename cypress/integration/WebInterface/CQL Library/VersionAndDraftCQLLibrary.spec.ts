@@ -244,8 +244,8 @@ describe('Version CQL Library with errors', () => {
         //Click on cancel version button
         cy.get(CQLLibrariesPage.versionCancelBtn).click()
     })
-    //skipping because it passes when I run locally
-    it.skip('User can not version the CQL library if the CQL has parsing errors', () => {
+
+    it('User can not version the CQL library if the CQL has parsing errors', () => {
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
@@ -276,8 +276,6 @@ describe('Version CQL Library with errors', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('exist')
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('not.be.empty')
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('not.be.null')
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            "Parse: 0:10 | extraneous input 'tdysfdfjch' expecting {<EOF>, 'define', 'context'}")
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibrariesPage.versionErrorMsg).should('contain.text', 'Versioning cannot be done as the Cql has errors in it')

@@ -17,8 +17,8 @@ let testCaseJson = TestCaseJson.TestCaseJson_Valid
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-//passed during local run
-describe.skip('Measure Highlighting', () => {
+
+describe('Measure Highlighting', () => {
 
 
     beforeEach('Create measure and login', () => {

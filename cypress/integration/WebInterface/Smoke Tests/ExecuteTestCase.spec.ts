@@ -16,8 +16,8 @@ let testCaseSeries = 'SBTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
 let newMeasureName = ''
 let newCqlLibraryName = ''
-//passed during local run
-describe.skip('Execute Test Case', () => {
+
+describe('Execute Test Case', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))

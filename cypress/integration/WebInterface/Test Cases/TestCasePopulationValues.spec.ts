@@ -117,8 +117,8 @@ describe('Test Case Expected Measure Group population values based on initial me
         }
 
     })
-    //passed during local run
-    it.skip('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
+
+    it('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
