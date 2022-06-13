@@ -263,7 +263,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
     })
 
-    it('Value Set Invalid', () => {
+    it('Value Set Invalid, 404', () => {
 
         umlsLoginForm.UMLSLogin()
 
@@ -295,5 +295,38 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             "ELM: 1:103 | Request failed with status code 404 for oid = 2.16.840.1.113883.3.464.1003.110.12.1059999 " +
             "location = 36:1-36:103")
+    })
+
+    it('Value Set Invalid, 400 undefined', () => {
+
+        umlsLoginForm.UMLSLogin()
+
+        //Click on Edit Button
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/ValueSetTestingEntryInValid400.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        cy.get(CQLEditorPage.umlsMessage).should('not.exist')
+
+        //Validate error(s) in CQL Editor window
+        cy.scrollTo('top')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{pageUp}')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
+        ('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            'ELM: 1:23 | Request failed with status code 400 for oid = undefined location = 18:1-18:23')
     })
 })
