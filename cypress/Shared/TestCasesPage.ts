@@ -3,10 +3,14 @@ import { Environment } from "./Environment"
 
 export class TestCasesPage {
 
-    public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'// > .sc-iqseJM'
+    public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
+    public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
+    public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
+    public static readonly denomActualCheckBox = '[data-testid="test-population-denominator-actual"]'
+    public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
-    public static readonly existingTestCaseSeriesDropdown = '#mui-6'//'#mui-4-option-0'
+    public static readonly existingTestCaseSeriesDropdown = '#mui-6'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
