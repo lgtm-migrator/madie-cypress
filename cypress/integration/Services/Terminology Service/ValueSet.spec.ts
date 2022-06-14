@@ -81,7 +81,6 @@ describe('Terminology Service: Value Set: Authentication', () => {
                         oid: '2.16.840.1.113762.1.4.1'
                     }
                 }).then((response) => {
-                    console.log(response)
                     expect(response.status).to.eql(400)
                     expect(response.body.message).to.eql('Required request parameter \'tgt\' for method parameter type String is not present')
                 })
@@ -134,7 +133,6 @@ describe('Terminology Service: Value Set: Authentication', () => {
                         oid: '2.16.840.1.11356762.1.4.1'
                     }
                 }).then((response) => {
-                    console.log(response)
                     expect(response.status).to.eql(401)
                     expect(response.statusText).to.eql('Unauthorized')
                     expect(response.isOkStatusCode).to.eql(false)
