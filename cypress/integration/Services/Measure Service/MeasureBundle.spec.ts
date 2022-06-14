@@ -116,11 +116,11 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
 
     })
 
-/*     after('Clean up',() => {
+    after('Clean up',() => {
         Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
 
-    }) */
-    it.only('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+    })
+    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
