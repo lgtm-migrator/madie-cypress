@@ -101,7 +101,6 @@ export function setAccessTokenCookie() {
             expect(response.status).to.eql(200)
 
             const resp = response.body
-            console.log(response.body)
             const codeIdx = resp.indexOf("data.code")
             const codeEndIdx = resp.indexOf(";", codeIdx)
             const codeLine = resp.substring(codeIdx, codeEndIdx)
@@ -189,7 +188,6 @@ export function setAccessTokenCookieALT() {
             expect(response.status).to.eql(200)
 
             const resp = response.body
-            console.log(response.body)
             const codeIdx = resp.indexOf("data.code")
             const codeEndIdx = resp.indexOf(";", codeIdx)
             const codeLine = resp.substring(codeIdx, codeEndIdx)

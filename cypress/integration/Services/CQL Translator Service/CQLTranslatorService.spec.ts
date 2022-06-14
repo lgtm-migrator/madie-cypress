@@ -13,7 +13,6 @@ describe('CQL Translation Service', () => {
     it('Successful 200', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
-            console.log(accessToken)
             cy.request({
                 url: '/api/cql/translator/cql?showWarnings=false&annotations=true&locators=true&disable-list-demotion=true&' +
                     'disable-list-promotion=true&disable-method-invocation=true&validate-units=true',
