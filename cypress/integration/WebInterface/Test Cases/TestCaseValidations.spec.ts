@@ -378,7 +378,7 @@ describe('Test Case Json Validations', () => {
         cy.log('Test Case updated successfully')
     })
 })
-describe.only('Test Case Run Test Case button validations', () => {
+describe('Test Case Run Test Case button validations', () => {
 
 
     beforeEach('Login and Create Measure', () => {
