@@ -59,6 +59,9 @@ describe('Read only for measure, measure group, and test cases that user does no
         //edit the measure that was not created by current measure
         MeasuresPage.clickEditforCreatedMeasure(true)
 
+        cy.get(CreateMeasurePage.measurementPeriodStartDate).should('be.disabled')
+        cy.get(CreateMeasurePage.measurementPeriodEndDate).should('be.disabled')
+
         cy.get(EditMeasurePage.leftPanelMeasureSteward).should('be.visible')
         cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
         cy.get(EditMeasurePage.measureStewardTextBox).should('not.exist')
