@@ -10,6 +10,7 @@ let measureScoring = 'Ratio'
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
+
 describe('Edit Measure Name Validations', () => {
     before('Create Measure', () => {
 
