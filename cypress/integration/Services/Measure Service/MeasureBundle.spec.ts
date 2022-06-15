@@ -70,7 +70,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
                     'model': model,
                     'measureScoring': measureScoring,
                     'cql': measureCQL,
-                    //'elmJson': elmJson,
+                    'elmJson': elmJson,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
                     'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z"
                 }
