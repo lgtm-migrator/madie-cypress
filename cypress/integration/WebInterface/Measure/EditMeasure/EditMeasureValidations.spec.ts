@@ -10,6 +10,7 @@ let measureScoring = 'Ratio'
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
+
 describe('Edit Measure Name Validations', () => {
     before('Create Measure', () => {
 
@@ -64,10 +65,7 @@ describe('Edit Measure Name Validations', () => {
     })
 })
 
-describe.only('Measurement Period Validations', () => {
-
-    // let measureName = 'TestMeasure' + Date.now()
-    // let CqlLibraryName = 'TestLibrary' + Date.now()
+describe('Measurement Period Validations', () => {
 
     beforeEach('Create measure and login', () => {
 
@@ -97,7 +95,7 @@ describe.only('Measurement Period Validations', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(CreateMeasurePage.measurementPeriodEndDate).clear().type('01/01/1999')
         cy.get(CreateMeasurePage.measurementPeriodStartDate).clear().type('12/01/2022')
-        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date should be greater than measurement period start date.')
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date should be greater than or equal to measurement period start date.')
 
     })
 
