@@ -489,7 +489,7 @@ describe('Measurement Period Validations', () => {
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
-                    expect(response.body.message).to.eql('Measurement period end date should be greater than measurement period start date.')
+                    expect(response.body.message).to.eql('Measurement period end date should be greater than or equal to measurement period start date.')
                 })
             })
         })
