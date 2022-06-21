@@ -24,6 +24,16 @@ let vTCJsonWithOutBundleId = '{{} "resourceType": "Bundle", "meta": {{}   "versi
 ' "Patient","text": {{} "status": "generated","div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"},"identifier":' +
 ' [ {{} "system": "http://clinfhir.com/fhir/NamingSystem/identifier","value": "20181011LizzyHealth"} ],"name": [ {{} "use": "official",' +
 ' "text": "Lizzy Health","family": "Health","given": [ "Lizzy" ]} ],"gender": "female","birthDate": "2000-10-11"}} ]}'
+let iVTCJsonWithOutMCQLVS = '{{} "resourceType": "Bundle", "id": "1366", "meta": {{}   "versionId": "1",' +
+' "lastUpdated": "2022-03-30T19:02:32.620+00:00"  },  "type": "collection",  "entry": [ {{}   "fullUrl": "http://local/Encounter",' +
+' "resource": {{} "resourceType": "Encounter","meta": {{} "versionId": "1","lastUpdated": "2021-10-13T03:34:10.160+00:00","source":"#nEcAkGd8PRwPP5fA"},' +
+' "text": {{} "status": "generated","div":"<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Sep 9th 2021 for Asthma<a name=\\"mm\\"/></div>\"},' +
+' "status": "finished","class": {{} "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode","code": "IMP","display":"inpatient encounter"},' +
+' "type": [ {{} "text": "OutPatient"} ],"subject": {{} "reference": "Patient/1"},"participant": [ {{} "individual": {{} "reference": "Practitioner/30164",' +
+' "display": "Dr John Doe"}} ],"period": {{} "start": "2022-01-10T03:34:10.054Z"}}}, {{} "fullUrl": "http://local/Patient","resource": {{} "resourceType":'+
+' "Patient","text": {{} "status": "generated","div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"},"identifier":' +
+' [ {{} "system": "http://clinfhir.com/fhir/NamingSystem/identifier","value": "20181011LizzyHealth"} ],"name": [ {{} "use": "official",' +
+' "text": "Lizzy Health","family": "Health","given": [ "Lizzy" ]} ],"gender": "female","birthDate": "2000-10-11"}} ]}'
 let testCaseXML = TestCaseJson.TestCase_XML
 let testCaseSeries = 'SBTestSeries'
 let twoFiftyTwoCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'
@@ -844,6 +854,129 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.numActualCheckBox).should('be.checked')
         cy.get(TestCasesPage.numExclusionActuralCheckBox).should('be.checked')
         cy.get(TestCasesPage.denomActualCheckBox).should('be.checked')
+
+    })
+})
+
+describe('Test Case execution validations based on Measure CQL value sets', () => {
+    beforeEach('Login and Create Measure', () => {
+        CqlLibraryName = 'TestLibrary2' + Date.now()
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
+        OktaLogin.Login()
+
+
+    })
+    afterEach('Logout and Clean up', () => {
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
+
+    })
+
+    it('Measure CQL has a valueset declared but not used within the CQL', () => {
+
+        //CQLForTestCaseExecutionInValidVS
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add CQL
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecutionInValidVS.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+
+
+        //Create Measure Group
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()        
+
+        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
+
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')
+        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).select('denom')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()    
+        
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        cy.get(TestCasesPage.testCaseMeasureCQLError).should('exist')
+        cy.get(TestCasesPage.testCaseMeasureCQLError).should('be.visible')
+        cy.get(TestCasesPage.testCaseMeasureCQLError).should('contain.text', 'An error exists with the measure CQL, please review the CQL Editor tab.')
+
+    })
+
+    it.only('Test Case JSON is not using the value set from the CQL', () => {
+
+        //CQLForTestCaseExecutionValidVS
+        //iVTCJsonWithOutMCQLVS
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add CQL
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecutionValidVS.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+
+
+        //Create Measure Group
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()        
+
+        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
+
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')
+        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorSelect).select('denom')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).select('denom')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()    
+
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, iVTCJsonWithOutMCQLVS, true)
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+
+        cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseButton).click()
+
+        cy.get(TestCasesPage.runTestButton).should('be.visible')
+        cy.get(TestCasesPage.runTestButton).should('be.enabled')
+        cy.get(TestCasesPage.runTestButton).click()
+
+        cy.pause()
+
 
     })
 })

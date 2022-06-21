@@ -1,0 +1,20 @@
+library SimpleFhirLibrary version '0.0.004'
+
+using FHIR version '4.0.1'
+
+include FHIRHelpers version '4.0.001' called FHIRHelpers
+
+valueset "Office Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'
+
+parameter "Measurement Period" Interval<DateTime>
+
+context Patient
+
+define "ipp":
+  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"
+
+define "denom":
+  "ipp"
+  
+define "num":
+  exists ["Encounter": "Office Visit"] E where E.status ~ 'finished'
