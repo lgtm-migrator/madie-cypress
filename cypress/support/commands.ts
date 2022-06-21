@@ -33,7 +33,7 @@ declare global {
         interface Chainable {
             setAccessTokenCookie()
             setAccessTokenCookieALT()
-            setUMLSTGTCookie()
+            UMLSAPIKeyLogin()
         }
     }
 }
@@ -224,7 +224,7 @@ export function setAccessTokenCookieALT() {
     })
 }
 
-export function setUMLSTGTCookie() {
+export function UMLSAPIKeyLogin() {
 
     cy.request({
         url: 'https://utslogin.nlm.nih.gov/cas/v1/api-key',
@@ -240,13 +240,6 @@ export function setUMLSTGTCookie() {
         failOnStatusCode: false
     }).then((response) => {
         expect(response.status).to.eql(201)
-
-        const location = response.headers.location.toString()
-        const locationArray = location.split("/")
-        const tgt = locationArray[6]
-
-        //setting the cookie value to be grabbed for umls authentication
-        cy.setCookie('UMLS_TGT', tgt)
     })
 }
 
@@ -262,6 +255,6 @@ Cypress.Commands.add('setAccessTokenCookie', () => {
 Cypress.Commands.add('setAccessTokenCookieALT', () => {
     return setAccessTokenCookieALT()
 })
-Cypress.Commands.add('setUMLSTGTCookie', () => {
-    return setUMLSTGTCookie()
+Cypress.Commands.add('UMLSAPIKeyLogin', () => {
+    return UMLSAPIKeyLogin()
 })
