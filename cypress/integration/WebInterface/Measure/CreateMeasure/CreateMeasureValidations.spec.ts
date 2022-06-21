@@ -189,7 +189,7 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/1999')
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2022')
         cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period ' +
-            'end date should be greater than measurement period start date.')
+            'end date should be greater than or equal to measurement period start date.')
         cy.get(CreateMeasurePage.cancelButton).click()
 
     })

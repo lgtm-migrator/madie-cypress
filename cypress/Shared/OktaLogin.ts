@@ -27,14 +27,20 @@ export class OktaLogin {
         cy.get(LandingPage.newMeasureButton).should('be.visible')
         cy.log('Login Successful')
 
-        if (umlsLogin === false) {
-            //do nothing
-        }
-        else
-        {
-            umlsLoginForm.UMLSLogin()
-        }
+        //setup for grabbing the measure create call
+        cy.intercept('GET', '/api/vsac/umls-credentials/status').as('umls')
 
+        cy.wait('@umls').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+            if (umlsLogin === false || response.body === true) {
+                //do nothing
+            }
+            else
+            {
+                umlsLoginForm.UMLSLogin()
+            }
+
+        })
     }
 
 

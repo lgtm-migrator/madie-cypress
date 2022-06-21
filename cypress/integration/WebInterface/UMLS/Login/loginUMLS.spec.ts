@@ -3,7 +3,9 @@ import {Header} from "../../../../Shared/Header"
 import {Utilities} from "../../../../Shared/Utilities"
 import {umlsLoginForm} from "../../../../Shared/umlsLoginForm"
 
-describe('Tests surrounding the abilty to log into UMLS', () => {
+//Need to skip this test for now until we are able to manipulate the DB and remove the API Key and TGT from
+//Mongo DB with a DB connection or new API Call
+describe.skip('Tests surrounding the abilty to log into UMLS', () => {
 
     beforeEach('Login',() => {
         OktaLogin.Login(false)

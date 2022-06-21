@@ -174,7 +174,9 @@ describe('CQL Library: CQL Editor: valueSet', () => {
 
     })
 
-    it('UMLS Error: User Not Logged in', () => {
+    //Need to skip this test for now until we are able to manipulate the DB and remove the API Key and TGT from
+    //Mongo DB with a DB connection or new API Call
+    it.skip('UMLS Error: User Not Logged in', () => {
 
         //Click on Edit Button
         CQLLibrariesPage.clickEditforCreatedLibrary()
