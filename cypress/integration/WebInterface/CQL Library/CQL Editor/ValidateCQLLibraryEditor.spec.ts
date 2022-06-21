@@ -107,7 +107,7 @@ describe('Validate CQL on CQL Library page', () => {
         //Validate error(s) in CQL Editor after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/fhir/libraries/cql"}"')
 
         //Navigate away from the page
         cy.get(Header.mainMadiePageButton).click()
@@ -118,7 +118,7 @@ describe('Validate CQL on CQL Library page', () => {
         //Validate error(s) in CQL Editor persists after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', '"status":404,"error":"Not Found","path":"/api/fhir/libraries/cql"}"')
 
     })
 
@@ -164,7 +164,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         //Create CQL Library
         CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
 
-        OktaLogin.Login(false)
+        OktaLogin.Login()
 
     })
 
@@ -197,8 +197,6 @@ describe('CQL Library: CQL Editor: valueSet', () => {
 
     it('Value Sets are valid', () => {
 
-        umlsLoginForm.UMLSLogin()
-
         //Click on Edit Button
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
@@ -217,8 +215,6 @@ describe('CQL Library: CQL Editor: valueSet', () => {
     })
 
     it('Value Set Invalid', () => {
-
-        umlsLoginForm.UMLSLogin()
 
         //Click on Edit Button
         CQLLibrariesPage.clickEditforCreatedLibrary()

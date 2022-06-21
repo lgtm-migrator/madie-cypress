@@ -124,7 +124,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
-                    url: '/api/fhir/measures/' + id + '/bundles',
+                    url: '/api/measures/' + id + '/bundles',
                     method: 'GET',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
@@ -232,7 +232,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/fhir/measures/' + id + '/bundles',
+                    url: '/api/measures/' + id + '/bundles',
                     method: 'GET',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
