@@ -13,7 +13,6 @@ let mpEndDate = now().format('YYYY-MM-DD')
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
-let measureScoring = 'Proportion'
 let model = 'QI-Core'
 let invalidmeasureCQL = "library SimpleFhirMeasureLibs version '0.0.004'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\nparameter 'Measurement Period' Interval<DateTime>\ncontext Patient\ndefine 'ipp':\n  exists ['Encounter'] E where E.period.start during 'Measurement Period'\ndefine 'denom':\n  'ipp'\ndefine 'num':\n  exists ['Encounter'] E where E.status ~ 'finished'"
 let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
@@ -68,7 +67,6 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
                     'measureName': measureName,
                     'cqlLibraryName': CqlLibraryName,
                     'model': model,
-                    'measureScoring': measureScoring,
                     'cql': measureCQL,
                     'elmJson': elmJson,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
@@ -90,7 +88,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": measureScoring,
+                        "scoring": 'Proportion',
                         "population": 
                         {
                             "initialPopulation": PopIniPop,
@@ -117,15 +115,16 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
+
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
-                    url: '/api/measures/' + id + '/bundles',
+                    url: '/api/fhir/measures/' + id + '/bundles',
                     method: 'GET',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
@@ -178,7 +177,6 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                     'measureName': measureName,
                     'cqlLibraryName': CqlLibraryName+1,
                     'model': model,
-                    'measureScoring': measureScoring,
                     'cql': measureCQL,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
                     'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z"
@@ -199,7 +197,6 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": measureScoring,
                         "population": 
                         {
                             "initialPopulation": PopIniPop,
@@ -226,7 +223,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName+1, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName+1)
 
     })
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
@@ -235,7 +232,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     failOnStatusCode: false,
-                    url: '/api/measures/' + id + '/bundles',
+                    url: '/api/fhir/measures/' + id + '/bundles',
                     method: 'GET',
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
@@ -265,7 +262,6 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
                     'measureName': measureName,
                     'cqlLibraryName': CqlLibraryName,
                     'model': model,
-                    'measureScoring': measureScoring,
                     'cql': missingFHIRHelpersMeasureCQL,
                     'elmJson': elmJson,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
@@ -287,7 +283,6 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": measureScoring,
                         "population": 
                         {
                             "initialPopulation": PopIniPop,
@@ -314,7 +309,7 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
@@ -358,7 +353,7 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
     let measureScoring = 'Proportion'
     let measureCQL = "library SimpleFhirMeasureLib version '0.0.004'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\nparameter 'Measurement Period' Interval<DateTime>\ncontext Patient\ndefine 'ipp':\n  exists ['Encounter'] E where E.period.start during 'Measurement Period'\ndefine 'denom':\n  'ipp'\ndefine 'num':\n  exists ['Encounter'] E where E.status ~ 'finished'"
     before('Create Measure',() => {
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring, measureCQL, true, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL, true, true)
     })
 
     beforeEach('Set Access Token',() => {
@@ -367,7 +362,7 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring, true, true)
+        Utilities.deleteMeasure(measureName, CqlLibraryName, true, true)
 
     })
     it('Get Measure bundle resource will only return if current user is equal to createdBy user', () => {
@@ -408,7 +403,6 @@ describe('Measure Bundle end point returns 409 when the measure is missing a gro
                     'measureName': measureName,
                     'cqlLibraryName': CqlLibraryName+2,
                     'model': model,
-                    'measureScoring': measureScoring,
                     'cql': measureCQL,
                     'elmJson': elmJson,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
@@ -429,7 +423,7 @@ describe('Measure Bundle end point returns 409 when the measure is missing a gro
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName+2, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName+2)
 
     })
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {

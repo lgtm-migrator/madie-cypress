@@ -8,14 +8,13 @@ import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
 
 describe('Reset Measure Populations', () => {
 
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
     beforeEach('Login', () => {
@@ -31,7 +30,7 @@ describe('Reset Measure Populations', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

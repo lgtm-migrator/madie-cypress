@@ -110,33 +110,10 @@ describe('Measure Name Validations', () => {
 
         //Verify the error message when the CQL Library Name given already exists
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).clear().type('TestCql1640794914452')
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.createMeasureButton).click()
         cy.get(CreateMeasurePage.serverErrorMsg).should('contain.text', 'CQL library with given name already exists')
 
         cy.get(CreateMeasurePage.serverErrorMsgCloseIcon).click()
-        cy.get(CreateMeasurePage.cancelButton).click()
-
-    })
-
-    //Measure Scoring Validations
-    it('Verify error message when the Measure Scoring field is empty', () => {
-
-        let measureName = 'MeasureScoringTest' + Date.now()
-        let CqlLibraryName = 'ScoringTestLibrary' + Date.now()
-
-       //Click on New Measure Button
-        cy.get(LandingPage.newMeasureButton).click()
-        cy.get(CreateMeasurePage.measureNameTextbox).type(measureName)
-        cy.get(CreateMeasurePage.measureModelDropdown).click()
-        cy.get(CreateMeasurePage.measureModelQICore).click()
-        cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).focus().blur()
-        cy.get(CreateMeasurePage.measureScoringFieldLevelError).should('contain.text', 'Measure Scoring is required.')
-        //Verify if create measure button is disabled
-        cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
-
         cy.get(CreateMeasurePage.cancelButton).click()
 
     })
@@ -154,8 +131,6 @@ describe('Measure Name Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).focus().blur()
         cy.get(CreateMeasurePage.measureModelFieldLevelError).should('contain.text', 'A Measure Model is required.')
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         //Verify if create measure button is disabled
         cy.get(CreateMeasurePage.createMeasureButton).should('be.disabled')
 
@@ -184,8 +159,6 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.measurementPeriodEndDate).type('01/01/1999')
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type('12/01/2022')
         cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period ' +
@@ -201,8 +174,6 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.measurementPeriodStartDate).focus().blur()
         cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Measurement period start date is required')
         cy.get(CreateMeasurePage.measurementPeriodEndDate).focus().blur()
@@ -217,8 +188,6 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type('01/01/1800')
         cy.get(CreateMeasurePage.measurementPeriodEndDate).click()
         cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Start date should be between the years 1900 and 2099.')
@@ -235,8 +204,6 @@ describe('Measurement Period Validations', () => {
         cy.get(CreateMeasurePage.measureModelDropdown).click()
         cy.get(CreateMeasurePage.measureModelQICore).click()
         cy.get(CreateMeasurePage.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(CreateMeasurePage.measureScoringDropdown).click()
-        cy.get(CreateMeasurePage.measureScoringCohort).click()
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type('2020/01/02')
         cy.get(CreateMeasurePage.measurementPeriodEndDate).click()
         cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Invalid date format. (mm/dd/yyyy)')

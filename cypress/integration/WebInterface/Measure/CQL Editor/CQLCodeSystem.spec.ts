@@ -6,11 +6,9 @@ import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {Header} from "../../../../Shared/Header"
-import {umlsLoginForm} from "../../../../Shared/umlsLoginForm";
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
-let measureScoring = MeasureGroupPage.measureScoringUnit
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
@@ -22,7 +20,7 @@ describe.skip('UMLS / VSAC error when user is not logged into UMLS', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login(false)
 
     })
@@ -34,7 +32,7 @@ describe.skip('UMLS / VSAC error when user is not logged into UMLS', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
     //negative test
@@ -87,7 +85,7 @@ describe('Measure: CQL Editor', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login()
 
     })
@@ -99,7 +97,7 @@ describe('Measure: CQL Editor', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 

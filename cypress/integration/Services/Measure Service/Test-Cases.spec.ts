@@ -42,7 +42,6 @@ describe('Test Case population values based on Measure Group population definiti
                     'measureName': measureName,
                     'cqlLibraryName': cqlLibraryName,
                     'model': modelType,
-                    'measureScoring': measureScoring,
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
                     'cql': measureCQL
@@ -165,7 +164,7 @@ describe('Test Case population values based on Measure Group population definiti
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, cqlLibraryName)
 
     })
     it('Test Case population value check boxes match that of the measure group definitons -- all are defined', () => {
@@ -424,7 +423,7 @@ describe('Measure Service: Test Case Endpoints', () => {
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryNameDeux, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryNameDeux)
 
     })
 
@@ -580,7 +579,7 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryName)
 
     })
 
@@ -742,7 +741,7 @@ describe('Test Case Json Validations', () =>{
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryName)
 
     })
 
@@ -871,7 +870,7 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryName)
 
     })
 

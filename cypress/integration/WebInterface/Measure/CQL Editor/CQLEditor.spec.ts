@@ -22,7 +22,7 @@ describe('Measure: CQL Editor', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login()
 
     })
@@ -34,7 +34,7 @@ describe('Measure: CQL Editor', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 
@@ -208,7 +208,7 @@ describe('Measure: CQL Editor: valueSet', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login(false)
 
     })
@@ -217,7 +217,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         OktaLogin.Logout()
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 

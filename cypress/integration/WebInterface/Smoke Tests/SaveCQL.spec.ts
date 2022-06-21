@@ -7,14 +7,13 @@ import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
 
 describe('Save CQL on CQL Editor Page', () => {
 
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
 
@@ -28,7 +27,7 @@ describe('Save CQL on CQL Editor Page', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

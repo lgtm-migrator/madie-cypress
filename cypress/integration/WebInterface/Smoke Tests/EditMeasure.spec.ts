@@ -28,7 +28,7 @@ describe('Edit Measure', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

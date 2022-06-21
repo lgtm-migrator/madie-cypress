@@ -15,13 +15,6 @@ export class CreateMeasurePage {
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly serverErrorMsg = '[data-testid="server-error-alerts"]'
     public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"] [data-testid="CloseIcon"]'
-    public static readonly serverErrorMsgMeasureCreation = '[data-testid="server-error-msg"]'
-    public static readonly measureScoringDropdown = '#measureScoring'
-    public static readonly measureScoringFieldLevelError = '.MuiFormHelperText-root'
-    public static readonly measureScoringCohort = '[data-testid=measure-scoring-option-Cohort]'
-    public static readonly measureScoringContinuousVariable = '[data-testid="measure-scoring-option-Continuous Variable"]'
-    public static readonly measureScoringProportion = '[data-testid=measure-scoring-option-Proportion]'
-    public static readonly measureScoringRatio = '[data-testid=measure-scoring-option-Ratio]'
     public static readonly measurementPeriodStartDate = '[name=measurementPeriodStart]'
     public static readonly measurementPeriodEndDate = '[name=measurementPeriodEnd]'
     public static readonly measurementPeriodStartDateError = '[data-testid=measurementPeriodStart-helper-text]'
@@ -43,33 +36,17 @@ export class CreateMeasurePage {
         })
     }
 
-    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string,measureScoring: string) : void {
+    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string) : void {
 
         const now = require('dayjs')
         let mpStartDate = now().subtract('1', 'year').format('MM/DD/YYYY')
         let mpEndDate = now().format('MM/DD/YYYY')
 
-        cy.log('Create ' +measureScoring+ ' Measure')
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(this.measureNameTextbox).type(measureName)
         cy.get(this.measureModelDropdown).click()
         cy.get(this.measureModelQICore).click()
         cy.get(this.cqlLibraryNameTextbox).type(CqlLibraryName)
-        cy.get(this.measureScoringDropdown).click()
-        switch (measureScoring){
-            case 'Cohort':
-                cy.get(this.measureScoringCohort).click()
-                break
-            case 'Continuous Variable' :
-                cy.get(this.measureScoringContinuousVariable).click()
-                break
-            case 'Proportion':
-                cy.get(this.measureScoringProportion).click()
-                break
-            case 'Ratio':
-                cy.get(this.measureScoringRatio).click()
-                break
-        }
 
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type(mpStartDate)
         cy.get(CreateMeasurePage.measurementPeriodEndDate).type(mpEndDate)
@@ -78,10 +55,10 @@ export class CreateMeasurePage {
 
         cy.get(MeasuresPage.measureListTitles).should('be.visible')
 
-        cy.log( measureScoring+ ' Measure created successfully')
+        cy.log( 'Measure created successfully')
     }
 
-    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureScoring: string, measureCQL?: string, twoMeasures?: boolean, altUser?: boolean): string {
+    public static CreateQICoreMeasureAPI(measureName: string, CqlLibraryName: string, measureCQL?: string, twoMeasures?: boolean, altUser?: boolean): string {
 
         let user = ''
         const now = require('dayjs')
@@ -112,7 +89,6 @@ export class CreateMeasurePage {
                     'measureName': measureName,
                     'cqlLibraryName': CqlLibraryName,
                     'model': 'QI-Core',
-                    'measureScoring': measureScoring,
                     'createdBy': user,
                     'cql': measureCQL,
                     'elmJson': elmJson,
