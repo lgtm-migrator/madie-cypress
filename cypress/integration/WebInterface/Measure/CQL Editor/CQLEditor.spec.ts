@@ -1,7 +1,6 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
-import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
@@ -10,7 +9,6 @@ import {umlsLoginForm} from "../../../../Shared/umlsLoginForm";
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
-let measureScoring = MeasureGroupPage.measureScoringUnit
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
@@ -108,7 +106,7 @@ describe('Measure: CQL Editor', () => {
         ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+            '"status":404,"error":"Not Found","path":"/api/fhir/libraries/cql"}"')
 
         //Navigate away from the page
         cy.get(Header.measures).click()
@@ -126,7 +124,7 @@ describe('Measure: CQL Editor', () => {
         ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            '"status":404,"error":"Not Found","path":"/api/hapiFhir/libraries/cql"}"')
+            '"status":404,"error":"Not Found","path":"/api/fhir/libraries/cql"}"')
 
     })
 
@@ -209,7 +207,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
-        OktaLogin.Login(false)
+        OktaLogin.Login()
 
     })
 
@@ -245,8 +243,6 @@ describe('Measure: CQL Editor: valueSet', () => {
 
     it('Value Sets are valid', () => {
 
-        umlsLoginForm.UMLSLogin()
-
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -266,8 +262,6 @@ describe('Measure: CQL Editor: valueSet', () => {
     })
 
     it('Value Set Invalid, 404', () => {
-
-        umlsLoginForm.UMLSLogin()
 
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -300,8 +294,6 @@ describe('Measure: CQL Editor: valueSet', () => {
     })
 
     it('Value Set Invalid, 400 undefined', () => {
-
-        umlsLoginForm.UMLSLogin()
 
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()

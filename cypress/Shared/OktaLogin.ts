@@ -3,7 +3,7 @@ import {Environment} from "./Environment"
 import {LandingPage} from "./LandingPage"
 import {umlsLoginForm} from "./umlsLoginForm"
 
-let umlsLoggedIn = true
+let umlsLoggedIn = false
 
 //MADiE OKTA Login Class
 export class OktaLogin {
@@ -32,7 +32,6 @@ export class OktaLogin {
         cy.get(this.signInButton).click()
 
         cy.wait('@umls').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
             umlsLoggedIn = !!response.body
 
             if (umlsLogin === false || umlsLoggedIn === true) {
