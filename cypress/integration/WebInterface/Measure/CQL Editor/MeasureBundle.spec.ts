@@ -92,7 +92,7 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
     it('Log into the UI and save Measure CQL so the cqlErrors flag will update to true', () => {
@@ -207,7 +207,7 @@ describe('Bundle returns elmXML', () => {
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

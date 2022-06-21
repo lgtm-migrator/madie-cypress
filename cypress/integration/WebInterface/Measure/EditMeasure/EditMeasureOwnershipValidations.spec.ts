@@ -9,7 +9,6 @@ import {LandingPage} from "../../../../Shared/LandingPage"
 
 let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Proportion'
 
 let TCSeries = 'SBTestSeries'
 let TCTitle = 'test case title'
@@ -20,7 +19,7 @@ describe('Read only for measure, measure group, and test cases that user does no
     before('Create Measure, Measure Group, and Test Case with alt user', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, cqlLibraryName, measureScoring, '', true, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, cqlLibraryName, '', true, true)
         MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
         TestCasesPage.CreateTestCaseAPI(TCTitle, TCSeries, TCDescription, '', true, true)
 
@@ -38,7 +37,7 @@ describe('Read only for measure, measure group, and test cases that user does no
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, measureScoring,true, true)
+        Utilities.deleteMeasure(measureName, cqlLibraryName,true, true)
 
     })
 

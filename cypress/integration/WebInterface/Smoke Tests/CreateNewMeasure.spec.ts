@@ -4,7 +4,6 @@ import {Utilities} from "../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
 
 describe('Create New Measure', () => {
 
@@ -18,14 +17,14 @@ describe('Create New Measure', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 
     it('Login to Madie and Create New Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName,measureScoring)
+        CreateMeasurePage.CreateQICoreMeasure(measureName,CqlLibraryName)
 
     })
 })

@@ -48,7 +48,7 @@ describe('Measure Service: Edit Measure', () => {
 
     after('Clean up',() => {
 
-        Utilities.deleteMeasure(measureName, cqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, cqlLibraryName)
 
     })
 
@@ -463,7 +463,7 @@ describe('Measurement Period Validations', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = cqlLibraryName + randValue
 
-        Utilities.deleteMeasure(measureName, newCqlLibraryName, 'Cohort')
+        Utilities.deleteMeasure(measureName, newCqlLibraryName)
 
     })
 

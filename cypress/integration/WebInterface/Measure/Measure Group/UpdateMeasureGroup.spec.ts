@@ -20,7 +20,7 @@ describe('Validate Measure Group', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[3])
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login()
 
     })
@@ -32,7 +32,7 @@ describe('Validate Measure Group', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[3])
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 

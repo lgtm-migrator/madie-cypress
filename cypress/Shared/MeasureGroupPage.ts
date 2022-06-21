@@ -120,7 +120,6 @@ export class MeasureGroupPage {
         {
             measurePath = 'cypress/fixtures/measureId'
             measureGroupPath = 'cypress/fixtures/groupId'
-            //cy.writeFile('cypress/fixtures/measureId', response.body.id)
         }
 
         //Add Measure Group to the Measure

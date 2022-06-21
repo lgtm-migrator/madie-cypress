@@ -5,11 +5,9 @@ import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {Utilities} from "../../../Shared/Utilities"
-import {MeasuresPage} from "../../../Shared/MeasuresPage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries'
@@ -27,7 +25,7 @@ describe('Measure Highlighting', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoringArray[0])
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login()
 
     })
@@ -39,7 +37,7 @@ describe('Measure Highlighting', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoringArray[0])
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 

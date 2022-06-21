@@ -16,7 +16,7 @@ describe('Validate Measure Group', () => {
 
     before('Create measure', () => {
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1)
 
     })
 
@@ -34,7 +34,7 @@ describe('Validate Measure Group', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName1, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName1)
 
 
     })
@@ -87,10 +87,10 @@ describe('Validate Measure Group', () => {
 describe('Validate Measure Group -- scoring and populations', () => {
     before('Create measure', () => {
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1+4, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1+4)
 
         //create another Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2+5, measureScoring, null, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2+5, null, true)
     })
 
     beforeEach('Login', () => {
@@ -107,9 +107,9 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName1+4, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName1+4)
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName2+5, measureScoring,true)
+        Utilities.deleteMeasure(measureName, CqlLibraryName2+5,true)
 
     })
     it('Scoring unit and population association saves and persists with a Measure Group Description', () => {

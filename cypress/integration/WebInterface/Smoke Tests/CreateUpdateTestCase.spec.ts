@@ -22,7 +22,7 @@ describe('Create Test Case', () => {
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
     beforeEach('Login', () => {
@@ -36,7 +36,7 @@ describe('Create Test Case', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

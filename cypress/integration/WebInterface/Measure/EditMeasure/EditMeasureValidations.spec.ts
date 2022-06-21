@@ -6,7 +6,6 @@ import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
@@ -15,7 +14,7 @@ describe('Edit Measure Name Validations', () => {
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
 
@@ -29,7 +28,7 @@ describe('Edit Measure Name Validations', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
     })
 
     it('Verify error messages when the edit measure name entered is invalid', () => {
@@ -74,7 +73,7 @@ describe('Measurement Period Validations', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
         OktaLogin.Login()
 
     })
@@ -86,7 +85,7 @@ describe('Measurement Period Validations', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 

@@ -6,7 +6,6 @@ import {Utilities} from "../../../Shared/Utilities"
 
 let measureOne = ''
 let CqlLibraryOne = ''
-let measureScoring = 'Proportion'
 let measureTwo = ''
 let CqlLibraryTwo = ''
 
@@ -17,12 +16,12 @@ describe('Delete Measure', () => {
         //Create Measure with Regular User
         measureOne = 'TestMeasure1' + Date.now()
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureOne, CqlLibraryOne, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureOne, CqlLibraryOne)
 
         //Create Measure with Alternate User
         measureTwo = 'TestMeasure2' + Date.now()
         CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, CqlLibraryTwo, measureScoring, null, true, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, CqlLibraryTwo, null, true, true)
     })
 
     beforeEach('Login', () => {
@@ -39,7 +38,7 @@ describe('Delete Measure', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureTwo, CqlLibraryTwo, measureScoring,true, true)
+        Utilities.deleteMeasure(measureTwo, CqlLibraryTwo,true, true)
 
     })
 

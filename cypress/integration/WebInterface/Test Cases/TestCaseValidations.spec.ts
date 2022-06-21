@@ -33,7 +33,7 @@ describe('Test Case Validations', () => {
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
     beforeEach('Login', () => {
@@ -47,7 +47,7 @@ describe('Test Case Validations', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 
@@ -138,7 +138,7 @@ describe('Test Case Json Validations', () => {
     before('Create Measure', () => {
         CqlLibraryName = 'TestLibrary2' + Date.now()
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
 
     })
 
@@ -153,7 +153,7 @@ describe('Test Case Json Validations', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 
@@ -384,14 +384,14 @@ describe('Test Case Run Test Case button validations', () => {
     beforeEach('Login and Create Measure', () => {
         CqlLibraryName = 'TestLibrary2' + Date.now()
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureScoring)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
         OktaLogin.Login()
 
 
     })
     afterEach('Logout and Clean up', () => {
         OktaLogin.Logout()
-        Utilities.deleteMeasure(measureName, CqlLibraryName, measureScoring)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

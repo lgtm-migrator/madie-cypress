@@ -5,7 +5,7 @@ import {EditMeasurePage} from "./EditMeasurePage"
 
 export class Utilities {
 
-    public static deleteMeasure(measureName: string, cqlLibraryName: string, measureScoring: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
+    public static deleteMeasure(measureName: string, cqlLibraryName: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
 
         let path = 'cypress/fixtures/measureId'
         const now = require('dayjs')
@@ -35,7 +35,7 @@ export class Utilities {
                         Authorization: 'Bearer ' + accessToken.value
                     },
                     body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName,
-                        "measureScoring": measureScoring, "model": 'QI-Core', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false}
+                        "model": 'QI-Core', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false}
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body).to.eql("Measure updated successfully.")
