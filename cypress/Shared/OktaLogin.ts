@@ -3,6 +3,8 @@ import {Environment} from "./Environment"
 import {LandingPage} from "./LandingPage"
 import {umlsLoginForm} from "./umlsLoginForm"
 
+let umlsLoggedIn = true
+
 //MADiE OKTA Login Class
 export class OktaLogin {
 
@@ -23,24 +25,28 @@ export class OktaLogin {
         cy.get(this.passwordInput).type(Environment.credentials().password)
         cy.get(this.signInButton, { timeout: 1000000 }).should('be.enabled')
         cy.get(this.signInButton, { timeout: 1000000 }).should('be.visible')
-        cy.get(this.signInButton).click()
-        cy.get(LandingPage.newMeasureButton).should('be.visible')
-        cy.log('Login Successful')
 
         //setup for grabbing the measure create call
         cy.intercept('GET', '/api/vsac/umls-credentials/status').as('umls')
 
+        cy.get(this.signInButton).click()
+
         cy.wait('@umls').then(({response}) => {
             expect(response.statusCode).to.eq(200)
-            if (umlsLogin === false || response.body === true) {
+            umlsLoggedIn = !!response.body
+
+            if (umlsLogin === false || umlsLoggedIn === true) {
                 //do nothing
             }
             else
             {
                 umlsLoginForm.UMLSLogin()
             }
-
         })
+        cy.get(LandingPage.newMeasureButton).should('be.visible')
+        cy.log('Login Successful')
+
+
     }
 
 
