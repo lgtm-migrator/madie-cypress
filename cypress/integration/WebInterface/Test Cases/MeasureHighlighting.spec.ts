@@ -15,8 +15,8 @@ let testCaseJson = TestCaseJson.TestCaseJson_Valid
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-
-describe('Measure Highlighting', () => {
+//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
+describe.skip('Measure Highlighting', () => {
 
 
     beforeEach('Create measure and login', () => {

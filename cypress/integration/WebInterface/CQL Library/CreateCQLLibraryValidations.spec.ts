@@ -85,16 +85,22 @@ describe('CQL Library Validations', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
+
         CQLLibraryPage.clickCreateLibraryButton()
 
+        cy.wait(5000)        
+
+        cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', CQLLibraryName+randValue)
 
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1775)
+            expect(text.length).to.equal(1762)
         })
 
     })
@@ -104,10 +110,13 @@ describe('CQL Library Validations', () => {
         let UpdatedCQLLibraryName = CQLLibraryName +randValue+ "updated"
         CQLLibraryPage.createCQLLibrary(UpdatedCQLLibraryName)
         //navigate to the CQL Libaray page
+        cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).click()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type(UpdatedCQLLibraryName)
         cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
@@ -119,14 +128,17 @@ describe('CQL Library Validations', () => {
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
+        cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', UpdatedCQLLibraryName)
 
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()        
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1775)
+            expect(text.length).to.equal(1762)
         })
         
     })
