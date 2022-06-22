@@ -32,6 +32,7 @@ export class CQLLibrariesPage {
 
             cy.intercept('GET', '/api/cql-libraries/' + fileContents).as('cqlLibrary')
 
+            cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').should('be.visible')
             cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').click()
 
             cy.wait('@cqlLibrary').then(({response}) => {

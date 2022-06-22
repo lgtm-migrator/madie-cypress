@@ -11,8 +11,8 @@ let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let CqlLibraryName2 = 'TestLibrary2' + Date.now()
 let measureScoring = MeasureGroupPage.measureScoringUnit
 
-
-describe('Validate Measure Group', () => {
+//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
+describe.skip('Validate Measure Group', () => {
 
     before('Create measure', () => {
         //Create New Measure
@@ -84,7 +84,8 @@ describe('Validate Measure Group', () => {
 
     })
 })
-describe('Validate Measure Group -- scoring and populations', () => {
+//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
+describe.skip('Validate Measure Group -- scoring and populations', () => {
     before('Create measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1+4)
