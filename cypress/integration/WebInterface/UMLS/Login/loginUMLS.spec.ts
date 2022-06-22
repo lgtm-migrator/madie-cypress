@@ -8,7 +8,7 @@ import {umlsLoginForm} from "../../../../Shared/umlsLoginForm"
 describe.skip('Tests surrounding the abilty to log into UMLS', () => {
 
     beforeEach('Login',() => {
-        OktaLogin.Login(false)
+        OktaLogin.Login()
     })
 
     afterEach('Logout', () => {

@@ -1,7 +1,6 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
-import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
@@ -21,7 +20,7 @@ describe.skip('UMLS / VSAC error when user is not logged into UMLS', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
-        OktaLogin.Login(false)
+        OktaLogin.Login()
 
     })
 
@@ -35,8 +34,9 @@ describe.skip('UMLS / VSAC error when user is not logged into UMLS', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //negative test
-    it('Verify proper error(s) appear in CQL Editor, when a user is not connected / logged into UMLS', () => {
+    //Need to skip this test for now until we are able to manipulate the DB and remove the API Key and TGT from
+    //Mongo DB with a DB connection or new API Call
+    it.skip('Verify proper error(s) appear in CQL Editor, when a user is not connected / logged into UMLS', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()

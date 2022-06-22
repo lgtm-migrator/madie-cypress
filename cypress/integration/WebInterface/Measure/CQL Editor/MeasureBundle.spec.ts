@@ -86,7 +86,7 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
 
     beforeEach('Set Access Token',() => {
 
-        OktaLogin.Login(true)
+        OktaLogin.Login()
 
 
     })
@@ -199,9 +199,9 @@ describe('Bundle returns elmXML', () => {
         })
     })
 
-    beforeEach('Set Access Token',() => {
+    beforeEach('Login',() => {
 
-        OktaLogin.Login(true)
+        OktaLogin.Login()
 
 
     })
