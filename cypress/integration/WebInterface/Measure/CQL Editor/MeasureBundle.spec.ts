@@ -26,6 +26,7 @@ let PopDenex = 'num'
 let PopDenexcep = 'ipp'
 let PopNumex = 'numeratorExclusion'
 //skipping until bug MAT-4450 is fixed
+//skipping until MAT-4467 is resovled / fixed
 describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
     before('Create Measure',() => {
 
@@ -86,7 +87,7 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
 
     beforeEach('Set Access Token',() => {
 
-        OktaLogin.Login(true)
+        OktaLogin.Login()
 
 
     })
@@ -140,7 +141,8 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
     })
 })
 
-describe('Bundle returns elmXML', () => {
+//skipping until MAT-4467 is resovled / fixed
+describe.skip('Bundle returns elmXML', () => {
     before('Create Measure',() => {
 
         cy.setAccessTokenCookie()
@@ -199,9 +201,9 @@ describe('Bundle returns elmXML', () => {
         })
     })
 
-    beforeEach('Set Access Token',() => {
+    beforeEach('Login',() => {
 
-        OktaLogin.Login(true)
+        OktaLogin.Login()
 
 
     })
