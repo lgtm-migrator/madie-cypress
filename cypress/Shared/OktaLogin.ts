@@ -13,7 +13,7 @@ export class OktaLogin {
     //public static readonly termsConditionsCheckbox = '.custom-checkbox'
     public static readonly signInButton = '#okta-signin-submit'
 
-    public static Login(umlsLogin?: boolean) {
+    public static Login() {
 
         cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
         cy.url({ timeout: 1000000 }).should('include', '/login')
@@ -32,15 +32,17 @@ export class OktaLogin {
         cy.get(this.signInButton).click()
 
         cy.wait('@umls').then(({response}) => {
-            umlsLoggedIn = !!response.body
 
-            if (umlsLogin === false || umlsLoggedIn === true) {
+            if(response.statusCode === 200)
+            {
                 //do nothing
             }
             else
             {
+                cy.pause()
                 umlsLoginForm.UMLSLogin()
             }
+
         })
         cy.get(LandingPage.newMeasureButton).should('be.visible')
         cy.log('Login Successful')
