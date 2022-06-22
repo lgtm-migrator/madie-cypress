@@ -100,7 +100,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1762)
+            expect(text.length).to.equal(1766)
         })
 
     })
@@ -138,7 +138,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()        
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1762)
+            expect(text.length).to.equal(1766)
         })
         
     })
