@@ -48,8 +48,8 @@ let PopDenom = 'SDE Sex'
 let PopDenex = 'Absence of Cervix'
 let PopDenexcep = 'SDE Ethnicity'
 let PopNumex = 'Surgical Absence of Cervix'
-
-describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+//skipping until MAT-4467 is resovled / fixed
+describe.skip('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -159,7 +159,8 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
         })
     })
 })
-describe('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
+//skipping until MAT-4467 is resovled / fixed
+describe.skip('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -347,7 +348,8 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
         })
     })
 })
-describe('Measure Bundle end point returns 403 if measure was not created by current user', () => {
+//skipping until MAT-4467 is resovled / fixed
+describe.skip('Measure Bundle end point returns 403 if measure was not created by current user', () => {
     let measureName = 'MeasureName ' + Date.now()
     let CqlLibraryName = 'CQLLibraryName' + Date.now()
     let measureScoring = 'Proportion'
@@ -385,7 +387,8 @@ describe('Measure Bundle end point returns 403 if measure was not created by cur
     })
 
 })
-describe('Measure Bundle end point returns 409 when the measure is missing a group', () => {
+//skipping until MAT-4467 is resovled / fixed
+describe.skip('Measure Bundle end point returns 409 when the measure is missing a group', () => {
 
     before('Create Measure',() => {
 
