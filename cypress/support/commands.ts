@@ -225,21 +225,18 @@ export function setAccessTokenCookieALT() {
 }
 
 export function UMLSAPIKeyLogin() {
-
-    cy.request({
-        url: 'https://utslogin.nlm.nih.gov/cas/v1/api-key',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept': '*/*'
-        },
-
-        body: { apikey: Environment.credentials().umls_API_KEY
-        },
-        failOnStatusCode: false
-    }).then((response) => {
-        expect(response.status).to.eql(201)
+    cy.getCookie('accessToken').then((accessToken) => {
+        cy.request({
+            url: '/api/vsac/umls-credentials',
+            method: 'POST',
+            headers: {
+                authorization: 'Bearer ' + accessToken.value
+            },
+            body: Environment.credentials().umls_API_KEY,
+            failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.eql(200)
+        })
     })
 }
 
