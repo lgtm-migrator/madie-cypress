@@ -1,6 +1,8 @@
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {OktaLogin} from "../../../Shared/OktaLogin"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
+import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
@@ -16,7 +18,7 @@ let newMeasureName = ''
 let newCqlLibraryName = ''
 
 //skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-describe.skip('Measure Highlighting', () => {
+describe('Measure Highlighting', () => {
 
 
     beforeEach('Create measure and login', () => {
@@ -26,6 +28,7 @@ describe.skip('Measure Highlighting', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
         OktaLogin.Login()
 
     })
@@ -45,6 +48,10 @@ describe.skip('Measure Highlighting', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.visible')
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -81,6 +88,10 @@ describe.skip('Measure Highlighting', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.visible')
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()

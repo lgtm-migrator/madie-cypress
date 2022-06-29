@@ -7,6 +7,7 @@ export class TestCasesPage {
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
     public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
     public static readonly denomActualCheckBox = '[data-testid="test-population-denominator-actual"]'
+    public static readonly denomExclusionActualCheckBox = '[data-testid="test-population-denominatorExclusion-actual"]'
     public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'

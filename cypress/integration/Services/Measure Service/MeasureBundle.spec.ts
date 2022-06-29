@@ -1,12 +1,7 @@
 import {Utilities} from "../../../Shared/Utilities"
-import {OktaLogin} from "../../../Shared/OktaLogin"
-import {MeasuresPage} from "../../../Shared/MeasuresPage"
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
-import {Header} from "../../../Shared/Header"
-import {EditMeasurePage } from "../../../Shared/EditMeasurePage"
-
 export {}
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 const now = require('dayjs')
 let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
 let mpEndDate = now().format('YYYY-MM-DD')
@@ -48,8 +43,7 @@ let PopDenom = 'SDE Sex'
 let PopDenex = 'Absence of Cervix'
 let PopDenexcep = 'SDE Ethnicity'
 let PopNumex = 'Surgical Absence of Cervix'
-//skipping until MAT-4467 is resovled / fixed
-describe.skip('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -159,8 +153,7 @@ describe.skip('Measure Bundle end point returns expected data with valid Measure
         })
     })
 })
-//skipping until MAT-4467 is resovled / fixed
-describe.skip('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
+describe('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -198,6 +191,7 @@ describe.skip('Measure Bundle end point returns 409 with valid Measure CQL but i
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
+                        "scoring": 'Proportion',
                         "population": 
                         {
                             "initialPopulation": PopIniPop,
@@ -284,6 +278,7 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
+                        "scoring": 'Proportion',
                         "population": 
                         {
                             "initialPopulation": PopIniPop,
@@ -348,14 +343,13 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
         })
     })
 })
-//skipping until MAT-4467 is resovled / fixed
-describe.skip('Measure Bundle end point returns 403 if measure was not created by current user', () => {
+describe('Measure Bundle end point returns 403 if measure was not created by current user', () => {
     let measureName = 'MeasureName ' + Date.now()
     let CqlLibraryName = 'CQLLibraryName' + Date.now()
-    let measureScoring = 'Proportion'
     let measureCQL = "library SimpleFhirMeasureLib version '0.0.004'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\nparameter 'Measurement Period' Interval<DateTime>\ncontext Patient\ndefine 'ipp':\n  exists ['Encounter'] E where E.period.start during 'Measurement Period'\ndefine 'denom':\n  'ipp'\ndefine 'num':\n  exists ['Encounter'] E where E.status ~ 'finished'"
     before('Create Measure',() => {
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL, true, true)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
     })
 
     beforeEach('Set Access Token',() => {
@@ -387,8 +381,7 @@ describe.skip('Measure Bundle end point returns 403 if measure was not created b
     })
 
 })
-//skipping until MAT-4467 is resovled / fixed
-describe.skip('Measure Bundle end point returns 409 when the measure is missing a group', () => {
+describe('Measure Bundle end point returns 409 when the measure is missing a group', () => {
 
     before('Create Measure',() => {
 

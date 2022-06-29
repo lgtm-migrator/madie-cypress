@@ -49,6 +49,7 @@ export class MeasureGroupPage {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.get(this.measureScoringSelect).select('Proportion')
         cy.get(this.initialPopulationSelect).select('ipp')
         cy.get(this.denominatorSelect).select('denom')
         cy.get(this.numeratorSelect).select('num')
@@ -78,15 +79,18 @@ export class MeasureGroupPage {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
         cy.get(MeasureGroupPage.denominatorSelect).select('denom')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).select('ipp') //related to bug 4497
         cy.get(MeasureGroupPage.numeratorSelect).select('num')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).select('num')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
 
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
     }
     public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean): string {

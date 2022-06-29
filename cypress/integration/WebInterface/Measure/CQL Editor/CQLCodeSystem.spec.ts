@@ -77,7 +77,7 @@ describe.skip('UMLS / VSAC error when user is not logged into UMLS', () => {
     })    
 })
 
-describe('Measure: CQL Editor', () => {
+describe('Validations around code system in Measure CQL', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -124,8 +124,7 @@ describe('Measure: CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:110 | Invalid Code system")
 
     })
-    //negative test -- waiting on MAT-4458
-    it.skip('Verify proper error(s) appear in CQL Editor, when a user includes version and there is no vsac version', () => {
+    it('Verify proper error(s) appear in CQL Editor, when a user includes version and there is no vsac version', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -134,7 +133,7 @@ describe('Measure: CQL Editor', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         //type text in the CQL Editor that will cause error
-        Utilities.readWriteFileData('CQLCsURLIncorrect.txt', EditMeasurePage.cqlEditorTextBox)
+        Utilities.readWriteFileData('CQLCsVersionIncludedNoVSAC.txt', EditMeasurePage.cqlEditorTextBox)
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -145,10 +144,9 @@ describe('Measure: CQL Editor', () => {
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:110 | Invalid Code system")
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:72 | Version not found.")
 
     })
-    //negative test -- waiting on MAT-4458
     it.skip('Verify proper error(s) appear in CQL Editor, when a user does not include version and there is no vsac', () => {
 
         //Click on Edit Measure
@@ -158,13 +156,15 @@ describe('Measure: CQL Editor', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         //type text in the CQL Editor that will cause error
-        Utilities.readWriteFileData('CQLCsURLIncorrect.txt', EditMeasurePage.cqlEditorTextBox)
+        Utilities.readWriteFileData('CQLCsVersionNotIncludedNoVSAC.txt', EditMeasurePage.cqlEditorTextBox)
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+
+        cy.wait(10000)
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -251,7 +251,7 @@ describe('Measure: CQL Editor', () => {
         CQLEditorPage.clickCQLEditorTab()
 
         //type text in the CQL Editor that will cause error
-        Utilities.readWriteFileData('cqlCQLEditor.txt', EditMeasurePage.cqlEditorTextBox)
+        Utilities.readWriteFileData('CQLCsFHIRVersionIncludedNoVSAC.txt', EditMeasurePage.cqlEditorTextBox)
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -259,22 +259,9 @@ describe('Measure: CQL Editor', () => {
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
+        cy.wait(10000)
+
         //Validate error(s) in CQL Editor window
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 1:3 | Could not resolve identifier SDE in the current library.")
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 5:13 | Member SDE Sex not found for type null.")
-
-        //Navigate away from the page
-        cy.get(Header.measures).click()
-
-        //Navigate back to the CQL Editor page
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the CQL Editor tab
-        CQLEditorPage.clickCQLEditorTab()
-
-        //Validate error(s) in CQL Editor windows
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 1:3 | Could not resolve identifier SDE in the current library.")

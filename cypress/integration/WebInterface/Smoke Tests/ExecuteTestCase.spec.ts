@@ -70,8 +70,8 @@ describe('Execute Test Case', () => {
 
 
     })
-    //skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-    it.skip('Verify Test execution status when the Expected and Actual values do not match', () => {
+    //this test should be re-ran without the Deonminator Exclusion field containing a value, after MAT-4497 is fixed
+    it('Verify Test execution status when the Expected and Actual values do not match', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
@@ -99,6 +99,9 @@ describe('Execute Test Case', () => {
         TestCasesPage.clickEditforCreatedTestCase()
 
         //Select the Expected Value
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
 
         //Save updated test case
@@ -115,8 +118,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseStatus).should('be.visible')
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'fail')
     })
-    //skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-    it.skip('Verify Test execution status when the Expected and Actual values match', () => {
+    it('Verify Test execution status when the Expected and Actual values match', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
@@ -137,6 +139,13 @@ describe('Execute Test Case', () => {
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).check().should('be.checked')
 
         TestCasesPage.clickCreateTestCaseButton(true)
 
