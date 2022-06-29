@@ -147,7 +147,7 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:72 | Version not found.")
 
     })
-    it.skip('Verify proper error(s) appear in CQL Editor, when a user does not include version and there is no vsac', () => {
+    it('Verify proper error(s) appear in CQL Editor, when a user does not include version and there is no vsac', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -164,12 +164,10 @@ describe('Validations around code system in Measure CQL', () => {
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
-        cy.wait(10000)
-
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:110 | Invalid Code system")
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:91 | Unable to find a code system version")
 
     })
 
@@ -242,7 +240,7 @@ describe('Validations around code system in Measure CQL', () => {
 
     })
     //negative test -- waiting on MAT-4458
-    it.skip('Verify proper error(s) appear in CQL Editor, when user provides a FHIR version and there is no vsac version', () => {
+    it('Verify proper error(s) appear in CQL Editor, when user provides a FHIR version and there is no vsac version', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -259,13 +257,10 @@ describe('Validations around code system in Measure CQL', () => {
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
-        cy.wait(10000)
-
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 1:3 | Could not resolve identifier SDE in the current library.")
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "ELM: 5:13 | Member SDE Sex not found for type null.")
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:107 | Version not found.")
 
     })
 })
