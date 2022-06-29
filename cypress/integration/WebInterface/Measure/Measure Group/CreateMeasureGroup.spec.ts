@@ -9,14 +9,14 @@ import {Header} from "../../../../Shared/Header"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let CqlLibraryName2 = 'TestLibrary2' + Date.now()
-let measureScoring = MeasureGroupPage.measureScoringUnit
+let measureScoring = 'Proportion'
 
-//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-describe.skip('Validate Measure Group', () => {
+describe('Validate Measure Group', () => {
 
     before('Create measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
     })
 
@@ -59,10 +59,11 @@ describe.skip('Validate Measure Group', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.wait(10000)
         //validate values in the scoring drop down box
         cy.get('#scoring-unit-select').find('option').then(options => {
             const actual = [...options].map(o => o.value)
-            expect(actual).to.deep.eq(['Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
+            expect(actual).to.deep.eq(['Select', 'Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
         })
     })
     it('Initial Population being populated from CQL', () => {
@@ -84,14 +85,15 @@ describe.skip('Validate Measure Group', () => {
 
     })
 })
-//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-describe.skip('Validate Measure Group -- scoring and populations', () => {
+describe('Validate Measure Group -- scoring and populations', () => {
     before('Create measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1+4)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
         //create another Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName2+5, null, true)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(true)
     })
 
     beforeEach('Login', () => {
@@ -142,7 +144,7 @@ describe.skip('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //validate data is saved in mongo database --> future addition to automated test script
 
@@ -191,7 +193,7 @@ describe.skip('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //validate data is saved in mongo database --> future addition to automated test script
 

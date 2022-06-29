@@ -8,13 +8,13 @@ import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-//skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-describe.skip('Reset Measure Populations', () => {
+describe('Reset Measure Populations', () => {
 
     before('Create Measure', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
     })
     beforeEach('Login', () => {
@@ -64,7 +64,7 @@ describe.skip('Reset Measure Populations', () => {
         //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //verify the measure group's description before reset
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
@@ -76,7 +76,7 @@ describe.skip('Reset Measure Populations', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','SDE Ethnicity')
         cy.get(MeasureGroupPage.denominatorSelect).should('contain.text','SDE Payer')
         cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text','SDE Race')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('not.exist')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text','SDE Ethnicity')
         cy.get(MeasureGroupPage.numeratorSelect).should('contain.text','Initial Population')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text','SDE Ethnicity')
 

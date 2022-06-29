@@ -9,7 +9,7 @@ import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 let measureName = 'TestMeasure' + (Date.now())
 let CqlLibraryName = 'TestLibrary' + (Date.now())
-let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
+let measureScoringArray = ['Select', 'Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
 
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
@@ -18,7 +18,7 @@ let testCaseSeries = 'SBTestSeries'
 let newMeasureName = ''
 let newCqlLibraryName = ''
 ////skipping 1.) these tests need to be re-worked to account for no default measure score on group tab / page; 2.) MAT-4467
-describe.skip('Test Case Expected Measure Group population values based on initial measure scoring', () => {
+describe('Test Case Expected Measure Group population values based on initial measure scoring', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -27,6 +27,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        //MeasureGroupPage.CreateProportionMeasureGroupAPI()
         OktaLogin.Login()
 
     })
@@ -94,7 +95,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        for (let i = 0; i<=1; i++){
+        for (let i = 1; i<=2; i++){
             //log, in cypress, the measure score value
             cy.log((measureScoringArray[i].valueOf()).toString())
             //select scoring unit on measure
@@ -107,10 +108,10 @@ describe.skip('Test Case Expected Measure Group population values based on initi
             cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
             cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                 .then(($message) => {
-                    if(i == 1){
+                    if(i == 2){
                         expect($message.text()).to.equal('This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
                     }
-                    else if (i == 0){
+                    else if (i == 1){
                         expect($message.text()).to.equal('Population details for this group saved successfully.')
                     }
                 })
@@ -133,11 +134,11 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //log, in cypress, the measure score value
-        cy.log((measureScoringArray[0].valueOf()).toString())
+        cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[0].valueOf()).toString())
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
         //based on the scoring unit value, select a value for all population fields
-        Utilities.validationMeasureGroupSaveAll((measureScoringArray[0].valueOf()).toString())
+        Utilities.validationMeasureGroupSaveAll((measureScoringArray[1].valueOf()).toString())
         //save measure group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -163,11 +164,11 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //change score unit value and save / update measure with new value
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //log, in cypress, the measure score value
-        cy.log((measureScoringArray[1].valueOf()).toString())
+        cy.log((measureScoringArray[2].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[2].valueOf()).toString())
         //based on the scoring unit value, select a value for all population fields
-        Utilities.validationMeasureGroupSaveAll((measureScoringArray[1].valueOf()).toString())
+        Utilities.validationMeasureGroupSaveAll((measureScoringArray[2].valueOf()).toString())
         //save measure group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation message after attempting to save
@@ -203,8 +204,15 @@ describe.skip('Test Case Expected Measure Group population values based on initi
 
     })
     it('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
+
+        //creating propportion group on measure
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+
+        OktaLogin.Login()
+
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
+
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
         //read and write CQL from flat file
@@ -216,7 +224,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'wOOpt')
+        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
         //Navigate to Test Cases page and verify Populations
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
@@ -232,7 +240,13 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
     })
-    it('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
+    //this will need to be retested once 4497/ 4498 is fixed
+    it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
+        //creating propportion group on measure
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+
+        OktaLogin.Login()
+        
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -246,7 +260,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //setup measure group so that only the required fields / populations are defined / has values
-        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'wOOpt')
+        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
         //create test case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -264,7 +278,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //go back and update measure group to contain values for all of the population fields
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'all')
+        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'all')
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that test case now has all of the population check boxes available
@@ -279,8 +293,13 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
 
     })
+    //this will need to be retested once 4497/ 4498 is fixed
+    it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
+        //creating propportion group on measure
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
-    it('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
+        OktaLogin.Login()
+        
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -294,7 +313,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //setup measure group so that only the required fields / populations are defined / has values
-        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'all')
+        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'all')
         //create test case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -312,7 +331,7 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //go back and update measure group to contain values for all of the population fields
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        Utilities.validateMeasureGroup(measureScoringArray[3].valueOf().toString(),'wOOpt')
+        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that test case now has only the required population values / check boxes
@@ -343,11 +362,11 @@ describe.skip('Test Case Expected Measure Group population values based on initi
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //log, in cypress, the measure score value
-        cy.log((measureScoringArray[3].valueOf()).toString())
+        cy.log((measureScoringArray[4].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[4].valueOf()).toString())
         //based on the scoring unit value, select a value for all population fields
-        Utilities.validationMeasureGroupSaveAll((measureScoringArray[3].valueOf()).toString())
+        Utilities.validationMeasureGroupSaveAll((measureScoringArray[4].valueOf()).toString())
         //save measure group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
