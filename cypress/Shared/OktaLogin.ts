@@ -39,7 +39,6 @@ export class OktaLogin {
             }
             else
             {
-                cy.pause()
                 umlsLoginForm.UMLSLogin()
             }
 
