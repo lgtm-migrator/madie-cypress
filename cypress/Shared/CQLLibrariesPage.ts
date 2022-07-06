@@ -32,8 +32,8 @@ export class CQLLibrariesPage {
 
             cy.intercept('GET', '/api/cql-libraries/' + fileContents).as('cqlLibrary')
 
-            cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').should('be.visible')
-            cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').click()
+            cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').should('be.visible')
+            cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').click()
 
             cy.wait('@cqlLibrary').then(({response}) => {
                 expect(response.statusCode).to.eq(200)
@@ -45,7 +45,7 @@ export class CQLLibrariesPage {
     public static validateCQLLibraryName(expectedValue: string): void {
 
         cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
-            let element = cy.get('[data-testid=edit-cqlLibrary-'+ fileContents +']').parent()
+            let element = cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').parent()
             element.parent().should('contain', expectedValue)
 
         })

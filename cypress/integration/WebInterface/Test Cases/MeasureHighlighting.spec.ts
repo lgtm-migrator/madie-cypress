@@ -109,7 +109,6 @@ describe('Measure Highlighting', () => {
 
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
 
             cy.get(TestCasesPage.createTestCaseButton).click()
 
@@ -123,9 +122,6 @@ describe('Measure Highlighting', () => {
     
             cy.get(EditMeasurePage.testCasesTab).click()
 
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
 
         TestCasesPage.clickEditforCreatedTestCase()

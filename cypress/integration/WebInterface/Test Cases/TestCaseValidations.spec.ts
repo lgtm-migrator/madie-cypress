@@ -127,11 +127,14 @@ describe('Test Case Validations', () => {
 
         cy.wait(2000)
 
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
 
         //Update Test Case Description with more than 250 characters
-        cy.get(TestCasesPage.testCaseTitle).clear()
         cy.get(TestCasesPage.testCaseTitle).type(twoFiftyTwoCharacters, {delay: 0})
         cy.get(TestCasesPage.testCaseSeriesTextBox).click()
         cy.get(TestCasesPage.cuTestCaseButton).should('be.disabled')
@@ -289,7 +292,6 @@ describe('Test Case Json Validations', () => {
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
         
             cy.get(TestCasesPage.createTestCaseButton).click()
         
@@ -301,9 +303,6 @@ describe('Test Case Json Validations', () => {
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -316,9 +315,6 @@ describe('Test Case Json Validations', () => {
         
         cy.get(EditMeasurePage.testCasesTab).click()
 
-        cy.wait('@getMeasures').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
-        })
         
         //Verify created test case Title and Series exists on Test Cases Page
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
@@ -348,7 +344,6 @@ describe('Test Case Json Validations', () => {
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
                 
             cy.get(TestCasesPage.createTestCaseButton).click()
                 
@@ -360,9 +355,6 @@ describe('Test Case Json Validations', () => {
         
             cy.get(EditMeasurePage.testCasesTab).click()
         
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
         TestCasesPage.clickEditforCreatedTestCase()
         
@@ -375,9 +367,6 @@ describe('Test Case Json Validations', () => {
                 
         cy.get(EditMeasurePage.testCasesTab).click()
         
-        cy.wait('@getMeasures').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
-        })
                 
         //Verify created test case Title and Series exists on Test Cases Page
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
@@ -587,7 +576,6 @@ describe('Test Case Run Test Case button validations', () => {
         
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
         
             cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
             cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
@@ -603,9 +591,6 @@ describe('Test Case Run Test Case button validations', () => {
             cy.get(EditMeasurePage.testCasesTab).should('be.visible')
             cy.get(EditMeasurePage.testCasesTab).click()
         
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
         
         TestCasesPage.clickEditforCreatedTestCase()
@@ -668,7 +653,6 @@ describe('Test Case Run Test Case button validations', () => {
         
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
         
             cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
             cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
@@ -684,9 +668,6 @@ describe('Test Case Run Test Case button validations', () => {
             cy.get(EditMeasurePage.testCasesTab).should('be.visible')
             cy.get(EditMeasurePage.testCasesTab).click()
         
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
         
         
@@ -751,7 +732,6 @@ describe('Test Case Run Test Case button validations', () => {
 
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
         
             cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
             cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
@@ -767,9 +747,6 @@ describe('Test Case Run Test Case button validations', () => {
             
             cy.get(EditMeasurePage.testCasesTab).click()
         
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
 
         TestCasesPage.clickEditforCreatedTestCase()
@@ -830,7 +807,6 @@ describe('Test Case Run Test Case button validations', () => {
 
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
         
             cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
             cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
@@ -846,9 +822,6 @@ describe('Test Case Run Test Case button validations', () => {
             
             cy.get(EditMeasurePage.testCasesTab).click()
         
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
 
         TestCasesPage.clickEditforCreatedTestCase()
