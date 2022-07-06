@@ -54,8 +54,12 @@ describe('Execute Test Case', () => {
 
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
@@ -84,8 +88,12 @@ describe('Execute Test Case', () => {
 
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
@@ -103,6 +111,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).check().should('be.checked')
 
         //Save updated test case
         cy.get(TestCasesPage.cuTestCaseButton).click()
@@ -131,8 +140,12 @@ describe('Execute Test Case', () => {
 
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
@@ -140,17 +153,34 @@ describe('Execute Test Case', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
         cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('not.be.checked')
+
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).click()
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENEXCheckBox).click()
         cy.get(TestCasesPage.testCaseDENEXCheckBox).check().should('be.checked')
 
         TestCasesPage.clickCreateTestCaseButton(true)
 
+        cy.get(TestCasesPage.executeTestCaseButton).should('exist')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')        
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.executeTestCaseButton).focus()
+        cy.get(TestCasesPage.executeTestCaseButton).invoke('click')
+        cy.get(TestCasesPage.executeTestCaseButton).click()
         cy.get(TestCasesPage.executeTestCaseButton).click()
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
 

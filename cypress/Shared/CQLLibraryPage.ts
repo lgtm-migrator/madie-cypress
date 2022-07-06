@@ -34,10 +34,27 @@ export class CQLLibraryPage {
         cy.get(this.cqlLibraryModelQICore).click()
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()
-        cy.get(this.cqlLibraryNameList).contains(CQLLibraryName)
-        cy.get(this.cqlLibraryModelList).contains('QI-Core')
-
+        this.validateCQlLibraryName(CQLLibraryName)
+        this.validateCQlLibraryModel('QI-Core')
         cy.log('CQL Library Created Successfully')
+    }
+
+    public static validateCQlLibraryName(expectedValue: string): void {
+        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+
+            let element = cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').parent()
+            element.parent().should('contain', expectedValue)
+
+        })
+    }
+
+    public static validateCQlLibraryModel(expectedValue: string): void {
+        cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+
+            let element = cy.get('[data-testid=cqlLibrary-button-'+ fileContents + '-model' + ']').parent()
+            element.parent().should('contain', expectedValue)
+
+        })
     }
 
     public static clickCreateLibraryButton() : void {
