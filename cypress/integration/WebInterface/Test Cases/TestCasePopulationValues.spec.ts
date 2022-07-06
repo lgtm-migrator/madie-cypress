@@ -72,10 +72,22 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
         cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
 
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
+
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).click()
         cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
-        cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
+        
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).click()
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
 
     })
@@ -152,12 +164,26 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
-        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).click()
         cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
+
+
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).click()
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
-        cy.get(TestCasesPage.testCaseDENEXCheckBox).check().should('be.checked')
+        
+
         cy.get(TestCasesPage.createTestCaseButton).click()
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
         //navigate back to the measure group tab / page and...
@@ -182,7 +208,6 @@ describe('Test Case Expected Measure Group population values based on initial me
 
         cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
             cy.intercept('GET', '/api/measures/' + fileContents + '/test-cases').as('testCase')
-            cy.intercept('GET', '/api/measures/' + fileContents).as('getMeasures')
 
             //navigate back to the test case tab
             cy.get(EditMeasurePage.testCasesTab).click()
@@ -193,9 +218,6 @@ describe('Test Case Expected Measure Group population values based on initial me
                 expect(response.statusCode).to.eq(200)
             })
 
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
         TestCasesPage.clickEditforCreatedTestCase()
         //confirm that check boxes that were checked are no longer checked
