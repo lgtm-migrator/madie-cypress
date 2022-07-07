@@ -55,7 +55,6 @@ export class TestCasesPage {
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-            cy.intercept('GET', '/api/measures/' + id).as('getMeasures')
 
             cy.get(this.createTestCaseButton).click()
 
@@ -73,9 +72,6 @@ export class TestCasesPage {
     
             cy.get(EditMeasurePage.testCasesTab).click()
 
-            cy.wait('@getMeasures').then(({response}) => {
-                expect(response.statusCode).to.eq(200)
-            })
         })
     }
 
@@ -127,9 +123,14 @@ export class TestCasesPage {
         cy.get(this.testCasePopulationList).should('be.visible')
 
         //Edit / Update test case title
+
+        cy.get(this.testCaseTitle).should('exist')
         cy.get(this.testCaseTitle).should('be.visible')
         cy.get(this.testCaseTitle).should('be.enabled')
-        cy.get(this.testCaseTitle).clear()
+        cy.get(this.testCaseTitle).focus().clear()
+        cy.get(this.testCaseTitle).invoke('val', '')
+        cy.get(this.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        //cy.get(this.testCaseTitle).clear()
         cy.get(this.testCaseTitle).type(updatedTestCaseTitle)
         //Update Test Case Description
         cy.get(TestCasesPage.testCaseDescriptionTextBox).clear()
