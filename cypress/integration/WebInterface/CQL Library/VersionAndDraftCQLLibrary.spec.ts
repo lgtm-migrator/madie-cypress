@@ -7,8 +7,8 @@ let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
 let CqlLibraryOther = ''
 let updatedCqlLibraryName = ''
-
-describe('Add Version and Draft to CQL Library', () => {
+// skip until MAT-4444 can be tested
+describe.skip('Add Version and Draft to CQL Library', () => {
 
     before('Create CQL Library using ALT user', () => {
         //Create Measure with Alternate User
@@ -97,8 +97,8 @@ describe('Add Version and Draft to CQL Library', () => {
     })
 
 })
-
-describe('Draft and Version Validations', () => {
+// skip until MAT-4444 can be tested
+describe.skip('Draft and Version Validations', () => {
 
     before('Create CQL Library', () => {
         //create a single use CQL Library
@@ -209,8 +209,8 @@ describe('Draft and Version Validations', () => {
     })
 
 })
-
-describe('Version CQL Library with errors', () => {
+// skip until MAT-4444 can be tested
+describe.skip('Version CQL Library with errors', () => {
 
     beforeEach('Login', () => {
 
