@@ -50,8 +50,6 @@ describe('Validate CQL on CQL Library page', () => {
         //Clear the text in CQL Library Editor
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
 
-        cy.wait(1000)
-
         //Update text in the CQL Library Editor that will cause error
         cy.readFile('cypress/fixtures/cqlCQLEditor.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
@@ -89,8 +87,6 @@ describe('Validate CQL on CQL Library page', () => {
 
         //Clear the text in CQL Library Editor
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
-
-        cy.wait(1000)
 
         //Update text in the CQL Library Editor that will cause error
         cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR_404.txt').should('exist').then((fileContents) => {
