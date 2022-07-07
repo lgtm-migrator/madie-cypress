@@ -162,8 +162,8 @@ describe('Measure: CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
-
-    it('Graceful error msg if model is missing in CQL', () => {
+    //skipping --- this will be fixed with bug MAT-4521
+    it.skip('Graceful error msg if model is missing in CQL', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -177,6 +177,7 @@ describe('Measure: CQL Editor', () => {
 
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.pause()
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
@@ -191,6 +192,7 @@ describe('Measure: CQL Editor', () => {
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
         ('show').click({force:true, multiple: true})
+        cy.pause()
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             'ELM: 1:37 | Model Type and version are required')
@@ -291,6 +293,7 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             "ELM: 1:103 | Request failed with status code 404 for oid = 2.16.840.1.113883.3.464.1003.110.12.1059999 " +
             "location = 36:1-36:103")
+
     })
 
     it('Value Set Invalid, 400 undefined', () => {
