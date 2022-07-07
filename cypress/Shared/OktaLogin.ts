@@ -63,6 +63,10 @@ export class OktaLogin {
         cy.get(Header.userProfileSelectSignOutOption).focus()
         cy.get(Header.userProfileSelectSignOutOption).invoke('click')
         cy.get(Header.userProfileSelectSignOutOption).click({ force: true })
+        cy.intercept('POST', '/api/log/logout').as('logout')
+        cy.wait('@logout').then(({response}) => {
+            expect(response.statusCode).to.eq(405)
+        })
 
         cy.log('Logout Successful')
     }
