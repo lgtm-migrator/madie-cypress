@@ -887,3 +887,51 @@ describe('Test Case Run Test Case button validations', () => {
 
     })
 })
+//update / change this for the negative scenario as reviewed / discussed with Ashok yesterday
+describe('Measure: CQL Editor: valueSet: terminology support related tests', () => {
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    it.only('measure CQL had a valueset declared but not used within the CQL -- FHIR', () =>{
+        //Click on Edit Button
+         MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        
+        cy.readFile('cypress/fixtures/CQLFHIRTerminologyNegativeTest.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.pause()
+/*         
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        
+        cy.get(CQLEditorPage.umlsMessage).should('be.visible')
+        cy.get(CQLEditorPage.umlsMessage).should('contain.text', 'Value Set is valid!') */
+    })
+
+    it('measure CQL had a valueset declared but not used within the CQL -- FHIR based QICore', () =>{
+
+    })
+
+    it('measure CQL had a valueset declared but not used within the CQL -- QICore based QICore', () =>{
+
+    })
+})

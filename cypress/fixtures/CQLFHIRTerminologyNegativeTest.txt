@@ -1,0 +1,15 @@
+{home}library SimpleFhirLibrary version '0.0.004'
+{home}
+{home}using FHIR version '4.0.1'
+{home}
+{home}include FHIRHelpers version '4.0.001' called FHIRHelpers
+{home}
+{home}valueset "Office Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'
+{home}
+{home}parameter "Measurement Period" Interval<DateTime>
+{home}
+{home}context Patient
+{home}
+{home}
+{home}define "denom":
+{home}  "ipp"

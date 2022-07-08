@@ -1,0 +1,50 @@
+{home}/*
+{home}@update: BTR 2020-03-31 ->
+{home}Incremented version to 2.0.0
+{home}
+{home}@update: BTR 2022-05-26 ->
+{home}Updated FHIR version to 4.0.1
+{home}Updated FHIRHelpers version to 4.0.002
+{home}Updated for AU 2022 Content
+{home}*/
+{home}
+{home}library SupplementalDataElementsQICore4 version '3.0.000'
+{home}
+{home}using QICore version '4.1.1'
+{home}
+{home}include FHIRHelpers version '4.0.001' called FHIRHelpers
+{home}
+{home}valueset "Ethnicity": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837'
+{home}valueset "ONC Administrative Sex": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1'
+{home}valueset "Payer": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3591'
+{home}valueset "Race": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836'
+{home}
+{home}context Patient
+{home}
+{home}define "SDE Ethnicity":
+{home}  Patient.ethnicity E
+{home}    return Concept {
+{home}      codes: { E.ombCategory } union E.detailed,
+{home}      display: E.text
+{home}    }
+{home}
+{home}define "SDE Payer":
+{home}  [Coverage: type in "Payer"] Payer
+{home}    return {
+{home}      code: Payer.type,
+{home}      period: Payer.period
+{home}    }
+{home}
+{home}define "SDE Race":
+{home}  Patient.race R
+{home}    return Concept {
+{home}      codes: R.ombCategory union R.detailed,
+{home}      display: R.text
+{home}    }
+{home}
+{home}define "SDE Sex":
+{home}  case
+{home}      when Patient.gender = 'male' then Code { code: 'M', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Male' }
+{home}      when Patient.gender = 'female' then Code { code: 'F', system: 'http://hl7.org/fhir/v3/AdministrativeGender', display: 'Female' }
+{home}      else null
+{home}    end
