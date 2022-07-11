@@ -12,6 +12,10 @@ export class OktaLogin {
 
     public static Login() {
 
+        sessionStorage.clear()
+        cy.clearCookies()
+        cy.clearLocalStorage()
+
         cy.visit('/login', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
         cy.get(this.usernameInput, { timeout: 60000 }).should('be.enabled')
         cy.get(this.usernameInput, { timeout: 60000 }).should('be.visible')
@@ -63,7 +67,9 @@ export class OktaLogin {
         cy.wait('@logout', {timeout: 60000}).then(({response}) => {
             expect(response.statusCode).to.eq(405)
         })
-
+        cy.window().then((win) => {
+            win.sessionStorage.clear()
+        })
         cy.log('Logout Successful')
     }
 
