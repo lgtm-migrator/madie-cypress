@@ -3,28 +3,24 @@ import {Environment} from "./Environment"
 import {LandingPage} from "./LandingPage"
 import {umlsLoginForm} from "./umlsLoginForm"
 
-let umlsLoggedIn = false
-
 //MADiE OKTA Login Class
 export class OktaLogin {
 
     public static readonly usernameInput = '#okta-signin-username'
     public static readonly passwordInput = '#okta-signin-password'
-    //public static readonly termsConditionsCheckbox = '.custom-checkbox'
     public static readonly signInButton = '#okta-signin-submit'
 
     public static Login() {
 
-        cy.visit('/', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
-        cy.url({ timeout: 1000000 }).should('include', '/login')
-        cy.get(this.usernameInput, { timeout: 1000000 }).should('be.enabled')
-        cy.get(this.usernameInput, { timeout: 1000000 }).should('be.visible')
-        cy.get(this.passwordInput, { timeout: 1000000 }).should('be.enabled')
-        cy.get(this.passwordInput, { timeout: 1000000 }).should('be.visible')
+        cy.visit('/login', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
+        cy.get(this.usernameInput, { timeout: 60000 }).should('be.enabled')
+        cy.get(this.usernameInput, { timeout: 60000 }).should('be.visible')
+        cy.get(this.passwordInput, { timeout: 60000 }).should('be.enabled')
+        cy.get(this.passwordInput, { timeout: 60000 }).should('be.visible')
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
-        cy.get(this.signInButton, { timeout: 1000000 }).should('be.enabled')
-        cy.get(this.signInButton, { timeout: 1000000 }).should('be.visible')
+        cy.get(this.signInButton, { timeout: 60000 }).should('be.enabled')
+        cy.get(this.signInButton, { timeout: 60000 }).should('be.visible')
 
         //setup for grabbing the measure create call
         cy.intercept('GET', '/api/vsac/umls-credentials/status').as('umls')
@@ -62,9 +58,9 @@ export class OktaLogin {
         cy.get(Header.userProfileSelectSignOutOption).should('be.visible')
         cy.get(Header.userProfileSelectSignOutOption).focus()
         cy.get(Header.userProfileSelectSignOutOption).invoke('click')
-        cy.get(Header.userProfileSelectSignOutOption).click({ force: true })
         cy.intercept('POST', '/api/log/logout').as('logout')
-        cy.wait('@logout').then(({response}) => {
+        cy.get(Header.userProfileSelectSignOutOption).click({ force: true })
+        cy.wait('@logout', {timeout: 60000}).then(({response}) => {
             expect(response.statusCode).to.eq(405)
         })
 
