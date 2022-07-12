@@ -38,7 +38,6 @@ export class TestCaseJson {
         ' "identifier": [ {{} "use": "usual", "type": {{} "coding": [ {{}  "system": "urn:oid:2.16.840.1.113883.18.108", "code": "MR", "display": "Medical Record Number" } ]  },  "system": "http://hospital.smarthealthit.org", "value": "999459995"   } ], ' +
         ' "name": [ {{}  "family": "Jones", "given": [ "Bettie" ]  } ],  "gender": "female",  "birthDate": "1968-01-01"}, "request": {{} "method": "PUT",  "url": "Patient/ip-MyPrimaryLibrary"} } ]} '
 
-
     public static readonly TestCase_XML = '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '\n' +
         '<Patient xmlns="http://hl7.org/fhir">\n' +

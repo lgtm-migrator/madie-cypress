@@ -47,6 +47,7 @@ describe('Add Version and Draft to CQL Library', () => {
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
         CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
+
     })
 
     it('Add Draft to the versioned Library', () => {
@@ -97,7 +98,7 @@ describe('Add Version and Draft to CQL Library', () => {
 
 })
 
-describe('Draft and Version Validations', () => {
+describe.only('Draft and Version Validations', () => {
 
     before('Create CQL Library', () => {
         //create a single use CQL Library
