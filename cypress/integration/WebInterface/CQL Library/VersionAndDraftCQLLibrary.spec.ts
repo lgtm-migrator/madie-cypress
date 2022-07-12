@@ -98,7 +98,7 @@ describe('Add Version and Draft to CQL Library', () => {
 
 })
 
-describe.only('Draft and Version Validations', () => {
+describe('Draft and Version Validations', () => {
 
     before('Create CQL Library', () => {
         //create a single use CQL Library

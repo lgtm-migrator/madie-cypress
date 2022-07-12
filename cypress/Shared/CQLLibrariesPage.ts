@@ -1,6 +1,5 @@
 
-import {Utilities} from "../Shared/Utilities"
-import {Header} from "./Header";
+import {Header} from "./Header"
 
 export class CQLLibrariesPage {
 
@@ -14,6 +13,7 @@ export class CQLLibrariesPage {
     public static readonly editLibraryErrorMsgAfterVersion = '.CreateEditCqlLibrary__InfoAlert-sc-4o3bpi-2'
     public static readonly versionErrorMsg = '[data-testid=create-version-error-message]'
     public static readonly versionCancelBtn = '[data-testid="create-version-cancel-button"]'
+
 
 
     public static clickEditforCreatedLibrary(secondLibrary?: boolean): void {

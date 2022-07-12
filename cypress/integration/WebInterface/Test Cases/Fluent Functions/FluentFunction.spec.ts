@@ -47,6 +47,7 @@ describe('Fluent Function Capability', () => {
 
         cy.readFile('cypress/fixtures/CQLForFluentFunction.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+
         })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
