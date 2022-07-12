@@ -7,8 +7,8 @@ let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
 let CqlLibraryOther = ''
 let updatedCqlLibraryName = ''
-// skip until MAT-4444 can be tested
-describe.skip('Add Version and Draft to CQL Library', () => {
+
+describe('Add Version and Draft to CQL Library', () => {
 
     before('Create CQL Library using ALT user', () => {
         //Create Measure with Alternate User
@@ -47,7 +47,6 @@ describe.skip('Add Version and Draft to CQL Library', () => {
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
         CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
-
     })
 
     it('Add Draft to the versioned Library', () => {
@@ -97,8 +96,8 @@ describe.skip('Add Version and Draft to CQL Library', () => {
     })
 
 })
-// skip until MAT-4444 can be tested
-describe.skip('Draft and Version Validations', () => {
+
+describe('Draft and Version Validations', () => {
 
     before('Create CQL Library', () => {
         //create a single use CQL Library
@@ -209,8 +208,8 @@ describe.skip('Draft and Version Validations', () => {
     })
 
 })
-// skip until MAT-4444 can be tested
-describe.skip('Version CQL Library with errors', () => {
+
+describe('Version CQL Library with errors', () => {
 
     beforeEach('Login', () => {
 
