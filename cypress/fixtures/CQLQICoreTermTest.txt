@@ -69,5 +69,4 @@
 {home}define "Denominator exclusion":
 {home}"SDE Ethnicity".display in { 
 {home}    'Dominican' 
-{home}    }{del}{del}
-{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{backspace}{backspace}{backspace}{backspace}
+{home}    }{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{del}{backspace}{backspace}{backspace}

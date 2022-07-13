@@ -1321,8 +1321,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
         cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n\n  (\n  \n    [Encounter: "Office Visit"]\n    \n          union [Encounter: "Annual Wellness Visit"]\n          \n  ) ValidEncounter\n  \n        where ValidEncounter.period during "Measurement Period"\n        \n            and ValidEncounter.status  = \'finished\'\n')
-        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n\n  exists "Qualifying Encounters"\n')
+        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
+        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
     it('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- QICore based QICore', () =>{
         //Click on Edit Button
@@ -1401,8 +1401,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
         cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n\n  (\n  \n    [Encounter: "Office Visit"]\n    \n          union [Encounter: "Annual Wellness Visit"]\n          \n  ) ValidEncounter\n  \n        where ValidEncounter.period during "Measurement Period"\n        \n            and ValidEncounter.status  = \'finished\'\n')
-        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n\n  exists "Qualifying Encounters"\n')
+        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
+        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
     it('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- QICore based QICore', () =>{
         //Click on Edit Button
@@ -1481,12 +1481,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
         cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n\n  (\n  \n    [Encounter: "Office Visit"]\n    \n          union [Encounter: "Annual Wellness Visit"]\n          \n  ) ValidEncounter\n  \n        where ValidEncounter.period during "Measurement Period"\n        \n            and ValidEncounter.status  = \'finished\'\n')
-        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n\n  exists "Qualifying Encounters"\n')
+        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
+        cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
 })
 
-describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
+describe.only('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
@@ -1581,9 +1581,10 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
 
         cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n\n  (\n  \n    [Encounter: "Office Visit"]\n    \n          union [Encounter: "Annual Wellness Visit"]\n          \n  ) ValidEncounter\n  \n        where ValidEncounter.period during "Measurement Period"\n        \n            and ValidEncounter.status  = \'finished\'\n')
-        cy.get(TestCasesPage.testCalculationResultsLineFour).should('contain.text', '\ndefine "Denominator":\n\n  "Initial Population"\n')
-        cy.get(TestCasesPage.testCalculationResultsLineFive).should('contain.text', '\ndefine "Numerator":\n\n  Patient.gender = \'female\'\n  \n      and exists "Qualifying Encounters"\n')
+        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
+        cy.get(TestCasesPage.testCalculationResultsLineFour).should('contain.text', '\ndefine "Denominator":\n  "Initial Population"\n')
+        cy.get(TestCasesPage.testCalculationResultsLineFive).should('contain.text', '\ndefine "Numerator":\n  Patient.gender = \'female\'\n      and exists "Qualifying Encounters"\n')
+
     })
     it('Test Case JSON proper use of value set(s) -- FHIR', () =>{
         //Click on Edit Button
