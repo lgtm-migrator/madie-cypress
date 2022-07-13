@@ -50,51 +50,51 @@ describe('Add Version and Draft to CQL Library', () => {
 
     })
 
-    it('Add Draft to the versioned Library', () => {
-
-        let versionNumber = '1.0.000'
-        updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
-
-        CQLLibrariesPage.clickVersionforCreatedLibrary()
-        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
-        cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('be.enabled')
-        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
-
-        cy.get(CQLLibrariesPage.createVersionContinueButton).should('exist')
-        cy.get(CQLLibrariesPage.createVersionContinueButton).should('be.visible')
-        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
-        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
-        cy.log('Version Created Successfully')
-
-        CQLLibrariesPage.clickDraftforCreatedLibrary()
-        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('exist')
-        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.visible')
-        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.enabled')
-        cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
-
-        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('exist')
-        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.visible')
-        cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.enabled')
-        cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
-
-        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
-        cy.get(CQLLibrariesPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
-        cy.log('Draft Created Successfully')
-    })
-
-    it('Verify non Library owner unable to create Version', () => {
-
-        //Navigate to CQL Library Page
-        cy.get(Header.cqlLibraryTab).click()
-
-        //Navigate to All Libraries tab
-        cy.get(CQLLibraryPage.allLibrariesBtn).click()
-        CQLLibrariesPage.clickVersionforCreatedLibrary(true)
-        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
-        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
-    })
+    // it('Add Draft to the versioned Library', () => {
+    //
+    //     let versionNumber = '1.0.000'
+    //     updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
+    //
+    //     CQLLibrariesPage.clickVersionforCreatedLibrary()
+    //     cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
+    //     cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('be.enabled')
+    //     cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+    //
+    //     cy.get(CQLLibrariesPage.createVersionContinueButton).should('exist')
+    //     cy.get(CQLLibrariesPage.createVersionContinueButton).should('be.visible')
+    //     cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+    //     cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
+    //     CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+    //     cy.log('Version Created Successfully')
+    //
+    //     CQLLibrariesPage.clickDraftforCreatedLibrary()
+    //     cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('exist')
+    //     cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.visible')
+    //     cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).should('be.enabled')
+    //     cy.get(CQLLibrariesPage.updateDraftedLibraryTextBox).clear().type(updatedCqlLibraryName)
+    //
+    //     cy.get(CQLLibrariesPage.createDraftContinueBtn).should('exist')
+    //     cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.visible')
+    //     cy.get(CQLLibrariesPage.createDraftContinueBtn).should('be.enabled')
+    //     cy.get(CQLLibrariesPage.createDraftContinueBtn).click()
+    //
+    //     cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New Draft of CQL Library is Successfully created')
+    //     cy.get(CQLLibrariesPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
+    //     cy.log('Draft Created Successfully')
+    // })
+    //
+    // it('Verify non Library owner unable to create Version', () => {
+    //
+    //     //Navigate to CQL Library Page
+    //     cy.get(Header.cqlLibraryTab).click()
+    //
+    //     //Navigate to All Libraries tab
+    //     cy.get(CQLLibraryPage.allLibrariesBtn).click()
+    //     CQLLibrariesPage.clickVersionforCreatedLibrary(true)
+    //     cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+    //     cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+    //     cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
+    // })
 
 })
 
