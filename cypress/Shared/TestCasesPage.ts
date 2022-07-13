@@ -29,6 +29,13 @@ export class TestCasesPage {
     public static readonly runTestButton = '[data-testid="run-test-case-button"]'
     public static readonly testCalculationResults = '[data-testid=calculation-results]'
     public static readonly testCalculationResultsLineTwo = '[data-testid="calculation-results"] > div > :nth-child(2)'
+    public static readonly testCalculationResultsLineThree = '[data-testid="calculation-results"] > div > :nth-child(3)'
+    public static readonly testCalculationResultsLineFour = '[data-testid="calculation-results"] > div > :nth-child(4)'
+    public static readonly testCalculationResultsLineFive = '[data-testid="calculation-results"] > div > :nth-child(5)'
+    public static readonly testCalculationResultsLineSix = '[data-testid="calculation-results"] > div > :nth-child(6)'
+    public static readonly testCalculationResultsLineSeven = '[data-testid="calculation-results"] > div > :nth-child(7)'
+    public static readonly testCalculationResultsLineEight = '[data-testid="calculation-results"] > div > :nth-child(8)'
+    public static readonly testCalculationResultsLineNine = '[data-testid="calculation-results"] > div > :nth-child(9)'
     public static readonly testCalculationError = '[data-testid="calculation-error-alert"]'
 
     //Test Case Population Values
@@ -100,8 +107,10 @@ export class TestCasesPage {
 
         cy.get(this.testCasePopulationList).should('be.visible')
 
+        cy.get(this.testCaseTitle).should('exist')
         cy.get(this.testCaseTitle).should('be.visible')
         cy.get(this.testCaseTitle).should('be.enabled')
+        cy.get(this.testCaseTitle).clear()
         cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
