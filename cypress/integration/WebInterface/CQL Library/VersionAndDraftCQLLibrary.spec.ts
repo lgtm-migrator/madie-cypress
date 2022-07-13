@@ -47,6 +47,7 @@ describe('Add Version and Draft to CQL Library', () => {
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
         CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
         cy.log('Version Created Successfully')
+
     })
 
     it('Add Draft to the versioned Library', () => {
