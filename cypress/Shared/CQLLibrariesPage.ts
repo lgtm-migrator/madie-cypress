@@ -1,6 +1,5 @@
 
-import {Utilities} from "../Shared/Utilities"
-import {Header} from "./Header";
+import {Header} from "./Header"
 
 export class CQLLibrariesPage {
 
@@ -8,14 +7,12 @@ export class CQLLibrariesPage {
     public static readonly versionLibraryRadioButton = '[name="type"]'
     public static readonly createVersionContinueButton = '[data-testid="create-version-continue-button"] > :nth-child(1)'
     public static readonly VersionDraftMsgs = '.MuiAlert-message.css-1w0ym84'
-    public static readonly cqlLibraryVersionList = ':nth-child(1) > .CqlLibraryList___StyledTd3-sc-1rv02q7-12 > p'
+    public static readonly cqlLibraryVersionList =  ':nth-child(1) > :nth-child(3) > p'
     public static readonly updateDraftedLibraryTextBox = '[data-testid="cql-library-name-text-field"]'
     public static readonly createDraftContinueBtn = '[data-testid="create-draft-continue-button"]'
     public static readonly editLibraryErrorMsgAfterVersion = '.CreateEditCqlLibrary__InfoAlert-sc-4o3bpi-2'
     public static readonly versionErrorMsg = '[data-testid=create-version-error-message]'
     public static readonly versionCancelBtn = '[data-testid="create-version-cancel-button"]'
-
-
 
 
 
@@ -63,6 +60,7 @@ export class CQLLibrariesPage {
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
         cy.readFile(filePath).should('exist').then((fileContents) => {
+            cy.get('[data-testid="view/edit-cqlLibrary-button-'+ fileContents + '"]').click()
             cy.get('[data-testid="create-new-version-'+ fileContents +'-button"]').click()
         })
     }
@@ -82,6 +80,7 @@ export class CQLLibrariesPage {
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
         cy.readFile('cypress/fixtures/cqlLibraryId').should('exist').then((fileContents) => {
+            cy.get('[data-testid="view/edit-cqlLibrary-button-'+ fileContents + '"]').click()
             cy.get('[data-testid="create-new-draft-'+ fileContents +'-button"]').click()
         })
     }

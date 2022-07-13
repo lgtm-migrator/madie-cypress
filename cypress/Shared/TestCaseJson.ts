@@ -862,6 +862,23 @@ export class TestCaseJson {
     ' [ {{} "system": "http://clinfhir.com/fhir/NamingSystem/identifier","value": "20181011LizzyHealth"} ],"name": [ {{} "use": "official",' +
     ' "text": "Lizzy Health","family": "Health","given": [ "Lizzy" ]} ],"gender": "female","birthDate": "2000-10-11"}} ]}'
 
+    public static readonly TestCaseJson_FluentFunction ='{{} "resourceType": "Bundle", "id": "8354", "meta": {{}  "versionId": "1", "lastUpdated": "2022-07-08T14:49:20.301+00:00"}, ' +
+        ' "type": "collection", "entry": [ {{}  "resource": {{} "resourceType": "Encounter", "id": "ip-MyPrimaryLibrary-1", "meta": {{} ' +
+        ' "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-encounter" ]}, "status": "finished", "class": {{} "system": "urn:oid:2.16.840.1.113883.5.4",  ' +
+        ' "code": "AMB", "display": "ambulatory"}, "type": [ {{} "coding": [ {{} "system": "http://www.ama-assn.org/go/cpt", "code": "99202", ' +
+        ' "display": "Office or other outpatient visit for the evaluation and management of a new patient, which requires a medically appropriate history and/or examination and straightforward medical decision making. When using time for code selection, 15-29 minutes of total time is ' +
+        ' spent on the date of the encounter."} ] } ], "subject": {{}  "reference": "Patient/ip-MyPrimaryLibrary" }, "period": {{} "start": "2021-01-01T01:00:00.0", "end": "2021-01-02T01:00:00.0"} }, ' +
+        ' "request": {{} "method": "PUT", "url": "Encounter/ip-MyPrimaryLibrary-1"}}, {{} "resource": {{} "resourceType": "Observation", "id": "ip-MyPrimaryLibrary-2", "meta": {{} "profile": [ "http://hl7.org/fhir/observation" ]}, ' +
+        ' "status": "final", "code": {{} "coding": [ {{} "system": "urn:oid:2.16.840.1.113883.6.1", "code": "10524-7", "display": "Microscopic observation [Identifier] in Cervix by Cyto stain"} ]}, ' +
+        ' "subject": {{} "reference": "Patient/ip-MyPrimaryLibrary"}, "effectiveDateTime": "2019-11-01T00:00:00"}, "request": {{} "method": "PUT", "url": "Observation/ip-MyPrimaryLibrary-2"} }, {{}  "resource": {{} "resourceType": "Patient", "id": "ip-MyPrimaryLibrary", '  +
+        ' "meta": {{} "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]}, "text": {{} "status": "generated", ' +
+        ' "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Bettie <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>999459995</td></tr><tr><td>Date of birth</td><td><span>01 January 1968</span></td></tr></tbody></table></div>"}, '  +
+        ' "extension": [ {{} "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race", "extension": [ {{} "url": "ombCategory", "valueCoding": {{} "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2028-9", "display": "Asian"}} ]}, ' +
+        ' {{} "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity", "extension": [ {{} "url": "ombCategory", "valueCoding": {{} "system": "urn:oid:2.16.840.1.113883.6.238",  "code": "2135-2",  "display": "Hispanic or Latino"}} ]} ], ' +
+        ' "identifier": [ {{} "use": "usual", "type": {{} "coding": [ {{}  "system": "urn:oid:2.16.840.1.113883.18.108", "code": "MR", "display": "Medical Record Number" } ]  },  "system": "http://hospital.smarthealthit.org", "value": "999459995"   } ], ' +
+        ' "name": [ {{}  "family": "Jones", "given": [ "Bettie" ]  } ],  "gender": "female",  "birthDate": "1968-01-01"}, "request": {{} "method": "PUT",  "url": "Patient/ip-MyPrimaryLibrary"} } ]} '
+
+
     public static readonly TestCase_XML = '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '\n' +
         '<Patient xmlns="http://hl7.org/fhir">\n' +

@@ -28,6 +28,11 @@ import {Environment} from "../Shared/Environment"
 
 export { } // this file needs to be a module
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+})
+
+
 declare global {
     namespace Cypress {
         interface Chainable {
