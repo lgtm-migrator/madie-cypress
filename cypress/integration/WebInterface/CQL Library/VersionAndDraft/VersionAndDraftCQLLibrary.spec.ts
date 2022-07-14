@@ -1,7 +1,7 @@
-import {OktaLogin} from "../../../Shared/OktaLogin"
-import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
-import {Header} from "../../../Shared/Header"
-import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
+import {OktaLogin} from "../../../../Shared/OktaLogin"
+import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
+import {Header} from "../../../../Shared/Header"
+import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
