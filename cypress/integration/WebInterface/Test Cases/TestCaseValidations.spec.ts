@@ -1486,7 +1486,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
     })
 })
 
-describe.only('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
+describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
