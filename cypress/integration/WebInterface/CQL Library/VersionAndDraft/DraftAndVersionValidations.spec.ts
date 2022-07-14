@@ -30,18 +30,18 @@ describe('Draft and Version Validations', () => {
 
     })
 
-    it('Verify non Library owner unable to create Version', () => {
-
-        //Navigate to CQL Library Page
-        cy.get(Header.cqlLibraryTab).click()
-
-        //Navigate to All Libraries tab
-        cy.get(CQLLibraryPage.allLibrariesBtn).click()
-        CQLLibrariesPage.clickVersionforCreatedLibrary(true)
-        cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
-        cy.get(CQLLibrariesPage.createVersionContinueButton).click()
-        cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
-    })
+    // it('Verify non Library owner unable to create Version', () => {
+    //
+    //     //Navigate to CQL Library Page
+    //     cy.get(Header.cqlLibraryTab).click()
+    //
+    //     //Navigate to All Libraries tab
+    //     cy.get(CQLLibraryPage.allLibrariesBtn).click()
+    //     CQLLibrariesPage.clickVersionforCreatedLibrary(true)
+    //     cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
+    //     cy.get(CQLLibrariesPage.createVersionContinueButton).click()
+    //     cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'User is unauthorized to create a version')
+    // })
 
     it('User cannot create a draft of a draft that already exists, while the version is still open', () => {
 
