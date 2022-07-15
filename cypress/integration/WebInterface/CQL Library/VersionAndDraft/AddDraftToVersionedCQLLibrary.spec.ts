@@ -11,7 +11,7 @@ describe('Add Draft to CQL Library', () => {
     beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
         CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
+        //CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
 
         OktaLogin.Login()
 
