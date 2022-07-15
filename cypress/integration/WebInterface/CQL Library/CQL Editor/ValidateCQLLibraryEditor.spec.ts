@@ -1,7 +1,6 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {Header} from "../../../../Shared/Header"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
-import {umlsLoginForm} from "../../../../Shared/umlsLoginForm"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
 let apiCQLLibraryName = ''
