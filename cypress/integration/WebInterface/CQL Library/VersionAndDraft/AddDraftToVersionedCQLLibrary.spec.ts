@@ -1,22 +1,13 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
-import {Header} from "../../../../Shared/Header"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
 let CqlLibraryOne = ''
-let CqlLibraryTwo = ''
-let CqlLibraryOther = ''
 let updatedCqlLibraryName = ''
 
 
 
 describe('Add Draft to CQL Library', () => {
-
-    before('Create CQL Library using ALT user', () => {
-        //Create Measure with Alternate User
-        CqlLibraryTwo = 'TestLibrary2' + Date.now()
-        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryTwo, true, true)
-    })
 
     beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
