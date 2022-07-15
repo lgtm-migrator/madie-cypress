@@ -7,7 +7,7 @@ let updatedCqlLibraryName = ''
 
 
 
-describe('Add Draft to CQL Library', () => {
+describe.skip('Add Draft to CQL Library', () => {
 
     beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
