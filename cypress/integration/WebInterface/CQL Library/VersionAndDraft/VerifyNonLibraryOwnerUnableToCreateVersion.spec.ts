@@ -6,7 +6,7 @@ import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
 
-describe('Verify non Library owner unable to create Version', () => {
+describe.skip('Verify non Library owner unable to create Version', () => {
 
     before('Create CQL Library using ALT user', () => {
         //Create Measure with Alternate User
