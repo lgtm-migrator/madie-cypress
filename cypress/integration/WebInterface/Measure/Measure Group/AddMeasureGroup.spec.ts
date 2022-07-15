@@ -100,7 +100,7 @@ describe('Validate Measure Group additions', () => {
         
     })
 
-    it.only('Ensure numbering of groups is updated when group is created and saved out of sequential order', () => {
+    it('Ensure numbering of groups is updated when group is created and saved out of sequential order', () => {
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -182,7 +182,7 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureGroupFour).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupFour).click()
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Select')
-        
+
         cy.get(MeasureGroupPage.measureGroupFive).should('exist')
         cy.get(MeasureGroupPage.measureGroupFive).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupFive).click()
