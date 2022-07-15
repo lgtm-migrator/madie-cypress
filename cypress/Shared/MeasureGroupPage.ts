@@ -19,6 +19,18 @@ export class MeasureGroupPage {
     public static readonly measurePopulationSelect = '[name="population.measurePopulation"]'
     public static readonly measurePopulationExclusionSelect = '[name="population.measurePopulationExclusion"]'
 
+    //add measure group
+    public static readonly addMeasureGroupButton = '[data-testid="add-measure-group-button"]'
+
+    //additional measure groups (assuming thay exist)
+    public static readonly measureGroupOne = '[data-testid="leftPanelMeasureInformation-MeasureGroup1"]'
+    public static readonly measureGroupTwo = '[data-testid="leftPanelMeasureInformation-MeasureGroup2"]'
+    public static readonly measureGroupThree = '[data-testid="leftPanelMeasureInformation-MeasureGroup3"]'
+    public static readonly measureGroupFour = '[data-testid="leftPanelMeasureInformation-MeasureGroup4"]'
+    public static readonly measureGroupFive = '[data-testid="leftPanelMeasureInformation-MeasureGroup5"]'
+
+    //<a class="sc-dmRaPn sc-fLlhyt gxKhKd dcJxjk" id="0" data-testid="leftPanelMeasureInformation-MeasureGroup1" href="/measures/62d07457dd1b05334e8b6e1d/edit/measure-groups">MEASURE GROUP 1</a>
+
     //Measure group description
     public static readonly measureGroupDescriptionBox = '[name="groupDescription"]'
 
