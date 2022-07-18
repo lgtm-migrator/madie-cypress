@@ -28,6 +28,18 @@ describe('Add Draft to CQL Library', () => {
         let versionNumber = '1.0.000'
         updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
+        //Click Edit CQL Library
+        CQLLibrariesPage.clickEditforCreatedLibrary()
+
+        //Add valid CQL to the CQL Editor
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        })
+
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
         cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('be.enabled')
