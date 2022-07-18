@@ -119,6 +119,17 @@ describe('Validate Measure Group additions', () => {
 
         }
 
+        cy.get(MeasureGroupPage.measureGroupOne).should('exist')
+        cy.get(MeasureGroupPage.measureGroupOne).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTwo).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTwo).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupThree).should('exist')
+        cy.get(MeasureGroupPage.measureGroupThree).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupFour).should('exist')
+        cy.get(MeasureGroupPage.measureGroupFour).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupFive).should('exist')
+        cy.get(MeasureGroupPage.measureGroupFive).should('be.visible')
+
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
@@ -140,17 +151,6 @@ describe('Validate Measure Group additions', () => {
 
         cy.get(MeasureGroupPage.measureGroupOne).should('exist')
         cy.get(MeasureGroupPage.measureGroupOne).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTwo).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTwo).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupThree).should('exist')
-        cy.get(MeasureGroupPage.measureGroupThree).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupFour).should('exist')
-        cy.get(MeasureGroupPage.measureGroupFour).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupFive).should('exist')
-        cy.get(MeasureGroupPage.measureGroupFive).should('be.visible')
-
-        cy.get(MeasureGroupPage.measureGroupOne).should('exist')
-        cy.get(MeasureGroupPage.measureGroupOne).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
 
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Proportion')
@@ -168,20 +168,11 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
         cy.get(MeasureGroupPage.initialPopulationSelect).contains('Pap Test with Results')
 
-        cy.get(MeasureGroupPage.measureGroupThree).should('exist')
-        cy.get(MeasureGroupPage.measureGroupThree).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupThree).click()
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Select')
+        cy.get(MeasureGroupPage.measureGroupThree).should('not.exist')
 
-        cy.get(MeasureGroupPage.measureGroupFour).should('exist')
-        cy.get(MeasureGroupPage.measureGroupFour).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupFour).click()
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Select')
+        cy.get(MeasureGroupPage.measureGroupFour).should('not.exist')
 
-        cy.get(MeasureGroupPage.measureGroupFive).should('exist')
-        cy.get(MeasureGroupPage.measureGroupFive).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupFive).click()
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Select')
+        cy.get(MeasureGroupPage.measureGroupFive).should('not.exist')
 
     })
 })
