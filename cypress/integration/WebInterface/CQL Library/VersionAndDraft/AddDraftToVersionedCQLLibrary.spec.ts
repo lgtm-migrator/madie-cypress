@@ -6,7 +6,7 @@ let CqlLibraryOne = ''
 let updatedCqlLibraryName = ''
 
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
-describe.skip('Add Draft to CQL Library', () => {
+describe('Add Draft to CQL Library', () => {
 
     beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
