@@ -2,16 +2,16 @@ import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
-let CqlLibraryOne = ''
-let updatedCqlLibraryName = ''
+let CqlLibraryOne = 'TestLibrary1' + Date.now()
+let updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
 describe('Add Draft to CQL Library', () => {
 
     beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
-        CqlLibraryOne = 'TestLibrary1' + Date.now()
-        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
+        // CqlLibraryOne = 'TestLibrary1' + Date.now()
+        // CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
 
         OktaLogin.Login()
 
@@ -26,16 +26,18 @@ describe('Add Draft to CQL Library', () => {
     it('Add Draft to the versioned Library', () => {
 
         let versionNumber = '1.0.000'
-        updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
-        //Click Edit CQL Library
+        //Create CQL Library
+        CQLLibraryPage.createCQLLibrary(CqlLibraryOne)
+
+        //Add CQL to the Library
         CQLLibrariesPage.clickEditforCreatedLibrary()
-
-        //Add valid CQL to the CQL Editor
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
