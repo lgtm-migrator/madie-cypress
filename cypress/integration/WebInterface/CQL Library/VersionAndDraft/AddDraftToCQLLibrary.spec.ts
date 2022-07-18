@@ -1,17 +1,17 @@
-import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
+import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
-let CqlLibraryOne = 'TestLibrary1' + Date.now()
-let updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
+let apiCQLLibraryName = 'TestLibrary' + Date.now()
+let updatedCqlLibraryName = 'UpdatedTestLibrary' + Date.now()
+let versionNumber = '1.0.000'
 
-//skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
-describe.skip('Add Draft to CQL Library', () => {
+describe('Add Draft to CQL Library', () => {
 
-    before('Create CQL Library and Login', () => {
-        //Create CQL Library with Regular User
-        // CqlLibraryOne = 'TestLibrary1' + Date.now()
-        // CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
+    before('Create CQL library', () => {
+
+        //Create CQL Library
+        CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
 
         OktaLogin.Login()
 
@@ -25,19 +25,14 @@ describe.skip('Add Draft to CQL Library', () => {
 
     it('Add Draft to the versioned Library', () => {
 
-        let versionNumber = '1.0.000'
-
-        //Create CQL Library
-        CQLLibraryPage.createCQLLibrary(CqlLibraryOne)
-
-        //Add CQL to the Library
+        //Click Edit CQL Library
         CQLLibrariesPage.clickEditforCreatedLibrary()
+
+        //Add valid CQL to the CQL Editor
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
@@ -51,7 +46,7 @@ describe.skip('Add Draft to CQL Library', () => {
         cy.get(CQLLibrariesPage.createVersionContinueButton).should('be.visible')
         cy.get(CQLLibrariesPage.createVersionContinueButton).click()
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
-        CQLLibrariesPage.validateVersionNumber(CqlLibraryOne, versionNumber)
+        CQLLibrariesPage.validateVersionNumber(apiCQLLibraryName, versionNumber)
         cy.log('Version Created Successfully')
 
         CQLLibrariesPage.clickDraftforCreatedLibrary()
@@ -69,7 +64,4 @@ describe.skip('Add Draft to CQL Library', () => {
         cy.get(CQLLibrariesPage.cqlLibraryVersionList).should('contain', 'Draft 1.0.000')
         cy.log('Draft Created Successfully')
     })
-
 })
-
-
