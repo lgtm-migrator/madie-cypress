@@ -6,7 +6,7 @@ let CqlLibraryOne = 'TestLibrary1' + Date.now()
 let updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
-describe.skip('Add Draft to CQL Library', () => {
+describe('Add Draft to CQL Library', () => {
 
     before('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
@@ -32,9 +32,10 @@ describe.skip('Add Draft to CQL Library', () => {
 
         //Add CQL to the Library
         CQLLibrariesPage.clickEditforCreatedLibrary()
-        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
-            cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
-        })
+        // cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+        //     cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
+        // })
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('Test')
 
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
