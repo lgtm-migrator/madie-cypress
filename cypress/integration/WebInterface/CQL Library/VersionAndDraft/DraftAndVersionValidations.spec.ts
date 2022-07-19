@@ -73,10 +73,12 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibrariesPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
     })
 
-    it.skip('Draft cannot be saved with a name that exists for a different library', () => {
+    it('Draft cannot be saved with a name that exists for a different library', () => {
 
 
         let versionNumber = '1.0.000'
+        CqlLibraryOther = 'Another' + Date.now()
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOther)
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
 
