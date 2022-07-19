@@ -9,11 +9,11 @@ let updatedCqlLibraryName = ''
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
 describe('Draft and Version Validations', () => {
 
-    // before('Create CQL Library', () => {
-    //     //create a single use CQL Library
-    //     CqlLibraryOther = 'Another' + Date.now()
-    //     CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOther)
-    // })
+    before('Create CQL Library', () => {
+        //create a single use CQL Library
+        CqlLibraryOther = 'Another' + Date.now()
+        CQLLibraryPage.createAPICQLLibraryWithInvalidCQL(CqlLibraryOther)
+    })
 
     beforeEach('Craete CQL Library and Login', () => {
         //Create CQL Library with Regular User
@@ -75,10 +75,7 @@ describe('Draft and Version Validations', () => {
 
     it('Draft cannot be saved with a name that exists for a different library', () => {
 
-
         let versionNumber = '1.0.000'
-        CqlLibraryOther = 'Another' + Date.now()
-        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOther)
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
 
