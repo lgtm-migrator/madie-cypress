@@ -5,7 +5,6 @@ import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 let CqlLibraryOne = ''
 let updatedCqlLibraryName = ''
 
-//skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
 describe('Add Draft to CQL Library', () => {
 
     beforeEach('Create CQL Library and Login', () => {

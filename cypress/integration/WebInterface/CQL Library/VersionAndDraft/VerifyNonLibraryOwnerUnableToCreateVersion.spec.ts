@@ -6,7 +6,6 @@ import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
 
-//skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
 describe('Verify non Library owner unable to create Version', () => {
 
     before('Create CQL Library using ALT user', () => {
