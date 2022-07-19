@@ -7,7 +7,7 @@ let CqlLibraryOther = ''
 let updatedCqlLibraryName = ''
 
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
-describe.skip('Draft and Version Validations', () => {
+describe('Draft and Version Validations', () => {
 
     before('Create CQL Library', () => {
         //create a single use CQL Library
