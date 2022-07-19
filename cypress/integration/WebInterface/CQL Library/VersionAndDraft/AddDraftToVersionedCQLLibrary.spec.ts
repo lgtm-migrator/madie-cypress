@@ -2,22 +2,22 @@ import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 
-let CqlLibraryOne = 'TestLibrary1' + Date.now()
-let updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
+let CqlLibraryOne = ''
+let updatedCqlLibraryName = ''
 
 //skipping do to issue with createAPICQLLibraryWithValidCQL and its CQL value
-describe('Add Draft to CQL Library', () => {
+describe.skip('Add Draft to CQL Library', () => {
 
-    before('Create CQL Library and Login', () => {
+    beforeEach('Create CQL Library and Login', () => {
         //Create CQL Library with Regular User
-        // CqlLibraryOne = 'TestLibrary1' + Date.now()
-        // CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
+        CqlLibraryOne = 'TestLibrary1' + Date.now()
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne)
 
         OktaLogin.Login()
 
     })
 
-    after('Logout', () => {
+    afterEach('Logout', () => {
 
         OktaLogin.Logout()
 
@@ -26,22 +26,7 @@ describe('Add Draft to CQL Library', () => {
     it('Add Draft to the versioned Library', () => {
 
         let versionNumber = '1.0.000'
-
-        //Create CQL Library
-        CQLLibraryPage.createCQLLibrary(CqlLibraryOne)
-
-        //Add CQL to the Library
-        CQLLibrariesPage.clickEditforCreatedLibrary()
-        // cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
-        //     cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
-        // })
-        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type('Test')
-
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
-
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        updatedCqlLibraryName = 'UpdatedTestLibrary1' + Date.now()
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get(CQLLibrariesPage.versionLibraryRadioButton).should('exist')
@@ -72,5 +57,3 @@ describe('Add Draft to CQL Library', () => {
     })
 
 })
-
-
