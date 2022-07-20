@@ -16,7 +16,8 @@ let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_FluentFunction
 
-describe('Fluent Function Capability', () => {
+//Skipping until MAT-45550 is fixed
+describe.skip('Fluent Function Capability', () => {
 
     before('Create Measure', () => {
 
