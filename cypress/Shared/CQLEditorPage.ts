@@ -10,6 +10,9 @@ export class CQLEditorPage {
     //UMLS Not Logged in Error
     public static readonly umlsMessage = '[data-testid="valueset-success"]'
 
+    //editor message
+    public static readonly editorMessage = '.sc-gsDKAQ.cYvjud'
+
     //click action on the tab to get to the CQL Editor
     public static clickCQLEditorTab(): void {
 

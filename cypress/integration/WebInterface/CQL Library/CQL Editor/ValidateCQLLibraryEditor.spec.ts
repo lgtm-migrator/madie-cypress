@@ -1,7 +1,8 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {Header} from "../../../../Shared/Header"
-import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
+import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
+import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
 
 let apiCQLLibraryName = ''
 
@@ -204,8 +205,8 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
-        cy.get(CQLLibraryPage.umlsSuccessMessage).should('be.visible')
-        cy.get(CQLLibraryPage.umlsSuccessMessage).should('contain.text', 'Value Set is valid!')
+        cy.get(CQLEditorPage.editorMessage).should('be.visible')
+        cy.get(CQLEditorPage.editorMessage).should('contain.text', 'Parsing complete, CQL is valid')
 
     })
 
@@ -229,7 +230,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            'ELM: 1:102 | Request failed with status code 404 for oid = ' +
-            '2.16.840.1.113883.3.464.1003.110.12.105900 location = 18:1-18:102')
+            'ELM: 0:101 | Request failed with status code 404 for oid = 2.16.840.1.113883.3.464.1003.110.12.105900 ' +
+            'location = 18:0-18:101')
     })
 })
