@@ -525,7 +525,6 @@ describe('Validating group tabs', () => {
 
     })
     it('Assert indicator on tab with error, until error is removed', () => {
-        //<li data-testid="populations-tab" class="MeasureGroups__MenuItem-sc-1ozd0ed-14 bXwPtW">Populations 🚫</li>
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         
