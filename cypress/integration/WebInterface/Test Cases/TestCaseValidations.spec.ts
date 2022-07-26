@@ -1109,8 +1109,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
 
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR based QICore', () =>{
+
+    it('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -1175,8 +1175,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
 
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR based QICore', () =>{
+
+    it('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR based QICore', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -1241,8 +1241,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
 
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- QICore based QICore', () =>{
+
+    it('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -1322,8 +1322,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
         cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- QICore based QICore', () =>{
+
+    it('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -1403,8 +1403,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "Qualifying Encounters":\n  (\n    [Encounter: "Office Visit"]\n          union [Encounter: "Annual Wellness Visit"]\n  ) ValidEncounter\n        where ValidEncounter.period during "Measurement Period"\n            and ValidEncounter.status  = \'finished\'\n')
         cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- QICore based QICore', () =>{
+
+    it('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -1504,8 +1504,8 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON proper use of value set(s) -- QICore based QICore', () =>{
+
+    it('Test Case JSON proper use of value set(s) -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -1666,8 +1666,8 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
 
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
     })
-    //skipping test until resolution of bug MAT-4550
-    it.skip('Test Case JSON proper use of value set(s) -- FHIR based QICore', () =>{
+
+    it('Test Case JSON proper use of value set(s) -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
