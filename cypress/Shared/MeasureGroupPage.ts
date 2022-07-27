@@ -9,7 +9,9 @@ export class MeasureGroupPage {
     public static readonly populationTab = '[data-testid="populations-tab"]'
     public static readonly stratificationTab = '[data-testid="stratifications-tab"]'
     public static readonly reportingTab = '[data-testid="reporting-tab"]'
-
+    public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
+    public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
+    
     //Reporting tab fields
     public static readonly rateAggregation = '[data-testid="rateAggregationText"]'
     public static readonly improvementNotationSelect = '[data-testid="improvement-notation-select"]'
@@ -164,7 +166,10 @@ export class MeasureGroupPage {
                             "denominatorException": PopDenexcep,
                             "numerator": PopNum,
                             "numeratorExclusion": PopNumex
-                        }
+                        },
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
