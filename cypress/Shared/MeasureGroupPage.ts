@@ -26,14 +26,14 @@ export class MeasureGroupPage {
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
 
     //Populations
-    public static readonly initialPopulationSelect = '[name="population.initialPopulation"]'
-    public static readonly denominatorSelect = '[name="population.denominator"]'
-    public static readonly denominatorExclusionSelect = '[name="population.denominatorExclusion"]'
-    public static readonly denominatorExceptionSelect = '[name="population.denominatorException"]'
-    public static readonly numeratorSelect = '[name="population.numerator"]'
-    public static readonly numeratorExclusionSelect = '[name="population.numeratorExclusion"]'
-    public static readonly measurePopulationSelect = '[name="population.measurePopulation"]'
-    public static readonly measurePopulationExclusionSelect = '[name="population.measurePopulationExclusion"]'
+    public static readonly initialPopulationSelect = '[id="population-select-initial-population"]'
+    public static readonly denominatorSelect = '[id="population-select-denominator"]'
+    public static readonly denominatorExclusionSelect = '[id="population-select-denominator-exclusion"]'
+    public static readonly denominatorExceptionSelect = '[id="population-select-denominator-exception"]'
+    public static readonly numeratorSelect = '[id="population-select-numerator"]'
+    public static readonly numeratorExclusionSelect = '[id="population-select-numerator-exclusion"]'
+    public static readonly measurePopulationSelect = '[id="population-select-measure-population"]'
+    public static readonly measurePopulationExclusionSelect = '[id="population-select-measure-population-exclusion"]'
 
     //add measure group
     public static readonly addMeasureGroupButton = '[data-testid="add-measure-group-button"]'
@@ -127,9 +127,6 @@ export class MeasureGroupPage {
         let PopIniPop = 'SDE Payer'
         let PopNum = 'SDE Race'
         let PopDenom = 'SDE Sex'
-        let PopDenex = 'Absence of Cervix'
-        let PopDenexcep = 'SDE Ethnicity'
-        let PopNumex = 'Surgical Absence of Cervix'
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -162,16 +159,22 @@ export class MeasureGroupPage {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
+                        "id": fileContents,
                         "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        },
+                        "populations": [
+                                {
+                                    "name": "initialPopulation",
+                                    "definition": PopIniPop
+                                },
+                                {
+                                    "name": "denominator",
+                                    "definition": PopDenom
+                                },
+                                {
+                                    "name": "numerator",
+                                    "definition": PopNum
+                                }
+                            ],
                         "measureGroupTypes": [
                             "Outcome"
                         ]
