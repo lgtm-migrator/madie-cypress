@@ -119,6 +119,7 @@ export class MeasureGroupPage {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
 
     }
+
     public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean): string {
         let user = ''
         let measurePath = ''
