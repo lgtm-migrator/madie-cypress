@@ -11,7 +11,7 @@ let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 let newMeasureName = ''
 let newCqlLibraryName = ''
-
+//skipping due to MAT-4591
 describe.skip('Validate Measure Group', () => {
 
     beforeEach('Create measure and login', () => {
