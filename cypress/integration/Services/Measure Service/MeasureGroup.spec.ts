@@ -47,20 +47,33 @@ describe('Measure Service: Test Case Endpoints', () => {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
+                        "id": fileContents,
                         "scoring": measureScoring,
-                        "population": { 
-                            "initialPopulation": PopIniPop, 
-                            "numerator": PopNum, 
-                            "denominator": PopDenom 
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                            ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
                     expect(response.body.scoring).to.eql(measureScoring)
-                    expect(response.body.population.initialPopulation).to.eql('IPP')
-                    expect(response.body.population.numerator).to.eql('Numerator')
-                    expect(response.body.population.denominator).to.eql('Denominator')
+                    expect(response.body.populations[0].definition).to.eql('IPP')
+                    expect(response.body.populations[1].definition).to.eql('Numerator')
+                    expect(response.body.populations[2].definition).to.eql('Denominator')
                 })
             })
         })
@@ -82,22 +95,38 @@ describe('Measure Service: Test Case Endpoints', () => {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": measureTstScoring, 
-                        "population": { 
-                            "initialPopulation": PopIniPop, 
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumExc,
-                            "denominator": PopDenom 
-                        }
+                        "id": fileContents,
+                        "scoring": measureTstScoring,
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumExc
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                            ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body.id).to.be.exist
                     expect(response.body.scoring).to.eql('Ratio')
-                    expect(response.body.population.initialPopulation).to.eql('IPP')
-                    expect(response.body.population.numerator).to.eql('Numerator')
-                    expect(response.body.population.numeratorExclusion).to.eql('Numerator Exclusion')
-                    expect(response.body.population.denominator).to.eql('Denominator')
+                    expect(response.body.populations[0].definition).to.eql('IPP')
+                    expect(response.body.populations[1].definition).to.eql('Numerator')
+                    expect(response.body.populations[2].definition).to.eql('Numerator Exclusion')
+                    expect(response.body.populations[3].definition).to.eql('Denominator')
                 })
             })
         })

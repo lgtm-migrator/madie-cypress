@@ -200,6 +200,15 @@ export class Utilities {
     }
 
     public static validationMeasureGroupSaveAll (measureScoreValue: string | string[]): void {
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
         switch ((measureScoreValue.valueOf()).toString()){
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed

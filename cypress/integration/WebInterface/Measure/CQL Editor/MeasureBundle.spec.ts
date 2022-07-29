@@ -65,15 +65,35 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -153,7 +173,7 @@ describe('Bundle returns elmXML', () => {
                 method: 'POST',
                 body: {
                     'measureName': measureName,
-                    'cqlLibraryName': CqlLibraryName,
+                    'cqlLibraryName': CqlLibraryName+5,
                     'model': model,
                     'measureScoring': measureScoring,
                     'cql': measureCQL,
@@ -179,15 +199,35 @@ describe('Bundle returns elmXML', () => {
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -206,7 +246,7 @@ describe('Bundle returns elmXML', () => {
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName)
+        Utilities.deleteMeasure(measureName, CqlLibraryName+5)
 
     })
 

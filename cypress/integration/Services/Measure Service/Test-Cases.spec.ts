@@ -1,8 +1,6 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
-export {}
-
 let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestLibrary' + Date.now()
 let modelType = 'QI-Core'
@@ -63,15 +61,35 @@ describe('Test Case population values based on Measure Group population definiti
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population":
+                        "populations": [
                             {
-                                "initialPopulation": PopIniPop,
-                                "denominator": PopDenom,
-                                "denominatorExclusion": PopDenex,
-                                "denominatorException": PopDenexcep,
-                                "numerator": PopNum,
-                                "numeratorExclusion": PopNumex
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
                             }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
@@ -205,16 +223,32 @@ describe('Test Case population values based on Measure Group population definiti
                             authorization: 'Bearer ' + accessToken.value
                         },
                         body: {
-                            "id":groupIdFc,
                             "scoring": measureScoring,
-                            "population":
+                            "populations": [
                                 {
-                                    "initialPopulation": PopIniPop,
-                                    "denominator": PopDenom,
-                                    "denominatorExclusion": PopDenex,
-                                    "denominatorException": PopDenexcep,
-                                    "numerator": PopNum
+                                    "name": "initialPopulation",
+                                    "definition": PopIniPop
+                                },
+                                {
+                                    "name": "denominator",
+                                    "definition": PopDenom
+                                },
+                                {
+                                    "name": "denominatorExclusion",
+                                    "definition": PopDenex
+                                },
+                                {
+                                    "name": "denominatorException",
+                                    "definition": PopDenexcep
+                                },
+                                {
+                                    "name": "numerator",
+                                    "definition": PopNum
                                 }
+                            ],
+                            "measureGroupTypes": [
+                                "Outcome"
+                            ]
                         }
 
                     }).then((response) => {
@@ -244,7 +278,7 @@ describe('Test Case population values based on Measure Group population definiti
                         expect(response.body['groupPopulations'][0].populationValues[2].name).to.eq('denominatorExclusion')
                         expect(response.body['groupPopulations'][0].populationValues[3].name).to.eq('denominatorException')
                         expect(response.body['groupPopulations'][0].populationValues[4].name).to.eq('numerator')
-                        expect(response.body['groupPopulations'][0].populationValues[5]).does.not.exist
+                        expect(response.body['groupPopulations'][0].populationValues[5].definition).does.not.exist
                     })
                 })
             })
@@ -261,15 +295,35 @@ describe('Test Case population values based on Measure Group population definiti
                     },
                     body: {
                         "scoring": measureScoring,
-                        "population":
+                        "populations": [
                             {
-                                "initialPopulation": PopIniPop,
-                                "denominator": PopDenom,
-                                "denominatorExclusion": PopDenex,
-                                "denominatorException": PopDenexcep,
-                                "numerator": PopNum,
-                                "numeratorExclusion": PopNumex
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
                             }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
