@@ -12,7 +12,7 @@ let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-describe('Validate Measure Group', () => {
+describe.skip('Validate Measure Group', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
