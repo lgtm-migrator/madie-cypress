@@ -400,17 +400,49 @@ describe('Test Case Run Test Case button validations', () => {
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
+                    // body: {
+                    //     "scoring": 'Proportion',
+                    //     "population":
+                    //     {
+                    //         "initialPopulation": PopIniPop,
+                    //         "denominator": PopDenom,
+                    //         "denominatorExclusion": PopDenex,
+                    //         "denominatorException": PopDenexcep,
+                    //         "numerator": PopNum,
+                    //         "numeratorExclusion": PopNumex
+                    //     }
+                    // }
                     body: {
                         "scoring": 'Proportion',
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -504,14 +536,36 @@ describe('Test Case Run Test Case button validations', () => {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     body: {
-                        "scoring": 'Proportion', 
-                        "population": { 
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum
-                        }
+                        "scoring": 'Proportion',
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)

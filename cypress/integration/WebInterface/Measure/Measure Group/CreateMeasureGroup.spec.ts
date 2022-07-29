@@ -10,6 +10,7 @@ let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let CqlLibraryName2 = 'TestLibrary2' + Date.now()
 let measureScoring = 'Proportion'
+let measureGroupType = 'Outcome'
 
 describe('Validate Measure Group', () => {
 
@@ -66,6 +67,20 @@ describe('Validate Measure Group', () => {
             expect(actual).to.deep.eq(['Select', 'Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
         })
     })
+
+    it('Verify value in the Measure Group Type field', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //validate value in the group type field
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('contain.text', measureGroupType)
+
+    })
+
     it('Initial Population being populated from CQL', () => {
 
         //click on Edit button to edit measure
@@ -115,6 +130,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         Utilities.deleteMeasure(measureName, CqlLibraryName2+5,true)
 
     })
+
     it('Scoring unit and population association saves and persists with a Measure Group Description', () => {
 
         //click on Edit button to edit measure
@@ -161,8 +177,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
-
-
     })
 
     it('Scoring unit and population association saves and persists without Measure Group Description', () => {
@@ -181,7 +195,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //select a population definition
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population') //select the 'Initial Population' option for IP
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex') //select the 'SDE Sex' option for Denominator
@@ -206,6 +220,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
         cy.get(MeasureGroupPage.initialPopulationSelect).contains('Initial Population')
-        
+
     })
 })

@@ -32,8 +32,8 @@ describe('Validate Measure Group additions', () => {
 
         Utilities.deleteMeasure(measureName, CqlLibraryName1)
 
-
     })
+
     it('Able to add complete group to a measure whom already has a group and previous group is not affected', () => {
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -55,6 +55,16 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
+
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
@@ -63,8 +73,8 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results') 
-        
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results')
+
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -92,31 +102,23 @@ describe('Validate Measure Group additions', () => {
 
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
         cy.get(MeasureGroupPage.initialPopulationSelect).contains('Pap Test with Results')
-        
+
     })
 
     it('Ensure numbering of groups is updated when group is created and saved out of sequential order', () => {
+
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-        //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        for (let i = 1; i <= 4; i++){
 
+        for (let i = 1; i <= 4; i++){
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
-
         }
 
         cy.get(MeasureGroupPage.measureGroupOne).should('exist')
@@ -130,6 +132,16 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureGroupFive).should('exist')
         cy.get(MeasureGroupPage.measureGroupFive).should('be.visible')
 
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
+
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
@@ -138,8 +150,8 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results') 
-        
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results')
+
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -167,8 +179,6 @@ describe('Validate Measure Group additions', () => {
 
         cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
         cy.get(MeasureGroupPage.initialPopulationSelect).contains('Pap Test with Results')
-
-        cy.get(MeasureGroupPage.measureGroupThree).should('not.exist')
 
         cy.get(MeasureGroupPage.measureGroupFour).should('not.exist')
 

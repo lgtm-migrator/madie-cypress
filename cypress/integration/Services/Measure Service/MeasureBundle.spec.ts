@@ -1,7 +1,8 @@
 import {Utilities} from "../../../Shared/Utilities"
-export {}
+//export {}
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
+
 const now = require('dayjs')
 let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
 let mpEndDate = now().format('YYYY-MM-DD')
@@ -43,6 +44,7 @@ let PopDenom = 'SDE Sex'
 let PopDenex = 'Absence of Cervix'
 let PopDenexcep = 'SDE Ethnicity'
 let PopNumex = 'Surgical Absence of Cervix'
+
 describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
     before('Create Measure',() => {
@@ -83,15 +85,35 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
                     },
                     body: {
                         "scoring": 'Proportion',
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -192,15 +214,35 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                     },
                     body: {
                         "scoring": 'Proportion',
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -239,8 +281,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
         })
     })
 })
-//this automated test is being skipped until the resolution of bug 4370 (more work *may* be necessary -- depends on fix)
-describe.skip('Measure Bundle end point returns nothing with Measure CQL missing FHIRHelpers include line', () => {
+describe('Measure Bundle end point returns nothing with Measure CQL missing FHIRHelpers include line', () => {
     before('Create Measure',() => {
 
         cy.setAccessTokenCookie()
@@ -255,7 +296,7 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
                 method: 'POST',
                 body: {
                     'measureName': measureName,
-                    'cqlLibraryName': CqlLibraryName,
+                    'cqlLibraryName': CqlLibraryName+5,
                     'model': model,
                     'cql': missingFHIRHelpersMeasureCQL,
                     'elmJson': elmJson,
@@ -279,15 +320,35 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
                     },
                     body: {
                         "scoring": 'Proportion',
-                        "population": 
-                        {
-                            "initialPopulation": PopIniPop,
-                            "denominator": PopDenom,
-                            "denominatorExclusion": PopDenex,
-                            "denominatorException": PopDenexcep,
-                            "numerator": PopNum,
-                            "numeratorExclusion": PopNumex
-                        }
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            },
+                            {
+                                "name": "denominatorExclusion",
+                                "definition": PopDenex
+                            },
+                            {
+                                "name": "denominatorException",
+                                "definition": PopDenexcep
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "numeratorExclusion",
+                                "definition": PopNumex
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
                     }
                 }).then((response) => {
                         expect(response.status).to.eql(201)
@@ -305,7 +366,7 @@ describe.skip('Measure Bundle end point returns nothing with Measure CQL missing
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName)
+        Utilities.deleteMeasure(measureName, CqlLibraryName+5)
 
     })
     it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
