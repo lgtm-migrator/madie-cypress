@@ -34,7 +34,7 @@ describe('Validate CQL on CQL Library page', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
@@ -56,7 +56,7 @@ describe('Validate CQL on CQL Library page', () => {
         })
 
         //save the value in the CQL Editor
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
@@ -94,9 +94,9 @@ describe('Validate CQL on CQL Library page', () => {
         })
 
         //save the value in the CQL Editor
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
@@ -133,7 +133,7 @@ describe('Validate CQL on CQL Library page', () => {
         })
 
         //save the value in the CQL Editor
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
@@ -181,7 +181,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
@@ -200,7 +200,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
@@ -210,7 +210,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
 
     })
 
-    it('Value Set Invalid', () => {
+    it.only('Value Set Invalid', () => {
 
         //Click on Edit Button
         CQLLibrariesPage.clickEditforCreatedLibrary()
@@ -218,8 +218,8 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.readFile('cypress/fixtures/ValueSetTestingEntryInValid.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')

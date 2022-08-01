@@ -5,15 +5,16 @@ export class CQLLibraryPage {
 
     public static readonly createCQLLibraryBtn = '[data-testid="create-new-cql-library-button"]'
     public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
-    public static readonly cqlLibraryModelDropdown = '#cqlLibraryModel'
+    public static readonly cqlLibraryModelDropdown = '#model-select'
     public static readonly allLibrariesBtn = '[data-testid="all-cql-libraries-tab"]'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core"]'
-    public static readonly saveCQLLibraryBtn = '[data-testid="cql-library-save-button"]'//'#saveBtn'
+    public static readonly saveCQLLibraryBtn = '[data-testid="create-new-library-save-button"]'
+    public static readonly updateCQLLibraryBtn = '[data-testid="cql-library-save-button"]'
     public static readonly cqlLibraryNameList = ':nth-child(1) > .CqlLibraryList___StyledTd-sc-1rv02q7-10'
     public static readonly cqlLibraryModelList = ':nth-child(1) > .CqlLibraryList___StyledTd2-sc-1rv02q7-11'
     public static readonly cqlLibraryNameInvalidError = '[data-testid="cqlLibraryName-helper-text"]'
-    public static readonly duplicateCQLLibraryNameError = '[data-testid="cql-library-server-error-alerts"]'
-    public static readonly cqlLibraryModelErrorMsg = '#cqlLibraryModel-helper-text'
+    public static readonly duplicateCQLLibraryNameError = '[data-testid="create-cql-library-error-text"]'
+    public static readonly cqlLibraryModelErrorMsg = '.MuiFormHelperText-root'
     public static readonly successfulCQLSaveNoErrors = '[data-testid=cql-library-success-alert]'
 
     //CQL Editor
