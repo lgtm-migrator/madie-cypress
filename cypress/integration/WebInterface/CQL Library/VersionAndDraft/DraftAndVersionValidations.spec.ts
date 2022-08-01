@@ -100,10 +100,10 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('exist')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')

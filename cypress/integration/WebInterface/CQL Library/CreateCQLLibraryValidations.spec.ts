@@ -68,34 +68,39 @@ describe('CQL Library Validations', () => {
         cy.get(Header.cqlLibraryTab).click()
         cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
-        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().blur()
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).dblclick()
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click({force:true})
         cy.get(CQLLibraryPage.cqlLibraryModelErrorMsg).should('contain.text', 'A CQL library model is required.')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
     })
 
     it('Create new CQL Library Creation with CQL', () =>{
         let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let LibraryName = CQLLibraryName+randValue
+
         //navigate to the CQL Libaray page and create new CQL Library
         cy.get(Header.cqlLibraryTab).click()
         cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
-        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(LibraryName)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        CQLLibraryPage.clickCreateLibraryButton()
+
+        CQLLibrariesPage.clickEditforCreatedLibrary()
         cy.readFile('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-
-        CQLLibraryPage.clickCreateLibraryButton()
-
-        cy.wait(5000)        
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
-        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', CQLLibraryName+randValue)
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('contain.value', LibraryName)
 
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
@@ -106,6 +111,7 @@ describe('CQL Library Validations', () => {
     })
 
     it('Update new CQL Library Creation with CQL', () =>{
+
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let UpdatedCQLLibraryName = CQLLibraryName +randValue+ "updated"
         CQLLibraryPage.createCQLLibrary(UpdatedCQLLibraryName)
@@ -122,9 +128,7 @@ describe('CQL Library Validations', () => {
             cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).type(fileContents)
         })
 
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.visible')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.enabled')
-        cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
 
