@@ -35,7 +35,7 @@ describe('Fluent Function Capability', () => {
 
     after('Clean up', () => {
 
-        Utilities.deleteMeasure(measureName, CqlLibraryName)
+        //Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 
@@ -62,6 +62,23 @@ describe('Fluent Function Capability', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
+        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
+        cy.get(MeasureGroupPage.addMeasureGroupButton).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+
+        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
         cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')

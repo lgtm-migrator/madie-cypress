@@ -208,7 +208,7 @@ export class Utilities {
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
         switch ((measureScoreValue.valueOf()).toString()){
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed

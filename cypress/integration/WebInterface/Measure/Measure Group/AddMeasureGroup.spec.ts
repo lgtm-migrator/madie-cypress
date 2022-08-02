@@ -63,7 +63,7 @@ describe('Validate Measure Group additions', () => {
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
@@ -140,7 +140,7 @@ describe('Validate Measure Group additions', () => {
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click()
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
