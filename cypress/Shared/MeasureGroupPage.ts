@@ -9,9 +9,12 @@ export class MeasureGroupPage {
     public static readonly populationTab = '[data-testid="populations-tab"]'
     public static readonly stratificationTab = '[data-testid="stratifications-tab"]'
     public static readonly reportingTab = '[data-testid="reporting-tab"]'
+    
+    //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
     public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
-    
+    public static readonly yesDeleteModalbtn = '[data-testid="delete-measure-group-modal-delete-btn"]'
+    public static readonly keepGroupModalbtn = '[data-testid="delete-measure-group-modal-cancel-btn"]'
     //Reporting tab fields
     public static readonly rateAggregation = '[data-testid="rateAggregationText"]'
     public static readonly improvementNotationSelect = '[data-testid="improvement-notation-select"]'
@@ -19,7 +22,8 @@ export class MeasureGroupPage {
     public static readonly measureGroupTypeSelect = '[data-testid="measure-group-type-dropdown"]'
     public static readonly measureGroupTypeCheckbox = '[class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-1km1ehz"]'
     public static readonly measureGroupTypeDropdownBtn = '[class="MuiBackdrop-root MuiBackdrop-invisible css-esi9ax"]'
-    
+    public static readonly measureGroupTypeListBox = '[id="mui-component-select-measureGroupTypes"]'
+        
     //Scoring drop-down box
     public static readonly measureScoringSelect = '[data-testid="scoring-unit-select"]'
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
@@ -164,15 +168,15 @@ export class MeasureGroupPage {
                         "populations": [
                                 {
                                     "name": "initialPopulation",
-                                    "definition": PopIniPop
+                                    "definition": PopIniPop || 'ipp'
                                 },
                                 {
                                     "name": "denominator",
-                                    "definition": PopDenom
+                                    "definition": PopDenom || 'denom'
                                 },
                                 {
                                     "name": "numerator",
-                                    "definition": PopNum
+                                    "definition": PopNum || 'num'
                                 }
                             ],
                         "measureGroupTypes": [
