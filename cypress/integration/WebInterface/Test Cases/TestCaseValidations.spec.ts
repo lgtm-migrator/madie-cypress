@@ -47,7 +47,7 @@ let twoFiftyTwoCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy
 
 describe('Test Case Validations', () => {
 
-    before('Create Measure, create group, and Login', () => {
+    before('Create Measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
     })
