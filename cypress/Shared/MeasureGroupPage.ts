@@ -78,6 +78,16 @@ export class MeasureGroupPage {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+
         cy.get(this.measureScoringSelect).select('Proportion')
         cy.get(this.initialPopulationSelect).select('ipp')
         cy.get(this.denominatorSelect).select('denom')
@@ -107,6 +117,16 @@ export class MeasureGroupPage {
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
         cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
