@@ -66,7 +66,7 @@ describe('Test Case Validations', () => {
 
     })
 
-    it.skip('Create Test Case: Description more than 250 characters', () => {
+    it('Create Test Case: Description more than 250 characters', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
