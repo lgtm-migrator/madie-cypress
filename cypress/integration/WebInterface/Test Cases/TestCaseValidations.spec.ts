@@ -971,7 +971,7 @@ describe('Test Case Run Test Case button validations', () => {
     })
 })
 describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON does not use value set(s)', () => {
-    beforeEach('Create measure, group and login', () => {
+    beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
