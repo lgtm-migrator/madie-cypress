@@ -35,7 +35,7 @@ describe('Fluent Function Capability', () => {
 
     after('Clean up', () => {
 
-        //Utilities.deleteMeasure(measureName, CqlLibraryName)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
 

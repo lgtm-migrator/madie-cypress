@@ -14,7 +14,7 @@ export class CreateMeasurePage {
     public static readonly measureNameFieldLevelError = '[data-testid=measureName-helper-text]'
     public static readonly cqlLibraryNameFieldLevelError = '[data-testid="cqlLibraryName-helper-text"]'
     public static readonly serverErrorMsg = '[data-testid="server-error-alerts"]'
-    public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"] [data-testid="CloseIcon"]'
+    public static readonly serverErrorMsgCloseIcon = '[data-testid="server-error-alerts"]'
     public static readonly measurementPeriodStartDate = '[name=measurementPeriodStart]'
     public static readonly measurementPeriodEndDate = '[name=measurementPeriodEnd]'
     public static readonly measurementPeriodStartDateError = '[data-testid=measurementPeriodStart-helper-text]'
