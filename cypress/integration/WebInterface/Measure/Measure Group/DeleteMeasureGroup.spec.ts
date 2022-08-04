@@ -14,44 +14,37 @@ let series = 'ICFTestSeries'
 let description = 'Some Test Description'
 let validJsonValue = TestCaseJson.API_TestCaseJson_Valid
 let measureTwo = measureOne + "Second"
+var newCqlLibraryName = null
+var randValue = null
+
 
 describe('Validate Measure Group deletion functionality', () => {
 
-    before('Create measure', () => {
+
+    beforeEach('Create measure(s), group(s), test case(s), and login', () => {
+        randValue = (Math.floor((Math.random() * 1000) + 1))
+        newCqlLibraryName = CqlLibraryName1 + randValue
+
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureOne, CqlLibraryName1)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureOne, newCqlLibraryName)
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
         TestCasesPage.CreateTestCaseAPI(title1, series, description, validJsonValue)
 
         //create new measure via temp user
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, CqlLibraryName1+"second", null, true, true )
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, newCqlLibraryName+"second", null, true, true )
         MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
         TestCasesPage.CreateTestCaseAPI(title1+"second", series, description, validJsonValue, true, true)
-
-
-
-
-    })
-
-    beforeEach('Login', () => {
-
         OktaLogin.Login()
-
     })
 
-    afterEach('Login', () => {
+    afterEach('Logout', () => {
 
         OktaLogin.Logout()
+        Utilities.deleteMeasure(measureOne, newCqlLibraryName)
+        Utilities.deleteMeasure(measureTwo, newCqlLibraryName+"second", true, true)
 
     })
 
-    after('Clean up', () => {
-
-        Utilities.deleteMeasure(measureOne, CqlLibraryName1)
-        Utilities.deleteMeasure(measureTwo, CqlLibraryName1+"second", true, true)
-
-
-    })
     it('Delete button brings up confirmation modal', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -89,6 +82,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get('.MuiTypography-root.MuiTypography-body1.jss7.css-9l3uo3').should('contain.text', 'This action cannot be undone.')
 
     })
+
     it('Confirmation modal has Yes button and clicking yes when there are multiple groups removes group and renumbering occurs', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -178,6 +172,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.measureGroupFour).should('not.exist')
         cy.get(MeasureGroupPage.measureGroupFive).should('not.exist')        
     })
+
     it('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -224,6 +219,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
         cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', 'Select')
     })
+
     it('Confirmation modal has a Keep button and clicking on it will result in the group persisting', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -283,6 +279,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Select')
 
     })
+
     it('Test Case list page still loads after a one from multiple groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -375,6 +372,7 @@ describe('Validate Measure Group deletion functionality', () => {
 
 
     })
+
     it('Test Case list page still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -430,6 +428,7 @@ describe('Validate Measure Group deletion functionality', () => {
             cy.get('[data-testid=test-case-row-'+ fileContents +']').should('exist').should('be.visible')
         })        
     })
+
     it('Test Cases still loads after a one from multiple groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -528,6 +527,7 @@ describe('Validate Measure Group deletion functionality', () => {
             })
         })
     })
+
     it('Test Cases still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -590,6 +590,7 @@ describe('Validate Measure Group deletion functionality', () => {
             })
         })        
     })
+
     it('User can only delete groups from a measure that they own', () => {
         //Verify the Measure on My Measures Page List
         cy.get(MeasuresPage.measureListTitles).should('not.contain', measureTwo)

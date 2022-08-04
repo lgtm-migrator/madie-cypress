@@ -42,8 +42,8 @@ describe('Measure Highlighting', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-
-    it('Execute single Test Case and verify Measure highlighting', () => {
+    //skipping due to bug MAT-4607
+    it.skip('Execute single Test Case and verify Measure highlighting', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
