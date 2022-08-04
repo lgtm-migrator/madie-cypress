@@ -1,5 +1,6 @@
 import {EditMeasurePage} from "./EditMeasurePage"
 import { Environment } from "./Environment"
+import {Utilities} from "./Utilities"
 
 export class TestCasesPage {
 
@@ -108,18 +109,25 @@ export class TestCasesPage {
         cy.get(this.testCasePopulationList).should('be.visible')
 
         cy.get(this.testCaseTitle).should('exist')
-        cy.get(this.testCaseTitle).should('be.visible')
-        cy.get(this.testCaseTitle).should('be.enabled')
-        cy.get(this.testCaseTitle).clear()
-        cy.get(this.testCaseTitle).type(testCaseTitle, { force: true })
+        Utilities.waitForElementVisible(this.testCaseTitle, 20000)
+        Utilities.waitForElementEnabled(this.testCaseTitle, 20000)
+        cy.get(this.testCaseDescriptionTextBox).should('exist')
+        cy.get(this.testCaseDescriptionTextBox).should('be.visible')
+        cy.get(this.testCaseDescriptionTextBox).should('be.enabled')
+        cy.get(this.testCaseDescriptionTextBox).focus()
         cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(this.testCaseSeriesTextBox).should('exist')
+        cy.get(this.testCaseSeriesTextBox).should('be.visible')
         cy.get(this.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        cy.get(this.testCaseTitle).focus()
+        cy.get(this.testCaseTitle).clear()
+        cy.get(this.testCaseTitle).focus()
+        cy.get(this.testCaseTitle).type(testCaseTitle.toString())
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
         this.clickCreateTestCaseButton(withBundleId)
-
 
 
         //Verify created test case Title and Series exists on Test Cases Page

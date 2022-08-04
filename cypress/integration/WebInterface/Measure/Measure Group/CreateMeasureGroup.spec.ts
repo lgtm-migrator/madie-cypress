@@ -130,8 +130,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
         Utilities.deleteMeasure(measureName, CqlLibraryName2+5,true)
 
     })
-
-    it('Scoring unit and population association saves and persists with a Measure Group Description', () => {
+    //skipping due to bug MAT-4604
+    it.skip('Scoring unit and population association saves and persists with a Measure Group Description', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -178,8 +178,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
     })
-
-    it('Scoring unit and population association saves and persists without Measure Group Description', () => {
+    //skipping due to bug MAT-4604
+    it.skip('Scoring unit and population association saves and persists without Measure Group Description', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure(true)

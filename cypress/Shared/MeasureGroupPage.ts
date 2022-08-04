@@ -143,14 +143,14 @@ export class MeasureGroupPage {
 
     }
 
-    public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean): string {
+    public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean, PopIniPopP?: string, PopNumP?:string, PopDenomP?: string): string {
         let user = ''
         let measurePath = ''
         let measureGroupPath = ''
-        let measureScoring = 'Proportion'
-        let PopIniPop = 'SDE Payer'
-        let PopNum = 'SDE Race'
-        let PopDenom = 'SDE Sex'
+        let measureScoring = 'Proportion'        
+        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'SDE Payer'}
+        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'SDE Race'}
+        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'SDE Race'}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -188,15 +188,15 @@ export class MeasureGroupPage {
                         "populations": [
                                 {
                                     "name": "initialPopulation",
-                                    "definition": PopIniPop || 'ipp'
+                                    "definition": PopIniPopP
                                 },
                                 {
                                     "name": "denominator",
-                                    "definition": PopDenom || 'denom'
+                                    "definition": PopDenomP
                                 },
                                 {
                                     "name": "numerator",
-                                    "definition": PopNum || 'num'
+                                    "definition": PopNumP
                                 }
                             ],
                         "measureGroupTypes": [

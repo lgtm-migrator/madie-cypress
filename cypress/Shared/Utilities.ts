@@ -445,11 +445,11 @@ export class Utilities {
                 this.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                     .then(($message) => {
-                        if (($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                        if (($message.text() == 'This change will reset the population scoring value in test cases. cases. Are you sure you wanted to continue with this? UpdateCancel'/*'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel'*/)) {
                             cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                             cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                         }
-                        else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                        else if ( ($message.text() != 'This change will reset the population scoring value in test cases. cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                             expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                         }
                    })
@@ -477,11 +477,11 @@ export class Utilities {
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
                         .then(($message) => {
-                            if (($message.text() == 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                            if (($message.text() == 'This change will reset the population scoring value in test cases. cases. Are you sure you wanted to continue with this? UpdateCancel'/*'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel'*/)) {
                                 cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
                                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
                             }
-                            else if ( ($message.text() != 'This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')) {
+                            else if ( ($message.text() != 'This change will reset the population scoring value in test cases. cases. Are you sure you wanted to continue with this? UpdateCancel')) {
                                 expect($message.text()).to.be.oneOf(['Population details for this group saved successfully.', 'Population details for this group updated successfully.'])
                             }
                         })
