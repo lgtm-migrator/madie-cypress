@@ -392,8 +392,6 @@ export class Utilities {
                     .select('SDE Race').contains('SDE Race')
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .select('Select Denominator Exception ( Leave selected for no population )')
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .select('Select Denominator Exclusion ( Leave selected for no population )')
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .select('Select Numerator Exclusion ( Leave selected for no population )') 
                 break
