@@ -225,8 +225,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
 
     })
-    //skipping due to bug MAT-4604
-    it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
 
         //creating propportion group on measure
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
