@@ -186,18 +186,36 @@ export class MeasureGroupPage {
                         "id": fileContents,
                         "scoring": measureScoring,
                         "populations": [
-                                {
-                                    "name": "initialPopulation",
-                                    "definition": PopIniPopP
-                                },
-                                {
-                                    "name": "denominator",
-                                    "definition": PopDenomP
-                                },
-                                {
-                                    "name": "numerator",
-                                    "definition": PopNumP
-                                }
+                            {
+                                "_id" : "", 
+                                "name" : "initialPopulation", 
+                                "definition" : PopIniPopP
+                            }, 
+                            {
+                                "_id" : "", 
+                                "name" : "denominator", 
+                                "definition" : PopDenomP
+                            }, 
+                            {
+                                "_id" : "", 
+                                "name" : "denominatorExclusion", 
+                                "definition" : ""
+                            }, 
+                            {
+                                "_id" : "", 
+                                "name" : "denominatorException", 
+                                "definition" : ""
+                            }, 
+                            {
+                                "_id" : "", 
+                                "name" : "numerator", 
+                                "definition" : PopNumP
+                            }, 
+                            {
+                                "_id" : "", 
+                                "name" : "numeratorExclusion", 
+                                "definition" : ""
+                            }                                
                             ],
                         "measureGroupTypes": [
                             "Outcome"
