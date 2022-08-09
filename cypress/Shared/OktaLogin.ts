@@ -32,7 +32,7 @@ export class OktaLogin {
 
         cy.get(this.signInButton).click()
 
-        cy.wait('@umls').then(({response}) => {
+        cy.wait('@umls', { timeout: 60000}).then(({response}) => {
 
             if(response.statusCode === 200)
             {
