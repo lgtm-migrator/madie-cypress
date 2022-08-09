@@ -23,6 +23,15 @@ export class Environment {
                     umls_API_KEY: Cypress.env('VSAC_API_KEY')
                 }
             }
+            case 'impl': {
+                return {
+                    harpUser: Cypress.env('IMPL_USERNAME'),
+                    password: Cypress.env('IMPL_PASSWORD'),
+                    harpUserALT: Cypress.env('IMPL_ALT_USERNAME'),
+                    passwordALT: Cypress.env('IMPL_ALT_PASSWORD'),
+                    umls_API_KEY: Cypress.env('VSAC_API_KEY')
+                }
+            }
         }
     }
 
@@ -44,6 +53,14 @@ export class Environment {
                     authUri: Cypress.env('TEST_MADIE_AUTHURI'),
                     redirectUri: Cypress.env('TEST_MADIE_REDIRECTURI'),
                     clientId: Cypress.env('TEST_MADIE_CLIENTID')
+                }
+            case 'impl':
+
+                return {
+                    authnUrl: 'https://impl.idp.idm.cms.gov/api/v1/authn',
+                    authUri: Cypress.env('IMPL_MADIE_AUTHURI'),
+                    redirectUri: Cypress.env('IMPL_MADIE_REDIRECTURI'),
+                    clientId: Cypress.env('IMPL_MADIE_CLIENTID')
                 }
 
         }

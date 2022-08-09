@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://impl-madie.hcqis.org",
+  "screenshotsFolder": "mochawesome-report/assets",
+  "numTestsKeptInMemory": 0,
+  "env": {
+    "environment": "impl",
+    "type": "base"
+  }
+}
+

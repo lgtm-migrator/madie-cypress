@@ -8,7 +8,7 @@ pipeline{
     }
 
     parameters {
-        choice(choices: ['dev:all:ui:tests','dev:all:tests','dev:ui:smoketests', 'dev:ui:cqllibrary:cqlEditor', 'dev:ui:measure:cqlEditor', 'dev:measure:editMeasure:ui:tests', 'dev:ui:testCases:testCasePopulationValues','dev:ui:cqllibrary:versionAndDraft','dev:all:services:tests','dev:services:measureService:tests', 'dev:services:cqlLibrariesService:tests', 'dev:services:cqlTranslatorService:tests', 'dev:services:terminologyService:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests','test:ui:smoketests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
+        choice(choices: ['dev:all:ui:tests','dev:all:tests','dev:ui:smoketests', 'dev:ui:cqllibrary:cqlEditor', 'dev:ui:measure:cqlEditor', 'dev:measure:editMeasure:ui:tests', 'dev:ui:testCases:testCasePopulationValues','dev:ui:cqllibrary:versionAndDraft','dev:all:services:tests','dev:services:measureService:tests', 'dev:services:cqlLibrariesService:tests', 'dev:services:cqlTranslatorService:tests', 'dev:services:terminologyService:tests', 'test:all:tests', 'test:all:ui:tests', 'test:all:services:tests','test:ui:smoketests','impl:all:tests','impl:all:ui:tests','impl:all:services:tests','impl:ui:smoketests'], description:'Choose the Test script to run', name: 'TEST_SCRIPT')
         choice(name:'BUILD_CONTAINER', description:'Rebuild Cypress Container?', choices:['no','yes'])
     }
 
@@ -22,6 +22,10 @@ pipeline{
         CYPRESS_TEST_PASSWORD=credentials('CYPRESS_TEST_PASSWORD')
         CYPRESS_TEST_ALT_USERNAME=credentials('CYPRESS_TEST_ALT_USERNAME')
         CYPRESS_TEST_ALT_PASSWORD=credentials('CYPRESS_TEST_ALT_PASSWORD')
+        CYPRESS_IMPL_USERNAME=credentials('CYPRESS_IMPL_USERNAME')
+        CYPRESS_IMPL_PASSWORD=credentials('CYPRESS_IMPL_PASSWORD')
+        CYPRESS_IMPL_ALT_USERNAME=credentials('CYPRESS_IMPL_ALT_USERNAME')
+        CYPRESS_IMPL_ALT_PASSWORD=credentials('CYPRESS_IMPL_ALT_PASSWORD')
         CYPRESS_VSAC_API_KEY=credentials('CYPRESS_VSAC_API_KEY')
         CYPRESS_DEV_MADIE_CLIENTID=credentials('CYPRESS_DEV_MADIE_CLIENTID')
         CYPRESS_DEV_MADIE_CODECHALLENGE=credentials('CYPRESS_DEV_MADIE_CODECHALLENGE')
@@ -31,6 +35,9 @@ pipeline{
         CYPRESS_TEST_MADIE_CLIENTID=credentials('CYPRESS_TEST_MADIE_CLIENTID')
         CYPRESS_TEST_MADIE_REDIRECTURI=credentials('CYPRESS_TEST_MADIE_REDIRECTURI')
         CYPRESS_TEST_MADIE_AUTHURI=credentials('CYPRESS_TEST_MADIE_AUTHURI')
+        CYPRESS_IMPL_MADIE_CLIENTID=credentials('CYPRESS_IMPL_MADIE_CLIENTID')
+        CYPRESS_IMPL_MADIE_REDIRECTURI=credentials('CYPRESS_IMPL_MADIE_REDIRECTURI')
+        CYPRESS_IMPL_MADIE_AUTHURI=credentials('CYPRESS_IMPL_MADIE_AUTHURI')
         CYPRESS_REPORT_BUCKET=credentials('CYPRESS_REPORT_BUCKET')
         NODE_OPTIONS=credentials('NODE_OPTIONS')
     }
