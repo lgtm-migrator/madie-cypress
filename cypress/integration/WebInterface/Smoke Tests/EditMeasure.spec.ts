@@ -37,10 +37,9 @@ describe('Edit Measure', () => {
         //Edit Measure Name
         MeasuresPage.clickEditforCreatedMeasure()
 
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear()
-        cy.get(EditMeasurePage.editMeasureTextBox).type(updatedMeasureName)
-        cy.get(EditMeasurePage.saveEditedMeasureName).click()
+        cy.get(EditMeasurePage.measureNameTextBox).clear()
+        cy.get(EditMeasurePage.measureNameTextBox).type(updatedMeasureName)
+        cy.get(EditMeasurePage.measurementInformationSaveButton).click()
 
         //Add Measure Steward
         cy.get(EditMeasurePage.leftPanelMeasureSteward).contains('Steward/Author').click()

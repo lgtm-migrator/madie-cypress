@@ -35,31 +35,27 @@ describe('Edit Measure Name Validations', () => {
 
         //Click on Edit Button, Verify error message when the Measure Name field is empty
         MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear()
-        cy.get(EditMeasurePage.editMeasureSaveButton).click()
-        cy.get(EditMeasurePage.editMeasureFieldLevelError).should('contain.text', 'A measure name is required.')
+
+        cy.get(EditMeasurePage.measureNameTextBox).clear()
+        cy.get(EditMeasurePage.measurementInformationForm).click()
+        cy.get(EditMeasurePage.measureNameFieldLevelError).should('contain.text', 'A Measure name is required.')
 
         //Verify error message when the Edit Measure Name doesn't contain alphabets
-        cy.get(EditMeasurePage.editMeasureCancelButton).click()
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear().type('66777')
-        cy.get(EditMeasurePage.editMeasureSaveButton).click()
-        cy.get(EditMeasurePage.editMeasureFieldLevelError).should('contain.text', 'A measure name must contain at least one letter.')
+        cy.get(EditMeasurePage.measureNameTextBox).type('66777')
+        cy.get(EditMeasurePage.measureNameFieldLevelError).should('contain.text', 'A Measure name must contain at least one letter.')
 
         //Verify error message when the Measure Name has '_'
-        cy.get(EditMeasurePage.editMeasureCancelButton).click()
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear().type('Test_Measure')
-        cy.get(EditMeasurePage.editMeasureSaveButton).click()
-        cy.get(EditMeasurePage.editMeasureFieldLevelError).should('contain.text', 'Measure Name must not contain \'_\' (underscores).')
+        cy.get(EditMeasurePage.measureNameTextBox).clear().type('Test_Measure')
+        cy.get(EditMeasurePage.measureNameFieldLevelError).should('contain.text', 'Measure Name must not contain \'_\' (underscores).')
 
         //Verify error message when the Measure Name has more than 500 characters
-        cy.get(EditMeasurePage.editMeasureCancelButton).click()
-        cy.get(EditMeasurePage.editMeasurePen).click()
-        cy.get(EditMeasurePage.editMeasureTextBox).clear().type('This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is for measure name validation.This test is')
-        cy.get(EditMeasurePage.editMeasureSaveButton).click()
-        cy.get(EditMeasurePage.editMeasureFieldLevelError).should('contain.text', 'A measure name cannot be more than 500 characters.')
+        cy.get(EditMeasurePage.measureNameTextBox).clear().type('This test is for measure name validation.This test ' +
+            'is for measure name validation.This test is for measure name validation.This test is for measure name ' +
+            'validation.This test is for measure name validation.This test is for measure name validation.This test ' +
+            'is for measure name validation.This test is for measure name validation.This test is for measure name ' +
+            'validation.This test is for measure name validation.This test is for measure name validation.This test ' +
+            'is for measure name validation.This test is')
+        cy.get(EditMeasurePage.measureNameFieldLevelError).should('contain.text', 'A Measure name cannot be more than 500 characters.')
 
     })
 })
@@ -94,7 +90,8 @@ describe('Measurement Period Validations', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(CreateMeasurePage.measurementPeriodEndDate).clear().type('01/01/1999')
         cy.get(CreateMeasurePage.measurementPeriodStartDate).clear().type('12/01/2022')
-        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date should be greater than or equal to measurement period start date.')
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period ' +
+            'end date should be greater than measurement period start date.')
 
     })
 
@@ -103,10 +100,10 @@ describe('Measurement Period Validations', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(CreateMeasurePage.measurementPeriodStartDate).clear()
         cy.get(CreateMeasurePage.measurementPeriodStartDate).focus().blur()
-        cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Required')
+        cy.get(CreateMeasurePage.measurementPeriodStartDateError).should('contain.text', 'Measurement period start date is required')
         cy.get(CreateMeasurePage.measurementPeriodEndDate).clear()
         cy.get(CreateMeasurePage.measurementPeriodEndDate).focus().blur()
-        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Required')
+        cy.get(CreateMeasurePage.measurementPeriodEndDateError).should('contain.text', 'Measurement period end date is required')
     })
 
     it('Verify error message when the Measurement Period start and end dates are not in valid range', () => {
