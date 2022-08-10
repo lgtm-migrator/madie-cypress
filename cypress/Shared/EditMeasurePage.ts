@@ -7,15 +7,14 @@ export class EditMeasurePage {
     public static readonly measureGroupsTab = '[data-testid=groups-tab]'
     public static readonly testCasesTab = '[data-testid=patients-tab]'
 
-    //Measure Details
-    public static readonly editMeasurePen = '.InlineEdit___StyledPencilIcon-sc-infirb-2'
-    public static readonly editMeasureTextBox = '[data-testid="inline-edit-input"]'
-    public static readonly saveEditedMeasureName = '.fa-check-circle > path'
-    public static readonly editMeasureFieldLevelError = '[data-testid="edit-measure-name-error-text"]'
-    public static readonly editMeasureSaveButton = '[data-testid="save-edit-measure-name"] > path'
-    public static readonly editMeasureCancelButton = '.fa-times-circle'
+    //Measurement Information
+    public static readonly measurementInformationForm = '[data-testid="measure-information-edit"]'
+    public static readonly measureNameTextBox = '[data-testid="measure-name-input"]'
+    public static readonly measurementInformationSaveButton = '[data-testid="measurement-information-save-button"]'
+    public static readonly measureNameFieldLevelError = '[data-testid="measureName-helper-text"]'
 
     //left panel
+    public static readonly leftPanelMeasureInformation = '[data-testid="leftPanelMeasureInformation"]'
     public static readonly leftPanelMeasureSteward = '[data-testid="leftPanelMeasureSteward"]'
     public static readonly leftPanelDescription = '[data-testid="leftPanelMeasureDescription"]'
     public static readonly leftPanelCopyright = '[data-testid="leftPanelMeasureCopyright"]'
