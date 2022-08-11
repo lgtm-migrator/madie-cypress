@@ -26,7 +26,7 @@ export class MeasureGroupPage {
     public static readonly stratDescThree ='[name="stratifications[2].description"]'
     public static readonly stratDescFour ='[name="stratifications[3].description"]'
 
-    public static readonly saveStratButton = '[data-testid="add-strat-button"]'
+    public static readonly addStratButton = '[data-testid="add-strat-button"]'
         
 
     //related to delete functionality for groups
@@ -221,6 +221,7 @@ export class MeasureGroupPage {
                     body: {
                         "id": fileContents,
                         "scoring": measureScoring,
+                        "populationBasis": "Boolean",
                         "populations": [
                             {
                                 "_id" : "",

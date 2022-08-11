@@ -152,7 +152,7 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.stratAssociationTwo).should('exist')
         cy.get(MeasureGroupPage.stratDescOne).should('exist')
         cy.get(MeasureGroupPage.stratDescTwo).should('exist')
-        cy.get(MeasureGroupPage.saveStratButton).should('exist')
+        cy.get(MeasureGroupPage.addStratButton).should('exist')
 
         //confirm values in stratification 1 related fields -- score type is Proportion
         //stratification 1 -- default value
@@ -193,6 +193,42 @@ describe('Validating group tabs', () => {
             .should('contain', 'Measure Population')
             .should('contain', 'Measure Population Exclusion')
 
+    })
+    it.only('Stratification does not save, if association is the only field that has a value selected', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        //save CQL as is
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Click on Measure Group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //enter a value for the required Population Basis field
+        cy.get(MeasureGroupPage.popBasis).type('Boolean').type('{enter}')
+        
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
+        cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //select a value only for Association
+        cy.get(MeasureGroupPage.stratAssociationOne).select('Denominator')
+
+        //save
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
+        cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //Association -- default value -- score type is Proportion
+        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
     })
     it('Reporting tab contains Rate Aggregation text area and Improvement Notation drop-down box', () => {
         //Click on Edit Measure
