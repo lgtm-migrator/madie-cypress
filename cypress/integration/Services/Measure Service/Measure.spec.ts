@@ -2,6 +2,7 @@
 
 export {}
 import {Utilities} from "../../../Shared/Utilities"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
 import {Environment} from "../../../Shared/Environment"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
@@ -20,6 +21,7 @@ let defaultUser = ''
 const now = require('dayjs')
 let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
 let mpEndDate = now().format('YYYY-MM-DD')
+let measureCQL = MeasureCQL.SBTEST_CQL
 
 describe('Measure Service: Create Measure', () => {
 
@@ -409,7 +411,7 @@ describe('Measure Service: CQL Library name validations', () => {
 
         newMeasureName = 'TestMeasure'+ Date.now()
         CQLLibraryName = 'CQLLibraryName' + Date.now()
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, CQLLibraryName)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, CQLLibraryName, measureCQL)
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.request({

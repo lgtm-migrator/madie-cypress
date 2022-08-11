@@ -4,6 +4,8 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Utilities} from "../../../../Shared/Utilities"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import { symlink } from "fs"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -11,6 +13,7 @@ let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 let newMeasureName = ''
 let newCqlLibraryName = ''
+let measureCQL = MeasureCQL.SBTEST_CQL
 
 describe('Validating group tabs', () => {
     beforeEach('Create measure and login', () => {
@@ -19,8 +22,8 @@ describe('Validating group tabs', () => {
         newCqlLibraryName = CqlLibraryName + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureCQL)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'num', 'denom')
         OktaLogin.Login()
 
     })
@@ -40,11 +43,6 @@ describe('Validating group tabs', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -65,17 +63,11 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('exist').should('be.visible').should('be.enabled')
 
     })
-
     it('Verifying Population tab with Ratio selected', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -100,11 +92,6 @@ describe('Validating group tabs', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -125,11 +112,6 @@ describe('Validating group tabs', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -147,18 +129,13 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('exist').should('be.visible').should('be.enabled')
 
     })
-    //skipping due to parital deploy of code that would break this test
-    it.skip('Stratification tab displays temporary message', () => {
+    it('Stratification tab includes new fields and those fields have expectedd values', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
+        //save CQL as is
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -168,9 +145,38 @@ describe('Validating group tabs', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()     
         
         //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
         cy.get(MeasureGroupPage.stratificationTab).click()
-        //confirm temp text for Stratification is present
-        cy.get('.MeasureGroups__FieldLabel-sc-1ozd0ed-17.dSkNkZ').should('contain.text', 'Stratification support to come')
+
+        //confirm stratification related fields are present
+        cy.get(MeasureGroupPage.stratOne).should('exist')
+        cy.get(MeasureGroupPage.stratTwo).should('exist')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('exist')
+        cy.get(MeasureGroupPage.stratAssociationTwo).should('exist')
+        cy.get(MeasureGroupPage.stratDescOne).should('exist')
+        cy.get(MeasureGroupPage.stratDescTwo).should('exist')
+        cy.get(MeasureGroupPage.saveStratButton).should('exist')
+
+        //confirm values in stratification 1 related fields
+        //stratification 1 -- default value
+        cy.get(MeasureGroupPage.stratOne).find('option:selected').should('have.text', '-')
+        //stratification 1 -- contains these values, in this order, based off of CQL
+        cy.get(MeasureGroupPage.stratOne)
+            .should('include.text', '-')
+            .should('include.text', 'denom')
+            .should('include.text', 'ipp')
+            .should('include.text', 'num')
+            
+        //Association -- default value
+        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
+        //Association -- contains these values based off score type
+        cy.get(MeasureGroupPage.stratAssociationOne)
+            .should('contain','Initial Population')
+            .should('contain', 'Denominator')
+            .should('contain', 'Denominator Exclusion')
+            .should('contain', 'Numerator')
+            .should('contain', 'Numerator Exclusion')
+            .should('contain', 'Denominator Exception')
 
     })
     it('Reporting tab contains Rate Aggregation text area and Improvement Notation drop-down box', () => {
@@ -178,11 +184,6 @@ describe('Validating group tabs', () => {
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -202,19 +203,12 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text', 'Select')
 
     })
-    //skipping this test due to typo in message; once MAT-4492 is implemented, this test will need to be updated to account for new modal
-    it.skip('Can successfully update / change score value and save on population tab', () => {
+    it('Can successfully update / change score value and save on population tab', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -236,13 +230,20 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
 
         //validation message after attempting to save
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
-        Utilities.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'This change will reset the population scoring value in test cases. cases. Are you sure you wanted to continue with this? UpdateCancel')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+        cy.get(MeasureGroupPage.popUpConfirmationModal).should('exist')
+        cy.get(MeasureGroupPage.popUpConfirmationModal).should('be.visible')
+        Utilities.waitForElementVisible(MeasureGroupPage.popUpConfirmationModal, 3000)
+        cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('exist')
+        cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('be.visible')
+        Utilities.waitForElementVisible(MeasureGroupPage.scoreUpdateMGConfirmMsg, 3000)
+        cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('contain.text', 'Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationMsg).should('contain.text', 'Are you sure you want to Save Changes?')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationUndoWarning).should('contain.text', 'This action cannot be undone.')
+
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Select Initial Population')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'ipp')
 
     })
     it('Can successfully update / change population value and save on population tab', () => {
@@ -251,12 +252,6 @@ describe('Validating group tabs', () => {
         
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -291,12 +286,6 @@ describe('Validating group tabs', () => {
         
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -337,12 +326,6 @@ describe('Validating group tabs', () => {
         
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -415,12 +398,6 @@ describe('Validating group tabs', () => {
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -504,12 +481,6 @@ describe('Validating group tabs', () => {
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -533,12 +504,6 @@ describe('Validating group tabs', () => {
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -586,12 +551,6 @@ describe('Validating group tabs', () => {
         
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
@@ -643,6 +602,18 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.rateAggregation).should('be.empty')
         cy.get(MeasureGroupPage.improvementNotationSelect).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text', 'Select')
+
+        //Click on Populations tab
+        cy.get(MeasureGroupPage.populationTab).should('exixt')
+        cy.get(MeasureGroupPage.populationTab).click()
+
+        //assert score-specific population fields appear in the population tab
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
+        cy.get(MeasureGroupPage.denominatorSelect).should('exist')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('exist')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('exist')
+        cy.get(MeasureGroupPage.numeratorSelect).should('exist')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('exist')
 
     })
 

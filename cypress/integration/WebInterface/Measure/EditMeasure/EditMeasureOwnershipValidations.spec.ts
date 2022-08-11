@@ -6,7 +6,9 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {LandingPage} from "../../../../Shared/LandingPage"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
 
+let measureCQL = MeasureCQL.SBTEST_CQL
 let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestLibrary' + Date.now()
 
@@ -19,7 +21,7 @@ describe('Read only for measure, measure group, and test cases that user does no
     before('Create Measure, Measure Group, and Test Case with alt user', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, cqlLibraryName, '', true, true)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, cqlLibraryName, measureCQL, true, true)
         MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
         TestCasesPage.CreateTestCaseAPI(TCTitle, TCSeries, TCDescription, '', true, true)
 
