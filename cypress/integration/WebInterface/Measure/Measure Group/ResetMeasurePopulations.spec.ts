@@ -5,15 +5,16 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
-
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureCQL = MeasureCQL.ICFTest_CQL
 describe('Reset Measure Populations', () => {
 
     before('Create Measure', () => {
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL)
 
     })
     beforeEach('Login', () => {
@@ -38,16 +39,6 @@ describe('Reset Measure Populations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        //Save CQL in CQL Editor Page
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
-
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
@@ -70,6 +61,10 @@ describe('Reset Measure Populations', () => {
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
 
         //Add Measure Populations for Ratio Measure
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Boolean').type('{enter}')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('SDE Ethnicity')
         cy.get(MeasureGroupPage.denominatorSelect).select('SDE Payer')
         cy.get(MeasureGroupPage.denominatorExclusionSelect).select('SDE Race')

@@ -10,6 +10,27 @@ export class MeasureGroupPage {
     public static readonly stratificationTab = '[data-testid="stratifications-tab"]'
     public static readonly reportingTab = '[data-testid="reporting-tab"]'
 
+<<<<<<< Updated upstream
+=======
+    //stratification fields
+    public static readonly stratOne = '[name="stratifications[0].cqlDefinition"]'
+    public static readonly stratTwo = '[name="stratifications[1].cqlDefinition"]'
+    public static readonly stratThree = '[name="stratifications[2].cqlDefinition"]'
+    public static readonly stratFour = '[name="stratifications[3].cqlDefinition"]'
+
+    public static readonly stratAssociationOne = '[name="stratifications[0].association"]'
+    public static readonly stratAssociationTwo = '[name="stratifications[1].association"]'
+    public static readonly stratAssociationThree = '[name="stratifications[2].association"]'
+    public static readonly stratAssociationFour = '[name="stratifications[3].association"]'
+
+    public static readonly stratDescOne ='[name="stratifications[0].description"]'
+    public static readonly stratDescTwo ='[name="stratifications[1].description"]'
+    public static readonly stratDescThree ='[name="stratifications[2].description"]'
+    public static readonly stratDescFour ='[name="stratifications[3].description"]'
+
+    public static readonly saveStratButton = '[data-testid="add-strat-button"]'
+        
+>>>>>>> Stashed changes
     //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
     public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
@@ -49,6 +70,9 @@ export class MeasureGroupPage {
 
     //update measure group
     public static readonly updateMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
+    public static readonly popUpConfirmationModal = '[class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-mbdu2s"]'
+    public static readonly scoreUpdateMGConfirmMsg = '[class="MuiTypography-root MuiTypography-body1 jss6 css-9l3uo3"]'
+    public static readonly updateMeasureGroupConfirmationUndoWarning = '[class="MuiTypography-root MuiTypography-body1 jss8 css-9l3uo3"]'
     public static readonly updateMeasureGroupConfirmationBtn = '[data-testid="update-measure-group-scoring-modal-agree-btn"]'
 
     //additional measure groups (assuming thay exist)
@@ -57,6 +81,10 @@ export class MeasureGroupPage {
     public static readonly measureGroupThree = '[data-testid="leftPanelMeasureInformation-MeasureGroup3"]'
     public static readonly measureGroupFour = '[data-testid="leftPanelMeasureInformation-MeasureGroup4"]'
     public static readonly measureGroupFive = '[data-testid="leftPanelMeasureInformation-MeasureGroup5"]'
+
+    //population basis
+    public static readonly popBasis = '[data-testid="population-basis-combo-box"]'
+    
 
     //Measure group description
     public static readonly measureGroupDescriptionBox = '[name="groupDescription"]'
