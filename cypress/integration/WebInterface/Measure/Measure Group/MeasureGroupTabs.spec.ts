@@ -154,7 +154,7 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.stratDescTwo).should('exist')
         cy.get(MeasureGroupPage.saveStratButton).should('exist')
 
-        //confirm values in stratification 1 related fields
+        //confirm values in stratification 1 related fields -- score type is Proportion
         //stratification 1 -- default value
         cy.get(MeasureGroupPage.stratOne).find('option:selected').should('have.text', '-')
         //stratification 1 -- contains these values, in this order, based off of CQL
@@ -164,9 +164,9 @@ describe('Validating group tabs', () => {
             .should('include.text', 'ipp')
             .should('include.text', 'num')
             
-        //Association -- default value
+        //Association -- default value -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
-        //Association -- contains these values based off score type
+        //Association -- contains these values based off score type -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne)
             .should('contain','Initial Population')
             .should('contain', 'Denominator')
@@ -174,6 +174,24 @@ describe('Validating group tabs', () => {
             .should('contain', 'Numerator')
             .should('contain', 'Numerator Exclusion')
             .should('contain', 'Denominator Exception')
+
+        //change score type to Cohort
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
+        //Association -- default value -- score type is Cohort
+        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
+        //Association -- contains these values based off score type -- score type is Cohort
+        cy.get(MeasureGroupPage.stratAssociationOne)
+            .should('contain', 'Initial Population')
+
+        //change score type to Continuous Variable
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Continuous Variable')
+        //Association -- default value -- score type is Continuous Variable
+        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
+        //Association -- contains these values based off score type -- score type is Continuous Variable
+        cy.get(MeasureGroupPage.stratAssociationOne)
+            .should('contain', 'Initial Population')
+            .should('contain', 'Measure Population')
+            .should('contain', 'Measure Population Exclusion')
 
     })
     it('Reporting tab contains Rate Aggregation text area and Improvement Notation drop-down box', () => {
