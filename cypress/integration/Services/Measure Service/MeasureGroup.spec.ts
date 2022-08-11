@@ -2,12 +2,14 @@ import {Utilities} from "../../../Shared/Utilities"
 
 export {}
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
 let measureScoring = 'Proportion'
 let newMeasureName = ''
 let newCqlLibraryName = ''
+let popMeasureCQL = MeasureCQL.SBTEST_CQL
 
 describe('Measure Service: Test Case Endpoints', () => {
 
@@ -234,5 +236,94 @@ describe('Measure Service: Test Case Endpoints', () => {
             })
         })
 
+    })
+})
+describe.only('Verify Population Basis is required when creating group on backend', () => {
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+    })
+
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    before('Create Measure', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, popMeasureCQL)
+    })
+    
+
+
+    it('Verify that 400 level response is returned when Population Basis is not included, when trying to create a group', () => {
+        let user = ''
+        let measurePath = ''
+        let measureGroupPath = ''
+        let measureScoring = 'Proportion'
+        measurePath = 'cypress/fixtures/measureId'
+        measureGroupPath = 'cypress/fixtures/groupId'
+ 
+        //Add Measure Group to the Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(measurePath).should('exist').then((fileContents) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        //"populationBasis": "Boolean",
+                        "populations": [
+                            {
+                                "_id" : "",
+                                "name" : "initialPopulation",
+                                "definition" : 'ipp'
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "denominator",
+                                "definition" : 'denom'
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "denominatorExclusion",
+                                "definition" : ""
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "denominatorException",
+                                "definition" : ""
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "numerator",
+                                "definition" : 'num'
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "numeratorExclusion",
+                                "definition" : ""
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(400)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile(measureGroupPath, response.body.id)
+                })
+            })
+        })
     })
 })

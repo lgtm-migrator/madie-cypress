@@ -5,6 +5,8 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {Header} from "../../../../Shared/Header"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import assert = require("assert")
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -13,6 +15,7 @@ let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 let newMeasureName = ''
 let newCqlLibraryName = ''
+let measureCQL = MeasureCQL.SBTEST_CQL
 
 describe('Validate Measure Group', () => {
 
@@ -280,5 +283,92 @@ describe('Validate Measure Group -- scoring and populations', () => {
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
+    })
+})
+describe.only('Validate Population Basis', () => {
+
+    before('Create measure', () => {
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'num', 'denom')
+
+    })
+
+    beforeEach('Login', () => {
+
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Login', () => {
+
+        OktaLogin.Logout()
+
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
+
+    })
+    it('Verify if no value is selected for Population Basis, the save button is unavailable', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+
+        //measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Measure Populations for Ratio Measure
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('{del}')
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('not.be.enabled')
+ 
+    })
+
+    it('Verify default value is "Boolean"', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+
+        //measure group description
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Measure Populations for Ratio Measure
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).then(($text) => {
+            assert($text.text(), 'Boolean')
+        })
+        //should('contain.text', 'Boolean')
+ 
     })
 })
