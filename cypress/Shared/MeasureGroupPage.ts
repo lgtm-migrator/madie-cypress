@@ -9,12 +9,13 @@ export class MeasureGroupPage {
     public static readonly populationTab = '[data-testid="populations-tab"]'
     public static readonly stratificationTab = '[data-testid="stratifications-tab"]'
     public static readonly reportingTab = '[data-testid="reporting-tab"]'
-    
+
     //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
     public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
     public static readonly yesDeleteModalbtn = '[data-testid="delete-measure-group-modal-agree-btn"]'
     public static readonly keepGroupModalbtn = '[data-testid="delete-measure-group-modal-cancel-btn"]'
+    public static readonly deleteMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
     //Reporting tab fields
     public static readonly rateAggregation = '[data-testid="rateAggregationText"]'
     public static readonly improvementNotationSelect = '[data-testid="improvement-notation-select"]'
@@ -23,7 +24,7 @@ export class MeasureGroupPage {
     public static readonly measureGroupTypeCheckbox = '[class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-1km1ehz"]'
     public static readonly measureGroupTypeDropdownBtn = '[class="MuiBackdrop-root MuiBackdrop-invisible css-esi9ax"]'
     public static readonly measureGroupTypeListBox = '[id="mui-component-select-measureGroupTypes"]'
-        
+
     //Scoring drop-down box
     public static readonly measureScoringSelect = '[data-testid="scoring-unit-select"]'
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
@@ -38,11 +39,16 @@ export class MeasureGroupPage {
     public static readonly measurePopulationSelect = '[id="population-select-measure-population"]'
     public static readonly measurePopulationExclusionSelect = '[id="population-select-measure-population-exclusion"]'
 
+    //UCUM scoring unit
+    public static readonly ucumScoringUnitSelect = '.css-ackcql'
+    public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
+    public static readonly ucumScoringUnitfullName = '#react-select-2-option-1-0'
+
     //add measure group
     public static readonly addMeasureGroupButton = '[data-testid="add-measure-group-button"]'
 
     //update measure group
-    public static readonly updateMeasureGroupConfirmationMsg = '.jss7'
+    public static readonly updateMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
     public static readonly updateMeasureGroupConfirmationBtn = '[data-testid="update-measure-group-scoring-modal-agree-btn"]'
 
     //additional measure groups (assuming thay exist)
@@ -151,7 +157,7 @@ export class MeasureGroupPage {
         let user = ''
         let measurePath = ''
         let measureGroupPath = ''
-        let measureScoring = 'Proportion'        
+        let measureScoring = 'Proportion'
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'SDE Payer'}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'SDE Race'}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'SDE Race'}
@@ -191,44 +197,44 @@ export class MeasureGroupPage {
                         "scoring": measureScoring,
                         "populations": [
                             {
-                                "_id" : "", 
-                                "name" : "initialPopulation", 
+                                "_id" : "",
+                                "name" : "initialPopulation",
                                 "definition" : PopIniPopP
-                            }, 
+                            },
                             {
-                                "_id" : "", 
-                                "name" : "denominator", 
+                                "_id" : "",
+                                "name" : "denominator",
                                 "definition" : PopDenomP
-                            }, 
+                            },
                             {
-                                "_id" : "", 
-                                "name" : "denominatorExclusion", 
+                                "_id" : "",
+                                "name" : "denominatorExclusion",
                                 "definition" : ""
-                            }, 
+                            },
                             {
-                                "_id" : "", 
-                                "name" : "denominatorException", 
+                                "_id" : "",
+                                "name" : "denominatorException",
                                 "definition" : ""
-                            }, 
+                            },
                             {
-                                "_id" : "", 
-                                "name" : "numerator", 
+                                "_id" : "",
+                                "name" : "numerator",
                                 "definition" : PopNumP
-                            }, 
+                            },
                             {
-                                "_id" : "", 
-                                "name" : "numeratorExclusion", 
+                                "_id" : "",
+                                "name" : "numeratorExclusion",
                                 "definition" : ""
-                            }                                
-                            ],
+                            }
+                        ],
                         "measureGroupTypes": [
                             "Outcome"
                         ]
                     }
                 }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile(measureGroupPath, response.body.id)
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile(measureGroupPath, response.body.id)
                 })
             })
         })

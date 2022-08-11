@@ -228,7 +228,7 @@ describe('Test Case Expected Measure Group population values based on initial me
     it('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
 
         //creating propportion group on measure
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+        //MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
         OktaLogin.Login()
 
@@ -245,6 +245,14 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.log((measureScoringArray[4].valueOf()).toString())
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[4].valueOf()).toString())
 
         Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
         //Navigate to Test Cases page and verify Populations

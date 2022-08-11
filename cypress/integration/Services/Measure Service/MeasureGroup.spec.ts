@@ -23,7 +23,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     })
 
     before('Create Measure', () => {
-        
+
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
@@ -62,7 +62,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                                 "name": "denominator",
                                 "definition": PopDenom
                             }
-                            ],
+                        ],
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -114,7 +114,7 @@ describe('Measure Service: Test Case Endpoints', () => {
                                 "name": "denominator",
                                 "definition": PopDenom
                             }
-                            ],
+                        ],
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -130,5 +130,109 @@ describe('Measure Service: Test Case Endpoints', () => {
                 })
             })
         })
+    })
+
+    it('Add UCUM Scoring unit to the Measure Group', () =>  {
+
+        let PopIniPop = 'IPP'
+        let PopNum = 'Numerator'
+        let PopDenom = 'Denominator'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                        }
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    expect(response.body.scoring).to.eql(measureScoring)
+                    expect(response.body.populations[0].definition).to.eql('IPP')
+                    expect(response.body.populations[1].definition).to.eql('Numerator')
+                    expect(response.body.populations[2].definition).to.eql('Denominator')
+                    expect(response.body.scoringUnit.label).to.eql('ml milliLiters')
+                })
+            })
+        })
+
+    })
+
+    it('Update UCUM Scoring unit for the Measure Group', () =>  {
+
+        let PopIniPop = 'IPP'
+        let PopNum = 'Numerator'
+        let PopDenom = 'Denominator'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ],
+                        "scoringUnit": {
+                            "label": "455 455",
+                        }
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    expect(response.body.scoring).to.eql(measureScoring)
+                    expect(response.body.populations[0].definition).to.eql('IPP')
+                    expect(response.body.populations[1].definition).to.eql('Numerator')
+                    expect(response.body.populations[2].definition).to.eql('Denominator')
+                    expect(response.body.scoringUnit.label).to.eql('455 455')
+                })
+            })
+        })
+
     })
 })

@@ -4,15 +4,17 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {Utilities} from "../../../../Shared/Utilities"
+
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
+let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
+let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 
 describe('Validate Measure Group additions', () => {
 
     before('Create measure', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName1)
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
     })
 
@@ -35,6 +37,7 @@ describe('Validate Measure Group additions', () => {
     })
 
     it('Able to add complete group to a measure whom already has a group and previous group is not affected', () => {
+
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -47,9 +50,18 @@ describe('Validate Measure Group additions', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.log((measureScoringArray[3].valueOf()).toString())
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
+        Utilities.validateMeasureGroup((measureScoringArray[3].valueOf()).toString(), mgPVTestType[0])
+
+        //Click on the measure group tab
+        // cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        // cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        // cy.get(EditMeasurePage.measureGroupsTab).click()
 
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')

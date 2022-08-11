@@ -14,7 +14,6 @@ describe('Reset Measure Populations', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
     })
     beforeEach('Login', () => {
@@ -52,6 +51,21 @@ describe('Reset Measure Populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+
+        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
+
         //measure group description
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
 
@@ -64,7 +78,7 @@ describe('Reset Measure Populations', () => {
         //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //verify the measure group's description before reset
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
@@ -76,7 +90,6 @@ describe('Reset Measure Populations', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','SDE Ethnicity')
         cy.get(MeasureGroupPage.denominatorSelect).should('contain.text','SDE Payer')
         cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text','SDE Race')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text','SDE Ethnicity')
         cy.get(MeasureGroupPage.numeratorSelect).should('contain.text','Initial Population')
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text','SDE Ethnicity')
 

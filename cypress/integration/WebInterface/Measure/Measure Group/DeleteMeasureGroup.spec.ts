@@ -25,12 +25,12 @@ describe('Validate Measure Group deletion functionality', () => {
         newCqlLibraryName = CqlLibraryName1 + randValue
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureOne, newCqlLibraryName)
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureOne, newCqlLibraryName)
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
         TestCasesPage.CreateTestCaseAPI(title1, series, description, validJsonValue)
 
         //create new measure via temp user
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureTwo, newCqlLibraryName+"second", null, true, true )
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureTwo, newCqlLibraryName+"second", null, true, true )
         MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
         TestCasesPage.CreateTestCaseAPI(title1+"second", series, description, validJsonValue, true, true)
         OktaLogin.Login()
@@ -47,20 +47,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Delete button brings up confirmation modal', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
@@ -75,37 +61,20 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.deleteMeasureGroupModal).should('be.visible')
 
         //modal has messaging asking the user to confirm the deletion
-        cy.get('.MuiTypography-root.MuiTypography-body1.jss6.css-9l3uo3').should('exist')
-        cy.get('.MuiTypography-root.MuiTypography-body1.jss6.css-9l3uo3').should('contain.text', 'Measure Group 1 will be deleted. Are you sure you want to delete this measure group?')
-        cy.get('.jss8').should('exist')
-        cy.get('.jss8').should('contain.text', 'This action cannot be undone.')
-
+        cy.get(MeasureGroupPage.deleteMeasureGroupConfirmationMsg).should('exist')
+        cy.get(MeasureGroupPage.deleteMeasureGroupConfirmationMsg).contains('Measure Group 1 will be deleted. Are you sure you want to delete this measure group?')
     })
 
     it('Confirmation modal has Yes button and clicking yes when there are multiple groups removes group and renumbering occurs', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         for (let i = 0; i <= 3; i++){
-            //click on the add measture grop button to create new group
+            //click on the add measure group button to create new group
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('exist')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
@@ -175,20 +144,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
@@ -222,20 +177,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Confirmation modal has a Keep button and clicking on it will result in the group persisting', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
@@ -282,20 +223,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Test Case list page still loads after a one from multiple groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist').should('be.visible')
@@ -375,20 +302,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Test Case list page still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
@@ -431,20 +344,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Test Cases still loads after a one from multiple groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
@@ -530,20 +429,6 @@ describe('Validate Measure Group deletion functionality', () => {
     it('Test Cases still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/CQLFHIRTerminologyTest.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-
-        //save Measure CQL
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')

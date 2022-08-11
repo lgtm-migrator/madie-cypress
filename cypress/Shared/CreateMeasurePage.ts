@@ -111,4 +111,58 @@ export class CreateMeasurePage {
         })
         return user
     }
+
+    public static CreateAPIQICoreMeasureWithCQL(measureName: string, CqlLibraryName: string, measureCQL?: string, twoMeasures?: boolean, altUser?: boolean): string {
+
+        let user = ''
+        const now = require('dayjs')
+        let mpStartDate = now().subtract('2', 'year').format('YYYY-MM-DD')
+        let mpEndDate = now().format('YYYY-MM-DD')
+        let elmJson = "{\"library\":{\"identifier\":{\"id\":\"SimpleFhirMeasureLib\",\"version\":\"0.0.004\"},\"schemaIdentifier\":{\"id\":\"urn:hl7-org:elm\",\"version\":\"r1\"},\"usings\":{\"def\":[{\"localIdentifier\":\"System\",\"uri\":\"urn:hl7-org:elm-types:r1\"},{\"localId\":\"1\",\"locator\":\"2:1-2:26\",\"localIdentifier\":\"FHIR\",\"uri\":\"http://hl7.org/fhir\",\"version\":\"4.0.1\",\"annotation\":[{\"type\":\"Annotation\",\"s\":{\"r\":\"1\",\"s\":[{\"value\":[\"\",\"using \"]},{\"s\":[{\"value\":[\"FHIR\"]}]},{\"value\":[\" version \",\"'4.0.1'\"]}]}}]}]},\"includes\":{\"def\":[{\"localId\":\"2\",\"locator\":\"3:1-3:56\",\"localIdentifier\":\"FHIRHelpers\",\"path\":\"FHIRHelpers\",\"version\":\"4.0.001\",\"annotation\":[{\"type\":\"Annotation\",\"s\":{\"r\":\"2\",\"s\":[{\"value\":[\"\",\"include \"]},{\"s\":[{\"value\":[\"FHIRHelpers\"]}]},{\"value\":[\" version \",\"'4.0.001'\",\" called \",\"FHIRHelpers\"]}]}}]}]},\"parameters\":{\"def\":[{\"localId\":\"5\",\"locator\":\"4:1-4:49\",\"accessLevel\":\"Public\",\"annotation\":[{\"type\":\"Annotation\",\"s\":{\"r\":\"5\",\"s\":[{\"value\":[\"\",\"parameter \",\"'Measurement Period'\",\" \"]},{\"r\":\"4\",\"s\":[{\"value\":[\"Interval<\"]},{\"r\":\"3\",\"s\":[{\"value\":[\"DateTime\"]}]},{\"value\":[\">\"]}]}]}}],\"parameterTypeSpecifier\":{\"localId\":\"4\",\"locator\":\"4:32-4:49\",\"type\":\"IntervalTypeSpecifier\",\"pointType\":{\"localId\":\"3\",\"locator\":\"4:41-4:48\",\"name\":\"{urn:hl7-org:elm-types:r1}DateTime\",\"type\":\"NamedTypeSpecifier\"}}}]},\"contexts\":{\"def\":[{\"locator\":\"5:1-5:15\",\"name\":\"Patient\"}]},\"statements\":{\"def\":[{\"locator\":\"5:1-5:15\",\"name\":\"Patient\",\"context\":\"Patient\",\"expression\":{\"type\":\"SingletonFrom\",\"operand\":{\"locator\":\"5:1-5:15\",\"dataType\":\"{http://hl7.org/fhir}Patient\",\"templateId\":\"http://hl7.org/fhir/StructureDefinition/Patient\",\"type\":\"Retrieve\"}}}]}},\"externalErrors\":[]}"
+
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+
+        //Create New Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.request({
+                url: '/api/measure',
+                headers: {
+                    authorization: 'Bearer ' + accessToken.value
+                },
+                method: 'POST',
+                body: {
+                    'measureName': measureName,
+                    'cqlLibraryName': CqlLibraryName,
+                    'model': 'QI-Core',
+                    'createdBy': user,
+                    'cql': "library SimpleFhirLibrary version '0.0.004'\n\n\n\nusing FHIR version '4.0.1'\n\n\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\n\n\n\nvalueset \"Office Visit\": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'\n\n\n\nparameter \"Measurement Period\" Interval<DateTime>\n\n\n\ncontext Patient\n\n\n\ndefine \"ipp\":\n\n  exists [\"Encounter\": \"Office Visit\"] E where E.period.start during \"Measurement Period\"\n  \n  \n  \ndefine \"denom\":\n\n  \"ipp\"\n  \n  \n  \ndefine \"num\":\n\n  exists [\"Encounter\": \"Office Visit\"] E where E.status ~ 'finished'",
+                    'elmJson': elmJson,
+                    'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
+                    'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z",
+                }
+            }).then((response) => {
+                expect(response.status).to.eql(201)
+                expect(response.body.id).to.be.exist
+                if (twoMeasures === true)
+                {
+                    cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+                }
+                else
+                {
+                    cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                }
+
+            })
+        })
+        return user
+    }
 }
