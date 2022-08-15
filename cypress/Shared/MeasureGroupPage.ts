@@ -27,8 +27,13 @@ export class MeasureGroupPage {
     public static readonly stratDescFour ='[name="stratifications[3].description"]'
 
     public static readonly addStratButton = '[data-testid="add-strat-button"]'
-        
 
+    //Ratio specific -- Add and Delete Initial Population(s)
+    public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
+    public static readonly secondInitialPopulationSelect = '[name="populations[1].definition"]'
+    public static readonly deleteSecondInitialPopulation = '[data-testid="remove_populations[1].definition"]'
+    public static readonly lblSecondInitialPopulation = '[id="population-select-initial-population-2-label"]'
+    
     //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
     public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
@@ -50,8 +55,6 @@ export class MeasureGroupPage {
 
     //Populations
     public static readonly initialPopulationSelect = '[name="populations[0].definition"]'
-    public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
-    public static readonly secondInitialPopulationSelect = '[name="populations[1].definition"]'
     public static readonly denominatorSelect = '[id="population-select-denominator"]'
     public static readonly denominatorExclusionSelect = '[id="population-select-denominator-exclusion"]'
     public static readonly denominatorExceptionSelect = '[id="population-select-denominator-exception"]'
@@ -243,6 +246,90 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "denominatorException",
+                                "definition" : ""
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "numerator",
+                                "definition" : PopNumP
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "numeratorExclusion",
+                                "definition" : ""
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile(measureGroupPath, response.body.id)
+                })
+            })
+        })
+        return user
+    }
+
+    public static CreateRatioMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean, PopIniPopP?: string, PopNumP?:string, PopDenomP?: string): string {
+        let user = ''
+        let measurePath = ''
+        let measureGroupPath = ''
+        let measureScoring = 'Ratio'
+        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'SDE Payer'}
+        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'SDE Race'}
+        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'SDE Race'}
+        if (altUser)
+        {
+            cy.setAccessTokenCookieALT()
+            user = Environment.credentials().harpUserALT
+        }
+        else
+        {
+            cy.setAccessTokenCookie()
+            user = Environment.credentials().harpUser
+        }
+        if (twoMeasureGroups === true)
+        {
+            measurePath = 'cypress/fixtures/measureId2'
+            measureGroupPath = 'cypress/fixtures/groupId2'
+            //cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+        }
+        else
+        {
+            measurePath = 'cypress/fixtures/measureId'
+            measureGroupPath = 'cypress/fixtures/groupId'
+        }
+    
+        //Add Measure Group to the Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(measurePath).should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        "populationBasis": "Boolean",
+                        "populations": [
+                            {
+                                "_id" : "",
+                                "name" : "initialPopulation",
+                                "definition" : PopIniPopP
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "denominator",
+                                "definition" : PopDenomP
+                            },
+                            {
+                                "_id" : "",
+                                "name" : "denominatorExclusion",
                                 "definition" : ""
                             },
                             {

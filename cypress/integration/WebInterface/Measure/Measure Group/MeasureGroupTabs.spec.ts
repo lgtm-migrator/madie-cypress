@@ -194,7 +194,7 @@ describe('Validating group tabs', () => {
             .should('contain', 'Measure Population Exclusion')
 
     })
-    it.only('Stratification does not save, if association is the only field that has a value selected', () => {
+    it('Stratification does not save, if association is the only field that has a value selected', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab

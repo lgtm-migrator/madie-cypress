@@ -4,6 +4,7 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Utilities} from "../../../../Shared/Utilities"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -11,6 +12,7 @@ let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 let newMeasureName = ''
 let newCqlLibraryName = ''
+let measureCQL = MeasureCQL.ICFTest_CQL
 
 describe('Validate Measure Group', () => {
 
@@ -150,5 +152,171 @@ describe('Validate Measure Group', () => {
         cy.get(MeasureGroupPage.updateMeasureGroupConfirmationMsg).should('contain.text', 'Are you sure you want to Save Changes?')
         cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+    })
+})
+describe('Delete second Initial Population -- Ratio score only', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureCQL)
+        MeasureGroupPage.CreateRatioMeasureGroupAPI()
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    it('Validate that when an second Initial Population is added, a delete / remove buttom becomes available', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //fill in a description value
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Second Initial Population
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('exist')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('be.visible')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
+
+        //verify that the second initial population appears and can be assigned a value
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('exist')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.enabled')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('Initial Population')
+
+        //verify that the delete button for the second initial population is available
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
+      
+    })
+
+    it('Validate that when the delete / remove button is clicked, for the second IP, the IP is removed', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //fill in a description value
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Second Initial Population
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('exist')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('be.visible')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
+
+        //verify that the second initial population appears and can be assigned a value
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('exist')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.enabled')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('Initial Population')
+
+        //verify that the delete button for the second initial population is available
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
+
+        //deleting / removeing the second initial population before saving
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).click()
+
+        //verify that the second initial population is no longer on screen / in the UI
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('not.exist')
+
+        //Add Second Initial Population again
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('exist')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('be.visible')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
+
+        //verify that the second initial population appears and can be assigned a value
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('exist')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.enabled')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('Initial Population')
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+        //verify that the delete button for the second initial population is available and can still be clicked on
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).click()
+
+        //verify that the second initial population is no longer on screen / in the UI
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('not.exist')
+    })
+
+    it('Validate that when the delete button is clicked, for the second IP, the first IP remains the same', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //fill in a description value
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Second Initial Population
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('exist')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).should('be.visible')
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
+
+        //verify that the second initial population appears and can be assigned a value
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('exist')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('be.enabled')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('be.visible')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('Initial Population')
+
+        //verify that the delete button for the second initial population is available
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
+
+        //deleting / removeing the second initial population before saving
+        cy.get(MeasureGroupPage.deleteSecondInitialPopulation).click()
+
+        //verify that the second initial population is no longer on screen / in the UI
+        cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('not.exist')
+
+        //verify IP1 and the other population field values are unchanged
+        cy.get(MeasureGroupPage.initialPopulationSelect).find('option:selected').should('have.text', 'SDE Payer')
+        cy.get(MeasureGroupPage.denominatorSelect).find('option:selected').should('have.text', 'SDE Race')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).find('option:selected').should('have.text', 'Select Denominator Exclusion')
+        cy.get(MeasureGroupPage.numeratorSelect).find('option:selected').should('have.text', 'SDE Race')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).find('option:selected').should('have.text', 'Select Numerator Exclusion')
     })
 })

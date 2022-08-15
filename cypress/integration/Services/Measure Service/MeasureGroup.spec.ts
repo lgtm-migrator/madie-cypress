@@ -299,6 +299,111 @@ describe('Measure Service: Test Case Endpoints', () => {
             })
         })
     })
+
+    it('Add and Delete Second Initial Population for Ratio Measure', () => {
+
+        let PopIniPop = 'Initial Population'
+        let SecondPopInPop = 'SDE Race'
+        let PopNum = 'Absence of Cervix'
+        let PopDenom = 'Pap Test with Results'
+        let measureGroupPath = 'cypress/fixtures/groupId'
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": "Ratio",
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "initialPopulation",
+                                "definition": SecondPopInPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                        },
+                        "populationBasis": "Boolean"
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    expect(response.body.scoring).to.eql('Ratio')
+                    expect(response.body.populations[0].definition).to.eql('Initial Population')
+                    expect(response.body.populations[1].definition).to.eql('SDE Race')
+                    expect(response.body.populations[2].definition).to.eql('Absence of Cervix')
+                    expect(response.body.populations[3].definition).to.eql('Pap Test with Results')
+                    expect(response.body.scoringUnit.label).to.eql('ml milliLiters')
+                    cy.writeFile(measureGroupPath, response.body.id)
+                })
+            })
+        })
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((fileContents) => {
+                cy.request({
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'PUT',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": "Ratio",
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": PopIniPop
+                            },
+                            {
+                                "name": "numerator",
+                                "definition": PopNum
+                            },
+                            {
+                                "name": "denominator",
+                                "definition": PopDenom
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                        },
+                        "populationBasis": "Boolean"
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(200)
+                    expect(response.body.id).to.be.exist
+                    expect(response.body.scoring).to.eql('Ratio')
+                    expect(response.body.populations[0].definition).to.eql('Initial Population')
+                    expect(response.body.populations[1].definition).to.eql('Absence of Cervix')
+                    expect(response.body.populations[2].definition).to.eql('Pap Test with Results')
+                    expect(response.body.scoringUnit.label).to.eql('ml milliLiters')
+                })
+            })
+        })
+    })
 })
 
 //Skipping until MAT-4630 is fixed
