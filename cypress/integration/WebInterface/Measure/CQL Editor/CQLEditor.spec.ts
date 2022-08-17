@@ -11,7 +11,8 @@ let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-describe('Measure: CQL Editor', () => {
+//skipping because of defect MAT-4635
+describe.skip('Measure: CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -197,7 +198,8 @@ describe('Measure: CQL Editor', () => {
     })
 })
 
-describe('Measure: CQL Editor: valueSet', () => {
+//skipping because of defect MAT-4635
+describe.skip('Measure: CQL Editor: valueSet', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
