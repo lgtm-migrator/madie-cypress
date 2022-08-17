@@ -33,7 +33,7 @@ export class MeasureGroupPage {
     public static readonly secondInitialPopulationSelect = '[name="populations[1].definition"]'
     public static readonly deleteSecondInitialPopulation = '[data-testid="remove_populations[1].definition"]'
     public static readonly lblSecondInitialPopulation = '[id="population-select-initial-population-2-label"]'
-    
+
     //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
     public static readonly deleteMeasureGroupModal = '[data-testid="delete-measure-group-dialog"]'
@@ -74,7 +74,7 @@ export class MeasureGroupPage {
     //update measure group
     public static readonly updateMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
     public static readonly popUpConfirmationModal = '[class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-mbdu2s"]'
-    public static readonly scoreUpdateMGConfirmMsg = '[class="MuiTypography-root MuiTypography-body1 jss6 css-9l3uo3"]'
+    public static readonly scoreUpdateMGConfirmMsg = '[class="MuiDialogContent-root css-1ty026z"]'
     public static readonly updateMeasureGroupConfirmationUndoWarning = '[class="MuiTypography-root MuiTypography-body1 jss8 css-9l3uo3"]'
     public static readonly updateMeasureGroupConfirmationBtn = '[data-testid="update-measure-group-scoring-modal-agree-btn"]'
 
@@ -87,7 +87,7 @@ export class MeasureGroupPage {
 
     //population basis
     public static readonly popBasis = '[data-testid="population-basis-combo-box"]'
-    
+
 
     //Measure group description
     public static readonly measureGroupDescriptionBox = '[name="groupDescription"]'
@@ -302,7 +302,7 @@ export class MeasureGroupPage {
             measurePath = 'cypress/fixtures/measureId'
             measureGroupPath = 'cypress/fixtures/groupId'
         }
-    
+
         //Add Measure Group to the Measure
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile(measurePath).should('exist').then((fileContents) => {

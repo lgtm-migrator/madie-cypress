@@ -64,11 +64,11 @@ describe('Validate Measure Group', () => {
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
 
         //Update Measure Group
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[2].valueOf()).toString())
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('SDE Payer')
-        cy.get(MeasureGroupPage.measurePopulationSelect).select('SDE Sex')
-        cy.get(MeasureGroupPage.measurePopulationExclusionSelect).select('Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex')
+        cy.get(MeasureGroupPage.numeratorSelect).select('Absence of Cervix')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         Utilities.waitForElementVisible(MeasureGroupPage.saveMeasureGroupDetails, 3000)
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -140,10 +140,11 @@ describe('Validate Measure Group', () => {
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
 
         //Update Measure Group without optional populations
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[2].valueOf()).toString())
+        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
         cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('SDE Payer')
-        cy.get(MeasureGroupPage.measurePopulationSelect).select('SDE Sex')
+        cy.get(MeasureGroupPage.denominatorSelect).select('SDE Sex')
+        cy.get(MeasureGroupPage.numeratorSelect).select('Absence of Cervix')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         Utilities.waitForElementVisible(MeasureGroupPage.saveMeasureGroupDetails, 3000)
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -174,7 +175,7 @@ describe('Delete second Initial Population -- Ratio score only', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    it('Validate that when an second Initial Population is added, a delete / remove buttom becomes available', () => {
+    it('Validate that when an second Initial Population is added, a delete / remove button becomes available', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -204,7 +205,7 @@ describe('Delete second Initial Population -- Ratio score only', () => {
         //verify that the delete button for the second initial population is available
         cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
         cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
-      
+
     })
 
     it('Validate that when the delete / remove button is clicked, for the second IP, the IP is removed', () => {
@@ -306,8 +307,17 @@ describe('Delete second Initial Population -- Ratio score only', () => {
         cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('exist')
         cy.get(MeasureGroupPage.deleteSecondInitialPopulation).should('be.visible')
 
-        //deleting / removeing the second initial population before saving
+        //deleting / removing the second initial population before saving
         cy.get(MeasureGroupPage.deleteSecondInitialPopulation).click()
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //verify that the second initial population is no longer on screen / in the UI
         cy.get(MeasureGroupPage.lblSecondInitialPopulation).should('not.exist')

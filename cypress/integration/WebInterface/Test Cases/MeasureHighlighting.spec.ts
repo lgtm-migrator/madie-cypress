@@ -1,8 +1,6 @@
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {OktaLogin} from "../../../Shared/OktaLogin"
-import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
-import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
@@ -27,7 +25,6 @@ describe('Measure Highlighting', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
         OktaLogin.Login()
 
     })
@@ -86,11 +83,7 @@ describe('Measure Highlighting', () => {
     it('Verify error message when the Test Case Json is empty', () => {
 
         //Add Measure Group
-        MeasureGroupPage.createMeasureGroupforRatioMeasure()
-
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.visible')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.enabled')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+        MeasureGroupPage.createMeasureGroupforProportionMeasure()
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -98,8 +91,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
-        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
-
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
@@ -124,6 +116,7 @@ describe('Measure Highlighting', () => {
         })
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
 

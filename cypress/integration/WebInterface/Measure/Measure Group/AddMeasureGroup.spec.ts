@@ -64,7 +64,6 @@ describe('Validate Measure Group additions', () => {
         // cy.get(EditMeasurePage.measureGroupsTab).click()
 
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
@@ -129,7 +128,6 @@ describe('Validate Measure Group additions', () => {
 
         for (let i = 1; i <= 4; i++){
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-            cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
         }
 
