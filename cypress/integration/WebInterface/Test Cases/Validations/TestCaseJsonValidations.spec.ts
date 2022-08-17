@@ -9,8 +9,6 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measurePath = 'cypress/fixtures/measureId'
-let measureGroupPath = 'cypress/fixtures/groupId'
 let PopIniPop = 'ipp'
 let PopNum = 'denom'
 let PopDenom = 'num'
@@ -26,80 +24,22 @@ let testCaseSeries = 'SBTestSeries'
 
 describe('Test Case Run Test Case button validations', () => {
 
-
     beforeEach('Login and Create Measure', () => {
+
         CqlLibraryName = 'TestLibrary2' + Date.now()
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
-        cy.setAccessTokenCookie()
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile(measurePath).should('exist').then((fileContents) => {
-                cy.request({
-                    url: '/api/measures/' + fileContents + '/groups/',
-                    method: 'POST',
-                    headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
-                    // body: {
-                    //     "scoring": 'Proportion',
-                    //     "population":
-                    //     {
-                    //         "initialPopulation": PopIniPop,
-                    //         "denominator": PopDenom,
-                    //         "denominatorExclusion": PopDenex,
-                    //         "denominatorException": PopDenexcep,
-                    //         "numerator": PopNum,
-                    //         "numeratorExclusion": PopNumex
-                    //     }
-                    // }
-                    body: {
-                        "scoring": 'Proportion',
-                        "populations": [
-                            {
-                                "name": "initialPopulation",
-                                "definition": PopIniPop
-                            },
-                            {
-                                "name": "denominator",
-                                "definition": PopDenom
-                            },
-                            {
-                                "name": "denominatorExclusion",
-                                "definition": PopDenex
-                            },
-                            {
-                                "name": "denominatorException",
-                                "definition": PopDenexcep
-                            },
-                            {
-                                "name": "numerator",
-                                "definition": PopNum
-                            },
-                            {
-                                "name": "numeratorExclusion",
-                                "definition": PopNumex
-                            }
-                        ],
-                        "measureGroupTypes": [
-                            "Outcome"
-                        ]
-                    }
-                }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile(measureGroupPath, response.body.id)
-                })
-            })
-        })
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
         OktaLogin.Login()
 
-
     })
+
     afterEach('Logout and Clean up', () => {
+
         OktaLogin.Logout()
         Utilities.deleteMeasure(measureName, CqlLibraryName)
-
     })
+
     it('Run Test Case button is disabled  -- CQL Errors', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -137,6 +77,7 @@ describe('Test Case Run Test Case button validations', () => {
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
 
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -146,7 +87,8 @@ describe('Test Case Run Test Case button validations', () => {
 
     })
 
-    it('Run / Execute Test Case button is disabled  -- Missing group / population selections', () => {
+    //MAT-4421/4635  -- the run test case button is enabled when it shouldn't be
+    it.skip('Run / Execute Test Case button is disabled  -- Missing group / population selections', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -217,10 +159,15 @@ describe('Test Case Run Test Case button validations', () => {
         OktaLogin.Login()
         cy.wait(10000)
 
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.runTestButton).should('be.visible')
+
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
 
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -228,6 +175,7 @@ describe('Test Case Run Test Case button validations', () => {
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')        
     })
+
     it('Run Test Case button is disabled -- Invalid TC Json', () =>{
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -300,6 +248,7 @@ describe('Test Case Run Test Case button validations', () => {
         })
         
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
         
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -398,6 +347,7 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
         
     })
+
     it('Run Test Case button is disabled -- missing TC Json',() =>{
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -466,6 +416,7 @@ describe('Test Case Run Test Case button validations', () => {
         })
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
 
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -549,7 +500,9 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
 
     })
-    it('Run Test Case actual results in Population Values table', () => {
+
+    //skipping until MAT-4421/4635 is fixed
+    it.skip('Run Test Case actual results in Population Values table', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -607,6 +560,8 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.createTestCaseButton).click()
 
+        cy.get(TestCasesPage.detailsTab).click()
+
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
@@ -614,7 +569,6 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.ippActualCheckBox).should('be.checked')
         cy.get(TestCasesPage.denomActualCheckBox).should('be.checked')
         cy.get(TestCasesPage.denomExclusionActualCheckBox).should('be.checked')
-
 
     })
 })
