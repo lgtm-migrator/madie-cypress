@@ -1,9 +1,20 @@
+import { should } from "chai"
 import {EditMeasurePage} from "./EditMeasurePage"
 import { Environment } from "./Environment"
 import {Utilities} from "./Utilities"
 
 export class TestCasesPage {
 
+    //tabs on the test case page
+    public static readonly cqlHasErrorsMsg = '[data-testid="test-case-cql-has-errors-message"]'
+    public static readonly detailsTab = '[data-testid="details-tab"]'
+    public static readonly tctMeasureCQLSubTab = '[data-testid="measurecql-tab"]'
+    public static readonly tctExpectedActualSubTab = '[data-testid="expectoractual-tab"]'
+
+    //CQL area on Test Case page
+    public static readonly tcCQLArea = '[data-testid="test-case-cql-editor"]'
+    
+    //misc test case page objects
     public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
     public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
@@ -105,6 +116,10 @@ export class TestCasesPage {
         cy.get(this.newTestCaseButton).should('be.visible')
         cy.get(this.newTestCaseButton).should('be.enabled')
         cy.get(this.newTestCaseButton).click()
+
+        cy.get(this.detailsTab).should('exist')
+        cy.get(this.detailsTab).should('be.visible')
+        cy.get(this.detailsTab).click()
 
         cy.get(this.testCasePopulationList).should('be.visible')
 
