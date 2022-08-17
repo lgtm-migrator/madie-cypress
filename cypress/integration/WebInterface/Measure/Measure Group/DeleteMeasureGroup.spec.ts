@@ -51,7 +51,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -77,14 +77,13 @@ describe('Validate Measure Group deletion functionality', () => {
             //click on the add measure group button to create new group
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('exist')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-            cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
         }
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupFour).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupFour).click()
-        
+
         //select a group type
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
@@ -113,16 +112,16 @@ describe('Validate Measure Group deletion functionality', () => {
         //save newly created group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()    
-        
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
         //click on the first group
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').focus().should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupOne).click()         
+        cy.get(MeasureGroupPage.measureGroupOne).click()
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTwo).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -138,7 +137,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.measureGroupTwo).should('not.exist')
         cy.get(MeasureGroupPage.measureGroupThree).should('not.exist')
         cy.get(MeasureGroupPage.measureGroupFour).should('not.exist')
-        cy.get(MeasureGroupPage.measureGroupFive).should('not.exist')        
+        cy.get(MeasureGroupPage.measureGroupFive).should('not.exist')
     })
 
     it('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
@@ -148,11 +147,11 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -166,7 +165,7 @@ describe('Validate Measure Group deletion functionality', () => {
 
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //confirm Scoring value is blank
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
@@ -181,7 +180,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -191,7 +190,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.keepGroupModalbtn).click()
 
         //confirm that the modal has closed
-        cy.get(MeasureGroupPage.deleteMeasureGroupModal).should('not.exist')        
+        cy.get(MeasureGroupPage.deleteMeasureGroupModal).should('not.exist')
 
         //confirm the group still exists
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist').should('be.visible')
@@ -227,19 +226,18 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist').should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         for (let i = 0; i <= 3; i++){
-            //click on the add measture grop button to create new group
+            //click on the add measure group button to create new group
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('exist')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-            cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
         }
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupFour).should('exist')
         cy.get(MeasureGroupPage.measureGroupFour).click()
-        
+
 
         //select a group type
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
@@ -273,12 +271,12 @@ describe('Validate Measure Group deletion functionality', () => {
 
         //click on the first group
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').focus().should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupOne).click()        
+        cy.get(MeasureGroupPage.measureGroupOne).click()
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').focus().should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTwo).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -294,7 +292,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //confirm test case is still present on measure
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=test-case-row-'+ fileContents +']').should('exist').should('be.visible')
-        })  
+        })
 
 
     })
@@ -306,11 +304,11 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -324,7 +322,7 @@ describe('Validate Measure Group deletion functionality', () => {
 
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //confirm Scoring value is blank
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
@@ -338,7 +336,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //confirm test case is still present on measure
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
             cy.get('[data-testid=test-case-row-'+ fileContents +']').should('exist').should('be.visible')
-        })        
+        })
     })
 
     it('Test Cases still loads after a one from multiple groups are deleted', () => {
@@ -348,19 +346,18 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         for (let i = 0; i <= 3; i++){
             //click on the add measture grop button to create new group
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('exist')
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-            cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
         }
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupFour).should('exist')
         cy.get(MeasureGroupPage.measureGroupFour).click()
-        
+
 
         //select a group type
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
@@ -390,16 +387,16 @@ describe('Validate Measure Group deletion functionality', () => {
         //save newly created group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()  
-        
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
         //click on the first group
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').focus().should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupOne).click()        
+        cy.get(MeasureGroupPage.measureGroupOne).click()
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTwo).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -418,7 +415,7 @@ describe('Validate Measure Group deletion functionality', () => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist').should('be.visible')
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
-        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {        
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((tId)=> {
                 cy.intercept('GET', 'https://dev-madie.hcqis.org/measures/' + mId + '/edit/test-cases/'+ tId, [])
 
@@ -433,11 +430,11 @@ describe('Validate Measure Group deletion functionality', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //click on Delete button for group
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
@@ -451,7 +448,7 @@ describe('Validate Measure Group deletion functionality', () => {
 
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
-        
+
         //confirm Scoring value is blank
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
@@ -468,11 +465,11 @@ describe('Validate Measure Group deletion functionality', () => {
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist').should('be.visible')
             cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
         })
-        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {        
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((tId)=> {
                 cy.intercept('GET', 'https://dev-madie.hcqis.org/measures/' + mId + '/edit/test-cases/'+ tId, [])
             })
-        })        
+        })
     })
 
     it('User can only delete groups from a measure that they own', () => {
@@ -493,6 +490,6 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //click on Delete button for group
-        cy.get(MeasureGroupPage.deleteGroupbtn).should('not.exist')       
+        cy.get(MeasureGroupPage.deleteGroupbtn).should('not.exist')
     })
 })

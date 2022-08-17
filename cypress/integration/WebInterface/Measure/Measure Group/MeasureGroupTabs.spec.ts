@@ -100,7 +100,7 @@ describe('Validating group tabs', () => {
 
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')        
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible').should('be.enabled')
 
     })
@@ -120,13 +120,13 @@ describe('Validating group tabs', () => {
 
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Continuous Variable')              
+        cy.get(MeasureGroupPage.measureScoringSelect).select('Continuous Variable')
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.measurePopulationSelect).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.measurePopulationExclusionSelect).should('exist').should('be.visible').should('be.enabled')
 
     })
-    it('Stratification tab includes new fields and those fields have expectedd values', () => {
+    it('Stratification tab includes new fields and those fields have expected values', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -139,10 +139,11 @@ describe('Validating group tabs', () => {
 
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-        cy.get(EditMeasurePage.measureGroupsTab).click()     
-        
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(MeasureGroupPage.populationTab).click()
+
         //Click on Stratification tab
-        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
         //confirm stratification related fields are present
@@ -163,7 +164,7 @@ describe('Validating group tabs', () => {
             .should('include.text', 'denom')
             .should('include.text', 'ipp')
             .should('include.text', 'num')
-            
+
         //Association -- default value -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Proportion
@@ -211,9 +212,9 @@ describe('Validating group tabs', () => {
 
         //enter a value for the required Population Basis field
         cy.get(MeasureGroupPage.popBasis).type('Boolean').type('{enter}')
-        
+
         //Click on Stratification tab
-        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
         //select a value only for Association
@@ -224,7 +225,7 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
 
         //Click on Stratification tab
-        cy.get(MeasureGroupPage.stratificationTab).should('exist')        
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
         //Association -- default value -- score type is Proportion
@@ -243,10 +244,10 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).should('be.empty')
@@ -288,8 +289,8 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('be.visible')
         Utilities.waitForElementVisible(MeasureGroupPage.scoreUpdateMGConfirmMsg, 3000)
         cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('contain.text', 'Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.')
-        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationMsg).should('contain.text', 'Are you sure you want to Save Changes?')
-        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationUndoWarning).should('contain.text', 'This action cannot be undone.')
+        cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('contain.text', 'Are you sure you want to Save Changes?')
+        cy.get(MeasureGroupPage.scoreUpdateMGConfirmMsg).should('contain.text', 'This action cannot be undone.')
 
         cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
         cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
@@ -300,7 +301,7 @@ describe('Validating group tabs', () => {
     it('Can successfully update / change population value and save on population tab', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
@@ -311,7 +312,7 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //change / update a population value for current scoring
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.initialPopulationSelect).select('num')
@@ -334,7 +335,7 @@ describe('Validating group tabs', () => {
     it('Can successfully update / change Reporting tab values and save on Reporting tab', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
@@ -345,10 +346,10 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).type('Typed some value for Rate Aggregation text area field')
@@ -374,7 +375,7 @@ describe('Validating group tabs', () => {
     it('Changes are retained while moving across different tabs', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
@@ -385,10 +386,10 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).type('Typed some value for Rate Aggregation text area field')
@@ -417,7 +418,7 @@ describe('Validating group tabs', () => {
         //navigate back to the reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab and their recently updated values
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).should('contain.value','Typed some value for Rate Aggregation text area field')
@@ -430,7 +431,7 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
 
@@ -438,16 +439,16 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).should('contain.value','Typed some value for Rate Aggregation text area field')
         cy.get(MeasureGroupPage.improvementNotationSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text','Increased score indicates improvement')        
+        cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text','Increased score indicates improvement')
 
 
     })
     it('Changes are saved across different tabs', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
@@ -457,11 +458,11 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).type('Typed some value for Rate Aggregation text area field')
@@ -474,12 +475,12 @@ describe('Validating group tabs', () => {
 
         //change / update a population value for current scoring
         cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')        
+        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')
 
         //navigate back to the reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab and their recently updated values
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).should('contain.value','Typed some value for Rate Aggregation text area field')
@@ -504,9 +505,9 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+
         //Click on Reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab and their recently updated values
@@ -516,7 +517,7 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text','Increased score indicates improvement')
 
         //navigate to the populations tab
-        cy.get(MeasureGroupPage.populationTab).should('exist')        
+        cy.get(MeasureGroupPage.populationTab).should('exist')
         cy.get(MeasureGroupPage.populationTab).click()
 
         //aeert the change / update to population value for current scoring
@@ -527,9 +528,9 @@ describe('Validating group tabs', () => {
     it('Stratification tab is not present / available when the Ratio scoring value is selected', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
@@ -551,9 +552,9 @@ describe('Validating group tabs', () => {
     it('Assert indicator on tab with error, until error is removed', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')        
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
@@ -586,12 +587,12 @@ describe('Validating group tabs', () => {
 
         //make reporting the active tab
         //Click on Reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert that the error indicator no longer appears on the population tab
         cy.get(MeasureGroupPage.populationTab)
-        .then(($message) => {assert($message.text, 'Populations') })
+            .then(($message) => {assert($message.text, 'Populations') })
 
 
 
@@ -599,7 +600,7 @@ describe('Validating group tabs', () => {
     it('Assert all fields, in all tabs, are for the measure group that is selected', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-        
+
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
@@ -610,11 +611,12 @@ describe('Validating group tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        
+        cy.get(MeasureGroupPage.populationTab).click()
+
         //Click on Reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
-        
+
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).type('Typed some value for Rate Aggregation text area field')
@@ -640,12 +642,12 @@ describe('Validating group tabs', () => {
         for (let i = 1; i <= 4; i++){
 
             cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-            cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
+            //cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
             cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
         }
         //Click on Reporting tab
-        cy.get(MeasureGroupPage.reportingTab).should('exist')        
+        cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert that the two fields appear on the reporting tab and are blank / without a selected value
@@ -654,8 +656,9 @@ describe('Validating group tabs', () => {
         cy.get(MeasureGroupPage.improvementNotationSelect).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.improvementNotationSelect).should('contain.text', 'Select')
 
+        cy.get(MeasureGroupPage.measureGroupOne).click()
         //Click on Populations tab
-        cy.get(MeasureGroupPage.populationTab).should('exixt')
+        cy.get(MeasureGroupPage.populationTab).should('exist')
         cy.get(MeasureGroupPage.populationTab).click()
 
         //assert score-specific population fields appear in the population tab
