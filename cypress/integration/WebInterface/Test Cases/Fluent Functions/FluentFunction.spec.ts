@@ -61,10 +61,10 @@ describe('Fluent Function Capability', () => {
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
-        cy.get(MeasureGroupPage.addMeasureGroupButton).click()
+// cy.pause()
+//         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
+//         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
+//         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
@@ -94,6 +94,8 @@ describe('Fluent Function Capability', () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.detailsTab).click()
 
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 

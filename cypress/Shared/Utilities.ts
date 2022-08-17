@@ -286,7 +286,6 @@ export class Utilities {
             }
             
         }
-        cy.get(EditMeasurePage.measureGroupsTab).click()
     }
 
     public static validationMeasureGroupSaveWithoutRequired (measureScoreValue: string | string[]): void {
@@ -446,6 +445,7 @@ export class Utilities {
 
         switch ((mgPVTestType.valueOf()).toString()){
             case "all": {
+
                 //log, in cypress, the measure score value
                 cy.log((mgPVTestType.valueOf()).toString())
                 this.validationMeasureGroupSaveAll((measureScoreValue.valueOf()).toString())

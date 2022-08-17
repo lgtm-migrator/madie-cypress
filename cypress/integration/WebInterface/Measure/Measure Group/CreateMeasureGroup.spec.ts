@@ -64,6 +64,8 @@ describe('Validate Measure Group', () => {
         cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
         cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+
+
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
 
         //get current value what is in the scoring box
