@@ -74,7 +74,7 @@ export class MeasureGroupPage {
     //update measure group
     public static readonly updateMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
     public static readonly popUpConfirmationModal = '[class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-mbdu2s"]'
-    public static readonly scoreUpdateMGConfirmMsg = '[class="MuiDialogContent-root css-1ty026z"]'//'[class="MuiTypography-root MuiTypography-body1 jss6 css-9l3uo3"]'
+    public static readonly scoreUpdateMGConfirmMsg = '[class="MuiDialogContent-root css-1ty026z"]'
     public static readonly updateMeasureGroupConfirmationUndoWarning = '[class="MuiTypography-root MuiTypography-body1 jss8 css-9l3uo3"]'
     public static readonly updateMeasureGroupConfirmationBtn = '[data-testid="update-measure-group-scoring-modal-agree-btn"]'
 
