@@ -151,7 +151,9 @@ export class TestCasesPage {
     }
 
     public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries:string)  :void{
-        cy.get(this.testCasePopulationList).should('be.visible')
+
+        //cy.get(this.testCasePopulationList).should('be.visible')
+        cy.get(this.detailsTab).click()
 
         //Edit / Update test case title
 
