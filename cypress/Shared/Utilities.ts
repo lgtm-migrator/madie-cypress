@@ -407,10 +407,6 @@ export class Utilities {
                     .select('SDE Sex')
                 cy.get(MeasureGroupPage.numeratorSelect)
                     .select('SDE Race').contains('SDE Race')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .select('Select Denominator Exception ( Leave selected for no population )')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .select('Select Numerator Exclusion ( Leave selected for no population )') 
                 break
             }
             case 'Continuous Variable': {
@@ -459,7 +455,7 @@ export class Utilities {
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
                 cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
                 this.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+            
 
                 break
             }
@@ -483,7 +479,6 @@ export class Utilities {
                     cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus().click()
                     //validation message after attempting to save
                     cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
                     }
                     break
             }

@@ -58,7 +58,7 @@ export class TestCasesPage {
     public static readonly testCaseDENEXCEPCheckBox = '[data-testid="test-population-denominatorException-expected"]'
     public static readonly testCaseMSRPOPLCheckBox = '[data-testid="test-population-measurePopulation-expected"]'
     public static readonly testCaseMSRPOPLEXCheckBox = '[data-testid="test-population-measurePopulationExclusion-expected"]'
-    public static readonly testCasePopulationHeaderForNoMeasureGroup = '.GroupPopulations___StyledSpan2-sc-1752rtp-2'
+    public static readonly testCasePopulationHeaderForNoMeasureGroup = '.MuiAlert-message.css-1w0ym84'
     public static readonly testCasePopulationValuesHeader = '.GroupPopulations___StyledSpan-sc-1752rtp-1'
     public static readonly testCasePopulationValuesTable = '[data-testid="test-case-population-list-tbl"]'
     public static readonly testCasePopulationValues = '.TestCasePopulationList___StyledTr-sc-iww9ze-3'

@@ -52,7 +52,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
-        cy.get(TestCasesPage.testCasePopulationHeaderForNoMeasureGroup).should('contain.text', 'No populations for current scoring. Please make sure at least one measure group has been created.')
+        cy.get(TestCasesPage.testCasePopulationHeaderForNoMeasureGroup).should('contain.text', 'There are no groups associated with this measure. Please review the Groups tab.')
     })
 
     it('Validate Population Values check boxes are correct based on measure scoring value that is applied, when the measure is initially created (defalut measure group)', () => {
@@ -67,6 +67,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
         cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
@@ -90,8 +96,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
 
     })
-    //skipping test due to typo error / bug MAT-4591
-    it.skip('Validate notification that a reset of population values, on test cases, will occur once the completed save / update of the scoring value is executed', () => {
+    it('Validate notification that a reset of population values, on test cases, will occur once the completed save / update of the scoring value is executed', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -115,23 +120,25 @@ describe('Test Case Expected Measure Group population values based on initial me
             Utilities.validationMeasureGroupSaveAll((measureScoringArray[i].valueOf()).toString())
             //save measure group
             cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-            //validation message after attempting to save
-            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-            cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg)
-                .then(($message) => {
-                    if(i == 2){
-                        expect($message.text()).to.equal('This change will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
-                    }
-                    else if (i == 1){
-                        expect($message.text()).to.equal('Population details for this group saved successfully.')
-                    }
-                })
+            if(i == 2){
+                //validation message after attempting to save
+                cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('exist')
+                cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('contain.text', 'Change Scoring?Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.Are you sure you want to Save Changes?This action cannot be undone.No, Keep WorkingYes, Save changes')
+                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
+            }
+            else if (i == 1){
+                //validation message after attempting to save
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+            }
         }
 
     })
 
-    //skipping test due to typo error / bug MAT-4591
-    it.skip('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
+    it('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -163,6 +170,11 @@ describe('Test Case Expected Measure Group population values based on initial me
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()        
 
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
@@ -198,10 +210,13 @@ describe('Test Case Expected Measure Group population values based on initial me
         //save measure group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation message after attempting to save
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'This change ' +
-            'will reset the population scoring value in test cases. Are you sure you wanted to continue with this? UpdateCancel')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
+        cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('exist')
+        cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('contain.text', 'Change Scoring?Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.Are you sure you want to Save Changes?This action cannot be undone.No, Keep WorkingYes, Save changes')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
+
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population ' +
             'details for this group updated successfully.')
 
@@ -220,15 +235,18 @@ describe('Test Case Expected Measure Group population values based on initial me
 
         })
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that check boxes that were checked are no longer checked
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
 
     })
     it('Test Case Population value options are limited to those that are defined from Measure Group -- required populations', () => {
-
-        //creating propportion group on measure
-        //MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
         OktaLogin.Login()
 
@@ -260,6 +278,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+        
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
         cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
@@ -270,8 +294,8 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
     })
-    //this will need to be retested once 4497/ 4498 is fixed
-    it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
+
+    it('Test Case Population value options are limited to those that are defined from Measure Group -- adding optional definitions', () => {
         //creating propportion group on measure
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
 
@@ -295,6 +319,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
@@ -311,6 +341,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'all')
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that test case now has all of the population check boxes available
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
@@ -323,7 +359,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
 
     })
-    //this will need to be retested once 4497/ 4498 is fixed
+    //this will need to be retested once 4631 is fixed
     it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
         //creating propportion group on measure
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
@@ -348,6 +384,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that test case now has all pertinent details -- all check boxes for the population fields are checked
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
@@ -364,6 +406,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that test case now has only the required population values / check boxes
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
@@ -409,55 +457,144 @@ describe('Test Case Expected Measure Group population values based on initial me
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
         //confirm that test case now has all pertinent details -- only the check boxes for the population fields that are required
         cy.get(TestCasesPage.testCasePopulationValuesHeader).should('contain.text', 'Group 1 (Proportion) Population Values')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
         cy.get(TestCasesPage.testCasePopulationValues).should('contain.text', 'PopulationExpectedActual')
 
         cy.log('Select DENOM and verify IPP is checked')
-        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check()
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
 
         cy.log('Uncheck IPP and verify DENOM is unchecked')
-        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck()
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
 
         //Select DENOM again
-        cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).check()
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
 
         cy.log('Uncheck DENOM and verify IPP is not unchecked')
-        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')        
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck()
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')        
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
 
         cy.log('Select Numerator and verify if DENOM and IPP are checked')
-        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled') 
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check()
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
 
         cy.log('Uncheck DENOM and verify if Numerator is unchecked')
-        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).uncheck()
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
 
         //Check Numerator again
-        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check()
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
         cy.log('Uncheck Numerator and verify if Denom is not unchecked')
-        cy.get(TestCasesPage.testCaseNUMERCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).uncheck()
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
 
         //Check Numerator again
-        cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).check()
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
         cy.log('Uncheck IPP and verify if DENOM and Numerator are unchecked')
-        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck().should('not.be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).uncheck()
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('not.be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('not.be.checked')
 
         cy.log('Select Numerator Exclusion and verify IPP, Numerator and Denominator are selected')
-        cy.get(TestCasesPage.testCaseNUMEXCheckBox).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).check()
+        cy.get(TestCasesPage.testCaseNUMEXCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
     })
 
