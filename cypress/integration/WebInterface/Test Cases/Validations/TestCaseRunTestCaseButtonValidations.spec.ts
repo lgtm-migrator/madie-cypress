@@ -39,20 +39,9 @@ describe('Test Case Run Test Case button validations', () => {
                     headers: {
                         authorization: 'Bearer ' + accessToken.value
                     },
-                    // body: {
-                    //     "scoring": 'Proportion',
-                    //     "population":
-                    //     {
-                    //         "initialPopulation": PopIniPop,
-                    //         "denominator": PopDenom,
-                    //         "denominatorExclusion": PopDenex,
-                    //         "denominatorException": PopDenexcep,
-                    //         "numerator": PopNum,
-                    //         "numeratorExclusion": PopNumex
-                    //     }
-                    // }
                     body: {
                         "scoring": 'Proportion',
+                        "populationBasis": "Boolean",
                         "populations": [
                             {
                                 "name": "initialPopulation",
@@ -99,8 +88,7 @@ describe('Test Case Run Test Case button validations', () => {
         Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
-    //skipping until bug MAT-4635 is fixed
-    it.skip('Run Test Case button is disabled  -- CQL Errors', () => {
+    it('Run Test Case button is disabled  -- CQL Errors', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -152,7 +140,7 @@ describe('Test Case Run Test Case button validations', () => {
 
     })
 
-    //skipping until bug MAT-4635 is fixed
+    //skipping until bug MAT-4421 is fixed
     it.skip('Run / Execute Test Case button is disabled  -- Missing group / population selections', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -184,6 +172,7 @@ describe('Test Case Run Test Case button validations', () => {
                     },
                     body: {
                         "scoring": 'Proportion',
+                        "populationBasis": "Boolean",
                         "populations": [
                             {
                                 "name": "initialPopulation",
@@ -244,8 +233,7 @@ describe('Test Case Run Test Case button validations', () => {
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')        
     })
-    //skipping until bug MAT-4635 is fixed
-    it.skip('Run Test Case button is disabled -- Invalid TC Json', () =>{
+    it('Run Test Case button is disabled -- Invalid TC Json', () =>{
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -434,7 +422,7 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
         
     })
-    //skipping until bug MAT-4635 is fixed
+    //skipping until bug MAT-4421 is fixed
     it.skip('Run Test Case button is disabled -- missing TC Json',() =>{
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -600,8 +588,7 @@ describe('Test Case Run Test Case button validations', () => {
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
 
     })
-    //skipping until bug MAT-4635 is fixed
-    it.skip('Run Test Case actual results in Population Values table', () => {
+    it('Run Test Case actual results in Population Values table', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
