@@ -58,11 +58,6 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
         Utilities.validateMeasureGroup((measureScoringArray[3].valueOf()).toString(), mgPVTestType[0])
 
-        //Click on the measure group tab
-        // cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-        // cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        // cy.get(EditMeasurePage.measureGroupsTab).click()
-
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 

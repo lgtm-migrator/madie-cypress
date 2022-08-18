@@ -172,8 +172,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
-        //validate data is saved in mongo database --> future addition to automated test script
-
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
         //navigate back to the measure group page
@@ -209,8 +207,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //select scoring unit on measure
         cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
-
-        //validate data is saved in mongo database --> future addition to automated test script
 
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
