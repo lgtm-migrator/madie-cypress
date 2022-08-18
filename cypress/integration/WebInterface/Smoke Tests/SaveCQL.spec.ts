@@ -8,8 +8,7 @@ import {Utilities} from "../../../Shared/Utilities"
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 
-//skipping because of defect MAT-4635
-describe.skip('Save CQL on CQL Editor Page', () => {
+describe('Save CQL on CQL Editor Page', () => {
 
     before('Create Measure', () => {
 

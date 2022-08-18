@@ -7,7 +7,7 @@ import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
-let measureCQL = 'library AdvancedIllnessandFrailtyExclusion_QICore4 version \'5.0.000\''//MeasureCQL.SBTEST_CQL
+let measureCQL = 'library SimpleFhirLibrary version \'0.0.004\''//MeasureCQL.SBTEST_CQL
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
@@ -76,14 +76,11 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.tcCQLArea).should('contain.text', measureCQL)
 
     })
-    //skipping until a fix is implemented for bug MAT-4635
-    it.skip('Updates applied and saved from the Measure CQL page / tab are updated and reflective in the Test Case Page', () =>{
+    it('Updates applied and saved from the Measure CQL page / tab are updated and reflective in the Test Case Page', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('Additional text')
 
         //saving current Measure CQL value
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
@@ -104,7 +101,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
         //type in an additional value to the already existing value in the editor
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}define \"denomx\":        \"ipp\"')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}using FHIR version \'4.0.1\'')
+
 
         //saving new CQL value
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
@@ -120,17 +118,14 @@ describe('Test Case Page CQL page object', () => {
         TestCasesPage.clickEditforCreatedTestCase()
  
         //confirm that CQL field, on the Test Case page, reflects the additional text
-        cy.get(TestCasesPage.tcCQLArea).should('contain.text', measureCQL+'{enter}define \"denomx\":        \"ipp\"')
+        cy.get(TestCasesPage.tcCQLArea).should('contain.text', measureCQL+'using FHIR version \'4.0.1\'')
 
     })
-    //skipping until a fix is implemented for bug MAT-4635
-    it.skip('A message is diesplayed if there are issues with the CQL', () =>{
+    it('A message is displayed if there are issues with the CQL', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('Additional text')
 
         //saving current Measure CQL value
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')

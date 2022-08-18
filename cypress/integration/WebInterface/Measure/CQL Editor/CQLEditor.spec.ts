@@ -11,8 +11,7 @@ let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
-//skipping because of defect MAT-4635
-describe.skip('Measure: CQL Editor', () => {
+describe('Measure: CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -162,8 +161,8 @@ describe.skip('Measure: CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
-
-    it('Graceful error msg if model is missing in CQL', () => {
+    //skipping due to bug 4521
+    it.skip('Graceful error msg if model is missing in CQL', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -198,8 +197,7 @@ describe.skip('Measure: CQL Editor', () => {
     })
 })
 
-//skipping because of defect MAT-4635
-describe.skip('Measure: CQL Editor: valueSet', () => {
+describe('Measure: CQL Editor: valueSet', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
