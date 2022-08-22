@@ -460,7 +460,7 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain','Initial Population')
+            .should('contain', 'Initial Population')
             .should('contain', 'Denominator')
             .should('contain', 'Denominator Exclusion')
             .should('contain', 'Numerator')
@@ -524,7 +524,7 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
     })
 
-    it('Add multiple stratifications to measure group', () => {
+    it('Add multiple stratifications to the measure group', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -582,20 +582,19 @@ describe('Validating Stratification tabs', () => {
         //Navigate back to stratification tab and assert the values
         cy.get(MeasureGroupPage.stratificationTab).click()
         cy.get(MeasureGroupPage.stratOne).should('contain', 'denom')
-        cy.get(MeasureGroupPage.stratTwo).should('contain','num')
-        cy.get(MeasureGroupPage.stratThree).should('contain','ipp')
-        cy.get(MeasureGroupPage.stratFour).should('contain','denom')
+        cy.get(MeasureGroupPage.stratTwo).should('contain', 'num')
+        cy.get(MeasureGroupPage.stratThree).should('contain', 'ipp')
+        cy.get(MeasureGroupPage.stratFour).should('contain', 'denom')
     })
 
-    it('Stratification tab is not present / available when the Ratio scoring value is selected', () => {
+    it('Removing stratifications from a measure group', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
-
         //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
+        //save CQL as is
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -603,15 +602,89 @@ describe('Validating Stratification tabs', () => {
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(MeasureGroupPage.populationTab).click()
 
-        //select Ratio scoring type
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
+        cy.get(MeasureGroupPage.stratificationTab).click()
+        //Click on Measure Group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(MeasureGroupPage.populationTab).click()
 
-        //assert that Stratification is no longer available
-        cy.get(MeasureGroupPage.stratificationTab).should('not.exist')
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
+        cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //Add Stratification 1
+        cy.get(MeasureGroupPage.stratOne).select('denom')
+        cy.get(MeasureGroupPage.stratAssociationOne).select('Denominator')
+        cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
+
+        //Add Stratification 2
+        cy.get(MeasureGroupPage.stratTwo).select('num')
+        cy.get(MeasureGroupPage.stratAssociationTwo).select('Numerator')
+        cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
+
+        //Add Stratification 3
+        cy.get(MeasureGroupPage.addStratButton).click()
+        cy.get(MeasureGroupPage.stratThree).select('ipp')
+        cy.get(MeasureGroupPage.stratAssociationThree).select('Initial Population')
+        cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
+
+        //Add Stratification 4
+        cy.get(MeasureGroupPage.addStratButton).click()
+        cy.get(MeasureGroupPage.stratFour).select('denom')
+        cy.get(MeasureGroupPage.stratAssociationFour).select('Denominator Exclusion')
+        cy.get(MeasureGroupPage.stratDescFour).type('StratificationFour')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+        //Remove Stratifications
+        cy.get(MeasureGroupPage.stratificationTab).click()
+        cy.get(MeasureGroupPage.removeStratButton).click({force:true, multiple: true})
+
+        //Verify Stratifications before save
+        cy.get(MeasureGroupPage.stratThree).should('contain', 'ipp')
+        cy.get(MeasureGroupPage.stratFour).should('contain', 'denom')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+        //Verify Stratifications after save
+        cy.get(MeasureGroupPage.stratificationTab).click()
+        cy.get(MeasureGroupPage.stratOne).should('contain', 'denom')
+        cy.get(MeasureGroupPage.stratTwo).should('contain', 'num')
 
     })
+
+        it('Stratification tab is not present / available when the Ratio scoring value is selected', () => {
+
+            //Click on Edit Measure
+            MeasuresPage.clickEditforCreatedMeasure()
+
+            //navigate to CQL Editor page / tab
+            cy.get(EditMeasurePage.cqlEditorTab).should('exist')
+            cy.get(EditMeasurePage.cqlEditorTab).click()
+
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+            cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+            //Click on Measure Group tab
+            cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+            cy.get(EditMeasurePage.measureGroupsTab).click()
+
+            //select Ratio scoring type
+            cy.get(MeasureGroupPage.measureScoringSelect).should('exist').should('be.visible').should('be.enabled')
+            cy.get(MeasureGroupPage.measureScoringSelect).select('Ratio')
+
+            //assert that Stratification is no longer available
+            cy.get(MeasureGroupPage.stratificationTab).should('not.exist')
+
+        })
 })
 
 describe('Validating Reporting tabs', () => {

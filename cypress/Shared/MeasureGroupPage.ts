@@ -27,6 +27,7 @@ export class MeasureGroupPage {
     public static readonly stratDescFour ='[name="stratifications[3].description"]'
 
     public static readonly addStratButton = '[data-testid="add-strat-button"]'
+    public static readonly removeStratButton = '[data-testid="remove-strat-button"]'
 
     //Ratio specific -- Add and Delete Initial Population(s)
     public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
