@@ -61,6 +61,7 @@ describe('Test Case population values based on Measure Group population definiti
                     },
                     body: {
                         "scoring": measureScoring,
+                        "populationBasis": 'Boolean',
                         "populations": [
                             {
                                 "name": "initialPopulation",

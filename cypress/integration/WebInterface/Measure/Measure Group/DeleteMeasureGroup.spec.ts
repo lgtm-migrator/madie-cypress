@@ -291,9 +291,9 @@ describe('Validate Measure Group deletion functionality', () => {
 
         //confirm test case is still present on measure
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
-            cy.get('[data-testid=test-case-row-'+ fileContents +']').should('exist').should('be.visible')
-            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist').should('be.visible')
-            cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
+            cy.get('[data-testid=test-case-row-'+ fileContents +']', { timeout: 80000 }).should('exist')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']', { timeout: 80000 }).should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']', { timeout: 80000 }).click()
         })
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((tId)=> {
@@ -341,9 +341,9 @@ describe('Validate Measure Group deletion functionality', () => {
 
         //confirm test case is still present on measure
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
-            cy.get('[data-testid=test-case-row-'+ fileContents +']').should('exist').should('be.visible')
-            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist').should('be.visible')
-            cy.get('[data-testid=edit-test-case-'+ fileContents +']').click()
+            cy.get('[data-testid=test-case-row-'+ fileContents +']', { timeout: 80000 }).should('exist')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']', { timeout: 80000 }).should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']', { timeout: 80000 }).click()
         })
         cy.readFile('cypress/fixtures/testCaseId').should('exist').then((mId) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((tId)=> {

@@ -199,6 +199,7 @@ describe('Bundle returns elmXML', () => {
                     },
                     body: {
                         "scoring": measureScoring,
+                        "populationBasis": 'Boolean',
                         "populations": [
                             {
                                 "name": "initialPopulation",
