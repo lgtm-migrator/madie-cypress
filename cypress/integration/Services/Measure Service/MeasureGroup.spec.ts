@@ -406,8 +406,7 @@ describe('Measure Service: Test Case Endpoints', () => {
     })
 })
 
-//Skipping until MAT-4630 is fixed
-describe.skip('Verify Population Basis is required when creating group on backend', () => {
+describe('Verify Population Basis is required when creating group on backend', () => {
     beforeEach('Set Access Token',() => {
 
         cy.setAccessTokenCookie()
@@ -450,7 +449,6 @@ describe.skip('Verify Population Basis is required when creating group on backen
                     body: {
                         "id": fileContents,
                         "scoring": measureScoring,
-                        //"populationBasis": "Boolean",
                         "populations": [
                             {
                                 "_id" : "",
@@ -488,9 +486,9 @@ describe.skip('Verify Population Basis is required when creating group on backen
                         ]
                     }
                 }).then((response) => {
+                    console.log(response)
                     expect(response.status).to.eql(400)
-                    expect(response.body.id).to.be.exist
-                    cy.writeFile(measureGroupPath, response.body.id)
+                    expect(response.body.validationErrors.populationBasis).to.eql('Population Basis is required.')
                 })
             })
         })

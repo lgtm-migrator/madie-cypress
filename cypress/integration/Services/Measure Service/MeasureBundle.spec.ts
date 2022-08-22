@@ -10,7 +10,6 @@ let mpEndDate = now().format('YYYY-MM-DD')
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
 let model = 'QI-Core'
-let invalidmeasureCQL = "library SimpleFhirMeasureLibs version '0.0.004'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\nparameter 'Measurement Period' Interval<DateTime>\ncontext Patient\ndefine 'ipp':\n  exists ['Encounter'] E where E.period.start during 'Measurement Period'\ndefine 'denom':\n  'ipp'\ndefine 'num':\n  exists ['Encounter'] E where E.status ~ 'finished'"
 let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
     '\n' +
     'using FHIR version \'4.0.1\'\n' +
@@ -85,6 +84,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
                     },
                     body: {
                         "scoring": 'Proportion',
+                        "populationBasis": 'Boolean',
                         "populations": [
                             {
                                 "name": "initialPopulation",
@@ -214,6 +214,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                     },
                     body: {
                         "scoring": 'Proportion',
+                        "populationBasis": 'Boolean',
                         "populations": [
                             {
                                 "name": "initialPopulation",
@@ -320,6 +321,7 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                     },
                     body: {
                         "scoring": 'Proportion',
+                        "populationBasis": 'Boolean',
                         "populations": [
                             {
                                 "name": "initialPopulation",
