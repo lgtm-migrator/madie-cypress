@@ -31,9 +31,15 @@ export class MeasureGroupPage {
 
     //Ratio specific -- Add and Delete Initial Population(s)
     public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
-    public static readonly secondInitialPopulationSelect = '[name="populations[1].definition"]'
+    public static readonly secondInitialPopulationSelect = '[id="population-select-initial-population-2"]'
     public static readonly deleteSecondInitialPopulation = '[data-testid="remove_populations[1].definition"]'
     public static readonly lblSecondInitialPopulation = '[id="population-select-initial-population-2-label"]'
+    public static readonly lblFirstIpAssociation = '[data-testid="Initial Population 1"]'
+    public static readonly rdioFirstDenom = '[data-testid="Initial Population 1-Denominator"]'
+    public static readonly rdioFirstNum = '[data-testid="Initial Population 1-Numerator"]'
+    public static readonly lblSecondIpAssociation = '[data-testid="Initial Population 2"]'
+    public static readonly rdioSecondNum = '[data-testid="Initial Population 2-Numerator"]'
+    public static readonly rdioSecondDenom = '[data-testid="Initial Population 2-Denominator"]'
 
     //related to delete functionality for groups
     public static readonly deleteGroupbtn = '[data-testid="group-form-delete-btn"]'
