@@ -26,7 +26,7 @@ let PopDenex = 'num'
 let PopDenexcep = 'ipp'
 let PopNumex = 'numeratorExclusion'
 //skipping until bug MAT-4450 is fixed
-describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
+describe('Measure Bundle end point returns cqlErrors as true', () => {
     before('Create Measure',() => {
 
         cy.setAccessTokenCookie()
@@ -65,6 +65,7 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
                     },
                     body: {
                         "scoring": measureScoring,
+                        "populationBasis": "Boolean",
                         "populations": [
                             {
                                 "name": "initialPopulation",
@@ -134,12 +135,12 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(1000)
 
         //log out of UI
         OktaLogin.Logout()
         //log into backend
         cy.setAccessTokenCookie()
-
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
@@ -151,12 +152,14 @@ describe.skip('Measure Bundle end point returns cqlErrors as true', () => {
 
                     }).then((response) => {
                         expect(response.status).to.eql(200)
-                        expect(response.body.cqlErrors).to.eql(true)
+                        expect(response.body.cqlErrors).to.equal(true)
+                        
 
                 })
 
             })
         })
+
     })
 })
 describe('Bundle returns elmXML', () => {
