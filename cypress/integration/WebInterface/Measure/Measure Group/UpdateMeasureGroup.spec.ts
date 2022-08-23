@@ -175,7 +175,7 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping due to bug around default value on first IP
+    //skipping due to bug MAT-4671 -- around default value on first IP
     it.skip('Validate that when an second Initial Population is added, assoications appear for IP1 and IP2', () => {
 
         //Click on Edit Measure
@@ -311,7 +311,7 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         //confirmed updated / saved msg
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
     })
-    //skipping due to bug
+    //skipping due to bug MAT-4672 -- around save button unavailability after changing / updating the association
     it.skip('Validate that changing the association when a value has been indicated for IP 2, allows user to save new associaiton', () =>{
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
