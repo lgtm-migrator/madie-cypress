@@ -61,10 +61,6 @@ describe('Fluent Function Capability', () => {
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
-// cy.pause()
-//         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
-//         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.enabled')
-//         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
