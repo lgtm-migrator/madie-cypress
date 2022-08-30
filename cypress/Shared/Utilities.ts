@@ -1,7 +1,6 @@
 import {TestCasesPage} from "./TestCasesPage"
 import {Header} from "./Header"
 import {MeasureGroupPage} from "./MeasureGroupPage"
-import {EditMeasurePage} from "./EditMeasurePage"
 
 export class Utilities {
 
@@ -11,6 +10,7 @@ export class Utilities {
         const now = require('dayjs')
         let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
         let mpEndDate = now().format('YYYY-MM-DD')
+        let ecqmTitle = 'eCQMTitle'
 
         if (altUser)
         {
@@ -34,8 +34,8 @@ export class Utilities {
                     headers: {
                         Authorization: 'Bearer ' + accessToken.value
                     },
-                    body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName,
-                        "model": 'QI-Core', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false}
+                    body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName, "ecqmTitle": ecqmTitle,
+                        "model": 'QI-Core v4.1.1', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false}
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body).to.eql("Measure updated successfully.")
