@@ -600,14 +600,3 @@ export class MeasureGroupPage {
         }
     }
 }
-/* public static readonly initialPopulationSelect = '[id="population-select-initial-population"]'
-public static readonly denominatorSelect = '[id="population-select-denominator"]'
-public static readonly denominatorExclusionSelect = '[id="population-select-denominator-exclusion"]'
-public static readonly denominatorExceptionSelect = '[id="population-select-denominator-exception"]'
-public static readonly numeratorSelect = '[id="population-select-numerator"]'
-public static readonly numeratorExclusionSelect = '[id="population-select-numerator-exclusion"]'
-public static readonly measurePopulationSelect = '[id="population-select-measure-population"]'
-public static readonly measurePopulationExclusionSelect = '[id="population-select-measure-population-exclusion"]'
-public static readonly measureObservationPopSelect = '[data-testid="measure-observation-cv-obs-input"]'
-public static readonly measurePopulationOption = '[data-testid="select-option-measure-group-population"]'
-public static readonly measureObsAggregSelect = '[data-testid="measure-observation-aggregate-cv-obs-input"]' */
