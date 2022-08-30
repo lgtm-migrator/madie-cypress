@@ -11,15 +11,15 @@ export class MeasureGroupPage {
     public static readonly reportingTab = '[data-testid="reporting-tab"]'
 
     //stratification fields
-    public static readonly stratOne = '[name="stratifications[0].cqlDefinition"]'
-    public static readonly stratTwo = '[name="stratifications[1].cqlDefinition"]'
-    public static readonly stratThree = '[name="stratifications[2].cqlDefinition"]'
-    public static readonly stratFour = '[name="stratifications[3].cqlDefinition"]'
+    public static readonly stratOne = '[id="Stratification-select-1"]'
+    public static readonly stratTwo = '[id="Stratification-select-2"]'
+    public static readonly stratThree = '[id="Stratification-select-3"]'
+    public static readonly stratFour = '[id="Stratification-select-4"]'
 
-    public static readonly stratAssociationOne = '[name="stratifications[0].association"]'
-    public static readonly stratAssociationTwo = '[name="stratifications[1].association"]'
-    public static readonly stratAssociationThree = '[name="stratifications[2].association"]'
-    public static readonly stratAssociationFour = '[name="stratifications[3].association"]'
+    public static readonly stratAssociationOne = '[id="association-select-1"]'
+    public static readonly stratAssociationTwo = '[id="association-select-2"]'
+    public static readonly stratAssociationThree = '[id="association-select-3"]'
+    public static readonly stratAssociationFour = '[id="association-select-4"]'
 
     public static readonly stratDescOne ='[name="stratifications[0].description"]'
     public static readonly stratDescTwo ='[name="stratifications[1].description"]'
@@ -49,7 +49,8 @@ export class MeasureGroupPage {
     public static readonly deleteMeasureGroupConfirmationMsg = '.MuiDialogContent-root > div'
     //Reporting tab fields
     public static readonly rateAggregation = '[data-testid="rateAggregationText"]'
-    public static readonly improvementNotationSelect = '[data-testid="improvement-notation-select"]'
+    public static readonly improvementNotationSelect = '[id="improvement-notation-select"]'
+    //<div tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="improvement-notation-select" id="improvement-notation-select" class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-182didf"><span style="opacity: 0.6;">-</span></div>
     //Measure Group Type
     public static readonly measureGroupTypeSelect = '[data-testid="measure-group-type-dropdown"]'
     public static readonly measureGroupTypeCheckbox = '[class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-1km1ehz"]'
@@ -57,7 +58,9 @@ export class MeasureGroupPage {
     public static readonly measureGroupTypeListBox = '[id="mui-component-select-measureGroupTypes"]'
 
     //Scoring drop-down box
-    public static readonly measureScoringSelect = '#scoring-select'
+    public static readonly measureScoringSelect = '[data-testid="scoring-select"]'
+    public static readonly measureScoringCohort = '[data-testid="group-scoring-option-COHORT"]'
+    public static readonly measureScoringProportion = '[data-testid="group-scoring-option-PROPORTION]'
     public static readonly measureScoringRatio = '[data-testid="group-scoring-option-RATIO"]'
     public static readonly measureScoringCV = '[data-testid="group-scoring-option-CONTINUOUS_VARIABLE"]'
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
@@ -71,8 +74,10 @@ export class MeasureGroupPage {
     public static readonly numeratorExclusionSelect = '[id="population-select-numerator-exclusion"]'
     public static readonly measurePopulationSelect = '[id="population-select-measure-population"]'
     public static readonly measurePopulationExclusionSelect = '[id="population-select-measure-population-exclusion"]'
+    public static readonly measureObservationPopSelect = '[data-testid="measure-observation-cv-obs-input"]'
     public static readonly measurePopulationOption = '[data-testid="select-option-measure-group-population"]'
-
+    public static readonly measureObsAggregSelect = '[data-testid="measure-observation-aggregate-cv-obs-input"]'
+    
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '.css-ackcql'
     public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
@@ -282,7 +287,7 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "denominatorExclusion",
-                                "definition" : ""
+                                "definition" : PopDenomP
                             },
                             {
                                 "_id" : "",
@@ -297,7 +302,7 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "numeratorExclusion",
-                                "definition" : ""
+                                "definition" : PopNumP
                             }
                         ],
                         "measureGroupTypes": [
