@@ -354,7 +354,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Ratio')
-        cy.get('[id="population-select-initial-population-1"]').should('contain.text', 'Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.firstInitialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
         cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
             .then(($message) => {
