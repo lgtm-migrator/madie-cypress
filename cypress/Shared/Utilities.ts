@@ -1,6 +1,7 @@
 import {TestCasesPage} from "./TestCasesPage"
 import {Header} from "./Header"
 import {MeasureGroupPage} from "./MeasureGroupPage"
+import {CQLLibraryPage} from "./CQLLibraryPage";
 
 export class Utilities {
 
@@ -487,7 +488,12 @@ export class Utilities {
 
     public static dropdownSelect (dropdownDataElement: string, valueDataElement: string): void {
         cy.get(dropdownDataElement).should('exist').should('be.visible')
-        if(valueDataElement == MeasureGroupPage.measureScoringCohort || valueDataElement == MeasureGroupPage.measureScoringProportion || valueDataElement == MeasureGroupPage.measureScoringRatio||valueDataElement == MeasureGroupPage.measureScoringCV){
+        if(valueDataElement == MeasureGroupPage.measureScoringCohort ||
+            valueDataElement == MeasureGroupPage.measureScoringProportion ||
+            valueDataElement == MeasureGroupPage.measureScoringRatio||
+            valueDataElement == MeasureGroupPage.measureScoringCV ||
+            valueDataElement == CQLLibraryPage.cqlLibraryModelQICore
+        ){
             cy.get(dropdownDataElement).click()
             cy.get(valueDataElement).click()
         }

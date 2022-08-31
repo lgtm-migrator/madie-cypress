@@ -7,7 +7,7 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
     public static readonly cqlLibraryModelDropdown = '#model-select'
     public static readonly allLibrariesBtn = '[data-testid="all-cql-libraries-tab"]'
-    public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core"]'
+    public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core v4.1.1"]'
     public static readonly saveCQLLibraryBtn = '[data-testid="create-new-library-save-button"]'
     public static readonly updateCQLLibraryBtn = '[data-testid="cql-library-save-button"]'
     public static readonly cqlLibraryNameList = ':nth-child(1) > .CqlLibraryList___StyledTd-sc-1rv02q7-10'
