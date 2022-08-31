@@ -9,7 +9,7 @@ let measureName = ''
 let newMeasureName = ''
 let CQLLibraryName = ''
 let newCQLLibraryName = ''
-let model = 'QI-Core'
+let model = 'QI-Core v4.1.1'
 let harpUser = Environment.credentials().harpUser
 let measureNameU = 'TestMeasure' + Date.now() + 1
 let CqlLibraryNameU = 'TestLibrary' + Date.now() + 1
@@ -33,7 +33,7 @@ describe('Measure Service: Create Measure', () => {
 
     })
     //create measure
-    it('Create New Measure, successful creation', () => {
+    it.only('Create New Measure, successful creation', () => {
         measureName = 'TestMeasure' + Date.now()
         CQLLibraryName = 'TestCql' + Date.now()
 

@@ -7,7 +7,7 @@ import {Utilities} from "../../../../Shared/Utilities"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
-let measureScoringArray = ['Ratio', 'Cohort', 'Continuous Variable', 'Proportion']
+let measureScoringArray = ['Ratio', 'Cohort', 'CV', 'Proportion']
 let mgPVTestType = ['all', 'wOReq', 'wOOpt']
 
 describe('Validate Measure Group additions', () => {
@@ -53,10 +53,31 @@ describe('Validate Measure Group additions', () => {
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.log((measureScoringArray[3].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[3].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
         Utilities.validateMeasureGroup((measureScoringArray[3].valueOf()).toString(), mgPVTestType[0])
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExceptionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
+
+        //save measure group
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        Utilities.waitForElementVisible(MeasureGroupPage.saveMeasureGroupDetails, 3000)
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus()
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        //validation message after attempting to save
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
+        Utilities.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
 
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
@@ -71,15 +92,14 @@ describe('Validate Measure Group additions', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
 
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -94,20 +114,20 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureGroupOne).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
 
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Proportion')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
-        cy.get(MeasureGroupPage.denominatorSelect).contains('SDE Sex')
-        cy.get(MeasureGroupPage.denominatorExclusionSelect).contains('Absence of Cervix')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).contains('SDE Ethnicity')
-        cy.get(MeasureGroupPage.numeratorSelect).contains('SDE Race')
-        cy.get(MeasureGroupPage.numeratorExclusionSelect).contains('Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Proportion')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text','Surgical Absence of Cervix')
 
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist')
         cy.get(MeasureGroupPage.measureGroupTwo).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTwo).click()
 
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('Pap Test with Results')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Cohort')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','Surgical Absence of Cervix')
 
     })
 
@@ -147,15 +167,14 @@ describe('Validate Measure Group additions', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
 
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Pap Test with Results')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -170,20 +189,20 @@ describe('Validate Measure Group additions', () => {
         cy.get(MeasureGroupPage.measureGroupOne).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
 
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Proportion')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
-        cy.get(MeasureGroupPage.denominatorSelect).contains('SDE Sex')
-        cy.get(MeasureGroupPage.denominatorExclusionSelect).contains('Absence of Cervix')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).contains('SDE Ethnicity')
-        cy.get(MeasureGroupPage.numeratorSelect).contains('SDE Race')
-        cy.get(MeasureGroupPage.numeratorExclusionSelect).contains('Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Proportion')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text','Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text','Surgical Absence of Cervix')
 
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist')
         cy.get(MeasureGroupPage.measureGroupTwo).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTwo).click()
 
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('Pap Test with Results')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
 
         cy.get(MeasureGroupPage.measureGroupFour).should('not.exist')
 

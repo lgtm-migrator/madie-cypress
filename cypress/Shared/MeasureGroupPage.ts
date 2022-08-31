@@ -78,7 +78,7 @@ export class MeasureGroupPage {
     public static readonly measurePopulationOption = '[data-testid="select-option-measure-group-population"]'
     public static readonly measureObsAggregSelect = '[data-testid="measure-observation-aggregate-cv-obs-input"]'
     public static readonly populationMismatchErrorMsg = '[data-testid="helper-text"]'
-
+    
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '.css-ackcql'
     public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'

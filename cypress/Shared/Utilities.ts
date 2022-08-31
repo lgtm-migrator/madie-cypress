@@ -214,47 +214,32 @@ export class Utilities {
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .select('SDE Sex')
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .select('Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'SDE Sex')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Absence of Cervix')
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .should('not.exist')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race')
-                    .contains('SDE Race')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .select('Surgical Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'SDE Race')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
                 break
             }
             case 'Proportion': {
                 //verify the correct populations are displayed and not displayed
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .select('SDE Sex')
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .select('Absence of Cervix')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .select('SDE Ethnicity')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race').contains('SDE Race')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .select('Surgical Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'SDE Sex')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExceptionSelect, 'SDE Ethnicity')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'SDE Race')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
                 break
             }
             case 'Continuous Variable': {
                 //verify the correct populations are displayed and not displayed
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.measurePopulationSelect)
-                    .select('SDE Sex')
-                cy.get(MeasureGroupPage.measurePopulationExclusionSelect)
-                    .select('Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'SDE Sex')
+                Utilities.dropdownSelect(MeasureGroupPage.measurePopulationExclusionSelect, 'Absence of Cervix')
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.denominatorExclusionSelect)
@@ -270,8 +255,7 @@ export class Utilities {
             case 'Cohort': {
                 //verify the correct populations are displayed and not displayed
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.denominatorExclusionSelect)
@@ -302,42 +286,30 @@ export class Utilities {
         switch ((measureScoreValue.valueOf()).toString()){
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .select('Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Absence of Cervix')
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .should('not.exist')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .select('Surgical Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .contains('Select Initial Population')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .contains('Select Denominator')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .contains('Select Numerator')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', '-')
+                cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', '-')
+                cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', '-')
                 break
             }
             case 'Proportion': {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.denominatorExclusionSelect)
-                    .select('Absence of Cervix')
-                cy.get(MeasureGroupPage.denominatorExceptionSelect)
-                    .select('SDE Ethnicity')
-                cy.get(MeasureGroupPage.numeratorExclusionSelect)
-                    .select('Surgical Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorExceptionSelect, 'SDE Ethnicity')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .contains('Select Initial Population')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .contains('Select Denominator')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .contains('Select Numerator')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', '-')
+                cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', '-')
+                cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', '-')
                 break
             }
             case 'Continuous Variable': {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.measurePopulationExclusionSelect)
-                    .select('Absence of Cervix')
+                Utilities.dropdownSelect(MeasureGroupPage.measurePopulationExclusionSelect, 'Absence of Cervix')
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.denominatorExclusionSelect)
@@ -349,10 +321,8 @@ export class Utilities {
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .contains('Select Initial Population')
-                cy.get(MeasureGroupPage.measurePopulationSelect)
-                    .contains('Select Measure Population')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', '-')
+                cy.get(MeasureGroupPage.measurePopulationSelect).should('contain.text', '-')
                 break
             }
             case 'Cohort': {
@@ -368,8 +338,7 @@ export class Utilities {
                 cy.get(MeasureGroupPage.numeratorExclusionSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .contains('Select Initial Population')
+                cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', '-')
                 break
 
             }
@@ -390,32 +359,24 @@ export class Utilities {
         switch ((measureScoreValue.valueOf()).toString()){
             case "Ratio": {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .select('SDE Sex')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race').contains('SDE Race')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'SDE Sex')
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'SDE Race')
                 cy.get(MeasureGroupPage.denominatorExceptionSelect)
                     .should('not.exist')
                 break
             }
             case 'Proportion': {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.denominatorSelect)
-                    .select('SDE Sex')
-                cy.get(MeasureGroupPage.numeratorSelect)
-                    .select('SDE Race').contains('SDE Race')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'SDE Sex')              
+                Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'SDE Race')
                 break
             }
             case 'Continuous Variable': {
                 //verify the correct populations are displayed and not displayed
-                cy.get(MeasureGroupPage.initialPopulationSelect)
-                    .select('SDE Payer')
-                cy.get(MeasureGroupPage.measurePopulationSelect)
-                    .select('SDE Sex')
+                Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'SDE Payer')
+                Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'SDE Sex')                    
                 cy.get(MeasureGroupPage.denominatorSelect)
                     .should('not.exist')
                 cy.get(MeasureGroupPage.denominatorExclusionSelect)
@@ -446,16 +407,7 @@ export class Utilities {
                 //log, in cypress, the measure score value
                 cy.log((mgPVTestType.valueOf()).toString())
                 this.validationMeasureGroupSaveAll((measureScoreValue.valueOf()).toString())
-                //save measure group
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-                this.waitForElementVisible(MeasureGroupPage.saveMeasureGroupDetails, 3000)
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus()
-                cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                //validation message after attempting to save
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('be.visible')
-                this.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
             
 
                 break
@@ -469,25 +421,15 @@ export class Utilities {
             case 'wOOpt': {
                 //based on the scoring unit value, select a value for all population fields
                 this.validationMeasureGroupSaveWithoutOptional((measureScoreValue.valueOf()).toString())
-                if ((measureScoreValue.valueOf()).toString() == 'Cohort') {
-                    //save measure group button is not enabled
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
-                }
-                else {
-                    //save measure group
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-                    cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus().click()
-                    //validation message after attempting to save
-                    cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                    }
-                    break
+                cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
+                break
             }
         }
     }
 
     public static dropdownSelect (dropdownDataElement: string, valueDataElement: string): void {
         cy.get(dropdownDataElement).should('exist').should('be.visible')
+        
         if(valueDataElement == MeasureGroupPage.measureScoringCohort ||
             valueDataElement == MeasureGroupPage.measureScoringProportion ||
             valueDataElement == MeasureGroupPage.measureScoringRatio||
