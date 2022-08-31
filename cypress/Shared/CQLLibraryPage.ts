@@ -1,5 +1,6 @@
 import {Header} from "./Header"
 import {Environment} from "./Environment"
+import {Utilities} from "./Utilities";
 
 export class CQLLibraryPage {
 
@@ -32,8 +33,7 @@ export class CQLLibraryPage {
         cy.get(Header.cqlLibraryTab).click()
         cy.get(this.createCQLLibraryBtn).click()
         cy.get(this.cqlLibraryNameTextbox).type(CQLLibraryName)
-        cy.get(this.cqlLibraryModelDropdown).click()
-        cy.get(this.cqlLibraryModelQICore).click()
+        Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()
         this.validateCQlLibraryName(CQLLibraryName)
