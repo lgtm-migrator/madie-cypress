@@ -116,7 +116,8 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -124,6 +125,7 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:110 | Invalid Code system")
 
     })
+
     it('Verify proper error(s) appear in CQL Editor, when a user includes version and there is no vsac version', () => {
 
         //Click on Edit Measure
@@ -139,7 +141,10 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+
+        cy.get('.page-header').click()
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -147,6 +152,7 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:72 | Version not found.")
 
     })
+
     it('Verify proper error(s) appear in CQL Editor, when a user does not include version and there is no vsac', () => {
 
         //Click on Edit Measure
@@ -162,7 +168,8 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -171,29 +178,6 @@ describe('Validations around code system in Measure CQL', () => {
 
     })
 
-    it('Verify proper error(s) appear in CQL Editor, when a user provides an unknown version', () => {
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the CQL Editor tab
-        CQLEditorPage.clickCQLEditorTab()
-
-        //type text in the CQL Editor that will cause error
-        Utilities.readWriteFileData('CQLCsUnknownVersion.txt', EditMeasurePage.cqlEditorTextBox)
-
-        //save the value in the CQL Editor
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
-
-        //Validate error(s) in CQL Editor window
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
-        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
-        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:111 | Version not found.")
-
-    })
 
     it('Verify proper error(s) appear in CQL Editor, when a user provides no version and vsac exists', () => {
 
@@ -210,7 +194,8 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate no error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
@@ -233,12 +218,14 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate no error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
+
     it('Verify proper error(s) appear in CQL Editor, when user provides a FHIR version and there is no vsac version', () => {
 
         //Click on Edit Measure
@@ -254,7 +241,10 @@ describe('Validations around code system in Measure CQL', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+
+        cy.get('.page-header').click()
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')

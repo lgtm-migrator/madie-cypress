@@ -50,7 +50,8 @@ describe('Measure: CQL Editor', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -92,7 +93,8 @@ describe('Measure: CQL Editor', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor after saving
         cy.scrollTo('top')
@@ -127,7 +129,8 @@ describe('Measure: CQL Editor', () => {
 
     })
 
-    it('Verify no errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, when included library is found', () => {
+    it('Verify no errors appear on CQL Editor page and in the CQL Editor object, on save and on tab / page load, ' +
+        'when included library is found', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -143,7 +146,8 @@ describe('Measure: CQL Editor', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate the lack of error(s) in CQL Editor
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
@@ -161,8 +165,8 @@ describe('Measure: CQL Editor', () => {
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
-    //skipping due to bug 4521
-    it.skip('Graceful error msg if model is missing in CQL', () => {
+
+    it('Graceful error msg if model is missing in CQL', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -178,7 +182,8 @@ describe('Measure: CQL Editor', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //Validate message on page
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor after saving
 
@@ -253,7 +258,8 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
     })
 
@@ -270,7 +276,8 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(CQLEditorPage.umlsMessage).should('not.exist')
 
@@ -303,7 +310,8 @@ describe('Measure: CQL Editor: valueSet', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(CQLEditorPage.umlsMessage).should('not.exist')
 
