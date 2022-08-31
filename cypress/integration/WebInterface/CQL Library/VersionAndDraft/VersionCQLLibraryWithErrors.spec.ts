@@ -59,7 +59,8 @@ describe('Version CQL Library with errors', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Verify CQL parsing errors
         cy.scrollTo('top')

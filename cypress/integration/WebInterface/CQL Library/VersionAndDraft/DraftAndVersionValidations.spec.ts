@@ -106,7 +106,7 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get('.MuiDialogContent-root > :nth-child(2) > :nth-child(4)').should('contain.text', 'Versioning cannot be done as there is no associated Cql with this library')
