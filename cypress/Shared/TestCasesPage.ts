@@ -81,6 +81,7 @@ export class TestCasesPage {
                 expect(response.statusCode).to.eq(201)
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
+
             if (withBundleId){
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
             }
@@ -120,8 +121,6 @@ export class TestCasesPage {
         cy.get(this.detailsTab).should('be.visible')
         cy.get(this.detailsTab).click()
 
-        cy.get(this.testCasePopulationList).should('be.visible')
-
         cy.get(this.testCaseTitle).should('exist')
         Utilities.waitForElementVisible(this.testCaseTitle, 20000)
         Utilities.waitForElementEnabled(this.testCaseTitle, 20000)
@@ -140,6 +139,10 @@ export class TestCasesPage {
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
+
+        cy.get(this.tctExpectedActualSubTab).click()
+
+        cy.get(this.testCasePopulationList).should('be.visible')
 
         this.clickCreateTestCaseButton(withBundleId)
 
