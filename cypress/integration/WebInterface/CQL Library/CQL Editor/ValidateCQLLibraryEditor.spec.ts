@@ -36,7 +36,8 @@ describe('Validate CQL on CQL Library page', () => {
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('not.exist')
 
@@ -58,7 +59,8 @@ describe('Validate CQL on CQL Library page', () => {
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
@@ -98,7 +100,8 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate error(s) in CQL Editor after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
@@ -135,7 +138,8 @@ describe('Validate CQL on CQL Library page', () => {
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         //Validate the lack of error(s) in CQL Editor
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('not.exist')
@@ -202,15 +206,15 @@ describe('CQL Library: CQL Editor: valueSet', () => {
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(CQLEditorPage.editorMessage).should('be.visible')
         cy.get(CQLEditorPage.editorMessage).should('contain.text', 'Parsing complete, CQL is valid')
 
     })
 
-    it.only('Value Set Invalid', () => {
+    it('Value Set Invalid', () => {
 
         //Click on Edit Button
         CQLLibrariesPage.clickEditforCreatedLibrary()
@@ -221,8 +225,8 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(CQLLibraryPage.umlsErrorMessage).should('not.be.visible')
 

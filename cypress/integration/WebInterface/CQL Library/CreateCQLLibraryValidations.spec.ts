@@ -2,6 +2,7 @@ import {OktaLogin} from "../../../Shared/OktaLogin"
 import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
+import {Utilities} from "../../../Shared/Utilities";
 
 let CQLLibraryName = 'TestLibrary' + Date.now()
 
@@ -55,8 +56,7 @@ describe('CQL Library Validations', () => {
 
         //Verify error message for duplicate CQL Library Name
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type('TestLibrary')
-        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).click()
-        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.duplicateCQLLibraryNameError).should('contain.text', 'Library name must be unique. cqlLibraryName : Library name must be unique.')
 
@@ -93,7 +93,8 @@ describe('CQL Library Validations', () => {
         })
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
@@ -105,7 +106,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1766)
+            expect(text.length).to.equal(1760)
         })
 
     })
@@ -130,7 +131,8 @@ describe('CQL Library Validations', () => {
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'Cql Library successfully updated')
+        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
@@ -142,7 +144,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()        
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).to.equal(1766)
+            expect(text.length).to.equal(1768)
         })
         
     })
