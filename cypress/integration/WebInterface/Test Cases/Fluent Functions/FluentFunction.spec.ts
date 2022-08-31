@@ -72,11 +72,9 @@ describe('Fluent Function Capability', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, 'Cohort')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
+
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -93,7 +91,8 @@ describe('Fluent Function Capability', () => {
 
         cy.get(TestCasesPage.detailsTab).click()
 
-        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
@@ -101,14 +100,15 @@ describe('Fluent Function Capability', () => {
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
-
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
+
+cy.pause()
 
         TestCasesPage.clickCreateTestCaseButton(true)
 
