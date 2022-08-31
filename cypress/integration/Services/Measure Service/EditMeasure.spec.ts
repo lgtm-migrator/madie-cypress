@@ -568,6 +568,5 @@ describe('Measurement Period Validations', () => {
             })
         })
     })
-
 })
 
