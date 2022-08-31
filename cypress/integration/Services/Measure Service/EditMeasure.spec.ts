@@ -1,12 +1,17 @@
 import {Utilities} from "../../../Shared/Utilities"
+import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
 
 let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestCql' + Date.now()
 let randValue = (Math.floor((Math.random() * 1000) + 1))
 let newMeasureName = measureName + randValue
 let newCQLLibraryName = cqlLibraryName + randValue
+let measureCQL = MeasureCQL.SBTEST_CQL
+let model = 'QI-Core v4.1.1'
+
 const now = require('dayjs')
-let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
+let mpStartDate = now().subtract('2', 'year').format('YYYY-MM-DD')
 let mpEndDate = now().format('YYYY-MM-DD')
 
 describe('Measure Service: Edit Measure', () => {
@@ -15,29 +20,7 @@ describe('Measure Service: Edit Measure', () => {
 
         cy.setAccessTokenCookie()
 
-        //Create New Measure
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                method: 'POST',
-                body: {
-                    'measureName': measureName,
-                    'cqlLibraryName': cqlLibraryName,
-                    'model': 'QI-Core',
-                    'measureScoring': 'Cohort',
-                    "ecqmTitle": "eCQMTitle",
-                    "measurementPeriodStart": mpStartDate,
-                    "measurementPeriodEnd": mpEndDate
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-                expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/fixtures/measureId', response.body.id)
-            })
-        })
+        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, cqlLibraryName, measureCQL)
     })
 
     beforeEach('Set Access Token',() => {
@@ -57,6 +40,8 @@ describe('Measure Service: Edit Measure', () => {
 
         //Update Measure details
         cy.getCookie('accessToken').then((accessToken) => {
+            cy.log(mpStartDate)
+            cy.log(mpEndDate)
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
                     url: '/api/measures/' +id,
@@ -64,16 +49,16 @@ describe('Measure Service: Edit Measure', () => {
                         authorization: 'Bearer ' + accessToken.value
                     },
                     method: 'PUT',
-                    body: {
-                        'id': id,
-                        'measureName': 'UpdatedTestMeasure' + Date.now(),
-                        'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
-                        "ecqmTitle": "eCQMTitle",
-                        "measurementPeriodStart": mpStartDate,
-                        "measurementPeriodEnd": mpEndDate,
-                        'measureScoring': 'Ratio'
-                    }
+                     body: {
+                         "id" : id,
+                         "measureName": 'UpdatedTestMeasure' + randValue,
+                         "cqlLibraryName": 'UpdatedCqlLibrary' + randValue,
+                         "model": model,
+                         "measureScoring": "Ratio",
+                         "ecqmTitle": "ecqmTitle",
+                         "measurementPeriodStart": mpStartDate + "T00:00:00.000Z",
+                         "measurementPeriodEnd": mpEndDate + "T00:00:00.000Z"
+                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body).to.eql('Measure updated successfully.')
@@ -98,9 +83,10 @@ describe('Measure Service: Edit Measure', () => {
                         'id': id,
                         'measureName': "",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": mpStartDate,
                         "measurementPeriodEnd": mpEndDate
                     }
@@ -127,9 +113,10 @@ describe('Measure Service: Edit Measure', () => {
                         'id': id,
                         'measureName': '12343456456',
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": mpStartDate,
                         "measurementPeriodEnd": mpEndDate
                     }
@@ -156,9 +143,10 @@ describe('Measure Service: Edit Measure', () => {
                         'id': id,
                         'measureName': 'Test_Measure',
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": mpStartDate,
                         "measurementPeriodEnd": mpEndDate
                     }
@@ -189,9 +177,10 @@ describe('Measure Service: Edit Measure', () => {
                             'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwerty' +
                             'qwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwertyqwqwertyqwertyqwertyqwertyqwertyq',
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": mpStartDate,
                         "measurementPeriodEnd": mpEndDate
                     }
@@ -218,9 +207,9 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
-                        "ecqmTitle": "eCQMTitle",
+                        'ecqmTitle': "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
                         "measurementPeriodEnd": mpEndDate
                     }
@@ -246,7 +235,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -275,7 +264,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -304,7 +293,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -333,7 +322,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -362,7 +351,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -391,7 +380,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -420,7 +409,7 @@ describe('Measure Service: Edit Measure', () => {
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cql': "library xyz version '1.5.000'\n\nusing FHIR version '4.0.1'\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\ninclude SupplementalDataElementsFHIR4 version '2.0.000' called SDE\ninclude MATGlobalCommonFunctionsFHIR4 version '6.1.000' called Global\n\nparameter \"Measurement Period\" Interval<DateTime>\n\ncontext Patient\n\ndefine \"SDE Ethnicity\":\n  SDE.\"SDE Ethnicity\"\n\ndefine \"SDE Payer\":\n  SDE.\"SDE Payer\"\n\ndefine \"SDE Race\":\n  SDE.\"SDE Race\"\n\ndefine \"SDE Sex\":\n  SDE.\"SDE Sex\"",
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         'measureScoring': 'Ratio',
                         "ecqmTitle": "eCQMTitle",
                         "measurementPeriodStart": mpStartDate,
@@ -441,29 +430,7 @@ describe('Measurement Period Validations', () => {
 
         cy.setAccessTokenCookie()
 
-        //Create New Measure
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                headers: {
-                    authorization: 'Bearer ' + accessToken.value
-                },
-                method: 'POST',
-                body: {
-                    'measureName': newMeasureName,
-                    'cqlLibraryName': newCQLLibraryName,
-                    'model': 'QI-Core',
-                    'measureScoring': 'Cohort',
-                    "ecqmTitle": "eCQMTitle",
-                    "measurementPeriodStart": mpStartDate,
-                    "measurementPeriodEnd": mpEndDate
-                }
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-                expect(response.body.id).to.be.exist
-                cy.writeFile('cypress/fixtures/measureId', response.body.id)
-            })
-        })
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureCQL)
     })
 
     beforeEach('Set Access Token', () => {
@@ -496,8 +463,9 @@ describe('Measurement Period Validations', () => {
                         'id': id,
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": mpEndDate,
                         "measurementPeriodEnd": mpStartDate,
                         'measureScoring': 'Ratio'
@@ -525,8 +493,9 @@ describe('Measurement Period Validations', () => {
                         'id': id,
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": "",
                         "measurementPeriodEnd": "",
                         'measureScoring': 'Ratio'
@@ -554,8 +523,9 @@ describe('Measurement Period Validations', () => {
                         'id': id,
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": "1823-01-01T05:00:00.000+0000",
                         "measurementPeriodEnd": "3023-01-01T05:00:00.000+0000",
                         'measureScoring': 'Ratio'
@@ -584,8 +554,9 @@ describe('Measurement Period Validations', () => {
                         'id': id,
                         'measureName': 'UpdatedTestMeasure' + Date.now(),
                         'cqlLibraryName': 'UpdatedCqlLibrary' + Date.now(),
-                        'model': 'QI-Core',
+                        'model': model,
                         "ecqmTitle": "eCQMTitle",
+                        'cql': measureCQL,
                         "measurementPeriodStart": "01/01/2021",
                         "measurementPeriodEnd": "01/01/2023",
                         'measureScoring': 'Ratio'
@@ -597,6 +568,5 @@ describe('Measurement Period Validations', () => {
             })
         })
     })
-
 })
 
