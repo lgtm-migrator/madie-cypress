@@ -430,30 +430,6 @@ describe('Measurement Period Validations', () => {
 
         cy.setAccessTokenCookie()
 
-        //Create New Measure
-        // cy.getCookie('accessToken').then((accessToken) => {
-        //     cy.request({
-        //         url: '/api/measure',
-        //         headers: {
-        //             authorization: 'Bearer ' + accessToken.value
-        //         },
-        //         method: 'POST',
-        //         body: {
-        //             'measureName': newMeasureName,
-        //             'cqlLibraryName': newCQLLibraryName,
-        //             'model': model,
-        //             'measureScoring': 'Cohort',
-        //             "ecqmTitle": "eCQMTitle",
-        //             "measurementPeriodStart": mpStartDate,
-        //             "measurementPeriodEnd": mpEndDate
-        //         }
-        //     }).then((response) => {
-        //         expect(response.status).to.eql(201)
-        //         expect(response.body.id).to.be.exist
-        //         cy.writeFile('cypress/fixtures/measureId', response.body.id)
-        //     })
-        // })
-
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCQLLibraryName, measureCQL)
     })
 
