@@ -424,8 +424,7 @@ describe('Validating Stratification tabs', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping due to bug MAT-4682
-    it.skip('Stratification tab includes new fields and those fields have expected values', () => {
+    it('Stratification tab includes new fields and those fields have expected values', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
@@ -457,46 +456,33 @@ describe('Validating Stratification tabs', () => {
         //confirm values in stratification 1 related fields -- score type is Proportion
         //stratification 1 -- default value
         cy.get(MeasureGroupPage.stratOne).should('contain.text', '-')
-        //stratification 1 -- contains these values, in this order, based off of CQL
-        cy.get(MeasureGroupPage.stratOne)
-            .should('include.text', '-')
-            .should('include.text', 'denom')
-            .should('include.text', 'ipp')
-            .should('include.text', 'num')
-
+        cy.get(MeasureGroupPage.stratOne).each(($ele) => {
+            expect($ele.text()).to.be.oneOf(['-', 'denom', 'ipp', 'num'])
+        })
         //Association -- default value -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Proportion
-        cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain', 'Initial Population')
-            .should('contain', 'Denominator')
-            .should('contain', 'Denominator Exclusion')
-            .should('contain', 'Numerator')
-            .should('contain', 'Numerator Exclusion')
-            .should('contain', 'Denominator Exception')
-
+        cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
+            expect($ele.text()).to.be.oneOf(['Initial Population', 'Denominator', 'Denominator Exclusion', 'Numerator', 'Numerator Exclusion', 'Denominator Exception'])
+        })
         //change score type to Cohort
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
-        //Association -- default value -- score type is Cohort
-        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Cohort
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain', 'Initial Population')
-
+            .should('contain.text', 'Initial Population')
         //change score type to Continuous Variable
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Continuous Variable')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
         //Association -- default value -- score type is Continuous Variable
-        cy.get(MeasureGroupPage.stratAssociationOne).find('option:selected').should('have.text', 'Initial Population')
-        //Association -- contains these values based off score type -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain', 'Initial Population')
-            .should('contain', 'Measure Population')
-            .should('contain', 'Measure Population Exclusion')
+        .should('contain.text', 'Initial Population')
+        //Association -- contains these values based off score type -- score type is Continuous Variable
+        cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
+            expect($ele.text()).to.be.oneOf(['Initial Population', 'Measure Population', 'Measure Population Exclusion'])
+        })
 
     })
 
-    //skipping due to bug MAT-4682
-    it.skip('Stratification does not save, if association is the only field that has a value selected', () => {
+    it('Stratification does not save, if association is the only field that has a value selected', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
         //navigate to CQL Editor page / tab
