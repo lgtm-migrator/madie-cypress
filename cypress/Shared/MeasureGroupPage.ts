@@ -1,7 +1,7 @@
 import {MeasuresPage} from "./MeasuresPage"
 import {EditMeasurePage} from "./EditMeasurePage"
 import {CQLEditorPage} from "./CQLEditorPage"
-import { Environment } from "./Environment"
+import {Environment} from "./Environment"
 
 export class MeasureGroupPage {
 
@@ -60,7 +60,7 @@ export class MeasureGroupPage {
     //Scoring drop-down box
     public static readonly measureScoringSelect = '[data-testid="scoring-select"]'
     public static readonly measureScoringCohort = '[data-testid="group-scoring-option-COHORT"]'
-    public static readonly measureScoringProportion = '[data-testid="group-scoring-option-PROPORTION]'
+    public static readonly measureScoringProportion = '[data-testid="group-scoring-option-PROPORTION"]'
     public static readonly measureScoringRatio = '[data-testid="group-scoring-option-RATIO"]'
     public static readonly measureScoringCV = '[data-testid="group-scoring-option-CONTINUOUS_VARIABLE"]'
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
@@ -77,7 +77,8 @@ export class MeasureGroupPage {
     public static readonly measureObservationPopSelect = '[data-testid="measure-observation-cv-obs-input"]'
     public static readonly measurePopulationOption = '[data-testid="select-option-measure-group-population"]'
     public static readonly measureObsAggregSelect = '[data-testid="measure-observation-aggregate-cv-obs-input"]'
-    
+    public static readonly populationMismatchErrorMsg = '[data-testid="helper-text"]'
+
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '.css-ackcql'
     public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
@@ -127,6 +128,7 @@ export class MeasureGroupPage {
 
     //population basis
     public static readonly popBasis = '[data-testid="population-basis-combo-box"]'
+    public static readonly popBasisOption = '#mui-3-option-0'
 
     //Measure group description
     public static readonly measureGroupDescriptionBox = '[name="groupDescription"]'
