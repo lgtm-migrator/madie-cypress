@@ -16,6 +16,7 @@ export class CQLLibraryPage {
     public static readonly duplicateCQLLibraryNameError = '[data-testid="create-cql-library-error-text"]'
     public static readonly cqlLibraryModelErrorMsg = '.MuiFormHelperText-root'
     public static readonly successfulCQLSaveNoErrors = '[data-testid=cql-library-success-alert]'
+    public static readonly warningAlert = '[data-testid="cql-library-warning-alert"]'
 
     //CQL Editor
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
@@ -96,7 +97,7 @@ export class CQLLibraryPage {
                 method: 'POST',
                 body: {
                     'cqlLibraryName': CqlLibraryName,
-                    'model': 'QI-Core',
+                    'model': 'QI-Core v4.1.1',
                     'createdBy': user,
                     'cql': ""
                 }
