@@ -5,6 +5,7 @@ let CqlLibraryOne = ''
 let CqlLibraryTwo = ''
 let updatedCqlLibraryName = 'UpdatedTestLibrary' + Date.now()
 let harpUser = Environment.credentials().harpUser
+let model = 'QI-Core v4.1.1'
 
 describe('Version and Draft CQL Library', () => {
 
@@ -59,7 +60,7 @@ describe('Version and Draft CQL Library', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": "testLibrary",
-                        "model": "QI-Core"
+                        "model": model
                     }
 
                 }).then((response) => {
@@ -85,7 +86,7 @@ describe('Version and Draft CQL Library', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": "",
-                        "model": "QI-Core"
+                        "model": model
                     }
 
                 }).then((response) => {
@@ -110,7 +111,7 @@ describe('Version and Draft CQL Library', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": updatedCqlLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
 
                 }).then((response) => {
@@ -188,7 +189,7 @@ describe('Draft and Version Validations', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": updatedCqlLibraryName,
-                        "model": "QI-Core",
+                        "model": model,
                         "draft": false
                     }
                 }).then((response) => {

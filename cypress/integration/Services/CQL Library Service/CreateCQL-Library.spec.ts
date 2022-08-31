@@ -1,10 +1,9 @@
 import {Environment} from "../../../Shared/Environment"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 
-export {}
-
 let CQLLibraryName = ''
 let harpUser = Environment.credentials().harpUser
+let model = 'QI-core v4.1.1'
 
 describe('CQL Library Service: Create CQL Library', () => {
 
@@ -26,7 +25,7 @@ describe('CQL Library Service: Create CQL Library', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
@@ -104,7 +103,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -127,7 +126,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -150,7 +149,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -173,7 +172,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -196,7 +195,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -219,7 +218,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
@@ -242,7 +241,7 @@ describe('CQL Library Name validations', () => {
                 },
                 body: {
                     "cqlLibraryName": CQLLibraryName,
-                    "model": "QI-Core"
+                    "model": model
                 }
             }).then((response) => {
                 expect(response.status).to.eql(400)
