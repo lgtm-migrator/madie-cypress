@@ -63,29 +63,13 @@ describe('Validate Measure Group', () => {
         //log, in cypress, the measure score value
         cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
 
 
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
 
         //get current value what is in the scoring box
-        cy.get(MeasureGroupPage.measureScoringSelect).find(':selected').should('to.have.value', measureScoringArray[1])
-    })
-
-    it('Verify values in the scoring drop down box', () => {
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.wait(10000)
-        //validate values in the scoring drop down box
-        cy.get('#scoring-unit-select').find('option').then(options => {
-            const actual = [...options].map(o => o.value)
-            expect(actual).to.deep.eq(['Select', 'Cohort', 'Continuous Variable', 'Proportion', 'Ratio'])
-        })
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', measureScoringArray[1])
     })
 
     it('Verify value in the Measure Group Type field', () => {
@@ -97,20 +81,7 @@ describe('Validate Measure Group', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //validate value in the group type field
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('contain.text', measureGroupType)
-
-    })
-
-    it('Initial Population being populated from CQL', () => {
-
-        //click on Edit button to edit measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //validate population definitions are those that were added via CQL
-        cy.get(MeasureGroupPage.initialPopulationSelect).find('option:nth-child(1)').should('contain.text', 'SDE Ethnicity')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('contain.text', 'Select all that applyMeasure Group Type')
 
     })
 })
@@ -158,11 +129,18 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //log, in cypress, the measure score value
         cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
 
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
 
         //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -170,7 +148,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
@@ -179,8 +157,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Cohort')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','Surgical Absence of Cervix')
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
@@ -205,8 +183,23 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
         cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
+
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
@@ -215,8 +208,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Cohort')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text','Surgical Absence of Cervix')
 
     })
 
@@ -240,8 +233,23 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
         cy.log((measureScoringArray[1].valueOf()).toString())
         //select scoring unit on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[1].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         Utilities.validateMeasureGroup((measureScoringArray[1].valueOf()).toString(), mgPVTestType[0])
+
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
@@ -266,8 +274,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
-        //validate data is saved in mongo database --> future addition to automated test script
-
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
         //navigate back to the measure group page
@@ -275,8 +281,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Cohort')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Cohort')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
@@ -303,15 +309,34 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
         cy.log((measureScoringArray[0].valueOf()).toString())
         //select scoring unit as Ratio on measure
-        cy.get(MeasureGroupPage.measureScoringSelect).select((measureScoringArray[0].valueOf()).toString())
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
         Utilities.validateMeasureGroup((measureScoringArray[0].valueOf()).toString(), mgPVTestType[0])
+
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
+
+        //save population definition with scoring unit
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
 
         //Add Second Initial Population
         cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
-        cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.secondInitialPopulationSelect, 'Surgical Absence of Cervix')
 
         //save population definition with scoring unit
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -321,8 +346,6 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
-        //validate data is saved in mongo database --> future addition to automated test script
-
         //navigate away from measure group page
         cy.get(Header.mainMadiePageButton).click()
         //navigate back to the measure group page
@@ -330,9 +353,9 @@ describe('Validate Measure Group -- scoring and populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('SDE Payer')
-        cy.get(MeasureGroupPage.secondInitialPopulationSelect).contains('Initial Population')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Ratio')
+        cy.get(MeasureGroupPage.firstInitialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
+        cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
         cy.get(MeasureGroupPage.measureGroupDescriptionBox)
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
@@ -383,8 +406,8 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
         //Navigate to Groups tab and verify the Measure scoring and population reset to previous values
         cy.get(EditMeasurePage.measureGroupsTab).click()
-        cy.get(MeasureGroupPage.measureScoringSelect).contains('Ratio')
-        cy.get(MeasureGroupPage.initialPopulationSelect).contains('ipp')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Ratio')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'ipp')
 
     })
 })
@@ -446,7 +469,7 @@ describe('Validate Population Basis', () => {
  
     })
 
-    it('Verify default value is "Boolean"', () => {
+    it.only('Verify default value is "Boolean"', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -472,7 +495,7 @@ describe('Validate Population Basis', () => {
         cy.get(MeasureGroupPage.popBasis).then(($text) => {
             assert($text.text(), 'Boolean')
         })
-        //should('contain.text', 'Boolean')
+
  
     })
 })
