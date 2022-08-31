@@ -1,9 +1,8 @@
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 
-export {}
-
 let CQLLibraryName = ''
 let updatedCQLLibraryName = ''
+let model = 'QI-Core v4.1.1'
 
 describe('Edit CQL Library', () => {
 
@@ -38,7 +37,7 @@ describe('Edit CQL Library', () => {
                     body: {
                         "id": cqlLibraryId,
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(200)
@@ -65,7 +64,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -90,7 +89,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -115,7 +114,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -140,7 +139,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -165,7 +164,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
@@ -190,7 +189,7 @@ describe('Edit CQL Library', () => {
                     },
                     body: {
                         "cqlLibraryName": updatedCQLLibraryName,
-                        "model": "QI-Core"
+                        "model": model
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(400)
