@@ -39,6 +39,7 @@ export class TestCasesPage {
     public static readonly testCaseExecutionError = '[data-testid="display-tests-error"]'
     public static readonly runTestButton = '[data-testid="run-test-case-button"]'
     public static readonly testCalculationResults = '[data-testid=calculation-results]'
+    public static readonly testCaseExpected_Actual_table_tbl = '[data-testid="create-test-case-populations"]'
     public static readonly testCalculationResultsLineTwo = '[data-testid="calculation-results"] > div > :nth-child(2)'
     public static readonly testCalculationResultsLineThree = '[data-testid="calculation-results"] > div > :nth-child(3)'
     public static readonly testCalculationResultsLineFour = '[data-testid="calculation-results"] > div > :nth-child(4)'
