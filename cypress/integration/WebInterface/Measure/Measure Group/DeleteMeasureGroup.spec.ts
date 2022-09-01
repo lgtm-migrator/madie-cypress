@@ -7,13 +7,12 @@ import {Utilities} from "../../../../Shared/Utilities"
 import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
-
 let measureOne = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let title1 = 'TCOneForDeleteTests'
 let series = 'ICFTestSeries'
 let description = 'Some Test Description'
-let measureCQL = MeasureCQL.SBTEST_CQL
+let measureCQL = MeasureCQL.ICFTest_CQL
 let validJsonValue = TestCaseJson.API_TestCaseJson_Valid
 let measureTwo = measureOne + "Second"
 var newCqlLibraryName = null
@@ -28,13 +27,15 @@ describe('Validate Measure Group deletion functionality', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureOne, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
         MeasureGroupPage.CreateProportionMeasureGroupAPI()
         TestCasesPage.CreateTestCaseAPI(title1, series, description, validJsonValue)
-
-        //create new measure via temp user
-        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureTwo, newCqlLibraryName+"second", measureCQL, true, true )
-        MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
-        TestCasesPage.CreateTestCaseAPI(title1+"second", series, description, validJsonValue, true, true)
         OktaLogin.Login()
     })
 
@@ -42,7 +43,6 @@ describe('Validate Measure Group deletion functionality', () => {
 
         OktaLogin.Logout()
         Utilities.deleteMeasure(measureOne, newCqlLibraryName)
-        Utilities.deleteMeasure(measureTwo, newCqlLibraryName+"second", true, true)
 
     })
 
@@ -99,17 +99,18 @@ describe('Validate Measure Group deletion functionality', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')
 
+        //choose Procedure pop basis
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
         //select scoring type
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
 
         //select an initial population value
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         //save newly created group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
@@ -119,6 +120,9 @@ describe('Validate Measure Group deletion functionality', () => {
         //click on the first group
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').focus().should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
+
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist').focus().should('be.visible').should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').should('be.visible')
@@ -171,8 +175,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //confirm Scoring value is blank
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', 'Select')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', '-')
     })
 
     it('Confirmation modal has a Keep button and clicking on it will result in the group persisting', () => {
@@ -198,26 +201,26 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('contain.text', 'Outcome')
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist').should('be.visible').should('be.enabled')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('exist').should('be.visible')
         cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', 'Proportion')
 
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'ipp')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Surgical Absence of Cervix')
 
-        cy.get(MeasureGroupPage.denominatorSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', 'ipp')
+        cy.get(MeasureGroupPage.denominatorSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', 'Surgical Absence of Cervix')
 
-        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', 'ipp')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', 'Surgical Absence of Cervix')
 
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', 'Select')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', 'Surgical Absence of Cervix')
 
-        cy.get(MeasureGroupPage.numeratorSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', 'Select')
+        cy.get(MeasureGroupPage.numeratorSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', 'Surgical Absence of Cervix')
 
-        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Select')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('exist').should('be.visible')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Surgical Absence of Cervix')
 
     })
 
@@ -254,17 +257,18 @@ describe('Validate Measure Group deletion functionality', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')
 
+        //choose Procedure pop basis
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
         //select scoring type
-        cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Cohort')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
 
         //select an initial population value
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('exist')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('denom')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         //save newly created group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
@@ -274,6 +278,9 @@ describe('Validate Measure Group deletion functionality', () => {
         //click on the first group
         cy.get(MeasureGroupPage.measureGroupOne).should('exist').focus().should('be.visible')
         cy.get(MeasureGroupPage.measureGroupOne).click()
+
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist').focus().should('be.visible').should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()        
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').should('be.visible')
@@ -334,8 +341,7 @@ describe('Validate Measure Group deletion functionality', () => {
         //confirm Scoring value is blank
         cy.get(MeasureGroupPage.measureScoringSelect).should('exist')
         cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', 'Select')
+        cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text', '-')
 
         //navigate to the test case list tab / page
         cy.get(EditMeasurePage.testCasesTab).should('exist').should('be.visible')
@@ -353,8 +359,35 @@ describe('Validate Measure Group deletion functionality', () => {
             })
         })
     })
+})
+describe('Ownership test when deleting groups', () => {
+    beforeEach('Create measure(s), group(s), test case(s), and login', () => {
+        randValue = (Math.floor((Math.random() * 1000) + 1))
+        newCqlLibraryName = CqlLibraryName1 + randValue
 
+        //create new measure via temp user
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureTwo, newCqlLibraryName+"second", measureCQL, true, true )
+        OktaLogin.AltLogin()
+        MeasuresPage.clickEditforCreatedMeasure(true)
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
+        TestCasesPage.CreateTestCaseAPI(title1+"second", series, description, validJsonValue, true, true)
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(measureTwo, newCqlLibraryName+"second", true, true)
+
+    })
+    
     it('User can only delete groups from a measure that they own', () => {
+
         //Verify the Measure on My Measures Page List
         cy.get(MeasuresPage.measureListTitles).should('not.contain', measureTwo)
 

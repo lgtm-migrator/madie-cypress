@@ -238,9 +238,9 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Proportion'
-        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'ipp'}
-        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'num'}
-        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'denom'}
+        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
+        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
+        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -275,7 +275,7 @@ export class MeasureGroupPage {
                     body: {
                         "id": fileContents,
                         "scoring": measureScoring,
-                        "populationBasis": "Boolean",
+                        "populationBasis": "Procedure",
                         "populations": [
                             {
                                 "_id" : "",
@@ -295,7 +295,7 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "denominatorException",
-                                "definition" : ""
+                                "definition" : PopDenomP
                             },
                             {
                                 "_id" : "",
