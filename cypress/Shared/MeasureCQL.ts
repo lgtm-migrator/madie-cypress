@@ -292,7 +292,7 @@ export class MeasureCQL {
     'include MATGlobalCommonFunctionsQICore4 version \'5.0.000\' called Global\n' +
     'include SupplementalDataElementsQICore4 version \'2.0.000\' called SDE\n' +
     
-    'codesystem \"SNOMEDCT:2017-09\": \'http://snomed.info/sct/731000124108\' version \'http://snomed.info/sct/731000124108/version/201709\n' +
+    'codesystem \"SNOMEDCT:2017-09\": \'http://snomed.info/sct/731000124108\' version \'http://snomed.info/sct/731000124108/version/201709\'\n' +
     
     'valueset \"ONC Administrative Sex\": \'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1\'\n' +
     'valueset \"Race\": \'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.836\'\n' +
@@ -372,7 +372,5 @@ export class MeasureCQL {
     '		with [Observation: \"HPV Test\"] HPVTest\n' +
     '			such that HPVTest.value is not null\n' +
     '        and Global.\"Normalize Interval\"(HPVTest.effective) starts within 1 day of start of Global.\"Normalize Interval\"(PapTestOver30YearsOld.effective)\n' +
-    '				and HPVTest.status in {{} \'final\', \'amended\', \'corrected\', \'preliminary\' }\n'
-    
-
+    '				and HPVTest.status in {{} \'final\', \'amended\', \'corrected\', \'preliminary\' }'
 }
