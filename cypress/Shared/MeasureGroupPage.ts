@@ -31,6 +31,7 @@ export class MeasureGroupPage {
 
     //Ratio specific -- Add and Delete Initial Population(s)
     public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
+    public static readonly firstInitialPopulationSelect = '[id="population-select-initial-population-1"]'
     public static readonly secondInitialPopulationSelect = '[id="population-select-initial-population-2"]'
     public static readonly deleteSecondInitialPopulation = '[data-testid="remove_populations[1].definition"]'
     public static readonly lblSecondInitialPopulation = '[id="population-select-initial-population-2-label"]'
@@ -237,9 +238,9 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Proportion'
-        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'ipp'}
-        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'num'}
-        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'denom'}
+        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
+        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
+        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -274,7 +275,7 @@ export class MeasureGroupPage {
                     body: {
                         "id": fileContents,
                         "scoring": measureScoring,
-                        "populationBasis": "Boolean",
+                        "populationBasis": "Procedure",
                         "populations": [
                             {
                                 "_id" : "",
@@ -294,7 +295,7 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "denominatorException",
-                                "definition" : ""
+                                "definition" : PopDenomP
                             },
                             {
                                 "_id" : "",

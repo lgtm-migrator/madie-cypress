@@ -12,7 +12,7 @@ export class TestCasesPage {
 
     //CQL area on Test Case page
     public static readonly tcCQLArea = '[data-testid="test-case-cql-editor"]'
-    
+
     //misc test case page objects
     public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
@@ -39,6 +39,7 @@ export class TestCasesPage {
     public static readonly testCaseExecutionError = '[data-testid="display-tests-error"]'
     public static readonly runTestButton = '[data-testid="run-test-case-button"]'
     public static readonly testCalculationResults = '[data-testid=calculation-results]'
+    public static readonly testCaseExpected_Actual_table_tbl = '[data-testid="create-test-case-populations"]'
     public static readonly testCalculationResultsLineTwo = '[data-testid="calculation-results"] > div > :nth-child(2)'
     public static readonly testCalculationResultsLineThree = '[data-testid="calculation-results"] > div > :nth-child(3)'
     public static readonly testCalculationResultsLineFour = '[data-testid="calculation-results"] > div > :nth-child(4)'
@@ -87,8 +88,8 @@ export class TestCasesPage {
             }
             else {
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle ID has been auto generated')
-            }    
-    
+            }
+
             cy.get(EditMeasurePage.testCasesTab).click()
 
         })
@@ -109,7 +110,7 @@ export class TestCasesPage {
     public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string, withBundleId?:boolean)  :void{
 
         if ((withBundleId == undefined) || (withBundleId === null)){withBundleId = false}
-        
+
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -140,12 +141,9 @@ export class TestCasesPage {
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
-        cy.get(this.tctExpectedActualSubTab).click()
-
-        cy.get(this.testCasePopulationList).should('be.visible')
+        cy.get(this.detailsTab).click()
 
         this.clickCreateTestCaseButton(withBundleId)
-
 
         //Verify created test case Title and Series exists on Test Cases Page
         this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
@@ -155,7 +153,6 @@ export class TestCasesPage {
 
     public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries:string)  :void{
 
-        //cy.get(this.testCasePopulationList).should('be.visible')
         cy.get(this.detailsTab).click()
 
         //Edit / Update test case title
