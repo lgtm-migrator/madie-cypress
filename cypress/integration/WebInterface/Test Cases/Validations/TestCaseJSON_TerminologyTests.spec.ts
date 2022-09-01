@@ -43,7 +43,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -73,23 +73,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
-        
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
 
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
 
-
-        cy.get(MeasureGroupPage.denominatorSelect).should('be.visible')
-        cy.get(MeasureGroupPage.denominatorSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
-
-        cy.get(MeasureGroupPage.numeratorSelect).should('be.visible')
-        cy.get(MeasureGroupPage.numeratorSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.numeratorSelect).select('num')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
         
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -102,10 +91,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
-        cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
         cy.get(TestCasesPage.cuTestCaseButton).should('exist')
@@ -117,14 +108,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
-
-        
+        cy.get(TestCasesPage.testCaseExpected_Actual_table_tbl).should('contain.text', 'Measure Group 1 - (Proportion)')
 
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
 
     })
-     //skipping test due to bug MAT-4607
+     //skipping test due to bug MAT-4631
      it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
@@ -203,7 +192,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineFour).should('contain.text', '\ndefine "num":\n\n  exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
 
     })
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- FHIR', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
@@ -283,7 +272,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -363,7 +352,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR based QICore', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
@@ -443,7 +432,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -538,7 +527,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -633,7 +622,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCalculationResultsLineThree).should('contain.text', '\ndefine "Initial Population":\n  exists "Qualifying Encounters"\n')
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -748,7 +737,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON proper use of value set(s) -- QICore based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -844,7 +833,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.testCalculationResultsLineFive).should('contain.text', '\ndefine "Numerator":\n  Patient.gender = \'female\'\n      and exists "Qualifying Encounters"\n')
 
     })
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON proper use of value set(s) -- FHIR', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -938,7 +927,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
     })
 
-    //skipping test due to bug MAT-4607
+    //skipping test due to bug MAT-4631
     it.skip('Test Case JSON proper use of value set(s) -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()

@@ -39,7 +39,7 @@ describe('Measure Highlighting', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping due to bug MAT-4607
+    //skipping due to bug MAT-4631
     it.skip('Execute single Test Case and verify Measure highlighting', () => {
 
         //Add Measure Group
