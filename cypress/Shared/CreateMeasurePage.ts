@@ -101,6 +101,7 @@ export class CreateMeasurePage {
                     'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z",
                 }
             }).then((response) => {
+                console.log(response)
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
                 if (twoMeasures === true)

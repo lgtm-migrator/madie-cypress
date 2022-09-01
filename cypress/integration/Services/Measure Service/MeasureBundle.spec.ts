@@ -2,13 +2,13 @@ import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 
-let measureName = 'MeasureName ' + Date.now()
-let CqlLibraryName = 'CQLLibraryName' + Date.now()
+let measureName = 'MeasureBundle' + Date.now()
+let CqlLibraryName = 'MeasureBundle' + Date.now()
 let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
     '\n' +
     'using FHIR version \'4.0.1\'\n' +
     '\n' +
-    'include FHIRHelpers version \'4.0.001\' called FHIRHelpers\n' +
+    'include FHIRHelpers version \'4.1.000\' called FHIRHelpers\n' +
     '\n' +
     'valueset "Office Visit": \'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001\'\n' +
     '\n' +
@@ -101,6 +101,7 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
     })
 
     after('Clean up',() => {
+
         Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
