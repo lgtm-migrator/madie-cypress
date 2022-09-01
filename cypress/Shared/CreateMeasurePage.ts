@@ -149,7 +149,7 @@ export class CreateMeasurePage {
                     'cqlLibraryName': CqlLibraryName,
                     'model': 'QI-Core v4.1.1',
                     'createdBy': user,
-                    'cql': measureCQL/* "library SimpleFhirLibrary version '0.0.004'\n\n\n\nusing FHIR version '4.0.1'\n\n\n\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\n\n\n\nvalueset \"Office Visit\": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'\n\n\n\nparameter \"Measurement Period\" Interval<DateTime>\n\n\n\ncontext Patient\n\n\n\ndefine \"ipp\":\n\n  exists [\"Encounter\": \"Office Visit\"] E where E.period.start during \"Measurement Period\"\n  \n  \n  \ndefine \"denom\":\n\n  \"ipp\"\n  \n  \n  \ndefine \"num\":\n\n  exists [\"Encounter\": \"Office Visit\"] E where E.status ~ 'finished'" */,
+                    'cql': measureCQL,
                     'elmJson': elmJson,
                     "ecqmTitle": "ecqmTitle",
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
