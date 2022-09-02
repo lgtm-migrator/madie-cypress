@@ -52,7 +52,6 @@ export class MeasureGroupPage {
     //Reporting tab fields
     public static readonly rateAggregation = '[data-testid="rateAggregationText"]'
     public static readonly improvementNotationSelect = '[id="improvement-notation-select"]'
-    //<div tabindex="0" role="button" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="improvement-notation-select" id="improvement-notation-select" class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-182didf"><span style="opacity: 0.6;">-</span></div>
     //Measure Group Type
     public static readonly measureGroupTypeSelect = '[data-testid="measure-group-type-dropdown"]'
     public static readonly measureGroupTypeCheckbox = '[class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-1km1ehz"]'

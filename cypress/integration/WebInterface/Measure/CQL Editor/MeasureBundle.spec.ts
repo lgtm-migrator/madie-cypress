@@ -5,17 +5,13 @@ import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Header} from "../../../../Shared/Header"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
-let measureScoring = 'Proportion'
-let measureCQL = "library SimpleFhirMeasureLib version '0.0.004'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.0.001' called FHIRHelpers\nparameter 'Measurement Period' Interval<DateTime>\ncontext Patient\ndefine 'ipp':\n  exists ['Encounter'] E where E.period.start during 'Measurement Period'\ndefine 'denom':\n  'ipp'\ndefine 'num':\n  exists ['Encounter'] E where E.status ~ 'finished'"
-let PopIniPop = 'ipp'
-let PopNum = 'num'
-let PopDenom = 'denom'
-let PopDenex = 'ipp'
-let PopDenexcep = 'denom'
-let PopNumex = 'numeratorExclusion'
+let measureCQL = MeasureCQL.ICFCleanTest_CQL
+
 
 //skipping until bug MAT-4450 is fixed
 describe('Measure Bundle end point returns cqlErrors as true', () => {
@@ -24,57 +20,16 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         cy.setAccessTokenCookie()
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL)
-
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureName, CqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
         //create Measure Group
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/fixtures/measureId').should('exist').then((retrievedMeasureID) => {
-                cy.request({
-                    url: '/api/measures/' + retrievedMeasureID + '/groups/',
-                    method: 'POST',
-                    headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
-                    body: {
-                        "scoring": measureScoring,
-                        "populationBasis": "Boolean",
-                        "populations": [
-                            {
-                                "name": "initialPopulation",
-                                "definition": PopIniPop
-                            },
-                            {
-                                "name": "denominator",
-                                "definition": PopDenom
-                            },
-                            {
-                                "name": "denominatorExclusion",
-                                "definition": PopDenex
-                            },
-                            {
-                                "name": "denominatorException",
-                                "definition": PopDenexcep
-                            },
-                            {
-                                "name": "numerator",
-                                "definition": PopNum
-                            },
-                            {
-                                "name": "numeratorExclusion",
-                                "definition": PopNumex
-                            }
-                        ],
-                        "measureGroupTypes": [
-                            "Outcome"
-                        ]
-                    }
-                }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
-                })
-            })
-        })
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
     })
 
     beforeEach('Set Access Token',() => {
@@ -107,7 +62,7 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(1000)
+        cy.wait(4500)
 
         //log out of UI
         OktaLogin.Logout()
@@ -141,56 +96,16 @@ describe('Bundle returns elmXML', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL)
-
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
         //create Measure Group
-        cy.getCookie('accessToken').then((accessToken) => {
-            cy.readFile('cypress/fixtures/measureId').should('exist').then((retrievedMeasureID) => {
-                cy.request({
-                    url: '/api/measures/' + retrievedMeasureID + '/groups/',
-                    method: 'POST',
-                    headers: {
-                        authorization: 'Bearer ' + accessToken.value
-                    },
-                    body: {
-                        "scoring": measureScoring,
-                        "populationBasis": 'Boolean',
-                        "populations": [
-                            {
-                                "name": "initialPopulation",
-                                "definition": PopIniPop
-                            },
-                            {
-                                "name": "denominator",
-                                "definition": PopDenom
-                            },
-                            {
-                                "name": "denominatorExclusion",
-                                "definition": PopDenex
-                            },
-                            {
-                                "name": "denominatorException",
-                                "definition": PopDenexcep
-                            },
-                            {
-                                "name": "numerator",
-                                "definition": PopNum
-                            },
-                            {
-                                "name": "numeratorExclusion",
-                                "definition": PopNumex
-                            }
-                        ],
-                        "measureGroupTypes": [
-                            "Outcome"
-                        ]
-                    }
-                }).then((response) => {
-                        expect(response.status).to.eql(201)
-                        expect(response.body.id).to.be.exist
-                        cy.writeFile('cypress/fixtures/groupId', response.body.id)
-                })
-            })
-        })
+        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+
     })
 
     beforeEach('Login',() => {

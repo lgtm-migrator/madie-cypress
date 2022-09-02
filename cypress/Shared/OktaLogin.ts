@@ -18,14 +18,15 @@ export class OktaLogin {
 
         cy.visit('/login', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
 
-        cy.get(this.usernameInput, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.usernameInput, { timeout: 80000 }).should('be.visible')
-        cy.get(this.passwordInput, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.passwordInput, { timeout: 80000 }).should('be.visible')
+        cy.get(this.usernameInput, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.usernameInput, { timeout: 100000 }).should('be.visible')
+        cy.get(this.passwordInput, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.passwordInput, { timeout: 100000 }).should('be.visible')
+        cy.wait(1000)
         cy.get(this.usernameInput).type(Environment.credentials().harpUserALT)
         cy.get(this.passwordInput).type(Environment.credentials().passwordALT)
-        cy.get(this.signInButton, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.signInButton, { timeout: 80000 }).should('be.visible')
+        cy.get(this.signInButton, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.signInButton, { timeout: 100000 }).should('be.visible')
 
         //setup for grabbing the measure create call
         cy.intercept('GET', '/api/vsac/umls-credentials/status').as('umls')
@@ -57,14 +58,15 @@ export class OktaLogin {
 
         cy.visit('/login', { onBeforeLoad: (win) => { win.sessionStorage.clear() } })
 
-        cy.get(this.usernameInput, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.usernameInput, { timeout: 80000 }).should('be.visible')
-        cy.get(this.passwordInput, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.passwordInput, { timeout: 80000 }).should('be.visible')
+        cy.get(this.usernameInput, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.usernameInput, { timeout: 100000 }).should('be.visible')
+        cy.get(this.passwordInput, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.passwordInput, { timeout: 100000 }).should('be.visible')
+        cy.wait(1000)
         cy.get(this.usernameInput).type(Environment.credentials().harpUser)
         cy.get(this.passwordInput).type(Environment.credentials().password)
-        cy.get(this.signInButton, { timeout: 80000 }).should('be.enabled')
-        cy.get(this.signInButton, { timeout: 80000 }).should('be.visible')
+        cy.get(this.signInButton, { timeout: 100000 }).should('be.enabled')
+        cy.get(this.signInButton, { timeout: 100000 }).should('be.visible')
 
         //setup for grabbing the measure create call
         cy.intercept('GET', '/api/vsac/umls-credentials/status').as('umls')
