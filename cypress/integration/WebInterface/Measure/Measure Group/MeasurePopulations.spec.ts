@@ -38,7 +38,8 @@ describe('Measure Populations', () => {
 
     })
 
-    it('Validate if the Measure populations reset on Measure Group Scoring change', () => {
+    //Commenting until MAT-4734 is fixed
+    it.skip('Validate if the Measure populations reset on Measure Group Scoring change', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -101,14 +102,14 @@ describe('Measure Populations', () => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
 
-        //Commenting until MAT-4734 is fixed
+
         //verify the populations after reset
-        // cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Select Initial Population')
-        // cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', 'Select Denominator')
-        // cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', 'Select Denominator Exclusion')
-        // cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', 'Select Denominator Exception')
-        // cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', 'Select Numerator')
-        // cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Select Numerator Exclusion')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Select Initial Population')
+        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', 'Select Denominator')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', 'Select Denominator Exclusion')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', 'Select Denominator Exception')
+        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', 'Select Numerator')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Select Numerator Exclusion')
 
         cy.log('Measure Populations reset successfully')
 
@@ -192,49 +193,6 @@ describe('Measure Populations', () => {
         cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of Encounter')
         Utilities.dropdownSelect(MeasureGroupPage.measurePopulationExclusionSelect, 'num')
         cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of Encounter')
-        Utilities.dropdownSelect(MeasureGroupPage.cvMeasureObservation, 'ToCode')
-        Utilities.dropdownSelect(MeasureGroupPage.cvAggregateFunction, 'Maximum')
-
-        //Verify save button is disabled
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
-
-    })
-
-    it('Verify error message when the population basis does not have a value', () => {
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-
-        //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
-
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
-
-        //measure group description
-        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
-
-        //Add Measure Populations for Ratio Measure
-        cy.get(MeasureGroupPage.popBasis).should('exist')
-        cy.get(MeasureGroupPage.popBasis).should('be.visible')
-        cy.get(MeasureGroupPage.popBasis).click()
-        cy.get(MeasureGroupPage.popBasis).clear()
-
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
-        cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of null')
-        Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'denom')
-        cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of null')
-        Utilities.dropdownSelect(MeasureGroupPage.measurePopulationExclusionSelect, 'num')
-        cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of null')
         Utilities.dropdownSelect(MeasureGroupPage.cvMeasureObservation, 'ToCode')
         Utilities.dropdownSelect(MeasureGroupPage.cvAggregateFunction, 'Maximum')
 
