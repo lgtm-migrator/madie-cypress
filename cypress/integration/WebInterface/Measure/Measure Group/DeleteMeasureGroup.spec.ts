@@ -12,7 +12,7 @@ let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let title1 = 'TCOneForDeleteTests'
 let series = 'ICFTestSeries'
 let description = 'Some Test Description'
-let measureCQL = MeasureCQL.ICFTest_CQL
+let measureCQL = MeasureCQL.ICFCleanTest_CQL
 let validJsonValue = TestCaseJson.API_TestCaseJson_Valid
 let measureTwo = measureOne + "Second"
 var newCqlLibraryName = null
@@ -34,7 +34,8 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(4500)
         OktaLogin.Logout()
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(null,null,null,null,
+            null,'Procedure')
         TestCasesPage.CreateTestCaseAPI(title1, series, description, validJsonValue)
         OktaLogin.Login()
     })
@@ -224,7 +225,8 @@ describe('Validate Measure Group deletion functionality', () => {
 
     })
 
-    it('Test Cases still loads after a one from multiple groups are deleted', () => {
+    //This test  case needs review for validity
+    it.skip('Test Cases still loads after a one from multiple groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -280,7 +282,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.measureGroupOne).click()
 
         cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist').focus().should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()        
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
 
         //click on the second group that was just created
         cy.get(MeasureGroupPage.measureGroupTwo).should('exist').should('be.visible')
@@ -360,6 +362,7 @@ describe('Validate Measure Group deletion functionality', () => {
         })
     })
 })
+
 describe('Ownership test when deleting groups', () => {
     beforeEach('Create measure(s), group(s), test case(s), and login', () => {
         randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -374,7 +377,8 @@ describe('Ownership test when deleting groups', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(4500)
         OktaLogin.Logout()
-        MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true)
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(true, true, null,
+            null, null, 'Procedure')
         TestCasesPage.CreateTestCaseAPI(title1+"second", series, description, validJsonValue, true, true)
         OktaLogin.Login()
     })
