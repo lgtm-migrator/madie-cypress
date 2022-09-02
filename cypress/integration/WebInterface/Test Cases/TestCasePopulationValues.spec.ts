@@ -392,7 +392,7 @@ describe('Test Case Expected Measure Group population values based on initial me
 
     })
 
-    it.only('Verify Test Case population dependencies for Proportion Measures', () => {
+    it('Verify Test Case population dependencies for Proportion Measures', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
