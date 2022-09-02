@@ -226,7 +226,7 @@ export class MeasureGroupPage {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
     }
 
-    public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean, PopIniPopP?: string, PopNumP?:string, PopDenomP?: string): string {
+    public static CreateProportionMeasureGroupAPI(twoMeasureGroups?: boolean, altUser?: boolean, PopIniPopP?: string, PopNumP?:string, PopDenomP?: string, popBasis?: string): string {
         let user = ''
         let measurePath = ''
         let measureGroupPath = ''
@@ -234,6 +234,7 @@ export class MeasureGroupPage {
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}
+        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -248,7 +249,6 @@ export class MeasureGroupPage {
         {
             measurePath = 'cypress/fixtures/measureId2'
             measureGroupPath = 'cypress/fixtures/groupId2'
-            //cy.writeFile('cypress/fixtures/measureId2', response.body.id)
         }
         else
         {
@@ -268,7 +268,7 @@ export class MeasureGroupPage {
                     body: {
                         "id": fileContents,
                         "scoring": measureScoring,
-                        "populationBasis": "Boolean",
+                        "populationBasis": popBasis,
                         "populations": [
                             {
                                 "_id" : "",
