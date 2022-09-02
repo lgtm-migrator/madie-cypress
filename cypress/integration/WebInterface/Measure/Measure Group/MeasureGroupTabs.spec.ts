@@ -79,6 +79,7 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'ipp')
 
     })
+
     //skipping due to bug MAT-4631
     it.skip('Can successfully update / change population value and save on population tab', () => {
         //Click on Edit Measure
