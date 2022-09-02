@@ -231,6 +231,7 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Proportion'
+        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'/* 'ipp' */}
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}

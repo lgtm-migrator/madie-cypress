@@ -68,6 +68,7 @@ export class TestCasesPage {
     public static readonly numeratorExclusionRow = '[data-testid="test-row-population-id-numeratorExclusion"]'
     public static readonly denominatorRow = '[data-testid="test-row-population-id-denominator"]'
     public static readonly denominatorExclusionRow = '[data-testid="test-row-population-id-denominatorExclusion"]'
+    public static readonly denominatorExceptionRow = '[data-testid="test-row-population-id-denominatorException"]'
 
     public static clickCreateTestCaseButton(withBundleId?:boolean) : void {
 
@@ -161,9 +162,14 @@ export class TestCasesPage {
         cy.get(this.testCaseTitle).should('exist')
         cy.get(this.testCaseTitle).should('be.visible')
         cy.get(this.testCaseTitle).should('be.enabled')
-        cy.get(this.testCaseTitle).focus().clear()
+        cy.get(this.testCaseTitle).focus()
+        cy.wait(500)
+        cy.get(this.testCaseTitle).clear()
+        cy.wait(500)
         cy.get(this.testCaseTitle).invoke('val', '')
+        cy.wait(500)
         cy.get(this.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.wait(500)
         //cy.get(this.testCaseTitle).clear()
         cy.get(this.testCaseTitle).type(updatedTestCaseTitle)
         //Update Test Case Description
