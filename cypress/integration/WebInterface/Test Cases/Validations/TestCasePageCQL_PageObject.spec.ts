@@ -140,9 +140,6 @@ describe('Test Case Page CQL page object', () => {
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
 
-        //confirm that CQL field, on the Test Case page, cannot be edited
-        cy.get(TestCasesPage.tcCQLArea).should('contain.text', measureCQL) 
-
         //navigate to the CQL Editor tab, for the measure
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).click()

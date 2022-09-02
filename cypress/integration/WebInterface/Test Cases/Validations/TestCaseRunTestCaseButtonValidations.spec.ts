@@ -85,7 +85,7 @@ describe('Test Case Run Test Case button validations', () => {
     })
     afterEach('Logout and Clean up', () => {
         OktaLogin.Logout()
-        //Utilities.deleteMeasure(measureName, CqlLibraryName)
+        Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
     it('Run Test Case button is disabled  -- CQL Errors', () => {
