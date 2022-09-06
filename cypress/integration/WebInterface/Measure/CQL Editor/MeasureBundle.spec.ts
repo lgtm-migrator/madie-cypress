@@ -10,17 +10,22 @@ import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
+let newMeasureName = ''
+let newCqlLibraryName = ''
 let measureCQL = MeasureCQL.ICFCleanTest_CQL
 
-
-//skipping until bug MAT-4450 is fixed
 describe('Measure Bundle end point returns cqlErrors as true', () => {
-    before('Create Measure',() => {
+
+    let randValue = (Math.floor((Math.random() * 1000) + 1))
+    newMeasureName = measureName + randValue
+    newCqlLibraryName = CqlLibraryName + randValue
+
+    before('Create Measure and login',() => {
 
         cy.setAccessTokenCookie()
 
         //Create New Measure
-        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureName, CqlLibraryName, measureCQL)
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -29,21 +34,19 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         cy.wait(4500)
         OktaLogin.Logout()
         //create Measure Group
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
-    })
-
-    beforeEach('Set Access Token',() => {
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
 
         OktaLogin.Login()
-
-
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName)
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
+
     it('Log into the UI and save Measure CQL so the cqlErrors flag will update to true', () => {
+
         //Navigate away from the page
         cy.get(Header.measures).click()
 
@@ -89,13 +92,19 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
 
     })
 })
+
 describe('Bundle returns elmXML', () => {
+
+    let randValue = (Math.floor((Math.random() * 1000) + 1))
+    newMeasureName = measureName + randValue
+    newCqlLibraryName = CqlLibraryName + randValue
+
     before('Create Measure',() => {
 
         cy.setAccessTokenCookie()
 
         //Create New Measure
-        CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL)
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureCQL)
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -104,23 +113,17 @@ describe('Bundle returns elmXML', () => {
         cy.wait(4500)
         OktaLogin.Logout()
         //create Measure Group
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
-
-    })
-
-    beforeEach('Login',() => {
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
 
         OktaLogin.Login()
-
-
     })
 
     after('Clean up',() => {
-        Utilities.deleteMeasure(measureName, CqlLibraryName+5)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 
-    it('Upon saving CQL from the UI, GET Bundle request returns elmxml', () => {
+    it('Upon saving CQL from the UI, GET Bundle request returns elm xml', () => {
         //Navigate away from the page
         cy.get(Header.measures).click()
 
@@ -141,7 +144,7 @@ describe('Bundle returns elmXML', () => {
         //log into backend
         cy.setAccessTokenCookie()
 
-        //send GET Bundle request and verify response includes elmxml value
+        //send GET Bundle request and verify response includes elm xml value
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
