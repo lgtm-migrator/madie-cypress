@@ -1,6 +1,7 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
+import {describe} from "mocha";
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
@@ -777,3 +778,183 @@ describe('Measure Observations', () => {
         })
     })
 })
+
+describe('Measure Stratifications', () => {
+
+    beforeEach('Create Measure and Set Access Token', () => {
+
+        let stratMeasureCQL = "library CQLLibraryName1662480444560541 version '0.0.000'\nusing FHIR version '4.0.1'\ninclude FHIRHelpers version '4.1.000' called FHIRHelpers\nvalueset \"Office Visit\": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'\nparameter \"Measurement Period\" Interval<DateTime>\ncontext Patient\ndefine \"ipp\":\nexists [\"Encounter\": \"Office Visit\"] E where E.period.start during \"Measurement Period\"\ndefine \"denom\":\n\"ipp\"\ndefine \"num\":\nexists [\"Encounter\": \"Office Visit\"] E where E.status ~ 'finished'\ndefine \"Surgical Absence of Cervix\":\n    [Procedure: \"Hysterectomy with No Residual Cervix\"] NoCervixHysterectomy\n        where NoCervixHysterectomy.status = 'completed'    \n"
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, stratMeasureCQL)
+
+        cy.setAccessTokenCookie()
+    })
+
+    after('Clean up', () => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Measure group created successfully when the population basis match with Stratification return type', () => {
+
+        let measurePath = ''
+        let measureScoring = 'Proportion'
+        measurePath = 'cypress/fixtures/measureId'
+
+        //Add Measure Group to the Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(measurePath).should('exist').then((fileContents) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        "populationBasis": "Boolean",
+                        "populations": [
+                            {
+                                "_id": "",
+                                "name": "initialPopulation",
+                                "definition": 'ipp'
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominator",
+                                "definition": 'denom'
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominatorExclusion",
+                                "definition": ""
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominatorException",
+                                "definition": ""
+                            },
+                            {
+                                "_id": "",
+                                "name": "numerator",
+                                "definition": 'num'
+                            },
+                            {
+                                "_id": "",
+                                "name": "numeratorExclusion",
+                                "definition": ""
+                            }
+                        ],
+                        "stratifications": [
+                            {
+                                "id": "",
+                                "description": "",
+                                "cqlDefinition": "ipp",
+                                "association": "Initial Population"
+                            },
+                            {
+                                "id": "",
+                                "description": "",
+                                "cqlDefinition": "denom",
+                                "association": "Initial Population"
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    expect(response.status).to.eql(201)
+                    expect(response.body.scoring).to.eql(measureScoring)
+                })
+            })
+        })
+    })
+
+    it('Verify error message when the population basis does not match with Stratification return type', () => {
+
+        let measurePath = ''
+        let measureScoring = 'Proportion'
+        measurePath = 'cypress/fixtures/measureId'
+
+        //Add Measure Group to the Measure
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile(measurePath).should('exist').then((fileContents) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + fileContents + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "id": fileContents,
+                        "scoring": measureScoring,
+                        "populationBasis": "Boolean",
+                        "populations": [
+                            {
+                                "_id": "",
+                                "name": "initialPopulation",
+                                "definition": 'ipp'
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominator",
+                                "definition": 'denom'
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominatorExclusion",
+                                "definition": ""
+                            },
+                            {
+                                "_id": "",
+                                "name": "denominatorException",
+                                "definition": ""
+                            },
+                            {
+                                "_id": "",
+                                "name": "numerator",
+                                "definition": 'num'
+                            },
+                            {
+                                "_id": "",
+                                "name": "numeratorExclusion",
+                                "definition": ""
+                            }
+                        ],
+                        "stratifications": [
+                            {
+                                "id": "",
+                                "description": "",
+                                "cqlDefinition": "Surgical Absence of Cervix",
+                                "association": "Denominator"
+                            },
+                            {
+                                "id": "",
+                                "description": "",
+                                "cqlDefinition": "Surgical Absence of Cervix",
+                                "association": "Initial Population"
+                            }
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    expect(response.status).to.eql(400)
+                    expect(response.body.message).to.eql('Return type for the CQL definition selected for the Stratification(s) does not match with population basis.')
+                })
+            })
+        })
+    })
+})
+

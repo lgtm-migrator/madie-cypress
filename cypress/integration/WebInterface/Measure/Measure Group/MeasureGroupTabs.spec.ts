@@ -61,7 +61,6 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus()
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
 
-
         //validation message after attempting to save
         cy.get(MeasureGroupPage.popUpConfirmationModal).should('exist')
         cy.get(MeasureGroupPage.popUpConfirmationModal).should('be.visible')
@@ -679,6 +678,67 @@ describe('Validating Stratification tabs', () => {
 
         //assert that Stratification is no longer available
         cy.get(MeasureGroupPage.stratificationTab).should('not.exist')
+
+    })
+
+    it('Stratification added successfully when population basis match with Stratification return type', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on Measure Group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(MeasureGroupPage.populationTab).click()
+
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
+        cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //Add Stratification 1
+        Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
+        cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
+
+        //Add Stratification 2
+        Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'denom')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Numerator')
+        cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+    })
+
+    it('Verify error message when the Stratification return type does not match with population basis', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on Measure Group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(MeasureGroupPage.populationTab).click()
+
+        //Set Population basis as Encounter
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Encounter')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
+        //Click on Stratification tab
+        cy.get(MeasureGroupPage.stratificationTab).should('exist')
+        cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //Add Stratification 1
+        Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
+        cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of Encounter')
+
+        //Add Stratification 2
+        Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'denom')
+        cy.get(MeasureGroupPage.populationMismatchErrorMsg).should('contain.text', 'The selected definition does not align with the Population Basis field selection of Encounter')
+
+        //Verify save button is disabled
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
 
     })
 })
