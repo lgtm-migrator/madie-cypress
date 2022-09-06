@@ -267,7 +267,7 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
     afterEach('Logout and Clean up Measures', () => {
 
         OktaLogin.Logout()
-        //Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 
@@ -336,10 +336,8 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         //verify second IP association changes
         cy.get(MeasureGroupPage.rdioSecondNum).should('not.be.checked')
         cy.get(MeasureGroupPage.rdioSecondDenom).should('be.checked')
-
-
-
     })
+
     it('Validate association for IP2 is read only', () => {
 
         //Click on Edit Measure
@@ -432,7 +430,6 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.disabled')
 
         //select a value for the second IP
-        //cy.get(MeasureGroupPage.secondInitialPopulationSelect).select('SDE Race')
         Utilities.dropdownSelect(MeasureGroupPage.secondInitialPopulationSelect, 'Surgical Absence of Cervix')
 
         //verify that save button becomes enabled
@@ -536,10 +533,6 @@ describe('Delete second Initial Population -- Ratio score only', () => {
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
 
-        // //Create New Measure
-        // CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureCQL)
-        // MeasureGroupPage.CreateRatioMeasureGroupAPI()
-        // OktaLogin.Login()
         //Create New Measure
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
         OktaLogin.Login()
