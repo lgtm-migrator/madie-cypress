@@ -37,7 +37,10 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
+
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).contains(apiCQLLibraryName)
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).contains('version \'0.0.000\'')
 
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('not.exist')
 
@@ -60,7 +63,7 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
@@ -101,7 +104,7 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor after saving
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
@@ -139,7 +142,7 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate the lack of error(s) in CQL Editor
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('not.exist')
@@ -207,7 +210,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(CQLEditorPage.editorMessage).should('be.visible')
         cy.get(CQLEditorPage.editorMessage).should('contain.text', 'Parsing complete, CQL is valid')
@@ -226,7 +229,7 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(CQLLibraryPage.umlsErrorMessage).should('not.be.visible')
 

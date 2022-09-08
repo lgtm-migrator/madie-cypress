@@ -10,6 +10,7 @@ export class EditMeasurePage {
     //Measurement Information
     public static readonly measurementInformationForm = '[data-testid="measure-information-edit"]'
     public static readonly measureNameTextBox = '[data-testid="measure-name-input"]'
+    public static readonly cqlLibraryNameTextBox = '[data-testid="cql-library-name-input"]'
     public static readonly measurementInformationSaveButton = '[data-testid="measurement-information-save-button"]'
     public static readonly measureNameFieldLevelError = '[data-testid="measureName-helper-text"]'
 
