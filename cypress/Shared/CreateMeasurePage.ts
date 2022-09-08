@@ -1,6 +1,7 @@
 import { Environment } from "./Environment"
 import {LandingPage} from "./LandingPage"
 import {MeasuresPage} from "./MeasuresPage"
+import { v4 as uuidv4 } from 'uuid'
 
 export class CreateMeasurePage {
 
@@ -35,6 +36,7 @@ export class CreateMeasurePage {
         cy.wait('@' + alias).then(({response}) => {
             expect(response.statusCode).to.eq(201)
             cy.writeFile('cypress/fixtures/measureId', response.body.id)
+            cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
         })
     }
 
@@ -99,6 +101,8 @@ export class CreateMeasurePage {
                     'elmJson': elmJson,
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
                     'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z",
+                    'versionId': uuidv4()
+
                 }
             }).then((response) => {
                 console.log(response)
@@ -107,10 +111,12 @@ export class CreateMeasurePage {
                 if (twoMeasures === true)
                 {
                     cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+                    cy.writeFile('cypress/fixtures/versionId2', response.body.versionId)
                 }
                 else
                 {
                     cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                    cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
                 }
 
             })
@@ -155,6 +161,7 @@ export class CreateMeasurePage {
                     "ecqmTitle": "ecqmTitle",
                     'measurementPeriodStart': mpStartDate + "T00:00:00.000Z",
                     'measurementPeriodEnd': mpEndDate + "T00:00:00.000Z",
+                    'versionId': uuidv4()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
@@ -162,10 +169,12 @@ export class CreateMeasurePage {
                 if (twoMeasures === true)
                 {
                     cy.writeFile('cypress/fixtures/measureId2', response.body.id)
+                    cy.writeFile('cypress/fixtures/versionId2', response.body.versionId)
                 }
                 else
                 {
                     cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                    cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
                 }
 
             })

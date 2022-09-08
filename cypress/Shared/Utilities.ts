@@ -8,6 +8,7 @@ export class Utilities {
     public static deleteMeasure(measureName: string, cqlLibraryName: string, deleteSecondMeasure?:boolean, altUser?:boolean): void {
 
         let path = 'cypress/fixtures/measureId'
+        let versionIdPath = 'cypress/fixtures/versionId'
         const now = require('dayjs')
         let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
         let mpEndDate = now().format('YYYY-MM-DD')
@@ -25,21 +26,24 @@ export class Utilities {
         if (deleteSecondMeasure)
         {
             path = 'cypress/fixtures/measureId2'
+            versionIdPath = 'cypress/fixtures/versionId2'
         }
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile(path).should('exist').then((id) => {
-                cy.request({
+                cy.readFile(versionIdPath).should('exist').then((vId) => {
+                    cy.request({
                     url: '/api/measures/'+id,
                     method: 'PUT',
                     headers: {
                         Authorization: 'Bearer ' + accessToken.value
                     },
                     body: {"id": id, "measureName": measureName, "cqlLibraryName": cqlLibraryName, "ecqmTitle": ecqmTitle,
-                        "model": 'QI-Core v4.1.1', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false}
-                }).then((response) => {
+                        "model": 'QI-Core v4.1.1', "measurementPeriodStart": mpStartDate, "measurementPeriodEnd": mpEndDate,"active": false, 'versionId':vId}
+                    }).then((response) => {
                     expect(response.status).to.eql(200)
                     expect(response.body).to.eql("Measure updated successfully.")
+                    })
                 })
             })
         })
