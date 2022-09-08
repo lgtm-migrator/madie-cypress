@@ -17,7 +17,6 @@ let newCqlLibraryName = ''
 
 describe('Measure Highlighting', () => {
 
-
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
@@ -109,10 +108,11 @@ describe('Measure Highlighting', () => {
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
 
-            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case created successfully!')  
-    
-            cy.get(EditMeasurePage.testCasesTab).click()
+            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
 
+            cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
+            cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'An unknown exception occurred while validating the test case JSON.')
+            cy.get(EditMeasurePage.testCasesTab).click()
         })
 
         TestCasesPage.clickEditforCreatedTestCase()

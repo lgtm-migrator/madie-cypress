@@ -7,7 +7,7 @@ export class TestCaseJson {
     ' "status": "finished","class": {{} "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode","code": "IMP","display":"inpatient encounter"},' +
     ' "type": [ {{} "text": "OutPatient"} ],"subject": {{} "reference": "Patient/1"},"participant": [ {{} "individual": {{} "reference": "Practitioner/30164",' +
     ' "display": "Dr John Doe"}} ],"period": {{} "start": "2021-01-01T03:34:10.054Z"}}}, {{} "fullUrl": "http://local/Patient","resource": {{} "resourceType":'+
-    ' "Patient","text": {{} "status": "generated","div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"},"identifier":' +
+    ' "Patient","text": {{} "status": "generated","div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"}, "meta": {{} "profile": "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient"}, "identifier":' +
     ' [ {{} "system": "http://clinfhir.com/fhir/NamingSystem/identifier","value": "20181011LizzyHealth"} ],"name": [ {{} "use": "official",' +
     ' "text": "Lizzy Health","family": "Health","given": [ "Lizzy" ]} ],"gender": "female","birthDate": "2000-10-11"}} ]}'
 
@@ -42,12 +42,12 @@ export class TestCaseJson {
 
     public static readonly invalidTestCaseJsonFHIR_and_QICORE_MDates = '{{}        "resourceType": "Bundle",        "id": "7682",        "meta": {{}          "versionId": "1",' +
     '"lastUpdated": "2022-06-21T15:56:10.639+00:00"        },        "type": "collection",        "entry": [ {{}          "fullUrl": "http://local/Encounter",          "resource": {{}' +
-    '"resourceType": "Encounter",            "meta": {{}              "versionId": "1",              "lastUpdated": "2021-10-13T03:34:10.160+00:00",              "source": "#nEcAkGd8PRwPP5fA"' +
+    '"resourceType": "Encounter",    "class": {{} "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode","code": "IMP","display":"inpatient encounter"},        "meta": {{}              "versionId": "1",              "lastUpdated": "2021-10-13T03:34:10.160+00:00",              "source": "#nEcAkGd8PRwPP5fA"' +
     '},            "text": {{}              "status": "generated",              "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Sep 9th 2021 for Asthma<a name=\\"mm\\"/></div>\"' +
     '},            "status": "finished",            "type": [ {{}              "coding": [ {{}                "system": "http://snomed.info/sct",                "version": "2022-03",                "code": "185463005",                "display": "Visit out of hours (procedure)"' +
     '  } ]            } ],            "subject": {{}              "reference": "Patient/1"            },            "participant": [ {{}              "individual": {{}                "reference": "Practitioner/30164",                "display": "Dr John Doe"' +
     '  }            } ],            "period": {{}              "start": "2025-08-02T03:34:10.054Z",    "end": "2026-08-03T03:34:10.054Z"            }          }        }, {{}          "fullUrl": "http://local/Patient",          "resource": {{}            "resourceType": "Patient",' +
-    '"text": {{}              "status": "generated",              "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"            },            "identifier": [ {{}              "system": "http://clinfhir.com/fhir/NamingSystem/identifier",              "value": "20181011LizzyHealth"' +
+    '"text": {{}              "status": "generated",              "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\">Lizzy Health</div>\"            },  "meta": {{} "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient" ]},          "identifier": [ {{}              "system": "http://clinfhir.com/fhir/NamingSystem/identifier",              "value": "20181011LizzyHealth"' +
     '} ],            "name": [ {{}              "use": "official",              "text": "Lizzy Health",              "family": "Health",              "given": [ "Lizzy" ]            } ],            "gender": "female",' +
     '"birthDate": "2000-10-11"          }        } ]      }'
 
@@ -871,7 +871,7 @@ export class TestCaseJson {
         ' "request": {{} "method": "PUT", "url": "Encounter/ip-MyPrimaryLibrary-1"}}, {{} "resource": {{} "resourceType": "Observation", "id": "ip-MyPrimaryLibrary-2", "meta": {{} "profile": [ "http://hl7.org/fhir/observation" ]}, ' +
         ' "status": "final", "code": {{} "coding": [ {{} "system": "urn:oid:2.16.840.1.113883.6.1", "code": "10524-7", "display": "Microscopic observation [Identifier] in Cervix by Cyto stain"} ]}, ' +
         ' "subject": {{} "reference": "Patient/ip-MyPrimaryLibrary"}, "effectiveDateTime": "2019-11-01T00:00:00"}, "request": {{} "method": "PUT", "url": "Observation/ip-MyPrimaryLibrary-2"} }, {{}  "resource": {{} "resourceType": "Patient", "id": "ip-MyPrimaryLibrary", '  +
-        ' "meta": {{} "profile": [ "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient" ]}, "text": {{} "status": "generated", ' +
+        ' "meta": {{} "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient" ]}, "text": {{} "status": "generated", ' +
         ' "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderText\\">Bettie <b>JONES </b></div><table class=\\"hapiPropertyTable\\"><tbody><tr><td>Identifier</td><td>999459995</td></tr><tr><td>Date of birth</td><td><span>01 January 1968</span></td></tr></tbody></table></div>"}, '  +
         ' "extension": [ {{} "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race", "extension": [ {{} "url": "ombCategory", "valueCoding": {{} "system": "urn:oid:2.16.840.1.113883.6.238", "code": "2028-9", "display": "Asian"}} ]}, ' +
         ' {{} "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity", "extension": [ {{} "url": "ombCategory", "valueCoding": {{} "system": "urn:oid:2.16.840.1.113883.6.238",  "code": "2135-2",  "display": "Hispanic or Latino"}} ]} ], ' +
