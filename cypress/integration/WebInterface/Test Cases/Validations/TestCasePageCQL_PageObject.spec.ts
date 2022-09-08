@@ -11,7 +11,7 @@ let measureCQL = 'library SimpleFhirLibrary version \'0.0.004\''//MeasureCQL.SBT
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
-let validTerminologyFHIR_and_QICORETestCaseJson = TestCaseJson.validTestCaseJsonFHIR_and_QICORE
+let validTerminologyFHIR_and_QICORETestCaseJson = TestCaseJson.TestCaseJson_Valid
 let testCaseSeries = 'SBTestSeries'
 
 describe('Test Case Page CQL page object', () => {

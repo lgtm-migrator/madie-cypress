@@ -222,23 +222,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
 
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureScoringSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.measureScoringSelect).select('Proportion')
-        
-
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.initialPopulationSelect).select('ipp')
-
-
-        cy.get(MeasureGroupPage.denominatorSelect).should('be.visible')
-        cy.get(MeasureGroupPage.denominatorSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.denominatorSelect).select('denom')
-
-        cy.get(MeasureGroupPage.numeratorSelect).should('be.visible')
-        cy.get(MeasureGroupPage.numeratorSelect).should('be.enabled')
-        cy.get(MeasureGroupPage.numeratorSelect).select('num')
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
         
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -250,6 +237,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREMDatesTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
