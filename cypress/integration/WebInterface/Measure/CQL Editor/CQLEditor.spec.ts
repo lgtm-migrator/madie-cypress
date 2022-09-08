@@ -51,7 +51,7 @@ describe('Measure: CQL Editor', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor window
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
@@ -94,7 +94,7 @@ describe('Measure: CQL Editor', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor after saving
         cy.scrollTo('top')
@@ -147,7 +147,7 @@ describe('Measure: CQL Editor', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate the lack of error(s) in CQL Editor
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
@@ -183,7 +183,7 @@ describe('Measure: CQL Editor', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor after saving
 
@@ -198,6 +198,84 @@ describe('Measure: CQL Editor', () => {
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             'ELM: 1:37 | Model Type and version are required')
+
+    })
+    it('Verify Library name and version are replaced with the actual Library Name and Version for the Measure', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.readFile('cypress/fixtures/CQLForFluentFunction.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        //save the value in the CQL Editor
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Validate message on page
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
+
+        //Validate the lack of error(s) in CQL Editor
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
+
+        cy.get(EditMeasurePage.cqlEditorTextBox).contains(newCqlLibraryName)
+        cy.get(EditMeasurePage.cqlEditorTextBox).contains('version \'0.0.000\'')
+
+        //Navigate away from the page
+        cy.get(Header.measures).click()
+
+        //Navigate back to the CQL Editor page
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        //Validate error(s) in CQL Editor persists after saving
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
+
+    })
+
+    it('CQL updates when CQL Library name is updated in Measure Details', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.readFile('cypress/fixtures/CQLForFluentFunction.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        //save the value in the CQL Editor
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Validate message on page
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
+
+        //Validate the lack of error(s) in CQL Editor
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
+
+        //Navigate away from the page
+        cy.get(Header.measures).click()
+
+        //Navigate back to the CQL Editor page
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        cy.get(EditMeasurePage.cqlLibraryNameTextBox).clear()
+        cy.get(EditMeasurePage.cqlLibraryNameTextBox).type(newCqlLibraryName+'TEST')
+
+        cy.get(EditMeasurePage.measurementInformationSaveButton).click()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.get(EditMeasurePage.cqlEditorTextBox).contains(newCqlLibraryName+'TEST')
 
     })
 })
@@ -259,7 +337,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
     })
 
@@ -277,7 +355,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(CQLEditorPage.umlsMessage).should('not.exist')
 
@@ -311,7 +389,7 @@ describe('Measure: CQL Editor: valueSet', () => {
 
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(CQLEditorPage.umlsMessage).should('not.exist')
 
