@@ -10,7 +10,6 @@ import {MeasureCQL} from "../../../Shared/MeasureCQL"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
-let measureScoring = 'Ratio'
 let testCaseTitle = 'Title for Auto Test          !@#$%^&*().         !@#$%^&*()'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let testCaseSeries = 'SBTestSeries        !@#$%^&*()          !@#$%^&*()\''
@@ -18,13 +17,6 @@ let updatedTestCaseTitle = 'Title for Auto Test' + " some update"
 let updatedTestCaseDescription = testCaseDescription + ' '+ 'UpdatedTestCaseDescription'
 let updatedTestCaseSeries = 'CMSTestSeries'
 let testCaseJson = TestCaseJson.TestCaseJson_Valid
-let PopIniPop = 'ipp'
-let PopNum = 'num'
-let PopDenom = 'denom'
-let PopDenex = 'ipp'
-let PopDenexcep = 'denom'
-let PopNumex = 'numeratorExclusion'
-let valueForPopFields = 'Surgical Absence of Cervix'
 let measureCQL = MeasureCQL.ICFCleanTest_CQL
 
 describe('Create Test Case', () => {

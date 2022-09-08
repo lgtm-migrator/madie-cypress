@@ -215,13 +215,11 @@ export class TestCasesPage {
         {
             measurePath = 'cypress/fixtures/measureId2'
             testCasePath = 'cypress/fixtures/testcaseId2'
-            //cy.writeFile('cypress/fixtures/measureId2', response.body.id)
         }
         else
         {
             measurePath = 'cypress/fixtures/measureId'
             testCasePath = 'cypress/fixtures/testcaseId'
-            //cy.writeFile('cypress/fixtures/measureId', response.body.id)
         }
 
         //Add Test Case to the Measure
@@ -239,7 +237,6 @@ export class TestCasesPage {
                         'title': title,
                         'description': description,
                         'json': jsonValue
-                        //"{ \n  Encounter: \"Office Visit union\" \n  Id: \"Identifier\" \n  value: \"Visit out of hours (procedure)\" \n}"
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
