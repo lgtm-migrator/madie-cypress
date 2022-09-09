@@ -164,3 +164,101 @@ describe('Bundle returns elmXML', () => {
         })
     })
 })
+
+describe('Measure bundle end point returns scoring type for multiple Measure groups', () => {
+
+    let randValue = (Math.floor((Math.random() * 1000) + 1))
+    newMeasureName = measureName + randValue
+    newCqlLibraryName = CqlLibraryName + randValue
+
+    before('Create Measure', () => {
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        //create Measure Group
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+
+        OktaLogin.Login()
+    })
+
+    after('Clean up', () => {
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Measure bundle end point returns scoring type for multiple Measure groups', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Create second Measure group
+        cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
+        cy.get(MeasureGroupPage.addMeasureGroupButton).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
+
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        //log out of UI
+        OktaLogin.Logout()
+
+        //log into backend
+        cy.setAccessTokenCookie()
+
+        //send GET Bundle request and verify response includes elm xml value
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    url: '/api/measures/' + id + '/bundles',
+                    method: 'GET',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(200)
+                    expect(response.body.resourceType).to.eql('Bundle')
+                    expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('proportion')
+                    expect(response.body.entry[0].resource.group[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('cohort')
+                })
+            })
+        })
+    })
+})
