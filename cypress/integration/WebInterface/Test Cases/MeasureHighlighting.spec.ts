@@ -100,7 +100,7 @@ describe('Measure Highlighting', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {

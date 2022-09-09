@@ -210,9 +210,9 @@ describe('Run Test Case button validations', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
         
-            cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
-            cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
         
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
@@ -304,9 +304,9 @@ describe('Run Test Case button validations', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
         
-            cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
-            cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
         
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
@@ -501,9 +501,9 @@ describe('Execute Test Case Button Validations', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
-            cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
@@ -570,9 +570,9 @@ describe('Execute Test Case Button Validations', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
-            cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {

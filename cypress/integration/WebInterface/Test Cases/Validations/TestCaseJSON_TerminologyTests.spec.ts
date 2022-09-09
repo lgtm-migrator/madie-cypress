@@ -99,10 +99,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -178,10 +178,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -246,10 +246,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -326,10 +326,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -406,10 +406,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseIPPCheckBox).click()
         cy.get(TestCasesPage.testCaseIPPCheckBox).check().should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -501,10 +501,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -596,10 +596,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -691,10 +691,10 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -806,10 +806,10 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -902,10 +902,10 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
@@ -996,10 +996,10 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
-        cy.get(TestCasesPage.cuTestCaseButton).should('exist')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.cuTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')

@@ -23,13 +23,12 @@ export class TestCasesPage {
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-6'
-    public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly editTestCaseSaveButton = '[data-testid="edit-test-case-save-button"]'
+    public static readonly tcDiscardChangesButton = '[data-testid="edit-test-case-discard-button"]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '.ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
-    public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-cases-button"]'
     public static readonly testCaseStatus = 'tbody > tr > :nth-child(4)'
     public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
@@ -181,7 +180,7 @@ export class TestCasesPage {
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries).type('{enter}')
 
         //Save edited / updated to test case
-        cy.get(this.cuTestCaseButton).click()
+        cy.get(this.editTestCaseSaveButton).click()
         cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(EditMeasurePage.testCasesTab).click()

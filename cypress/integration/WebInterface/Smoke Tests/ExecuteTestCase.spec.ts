@@ -130,7 +130,7 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseDENEXCheckBox).check().should('be.checked')
 
         //Save updated test case
-        cy.get(TestCasesPage.cuTestCaseButton).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(EditMeasurePage.testCasesTab).click()
 
