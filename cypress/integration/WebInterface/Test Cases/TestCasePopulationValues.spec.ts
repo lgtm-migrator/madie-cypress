@@ -54,7 +54,8 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationHeaderForNoMeasureGroup).should('contain.text', 'There are no groups associated with this measure. Please review the Groups tab.')
     })
 
-    it('Validate Population Values check boxes are correct based on measure scoring value that is applied, when the measure is initially created (defalut measure group)', () => {
+    it('Validate Population Values check boxes are correct based on measure scoring value that is applied, ' +
+        'when the measure is initially created (defalut measure group)', () => {
 
         cy.log((measureScoringArray[3].valueOf()).toString())
 
@@ -87,14 +88,15 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).check().should('be.checked')
-        
+
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
 
     })
-    it('Validate notification that a reset of population values, on test cases, will occur once the completed save / update of the scoring value is executed', () => {
+    it('Validate notification that a reset of population values, on test cases, will occur once the completed ' +
+        'save / update of the scoring value is executed', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -147,7 +149,8 @@ describe('Test Case Expected Measure Group population values based on initial me
 
     })
 
-    it('Validate Population Values are reset on all test cases that exist under a measure group, after the score unit value is saved / updated', () => {
+    it('Validate Population Values are reset on all test cases that exist under a measure group, after the score ' +
+        'unit value is saved / updated', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -189,7 +192,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         //click on Expected / Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).click()      
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
         cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
@@ -206,11 +209,11 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).check().should('be.checked')
-        
-        cy.get(TestCasesPage.createTestCaseButton).should('exist')
-        cy.get(TestCasesPage.createTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.createTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.createTestCaseButton).click()
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
         //navigate to the Details tab to see confimration message
         cy.get(TestCasesPage.detailsTab).should('exist')
         cy.get(TestCasesPage.detailsTab).should('be.visible')
@@ -460,7 +463,7 @@ describe('Test Case Expected Measure Group population values based on initial me
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
         
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
             cy.get(TestCasesPage.detailsTab).click()
         
             //saving testCaseId to file to use later
@@ -722,7 +725,7 @@ describe('TC Pop value options are limited to those that are defined from Measur
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
         
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
             cy.get(TestCasesPage.detailsTab).click()
         
             //saving testCaseId to file to use later

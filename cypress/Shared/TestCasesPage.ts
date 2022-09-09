@@ -24,6 +24,7 @@ export class TestCasesPage {
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-6'
     public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
+    public static readonly editTestCaseSaveButton = '[data-testid="edit-test-case-save-button"]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '.ace_content'
@@ -76,7 +77,7 @@ export class TestCasesPage {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(this.createTestCaseButton).click()
+            cy.get(this.editTestCaseSaveButton).click()
             cy.get(TestCasesPage.detailsTab).click()
 
             //saving testCaseId to file to use later
