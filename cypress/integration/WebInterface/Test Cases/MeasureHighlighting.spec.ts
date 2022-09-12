@@ -38,15 +38,11 @@ describe('Measure Highlighting', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping due to bug MAT-4631
+    //skipping due to bug MAT-4705
     it.skip('Execute single Test Case and verify Measure highlighting', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
-
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.visible')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).should('be.enabled')
-        cy.get(MeasureGroupPage.confirmScoreUnitValueUpdateBtn).click()
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -73,9 +69,13 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group: population-group-1')
+        cy.get(TestCasesPage.tcHighlightingTab).should('exist')
+        cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
+        cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text','define "ipp":\n' +
+        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+
+        cy.get(TestCasesPage.testCalculationResults).should('contain.text','define "ipp":\n' +
             '  exists ["Encounter"] E where E.period.start during "Measurement Period"')
     })
 
@@ -100,7 +100,7 @@ describe('Measure Highlighting', () => {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(TestCasesPage.createTestCaseButton).click()
+            cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {

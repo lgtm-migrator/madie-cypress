@@ -13,7 +13,7 @@ in the measure development community.
 
 using QICore version '4.1.0'
 
-include FHIRHelpers version '4.0.001'
+include FHIRHelpers version '4.1.000'
 
 include HospiceQICore4 version '2.0.000' called Hospice
 include AdultOutpatientEncountersQICore4 version '2.0.000' called AdultOutpatientEncounters

@@ -14,6 +14,8 @@ export class TestCasesPage {
     public static readonly tcCQLArea = '[data-testid="test-case-cql-editor"]'
 
     //misc test case page objects
+    public static readonly tcHighlightingTab = '[data-testid="highlighting-tab"]'
+    //<button class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1yazzjn" tabindex="0" type="button" role="tab" aria-selected="true" data-testid="highlighting-tab">Highlighting<span class="MuiTouchRipple-root css-w0pj6f"></span></button>
     public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
     public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
@@ -23,19 +25,18 @@ export class TestCasesPage {
     public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
     public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-6'
-    public static readonly createTestCaseButton = '[data-testid=create-test-case-button]'
     public static readonly editTestCaseSaveButton = '[data-testid="edit-test-case-save-button"]'
+    public static readonly tcDiscardChangesButton = '[data-testid="edit-test-case-discard-button"]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
     public static readonly aceEditor = '.ace_content'
     public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
-    public static readonly cuTestCaseButton = '[data-testid="create-test-case-button"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-cases-button"]'
     public static readonly testCaseStatus = 'tbody > tr > :nth-child(4)'
     public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
     public static readonly testCaseJsonValidationErrorBtn = '[data-testid="show-json-validation-errors-button"]'
     public static readonly testCaseJsonValidationDisplayList = '[data-testid="json-validation-errors-list"] > span'
-    public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-7'
+    public static readonly testCaseJsonValidationErrorList = '.CreateTestCase__ValidationErrorCard-sc-z6rmnc-5'
     public static readonly testCasePopulationList = '[data-testid="create-test-case-populations"]'
     public static readonly testCaseExecutionError = '[data-testid="display-tests-error"]'
     public static readonly runTestButton = '[data-testid="run-test-case-button"]'
@@ -86,12 +87,12 @@ export class TestCasesPage {
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
 
-            if (withBundleId){
+/*             if (withBundleId){
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
             }
             else {
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle ID has been auto generated')
-            }
+            } */
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
@@ -181,7 +182,7 @@ export class TestCasesPage {
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries).type('{enter}')
 
         //Save edited / updated to test case
-        cy.get(this.cuTestCaseButton).click()
+        cy.get(this.editTestCaseSaveButton).click()
         cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(EditMeasurePage.testCasesTab).click()

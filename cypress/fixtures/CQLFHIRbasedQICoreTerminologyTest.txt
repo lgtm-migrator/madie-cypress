@@ -2,7 +2,7 @@
 {enter}
 {home}using QICore version '4.1.1'
 {enter}
-{home}include FHIRHelpers version '4.0.001' called FHIRHelpers
+{home}include FHIRHelpers version '4.1.000' called FHIRHelpers
 {enter}
 {home}valueset "Office Visit": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.3.464.1003.101.12.1001'
 {enter}
