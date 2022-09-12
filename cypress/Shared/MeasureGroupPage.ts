@@ -75,10 +75,12 @@ export class MeasureGroupPage {
     public static readonly numeratorExclusionSelect = '[id="population-select-numerator-exclusion"]'
     public static readonly measurePopulationSelect = '[id="population-select-measure-population"]'
     public static readonly measurePopulationExclusionSelect = '[id="population-select-measure-population-exclusion"]'
-    public static readonly measureObservationPopSelect = '[data-testid="measure-observation-cv-obs-input"]'
+    public static readonly measureObservationPopSelect = '[id="measure-observation-cv-obs"]'
     public static readonly measurePopulationOption = '[data-testid="select-option-measure-group-population"]'
-    public static readonly measureObsAggregSelect = '[data-testid="measure-observation-aggregate-cv-obs-input"]'
+    public static readonly measureObsAggregSelect = '[id="measure-observation-aggregate-cv-obs"]'
     public static readonly populationMismatchErrorMsg = '[data-testid="helper-text"]'
+
+    //<button type="submit" data-testid="update-measure-group-scoring-modal-agree-btn" class="sc-iqseJM sc-crHmcD sc-ksdxgE gWXOKc eglphJ fxUUyI" style="background: rgb(66, 75, 90); margin-top: 0px;">Yes, Save changes</button>
 
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '.css-ackcql'
@@ -284,12 +286,12 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "denominatorExclusion",
-                                "definition" : PopDenomP
+                                "definition" :""
                             },
                             {
                                 "_id" : "",
                                 "name" : "denominatorException",
-                                "definition" : PopDenomP
+                                "definition" : ""
                             },
                             {
                                 "_id" : "",
@@ -299,7 +301,7 @@ export class MeasureGroupPage {
                             {
                                 "_id" : "",
                                 "name" : "numeratorExclusion",
-                                "definition" : PopNumP
+                                "definition" :""
                             }
                         ],
                         "measureGroupTypes": [
@@ -321,6 +323,7 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Ratio'
+        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'/* 'ipp' */}
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'}

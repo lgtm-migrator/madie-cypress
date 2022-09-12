@@ -2,7 +2,7 @@
 
 {home}using QICore version '4.1.1'
 
-{home}include FHIRHelpers version '4.0.001' called FHIRHelpers
+{home}include FHIRHelpers version '4.1.000' called FHIRHelpers
 
 {home}valueset "Ethnicity": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.837'
 {home}valueset "ONC Administrative Sex": 'http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113762.1.4.1'

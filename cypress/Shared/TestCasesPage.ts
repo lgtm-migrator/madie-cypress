@@ -14,6 +14,8 @@ export class TestCasesPage {
     public static readonly tcCQLArea = '[data-testid="test-case-cql-editor"]'
 
     //misc test case page objects
+    public static readonly tcHighlightingTab = '[data-testid="highlighting-tab"]'
+    //<button class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1yazzjn" tabindex="0" type="button" role="tab" aria-selected="true" data-testid="highlighting-tab">Highlighting<span class="MuiTouchRipple-root css-w0pj6f"></span></button>
     public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
     public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
@@ -85,12 +87,12 @@ export class TestCasesPage {
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
 
-            if (withBundleId){
+/*             if (withBundleId){
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
             }
             else {
                 cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle ID has been auto generated')
-            }
+            } */
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
