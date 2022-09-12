@@ -769,3 +769,4 @@ describe('Delete second Initial Population -- Ratio score only', () => {
         cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Surgical Absence of Cervix')
     })
 })
+

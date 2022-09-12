@@ -1,18 +1,27 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
-import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
-import {TestCaseJson} from "../../../../Shared/TestCaseJson"
+import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {Utilities} from "../../../../Shared/Utilities"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import {TestCasesPage} from "../../../../Shared/TestCasesPage"
+import {TestCaseJson} from "../../../../Shared/TestCaseJson"
+import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 
 let measureName = 'TestMeasure' + Date.now()
+let newMeasureName = ''
+let newCqlLibraryName = ''
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
+let measureCQL = MeasureCQL.ICFCleanTest_CQL
 let testCaseSeries = 'SBTestSeries'
 let twoFiftyTwoCharacters = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr'
+let updatedTestCaseDescription = testCaseDescription + ' '+ 'UpdatedTestCaseDescription'
+let updatedTestCaseSeries = 'CMSTestSeries'
+
 
 describe('Test Case Validations', () => {
 
@@ -264,5 +273,107 @@ describe('Test Case Validations', () => {
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
         cy.get(TestCasesPage.testCaseTitleInlineError).contains('Test Case Title cannot be more ' +
             'than 250 characters.')
+    })
+})
+describe.only('Attempting to create a test case without a title', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    it('Create Test Case without a title', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+        
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).focus()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
+
+        //save button to save the test case is not available
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('not.be.enabled')
+
+
+
+    })
+
+    it('Edit and update test case to have no title', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+
+        //Click on Edit for Test Case
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //navigate to the details page
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).should('be.enabled')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).clear()
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.wait(500)
+
+        //Update Test Case Description
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).clear()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(updatedTestCaseDescription)
+        //Update Test Case Series
+        cy.get(TestCasesPage.testCaseSeriesTextBox).clear()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries).type('{enter}')
+
+
+        //save button to save the test case is not available
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('not.be.enabled')
     })
 })
