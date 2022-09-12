@@ -7,6 +7,7 @@ import {Utilities} from "../../../Shared/Utilities"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
+import { createPublicKey } from "crypto"
 
 let measureName = 'TestMeasure' + (Date.now())
 let CqlLibraryName = 'TestLibrary' + (Date.now())
@@ -326,75 +327,6 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'denex')
         cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'denexcep')
     })
-
-    //this will need to be retested once 4631 is fixed
-    it.skip('Test Case Population value options are limited to those that are defined from Measure Group -- removing optional definitions', () => {
-        //creating propportion group on measure
-        MeasureGroupPage.CreateProportionMeasureGroupAPI()
-
-        OktaLogin.Login()
-        
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
-        //navigate to CQL Editor page / tab
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-        //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-        //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-        //setup measure group so that only the required fields / populations are defined / has values
-        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'all')
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //click on Expected / Actual tab
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - (Proportion)')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'IPP')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMER')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENOM')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMEX')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEX')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENEXCEP')
-        //go back and update measure group to contain values for all of the population fields
-        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //click on Expected / Actual tab
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - (Proportion)')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'IPP')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'NUMER')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'DENOM')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'NUMEX')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEX')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('not.contain.text', 'DENEXCEP')
-
-    })
-
     it('Verify Test Case population dependencies for Proportion Measures', () => {
 
         //Click on Edit Measure
@@ -782,4 +714,70 @@ describe('TC Pop value options are limited to those that are defined from Measur
         cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'denexcep')
 
     })
+})
+describe('Test Case Expected Measure Group population values based on initial measure scoring', () => {
+
+    beforeEach('Create measure and login', () => {
+        randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(null, null, null, null, null, 'Procedure')
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    it('Test Case Population value options are limited to those that are defined from Measure Group', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        //setup measure group so that only the required fields / populations are defined / has values
+        Utilities.validateMeasureGroup(measureScoringArray[1].valueOf().toString(),'all')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+        cy.wait(500)
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).click()
+        //create test case
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+    
+        //click on Expected / Actual tab
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+    
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - (Ratio)')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'ipp')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numer')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denom')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numex')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denex')
+
+    
+    })
+    
 })

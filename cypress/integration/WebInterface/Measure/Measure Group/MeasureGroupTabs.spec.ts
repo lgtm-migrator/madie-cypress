@@ -79,8 +79,7 @@ describe('Validating Population tabs', () => {
 
     })
 
-    //skipping due to bug MAT-4631
-    it.skip('Can successfully update / change population value and save on population tab', () => {
+    it('Can successfully update / change population value and save on population tab', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -265,9 +264,7 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'denom')
 
     })
-
-    //skipping due to bug MAT-4631
-    it.skip('Assert indicator on tab with error, until error is removed', () => {
+    it('Assert indicator on tab with error, until error is removed', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -300,6 +297,9 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.populationTab).should('exist')
         cy.get(MeasureGroupPage.populationTab).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'num')
+        Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'denom')
+        Utilities.dropdownSelect(MeasureGroupPage.measureObservationPopSelect, 'ToCode')
+        Utilities.dropdownSelect(MeasureGroupPage.measureObsAggregSelect, 'Maximum')
 
         //make reporting the active tab
         //Click on Reporting tab
@@ -316,6 +316,11 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).focus()
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).focus()
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
 
         //validation message after attempting to save
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
