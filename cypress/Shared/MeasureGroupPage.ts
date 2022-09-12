@@ -80,8 +80,6 @@ export class MeasureGroupPage {
     public static readonly measureObsAggregSelect = '[id="measure-observation-aggregate-cv-obs"]'
     public static readonly populationMismatchErrorMsg = '[data-testid="helper-text"]'
 
-    //<button type="submit" data-testid="update-measure-group-scoring-modal-agree-btn" class="sc-iqseJM sc-crHmcD sc-ksdxgE gWXOKc eglphJ fxUUyI" style="background: rgb(66, 75, 90); margin-top: 0px;">Yes, Save changes</button>
-
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '.css-ackcql'
     public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
