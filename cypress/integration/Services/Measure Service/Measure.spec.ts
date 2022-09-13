@@ -20,6 +20,7 @@ let mpStartDate = now().subtract('1', 'year').format('YYYY-MM-DD')
 let mpEndDate = now().format('YYYY-MM-DD')
 let measureCQL = MeasureCQL.SBTEST_CQL
 let eCQMTitle = 'eCQMTitle'
+let versionIdPath = 'cypress/fixtures/versionId'
 
 describe('Measure Service: Create Measure', () => {
 
@@ -38,17 +39,26 @@ describe('Measure Service: Create Measure', () => {
         CQLLibraryName = 'TestCql' + Date.now()
 
         cy.getCookie('accessToken').then((accessToken) => {
-            cy.request({
-                url: '/api/measure',
-                method: 'POST',
-                headers: {
-                    Authorization: 'Bearer ' + accessToken.value
-                },
-                body: {"measureName": measureName, "cqlLibraryName": CQLLibraryName, "model": model, "ecqmTitle": eCQMTitle, "measurementPeriodStart": mpStartDate,
-                       "measurementPeriodEnd": mpEndDate}
-            }).then((response) => {
-                expect(response.status).to.eql(201)
-                expect(response.body.createdBy).to.eql(harpUser)
+            cy.readFile(versionIdPath).should('exist').then((vId) => {
+                cy.request({
+                    url: '/api/measure',
+                    method: 'POST',
+                    headers: {
+                        Authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "measureName": measureName,
+                        "cqlLibraryName": CQLLibraryName,
+                        "model": model,
+                        "versionId": vId,
+                        "ecqmTitle": eCQMTitle,
+                        "measurementPeriodStart": mpStartDate,
+                        "measurementPeriodEnd": mpEndDate
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.createdBy).to.eql(harpUser)
+                })
             })
         })
     })
