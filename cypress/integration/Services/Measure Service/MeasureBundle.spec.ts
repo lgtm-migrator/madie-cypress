@@ -175,6 +175,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                     "measurementPeriodEnd": '2023-01-01T05:00:00.000+00:00', 'versionId': uuidv4()}
             }).then((response) => {
                 expect(response.status).to.eql(201)
+                cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
             })
         })
     })
