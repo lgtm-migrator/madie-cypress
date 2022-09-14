@@ -1,6 +1,7 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
+import { v4 as uuidv4 } from 'uuid'
 
 let measureName = 'MeasureBundle' + Date.now()
 let CqlLibraryName = 'MeasureBundle' + Date.now()
@@ -171,7 +172,7 @@ describe('Measure Bundle end point returns 409 with valid Measure CQL but is mis
                     Authorization: 'Bearer ' + accessToken.value
                 },
                 body: {"measureName": newMeasureName, "cqlLibraryName": newCqlLibraryName, 'cql': measureCQL, "model": 'QI-Core v4.1.1', "ecqmTitle": 'eCQMTitle', "measurementPeriodStart": '2020-01-01T05:00:00.000+00:00',
-                    "measurementPeriodEnd": '2023-01-01T05:00:00.000+00:00'}
+                    "measurementPeriodEnd": '2023-01-01T05:00:00.000+00:00', 'versionId': uuidv4()}
             }).then((response) => {
                 expect(response.status).to.eql(201)
             })
