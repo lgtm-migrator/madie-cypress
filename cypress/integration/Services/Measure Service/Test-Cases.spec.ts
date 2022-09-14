@@ -1,6 +1,7 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import { v4 as uuidv4 } from 'uuid'
 
 let measureName = 'TestMeasure' + Date.now()
 let cqlLibraryName = 'TestLibrary' + Date.now()
@@ -443,12 +444,14 @@ describe('Measure Service: Test Case Endpoints', () => {
                     "ecqmTitle": "eCQMTitle",
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
-                    'measureScoring': 'Cohort'
+                    'measureScoring': 'Cohort', 
+                    'versionId': uuidv4()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
                 cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
             })
         })
     })
@@ -600,12 +603,14 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
                     "ecqmTitle": "eCQMTitle",
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
-                    'measureScoring': 'Cohort'
+                    'measureScoring': 'Cohort', 
+                    'versionId': uuidv4()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
                 cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
             })
         })
     })
@@ -763,12 +768,14 @@ describe('Test Case Json Validations', () =>{
                     "ecqmTitle": "eCQMTitle",
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
-                    'measureScoring': 'Cohort'
+                    'measureScoring': 'Cohort', 
+                    'versionId': uuidv4()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
                 cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
             })
         })
     })
@@ -805,7 +812,7 @@ describe('Test Case Json Validations', () =>{
                     }
                 }).then((response) => {
                     expect(response.status).to.eql(201)
-                    expect(response.body.hapiOperationOutcome.code).to.eql(201)
+                    expect(response.body.hapiOperationOutcome.code).to.eql(200)
                 })
             })
         })
@@ -833,8 +840,8 @@ describe('Test Case Json Validations', () =>{
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.hapiOperationOutcome.code).to.eql(400)
-                    expect(response.body.hapiOperationOutcome.message).to.eql('Unable to persist to HAPI FHIR due to errors')
-                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Incorrect resource type found, expected "Bundle" but found "Account"')
+                    expect(response.body.hapiOperationOutcome.message).to.eql('An error occurred while parsing the resource')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('HAPI-1814: Incorrect resource type found, expected "Bundle" but found "Account"')
                 })
             })
         })
@@ -861,8 +868,8 @@ describe('Test Case Json Validations', () =>{
                 }).then((response) => {
                     expect(response.status).to.eql(201)
                     expect(response.body.hapiOperationOutcome.code).to.eql(400)
-                    expect(response.body.hapiOperationOutcome.message).to.eql('Unable to persist to HAPI FHIR due to errors')
-                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('Failed to parse request body as JSON resource. Error was: Failed to parse JSON encoded FHIR content: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
+                    expect(response.body.hapiOperationOutcome.message).to.eql('An error occurred while parsing the resource')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('HAPI-1861: Failed to parse JSON encoded FHIR content: HAPI-1859: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
                 })
             })
         })
@@ -893,12 +900,14 @@ describe('Measure Service: Test Case Endpoint: Authentication', () => {
                     "ecqmTitle": modelType,
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
-                    'measureScoring': 'Cohort'
+                    'measureScoring': 'Cohort', 
+                    'versionId': uuidv4()
                 }
             }).then((response) => {
                 expect(response.status).to.eql(201)
                 expect(response.body.id).to.be.exist
                 cy.writeFile('cypress/fixtures/measureId', response.body.id)
+                cy.writeFile('cypress/fixtures/versionId', response.body.versionId)
             })
         })
     })
