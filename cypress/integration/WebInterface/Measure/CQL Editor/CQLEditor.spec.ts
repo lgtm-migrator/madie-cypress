@@ -407,3 +407,63 @@ describe('Measure: CQL Editor: valueSet', () => {
             'VSAC: 0:22 | Request failed with status code 400 for oid = undefined location = 18:0-18:22')
     })
 })
+
+describe('CQL errors with included libraries', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Verify errors appear on CQL Editor page when multiple versions of CQL library is included ', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.readFile('cypress/fixtures/CQLWithMultipleIncludedLibraries.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        //save the value in the CQL Editor
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Validate message on page
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
+
+        //Validate error(s) in CQL Editor after saving
+
+        cy.scrollTo('top')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{pageUp}')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
+
+        cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).eq(0).invoke
+        ('show').click({force:true, multiple: true})
+
+        cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
+            'ELM: 1:56 | Identifier FHIRHelpers is already in use in this library.')
+
+    })
+})
