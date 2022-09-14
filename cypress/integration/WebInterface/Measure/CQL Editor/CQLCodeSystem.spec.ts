@@ -117,9 +117,11 @@ describe('Validations around code system in Measure CQL', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:110 | Invalid Code system")
@@ -142,11 +144,13 @@ describe('Validations around code system in Measure CQL', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get('.page-header').click()
 
         //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:72 | Version not found.")
@@ -169,9 +173,11 @@ describe('Validations around code system in Measure CQL', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:91 | Unable to find a code system version")
@@ -195,9 +201,11 @@ describe('Validations around code system in Measure CQL', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
-        //Validate no error(s) in CQL Editor window
+        //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
 
@@ -217,11 +225,12 @@ describe('Validations around code system in Measure CQL', () => {
         //save the value in the CQL Editor
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
-        //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
-        //Validate no error(s) in CQL Editor window
+        //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('not.exist')
 
     })
@@ -242,11 +251,13 @@ describe('Validations around code system in Measure CQL', () => {
 
         //Validate message on page
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL updated successfully! ' +
-            'Library Name and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get('.page-header').click()
 
         //Validate error(s) in CQL Editor window
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLEditorPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLEditorPage.errorInCQLEditorWindow).invoke('show').click({force:true, multiple: true})
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text', "VSAC: 0:107 | Version not found.")
