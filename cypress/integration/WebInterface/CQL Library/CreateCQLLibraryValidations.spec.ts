@@ -66,6 +66,8 @@ describe('CQL Library Validations', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         //Verify error message for empty CQL Library Model
         cy.get(Header.cqlLibraryTab).click()
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(CQLLibraryName+randValue)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().blur()
@@ -80,6 +82,9 @@ describe('CQL Library Validations', () => {
 
         //navigate to the CQL Libaray page and create new CQL Library
         cy.get(Header.cqlLibraryTab).click()
+
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(LibraryName)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
@@ -94,7 +99,7 @@ describe('CQL Library Validations', () => {
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
@@ -106,7 +111,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).greaterThan(1760)
+            expect(text.length).greaterThan(1759)
         })
 
     })
@@ -132,7 +137,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
-            'and Version can be updated in the Details tab. MADiE has over written the updated Library Name and Version')
+            'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
