@@ -4,21 +4,13 @@ import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
-import {Utilities} from "../../../../Shared/Utilities"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
-import {TestCasesPage} from "../../../../Shared/TestCasesPage"
-import {TestCaseJson} from "../../../../Shared/TestCaseJson"
-import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 
-let measureName = 'TestMeasure' + Date.now()
-let CqlLibraryName = 'TestLibrary' + Date.now()
+
 let newMeasureName = ''
 let newCqlLibraryName = ''
 let ratioMeasureCQL = MeasureCQL.ICFCleanTest_CQL
-let testCaseTitle = 'test case title'
-let testCaseDescription = 'DENOMFail' + Date.now()
-let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
-let testCaseSeries = 'SBTestSeries'
+
 
 describe('Create Measure Validations', () => {
 
