@@ -23,6 +23,7 @@ export class EditMeasurePage {
     public static readonly leftPanelRationale = '[data-testid="leftPanelMeasureRationale"]'
     public static readonly leftPanelAuthor = '[data-testid="leftPanelMeasureAuthor"]'
     public static readonly leftPanelGuidance = '[data-testid="leftPanelMeasureGuidance"]'
+    public static readonly leftPanelMClinicalGuidanceRecommendation = '[data-testid="leftPanelMeasureClinicalGuidance"]'
 
     //Measure CQL Page
     //cql editor box on page
@@ -71,4 +72,10 @@ export class EditMeasurePage {
     public static readonly measureGuidanceTextBox = '[data-testid="measureGuidanceInput"]'
     public static readonly measureGuidanceSaveButton = '[data-testid="measureGuidanceSave"]'
     public static readonly measureGuidanceSuccessMessage = '[data-testid="measureGuidanceSuccess"]'
+
+    //Clinical Guidance / Recommendation Page
+    public static readonly measureClinicalRecommendationTextBox = '[data-testid="measureClinical Recommendation StatementInput"]'
+    public static readonly measureClinicalRecommendationSaveButton = '[data-testid="measureClinical Recommendation StatementSave"]'
+    public static readonly measureClinicalRecommendationDiscardButton = '[data-testid="cancel-button"]'
+    public static readonly measureClinicalRecommendationSuccessMessage = '[data-testid="measureClinical Recommendation StatementSuccess"]'
 }
