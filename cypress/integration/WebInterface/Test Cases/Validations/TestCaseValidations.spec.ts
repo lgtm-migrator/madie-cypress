@@ -484,3 +484,77 @@ describe('Attempting to create a test case without a title', () => {
         cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
     })
 })
+describe('Attempting to create a test case without a title', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    //skipping due to issues related to user story MAT-4694; once MAT-4694 is implemented this test case needs to be ran and it should pass
+    it.skip('Validate that, once saved, no dirty check prompt is provided for the test case', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+        
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+        
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.testCaseTitle, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.testCaseTitle, 20000)
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).focus()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.get(TestCasesPage.testCaseTitle).clear()
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle.toString())
+
+        //save test case
+        TestCasesPage.clickCreateTestCaseButton(true)
+
+        //navigate to the test cases tab
+        cy.get(EditMeasurePage.testCasesTab).should('exist')
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        //confirm test case is present on main test case page
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.enabled')
+        })
+    })
+})
