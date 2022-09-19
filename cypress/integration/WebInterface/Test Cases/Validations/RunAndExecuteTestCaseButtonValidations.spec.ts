@@ -111,7 +111,7 @@ describe('Run Test Case button validations', () => {
 
     })
 
-    //Skipping due to bug
+    //Skipping until MAT-4694 is completed
     it.skip('Run / Execute Test Case button is disabled  -- Missing group / population selections', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
