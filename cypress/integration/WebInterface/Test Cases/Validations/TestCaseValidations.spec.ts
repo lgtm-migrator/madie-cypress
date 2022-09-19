@@ -376,4 +376,185 @@ describe('Attempting to create a test case without a title', () => {
         //save button to save the test case is not available
         cy.get(TestCasesPage.editTestCaseSaveButton).should('not.be.enabled')
     })
+    it('Validate dirty check on the test case title, in the test case details tab', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+
+        //Click on Edit for Test Case
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //navigate to the details page
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).should('be.enabled')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).clear()
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.wait(500)
+        cy.get(TestCasesPage.testCaseTitle).type('newTestCaseTitle')
+
+        //attempt to navigate away from the test case page
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        
+        //verify that the discard modal appears
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('exist')
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
+
+
+    })
+    it('Validate dirty check on the test case description, in the test case details tab', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+
+        //Click on Edit for Test Case
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //navigate to the details page
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).should('be.enabled')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        //Update Test Case Description
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).clear()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(updatedTestCaseDescription)
+
+        //attempt to navigate away from the test case page
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        
+        //verify that the discard modal appears
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('exist')
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()        
+    })
+    it('Validate dirty check on the test case series, in the test case details tab', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        
+        //Click on Edit for Test Case
+        TestCasesPage.clickEditforCreatedTestCase()
+        
+        //navigate to the details page
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).should('be.enabled')
+        cy.get(TestCasesPage.detailsTab).click()
+        
+        //Update Test Case Series
+        cy.get(TestCasesPage.testCaseSeriesTextBox).clear()
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(updatedTestCaseSeries).type('{enter}')
+        
+        //attempt to navigate away from the test case page
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+                
+        //verify that the discard modal appears
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('exist')
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
+    })
+})
+describe('Attempting to create a test case without a title', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+    //skipping due to issues related to user story MAT-4694; once MAT-4694 is implemented this test case needs to be ran and it should pass
+    it.skip('Validate that, once saved, no dirty check prompt is provided for the test case', () => {
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+        
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+        
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.testCaseTitle, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.testCaseTitle, 20000)
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).focus()
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('exist')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.get(TestCasesPage.testCaseTitle).clear()
+        cy.get(TestCasesPage.testCaseTitle).focus()
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle.toString())
+
+        //save test case
+        TestCasesPage.clickCreateTestCaseButton(true)
+
+        //navigate to the test cases tab
+        cy.get(EditMeasurePage.testCasesTab).should('exist')
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        //confirm test case is present on main test case page
+        cy.readFile('cypress/fixtures/testCaseId').should('exist').then((fileContents) => {
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('exist')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.visible')
+            cy.get('[data-testid=edit-test-case-'+ fileContents +']').should('be.enabled')
+        })
+    })
 })

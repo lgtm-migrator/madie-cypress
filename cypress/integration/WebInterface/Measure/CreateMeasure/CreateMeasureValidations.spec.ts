@@ -1,6 +1,16 @@
 import {OktaLogin} from "../../../../Shared/OktaLogin"
 import {LandingPage} from "../../../../Shared/LandingPage"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
+import {MeasuresPage} from "../../../../Shared/MeasuresPage"
+import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
+import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+
+
+let newMeasureName = ''
+let newCqlLibraryName = ''
+let ratioMeasureCQL = MeasureCQL.ICFCleanTest_CQL
+
 
 describe('Create Measure Validations', () => {
 
@@ -11,6 +21,73 @@ describe('Create Measure Validations', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()
     })
+    //skipping until 3616 is completely ready
+    //Clinical Recommendation validations
+    it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the clinical recommendation page
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('exist')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).click()
+
+        //type some value in the text box and, then, clear text box
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).type('Some test value')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Clinical Recommendation Statement')
+
+        //type some value in the text box and save it
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).type('Some test value')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).click()
+
+        //verify save success message
+        cy.get(EditMeasurePage.measureClinicalRecommendationSuccessMessage).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSuccessMessage).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSuccessMessage).should('contain.text', 'Measure Clinical Recommendation Statement Information Saved Successfully')
+
+        //ensure that value in text box persists
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(EditMeasurePage.measureDetailsTab).should('exist')
+        cy.get(EditMeasurePage.measureDetailsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureDetailsTab).click()
+
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('exist')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).click()
+
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Some test value')
+
+
+        
+
+    })
+
 
     //Measure Name Validations
     it('Verify error messages when the measure name entered is invalid or empty', () => {

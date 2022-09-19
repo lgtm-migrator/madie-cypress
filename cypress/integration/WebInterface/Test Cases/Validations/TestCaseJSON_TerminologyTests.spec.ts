@@ -41,8 +41,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR', () =>{
+    it('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -54,37 +53,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
-
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
-
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'denom', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
@@ -113,12 +87,13 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid + '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
+        })
     })
-     //skipping test due to bug MAT-4705
-     it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR', () =>{
+     it('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -130,37 +105,15 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'denom', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
-
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
-
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
@@ -189,13 +142,14 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
-
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "num":\n\n  exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "ipp":\n\n exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n\ndefine function ToDateTime(value dateTime): value.value\n' */)
+        })
+        //Population Group: 6324dbcc3e9dc9628c4eeea0\ndefine "ipp":\n\n exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n\ndefine function ToDateTime(value dateTime): value.value\n
 
     })
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- FHIR', () =>{
+    it('Test Case JSON improper use of / invalid value set(s) -- Test Case JSON using wrong dates -- FHIR', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -207,35 +161,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'denom', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREMDatesTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
@@ -264,14 +195,15 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n' */)
+        })
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
 
     })
-
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR based QICore', () =>{
+    it('Test Case JSON improper use of / invalid value set(s) -- missing entire Encounter block -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -283,35 +215,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'num', 'num', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
@@ -340,14 +249,16 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n' */)
+        })
         
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
 
     })
-
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR based QICore', () =>{
+    it('Test Case JSON improper use of / invalid value set(s) -- Encounter in wrong status -- FHIR based QICore', () =>{
         //Click on Edit Button
          MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
@@ -359,36 +270,12 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        //Create Measure Group
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'num', 'num', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson, true)
         TestCasesPage.clickEditforCreatedTestCase()
@@ -417,9 +304,13 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n' */)
+        })
+
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
 
     })
 })
@@ -442,8 +333,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
     })
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON proper use of value set(s) -- FHIR', () =>{
+    it('Test Case JSON proper use of value set(s) -- FHIR', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -457,37 +347,12 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')        
-
-        //Create Measure Group
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')
-        
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'ipp', 'denom', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
 
@@ -530,13 +395,15 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n' */)
+        })
+
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', '\ndefine "ipp":\n\n  exists ["Encounter": "Office Visit"] E where E.period.start during "Measurement Period"\n')
     })
-
-    //skipping test due to bug MAT-4705
-    it.skip('Test Case JSON proper use of value set(s) -- FHIR based QICore', () =>{
+    it('Test Case JSON proper use of value set(s) -- FHIR based QICore', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -550,37 +417,12 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
-        //Create Measure Group
-        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        //select a group type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')
-
-        //Create Measure Group
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'num')        
-
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
-        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-                
-        //validation successful save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'num', 'num', 'num', 'Boolean')
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
 
@@ -623,8 +465,12 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        //cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
 
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
+        cy.readFile('cypress/fixtures/groupId').should('exist').then((groupid) => {
+            cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Population Group: ' + groupid /* + '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n' */)
+        })
+
+        //cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
     })
 })
