@@ -43,7 +43,8 @@ describe('Test Case Validations', () => {
         Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
-    it('Validate text on the "Run Test", "Discard Changes", and "Save" buttons', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Validate text on the "Run Test", "Discard Changes", and "Save" buttons', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -81,6 +82,9 @@ describe('Test Case Validations', () => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
         
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+            cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
             cy.get(TestCasesPage.editTestCaseSaveButton).click()
             cy.get(TestCasesPage.detailsTab).click()
         
@@ -92,8 +96,6 @@ describe('Test Case Validations', () => {
             cy.get(EditMeasurePage.testCasesTab).should('be.visible')        
             cy.get(EditMeasurePage.testCasesTab).click()
         })
-        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
-        cy.get(EditMeasurePage.testCasesTab).click()
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -104,7 +106,8 @@ describe('Test Case Validations', () => {
         //validate text on "Save" button
         cy.get(TestCasesPage.editTestCaseSaveButton).should('contain.text', 'Save')
     })
-    it('Validate that the "Run Test", "Discard Changes", and "Save" buttons are all viewable after clicking on Edit for a test case and on any right-pane tab', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Validate that the "Run Test", "Discard Changes", and "Save" buttons are all viewable after clicking on Edit for a test case and on any right-pane tab', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -204,7 +207,8 @@ describe('Test Case Validations', () => {
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
     })
 
-    it('Edit Test Case: Description more than 250 characters', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Edit Test Case: Description more than 250 characters', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -247,7 +251,8 @@ describe('Test Case Validations', () => {
 
     })
 
-    it('Edit Test Case: Title more than 250 characters', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Edit Test Case: Title more than 250 characters', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -337,7 +342,8 @@ describe('Attempting to create a test case without a title', () => {
 
     })
 
-    it('Edit and update test case to have no title', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Edit and update test case to have no title', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
