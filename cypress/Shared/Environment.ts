@@ -3,7 +3,7 @@ export class Environment {
      * We set our environment variables here in this class
      */
 
-    public static credentials = () : { harpUser: string, password: string, harpUserALT: string, passwordALT: string, umls_API_KEY: string } => {
+    public static credentials = () : { harpUser: string, password: string, harpUserALT: string, passwordALT: string, umls_API_KEY: string, measureSharing_API_Key: string } => {
         switch(Cypress.env('environment')) {
             case 'dev': {
                 return {
@@ -11,7 +11,8 @@ export class Environment {
                     password: Cypress.env('DEV_PASSWORD'),
                     harpUserALT: Cypress.env('DEV_ALT_USERNAME'),
                     passwordALT: Cypress.env('DEV_ALT_PASSWORD'),
-                    umls_API_KEY: Cypress.env('VSAC_API_KEY')
+                    umls_API_KEY: Cypress.env('VSAC_API_KEY'),
+                    measureSharing_API_Key: Cypress.env('MEASURESHARING_API_KEY')
                 }
             }
             case 'test': {
@@ -20,7 +21,8 @@ export class Environment {
                     password: Cypress.env('TEST_PASSWORD'),
                     harpUserALT: Cypress.env('TEST_ALT_USERNAME'),
                     passwordALT: Cypress.env('TEST_ALT_PASSWORD'),
-                    umls_API_KEY: Cypress.env('VSAC_API_KEY')
+                    umls_API_KEY: Cypress.env('VSAC_API_KEY'),
+                    measureSharing_API_Key: Cypress.env('MEASURESHARING_API_KEY')
                 }
             }
             case 'impl': {
@@ -29,7 +31,8 @@ export class Environment {
                     password: Cypress.env('IMPL_PASSWORD'),
                     harpUserALT: Cypress.env('IMPL_ALT_USERNAME'),
                     passwordALT: Cypress.env('IMPL_ALT_PASSWORD'),
-                    umls_API_KEY: Cypress.env('VSAC_API_KEY')
+                    umls_API_KEY: Cypress.env('VSAC_API_KEY'),
+                    measureSharing_API_Key: Cypress.env('MEASURESHARING_API_KEY')
                 }
             }
         }
