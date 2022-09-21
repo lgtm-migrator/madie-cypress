@@ -38,8 +38,8 @@ describe('Measure Highlighting', () => {
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
-    //skipping due to bug MAT-4705
-    it.skip('Execute single Test Case and verify Measure highlighting', () => {
+
+    it('Execute single Test Case and verify Measure highlighting', () => {
 
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
@@ -50,8 +50,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
-        cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
-
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.testCaseTitle).should('be.visible')
         cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
@@ -73,7 +72,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain.text', 'Measure Group 1 - (Proportion)')
+        cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group:')
 
         cy.get(TestCasesPage.testCalculationResults).should('contain.text','define "ipp":\n' +
             '  exists ["Encounter"] E where E.period.start during "Measurement Period"')

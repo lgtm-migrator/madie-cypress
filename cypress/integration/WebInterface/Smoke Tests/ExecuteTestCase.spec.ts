@@ -40,7 +40,8 @@ describe('Execute Test Case', () => {
 
     })
 
-    it('Verify that the Execute Test Case button is disabled when Measure has no Group', () => {
+    //skipping tests until the implementation of user story MAT-4694
+    it.skip('Verify that the Execute Test Case button is disabled when Measure has no Group', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()

@@ -38,8 +38,7 @@ describe('Measure Populations', () => {
 
     })
 
-    //Commenting until MAT-4734 is fixed
-    it.skip('Validate if the Measure populations reset on Measure Group Scoring change', () => {
+    it('Validate if the Measure populations reset on Measure Group Scoring change', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -104,12 +103,12 @@ describe('Measure Populations', () => {
 
 
         //verify the populations after reset
-        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', 'Select Initial Population')
-        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', 'Select Denominator')
-        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', 'Select Denominator Exclusion')
-        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', 'Select Denominator Exception')
-        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', 'Select Numerator')
-        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', 'Select Numerator Exclusion')
+        cy.get(MeasureGroupPage.initialPopulationSelect).should('contain.text', '-')
+        cy.get(MeasureGroupPage.denominatorSelect).should('contain.text', '-')
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).should('contain.text', '-')
+        cy.get(MeasureGroupPage.denominatorExceptionSelect).should('contain.text', '-')
+        cy.get(MeasureGroupPage.numeratorSelect).should('contain.text', '-')
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).should('contain.text', '-')
 
         cy.log('Measure Populations reset successfully')
 
