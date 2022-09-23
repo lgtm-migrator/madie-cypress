@@ -14,7 +14,6 @@ describe('Validate CQL on CQL Library page', () => {
         apiCQLLibraryName = 'TestLibrary' + Date.now()
         //Create CQL Library
         CQLLibraryPage.createCQLLibraryAPI(apiCQLLibraryName)
-
         OktaLogin.Login()
 
     })
