@@ -69,7 +69,7 @@ describe('Draft and Version Validations', () => {
         cy.log('Version Created Successfully')
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
-        cy.get(CQLLibrariesPage.editLibraryErrorMsgAfterVersion).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
+        cy.get(CQLLibrariesPage.infoMsg).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
     })
 
     it('Draft cannot be saved with a name that exists for a different library', () => {

@@ -43,11 +43,10 @@ describe('Validate Measure Group additions', () => {
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
         //read and write CQL from flat file
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
+        Utilities.typeFileContents('cypress/fixtures/EXM124v7QICore4Entry.txt', EditMeasurePage.cqlEditorTextBox)
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
 
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')

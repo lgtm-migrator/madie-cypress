@@ -52,7 +52,14 @@ export class Utilities {
     public static textValues = {
         dataLines: null
     }
-
+    public static typeFileContents(file: string, pageResource: any): void {
+        cy.get(pageResource).should('exist')
+        cy.get(pageResource).should('be.visible')
+        cy.get(pageResource).click()
+        cy.readFile(file).should('exist').then((fileContents) => {
+            cy.get(pageResource).focused().type(fileContents)
+        })
+    }
     public static readWriteFileData(file: string, pageResource: any): void{
         cy.fixture(file).then((str) => {
             // split file by line endings
