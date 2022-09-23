@@ -1,15 +1,15 @@
-library SimpleFhirMeasure version '0.0.001'
+{home}library SimpleFhirMeasure version '0.0.001'
 
-using FHIR version '4.0.1'
+{home}using FHIR version '4.0.1'
 
-include FHIRHelpers version '4.1.000' called FHIRHelpers
+{home}include FHIRHelpers version '4.1.000' called FHIRHelpers
 
-parameter "Measurement Period" Interval<DateTime>
+{home}parameter "Measurement Period" Interval<DateTime>
 
-context Patient
+{home}context Patient
 
-define "ipp":
-  exists ["Encounter"] E where E.period.start during "Measurement Period"
+{home}define "ipp":
+{home}  exists ["Encounter"] E where E.period.start during "Measurement Period"
 
 {home}define "denom":
 {home}  "ipp"

@@ -13,6 +13,8 @@ export class CQLLibrariesPage {
     public static readonly editLibraryErrorMsgAfterVersion = '.CreateEditCqlLibrary__InfoAlert-sc-4o3bpi-3'
     public static readonly versionErrorMsg = '[data-testid=create-version-error-message]'
     public static readonly versionCancelBtn = '[data-testid="create-version-cancel-button"]'
+    public static readonly infoMsg = '[class="EditCqlLibrary__InfoAlert-sc-j81nve-3 eTmbnI"]'
+
 
 
 
@@ -24,11 +26,14 @@ export class CQLLibrariesPage {
             filePath = 'cypress/fixtures/cqlLibraryId2'
         }
         //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).should('exist')
+        cy.get(Header.cqlLibraryTab).should('be.visible')
         cy.get(Header.cqlLibraryTab).click()
         cy.readFile(filePath).should('exist').then((fileContents) => {
 
             cy.intercept('GET', '/api/cql-libraries/' + fileContents).as('cqlLibrary')
 
+            cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').should('exist')
             cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').should('be.visible')
             cy.get('[data-testid=cqlLibrary-button-'+ fileContents +']').click()
 
