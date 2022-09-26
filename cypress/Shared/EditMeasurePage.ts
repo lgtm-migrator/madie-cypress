@@ -13,6 +13,8 @@ export class EditMeasurePage {
     public static readonly cqlLibraryNameTextBox = '[data-testid="cql-library-name-input"]'
     public static readonly measurementInformationSaveButton = '[data-testid="measurement-information-save-button"]'
     public static readonly measureNameFieldLevelError = '[data-testid="measureName-helper-text"]'
+    public static readonly measureId = '[data-testid="measure-id-input"]'
+    public static readonly versionId = '[data-testid="version-id-input"]'
 
     //left panel
     public static readonly leftPanelMeasureInformation = '[data-testid="leftPanelMeasureInformation"]'
@@ -74,7 +76,7 @@ export class EditMeasurePage {
     public static readonly measureGuidanceSuccessMessage = '[data-testid="measureGuidanceSuccess"]'
 
     //Clinical Guidance / Recommendation Page
-    public static readonly measureClinicalRecommendationTextBox = '[data-testid="measureClinical Recommendation StatementInput"]'
+    public static readonly measureClinicalRecommendationTextBox = '[data-testid="measureClinical Recommendation Statement"]'
     public static readonly measureClinicalRecommendationSaveButton = '[data-testid="measureClinical Recommendation StatementSave"]'
     public static readonly measureClinicalRecommendationDiscardButton = '[data-testid="cancel-button"]'
     public static readonly measureClinicalRecommendationSuccessMessage = '[data-testid="measureClinical Recommendation StatementSuccess"]'

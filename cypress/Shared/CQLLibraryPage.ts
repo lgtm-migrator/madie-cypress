@@ -18,6 +18,12 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryModelErrorMsg = '.MuiFormHelperText-root'
     public static readonly successfulCQLSaveNoErrors = '[data-testid=cql-library-success-alert]'
     public static readonly warningAlert = '[data-testid="cql-library-warning-alert"]'
+    public static readonly newCQLLibName = '[data-testid="cql-library-name-text-field-input"]'
+    public static readonly currentCQLLibName = '[id="cql-library-name-text-field-input"]'
+    public static readonly discardChanges = '[data-testid="cql-library-cancel-button"]'
+    public static readonly currentCQLLibSavebtn = '[data-testid="cql-library-save-button"]'
+    public static readonly headerDetails = '[class="details"]'
+
 
     //CQL Editor
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
@@ -31,11 +37,13 @@ export class CQLLibraryPage {
     public static createCQLLibrary (CQLLibraryName: string) : void {
 
         cy.get(Header.cqlLibraryTab).click()
+        cy.wait(1000)
         cy.get(this.createCQLLibraryBtn).click()
-        cy.get(this.cqlLibraryNameTextbox).type(CQLLibraryName)
+        cy.get(this.newCQLLibName).type(CQLLibraryName)
         Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()
+        cy.wait(1000)
         this.validateCQlLibraryName(CQLLibraryName)
         this.validateCQlLibraryModel('QI-Core')
         cy.log('CQL Library Created Successfully')
