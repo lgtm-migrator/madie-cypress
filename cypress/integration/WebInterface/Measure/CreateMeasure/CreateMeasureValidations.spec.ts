@@ -21,7 +21,7 @@ describe('Create Measure Validations', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()
     })
-    //skipping until 3616 is completely ready
+    //skipping until MAT-3616 / bug MAT-4857 is completely ready / fixed
     //Clinical Recommendation validations
     it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
         newMeasureName = 'TestMeasure' + Date.now()
