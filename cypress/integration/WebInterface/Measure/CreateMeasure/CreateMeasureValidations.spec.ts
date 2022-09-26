@@ -21,9 +21,11 @@ describe('Create Measure Validations', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()
     })
-    //skipping until 3616 is completely ready
+    //skipping until MAT-3616 / bug MAT-4857 is completely ready / fixed
     //Clinical Recommendation validations
     it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
         //Create New Measure
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
@@ -83,7 +85,32 @@ describe('Create Measure Validations', () => {
 
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Some test value')
 
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).click()
 
+        //if new changes are made to Clinical Recommendation but, then, discarded, the previous value appears
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(EditMeasurePage.measureDetailsTab).should('exist')
+        cy.get(EditMeasurePage.measureDetailsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureDetailsTab).click()
+
+        //clear current value
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).clear()
+
+        //enter some new value that will not be saved
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).type('Some new test value')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Some test value')
         
 
     })

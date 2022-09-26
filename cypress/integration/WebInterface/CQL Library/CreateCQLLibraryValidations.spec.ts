@@ -18,6 +18,47 @@ describe('CQL Library Validations', () => {
         OktaLogin.Logout()
 
     })
+    it('CQL Library header (breadcrumbs, name, version/draft, model, last update)', () => {
+
+        const dayjs = require('dayjs')
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCQLLibraryName = CQLLibraryName+randValue
+        let lastUpdated = dayjs().format('M/DD/YYYY')
+        //navigate to the main CQL Library list page
+        cy.get(Header.cqlLibraryTab).should('exist')
+        cy.get(Header.cqlLibraryTab).should('be.visible')
+        cy.get(Header.cqlLibraryTab).click()
+        cy.wait(1000)
+        //click button to create a new CQL Library
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.enabled')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
+        //Enter a name for the new CQL Library
+        cy.get(CQLLibraryPage.newCQLLibName).click()
+        cy.get(CQLLibraryPage.newCQLLibName).focus().type(newCQLLibraryName)
+        //select a model value
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+        //save the new CQL Library
+        CQLLibraryPage.clickCreateLibraryButton()
+        //navigate to CQL Library list page
+        cy.get(Header.cqlLibraryTab).click()
+        //Click Edit CQL Library
+        CQLLibrariesPage.clickEditforCreatedLibrary()
+
+        //validate header
+        cy.get(CQLLibraryPage.headerDetails).should('exist')
+        cy.get(CQLLibraryPage.headerDetails).should('be.visible')
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', 'Libraries/Details')
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', newCQLLibraryName)
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', 'v0.0.000')
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', 'Draft')
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', 'QI-Core v4.1.1')
+        cy.get(CQLLibraryPage.headerDetails).should('include.text', lastUpdated)
+
+
+    })
     it('CQL Library cancel / discard changes button', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         //navigate to the main CQL Library list page
