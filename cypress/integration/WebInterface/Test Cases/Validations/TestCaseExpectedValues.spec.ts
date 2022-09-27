@@ -274,7 +274,78 @@ describe('Non Boolean Population Basis Expected values', () => {
                 cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
                 cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
                 
-    })    
+    })
+
+    it('Validate and save Non Boolean Expected values', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        //click on Expected/Actual tab
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).type('abc')
+        cy.get(TestCasesPage.nonBooleanExpectedValueError).should('contain.text', 'Only numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
+
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).type('$%@')
+        cy.get(TestCasesPage.nonBooleanExpectedValueError).should('contain.text', 'Only numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
+
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).type('13@a')
+        cy.get(TestCasesPage.nonBooleanExpectedValueError).should('contain.text', 'Only numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
+
+        cy.get(TestCasesPage.testCaseIPPCheckBox).clear().type('1')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).clear().type('2')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).clear().type('3')
+
+        TestCasesPage.clickCreateTestCaseButton(true)
+
+        //Navigate to Test case tab
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('contain.value', '1')
+        cy.get(TestCasesPage.testCaseDENOMCheckBox).should('contain.value', '2')
+        cy.get(TestCasesPage.testCaseNUMERCheckBox).should('contain.value', '3')
+    })
 })
 describe('Boolean Population Basis Expected Values', () => {
 

@@ -74,6 +74,9 @@ export class TestCasesPage {
     public static readonly denominatorExceptionRow = '[data-testid="test-row-population-id-denominatorException"]'
     public static readonly measureObservationRow = '[data-testid="test-population-measureObservation-expected"]'
 
+    //Test Case Expected/Actual Values
+    public static readonly nonBooleanExpectedValueError = '[class="qpp-error-message"]'
+
     public static clickCreateTestCaseButton(withBundleId?:boolean) : void {
 
         //setup for grabbing the measure create call
