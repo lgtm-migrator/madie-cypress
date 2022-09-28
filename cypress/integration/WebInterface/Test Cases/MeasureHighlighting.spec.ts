@@ -64,6 +64,10 @@ describe('Measure Highlighting', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).should('be.enabled')
+        cy.get(TestCasesPage.detailsTab).click()
+
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
@@ -76,48 +80,5 @@ describe('Measure Highlighting', () => {
 
         cy.get(TestCasesPage.testCalculationResults).should('contain.text','define "ipp":\n' +
             '  exists ["Encounter"] E where E.period.start during "Measurement Period"')
-    })
-
-    it('Verify error message when the Test Case Json is empty', () => {
-
-        //Add Measure Group
-        MeasureGroupPage.createMeasureGroupforProportionMeasure()
-
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
-
-        cy.get(TestCasesPage.detailsTab).click()
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
-            cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
-
-            cy.get(TestCasesPage.editTestCaseSaveButton).click()
-
-            //saving testCaseId to file to use later
-            cy.wait('@testcase').then(({response}) => {
-                expect(response.statusCode).to.eq(201)
-                cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
-            })
-
-            cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while creating the test case')
-
-            cy.get(TestCasesPage.testCaseJsonValidationErrorBtn).click()
-            cy.get(TestCasesPage.testCaseJsonValidationErrorList).should('contain.text', 'An unknown exception occurred while validating the test case JSON.')
-            cy.get(EditMeasurePage.testCasesTab).click()
-        })
-
-        TestCasesPage.clickEditforCreatedTestCase()
-        cy.get(TestCasesPage.detailsTab).click()
-        cy.get(TestCasesPage.runTestButton).should('be.visible')
-        cy.get(TestCasesPage.runTestButton).should('be.disabled')
-
     })
 })
