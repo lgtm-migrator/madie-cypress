@@ -1,5 +1,10 @@
 export class EditMeasurePage {
 
+    //dirty modal
+    public static readonly dirtCheckModal = '[class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullWidth css-mbdu2s"]'
+    public static readonly keepWorkingCancel = '[data-testid="discard-dialog-cancel-button"]'
+    public static readonly discardChangesContinue = '[data-testid="discard-dialog-continue-button"]'
+    
 
     //Edit Measure tab menu
     public static readonly measureDetailsTab = '[data-testid=measure-details-tab]'
@@ -23,7 +28,7 @@ export class EditMeasurePage {
     public static readonly leftPanelCopyright = '[data-testid="leftPanelMeasureCopyright"]'
     public static readonly leftPanelDisclaimer = '[data-testid="leftPanelMeasureDisclaimer"]'
     public static readonly leftPanelRationale = '[data-testid="leftPanelMeasureRationale"]'
-    public static readonly leftPanelAuthor = '[data-testid="leftPanelMeasureAuthor"]'
+    public static readonly leftPanelStewardDevelopers = '[data-testid="leftPanelMeasureSteward"]'
     public static readonly leftPanelGuidance = '[data-testid="leftPanelMeasureGuidance"]'
     public static readonly leftPanelMClinicalGuidanceRecommendation = '[data-testid="leftPanelMeasureClinicalGuidance"]'
 
@@ -40,10 +45,19 @@ export class EditMeasurePage {
     public static readonly successfulMeasureDeleteMsg = '[data-testid=edit-measure-information-success-text]'
 
     //Measure Meta Data
-    //Measure Steward Page
-    public static readonly measureStewardTextBox = '[data-testid="measureStewardInput"]'
-    public static readonly measureStewardSaveButton = '[data-testid="measureStewardSave"]'
-    public static readonly measureStewardSuccessMessage = '[data-testid="measureStewardSuccess"]'
+    //Measure Steward & Developers Page
+    public static readonly measureStewardDrpDwn = '[data-testid="steward"]'
+    public static readonly measureStewardDrpDwnOption = '#mui-3-option-0'
+    public static readonly measureStewardObjHoldingValue = '[id="mui-8"]'
+    public static readonly measureDeveloperDrpDwn = '[data-testid="developers"]'
+    public static readonly measureDevelopersDrpDwnOption = '#mui-5-option-0'
+    public static readonly measureDevelopersObjHoldingValue = '[class="MuiChip-label MuiChip-labelMedium css-9iedg7"]'
+    //<span class="MuiChip-label MuiChip-labelMedium css-9iedg7">ACO Health Solutions</span>
+    public static readonly measureStewardDevelopersSaveButton = '[data-testid="steward-and-developers-save"]'
+    public static readonly measureStewardDevelopersDiscardCancel = '[data-testid="cancel-button"]'
+    public static readonly measureStewardDevelopersSuccessMessage = '[data-testid="steward-and-developers-success"]'
+    public static readonly measureStewardAlertMsg = '[data-testid="steward-helper-text"]'
+    public static readonly measureDevelopersAlertMsg = '[data-testid="developers-helper-text"]'
 
     //Description Page
     public static readonly measureDescriptionTextBox = '[data-testid="measureDescriptionInput"]'
@@ -64,11 +78,6 @@ export class EditMeasurePage {
     public static readonly measureRationaleTextBox = '[data-testid="measureRationaleInput"]'
     public static readonly measureRationaleSaveButton = '[data-testid="measureRationaleSave"]'
     public static readonly measureRationaleSuccessMessage = '[data-testid="measureRationaleSuccess"]'
-
-    //Author Page
-    public static readonly measureAuthorTextBox = '[data-testid="measureAuthorInput"]'
-    public static readonly measureAuthorSaveButton = '[data-testid="measureAuthorSave"]'
-    public static readonly measureAuthorSuccessMessage = '[data-testid="measureAuthorSuccess"]'
 
     //Guidance Page
     public static readonly measureGuidanceTextBox = '[data-testid="measureGuidanceInput"]'

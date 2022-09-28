@@ -37,23 +37,16 @@ describe('Edit Measure: Add Meta Data', () => {
 
     it('Verify the entry, save and retrieval of all Measure Meta Data', () => {
 
-        let steward = 'steward'
         let description = 'description'
         let copyright = 'copyright'
         let disclaimer = 'disclaimer'
         let rationale = 'rationale'
-        let author = 'author'
         let guidance = 'guidance'
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Enter meta data
-        //Measure Steward
-        Utilities.waitForElementVisible(EditMeasurePage.leftPanelMeasureSteward, 10000)
-        cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
-        cy.get(EditMeasurePage.measureStewardTextBox).clear().type(steward)
-        cy.get(EditMeasurePage.measureStewardSaveButton).click()
 
         //Description
         cy.get(EditMeasurePage.leftPanelDescription).click()
@@ -79,11 +72,23 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureRationaleSaveButton).click()
         cy.get(EditMeasurePage.measureRationaleSuccessMessage).should('be.visible')
 
-        //Author
-        cy.get(EditMeasurePage.leftPanelAuthor).click()
-        cy.get(EditMeasurePage.measureAuthorTextBox).clear().type(author)
-        cy.get(EditMeasurePage.measureAuthorSaveButton).click()
-        cy.get(EditMeasurePage.measureAuthorSuccessMessage).should('be.visible')
+        //Steward & Developers
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+        //select a value for Steward
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist').should('be.visible').click().type('Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwnOption).click()
+
+        //select a value for Developers
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type("ACO Health Solutions")
+        cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        //save button should become available, now, because a value is, now, in both fields
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.enabled')
+        
+        //save Steward & Developers
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSuccessMessage).should('be.visible')
 
         //Guidance
         cy.get(EditMeasurePage.leftPanelGuidance).click()
@@ -98,11 +103,10 @@ describe('Edit Measure: Add Meta Data', () => {
 
         //verification of data entry
         //steward
-        cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
-        cy.get(EditMeasurePage.measureStewardTextBox).invoke('val').then(val =>{
-            expect(val).to.eql(steward)
-        })
-        cy.log('Measure Steward added successfully')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('include.value', 'Able Health')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('include.text', 'ACO Health Solutions')
+        cy.log('Measure Steward & Developers added successfully')
 
         //description
         cy.get(EditMeasurePage.leftPanelDescription).click()
@@ -131,13 +135,6 @@ describe('Edit Measure: Add Meta Data', () => {
             expect(val).to.eql(rationale)
         })
         cy.log('Measure Rationale added successfully')
-
-        //author
-        cy.get(EditMeasurePage.leftPanelAuthor).click()
-        cy.get(EditMeasurePage.measureAuthorTextBox).invoke('val').then(val =>{
-            expect(val).to.eql(author)
-        })
-        cy.log('Measure Author added successfully')
 
         //guidance
         cy.get(EditMeasurePage.leftPanelGuidance).click()
