@@ -62,9 +62,13 @@ describe('Read only for measure, measure group, and test cases that user does no
         cy.get(CreateMeasurePage.measurementPeriodStartDate).should('be.disabled')
         cy.get(CreateMeasurePage.measurementPeriodEndDate).should('be.disabled')
 
-        cy.get(EditMeasurePage.leftPanelMeasureSteward).should('be.visible')
-        cy.get(EditMeasurePage.leftPanelMeasureSteward).click()
-        cy.get(EditMeasurePage.measureStewardTextBox).should('have.attr', 'readonly', 'readonly')
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('not.be.enabled')
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('not.be.enabled')
 
         cy.get(EditMeasurePage.leftPanelDescription).should('be.visible')
         cy.get(EditMeasurePage.leftPanelDescription).click()
@@ -81,10 +85,6 @@ describe('Read only for measure, measure group, and test cases that user does no
         cy.get(EditMeasurePage.leftPanelRationale).should('be.visible')
         cy.get(EditMeasurePage.leftPanelRationale).click()
         cy.get(EditMeasurePage.measureRationaleTextBox).should('have.attr', 'readonly', 'readonly')
-
-        cy.get(EditMeasurePage.leftPanelAuthor).should('be.visible')
-        cy.get(EditMeasurePage.leftPanelAuthor).click()
-        cy.get(EditMeasurePage.measureAuthorTextBox).should('have.attr', 'readonly', 'readonly')
 
         cy.get(EditMeasurePage.leftPanelGuidance).should('be.visible')
         cy.get(EditMeasurePage.leftPanelGuidance).click()
