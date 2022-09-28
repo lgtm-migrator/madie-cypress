@@ -472,13 +472,16 @@ describe('Boolean Population Basis Expected Values', () => {
 
         //Assert Expected values for Population Basis Encounter (Proportion Measure Group)
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-        cy.get(TestCasesPage.testCasePopulationValuesTable).eq(0).should('contain.text', 'Measure Group 1 - (Proportion)')
+
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - (Proportion)')
         cy.get(TestCasesPage.testCaseIPPCheckBox).eq(0).should('be.checked')
         cy.get(TestCasesPage.testCaseDENOMCheckBox).should('be.checked')
         cy.get(TestCasesPage.testCaseNUMERCheckBox).should('be.checked')
 
         //Assert Expected values for Population Basis Boolean (Cohort Measure Group)
-        cy.get(TestCasesPage.testCasePopulationValuesTable).eq(1).should('contain.text', 'Measure Group 2 - (Cohort)')
+        
+
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 2 - (Cohort)')
         cy.get(TestCasesPage.testCaseIPPCheckBox).eq(1).should('be.checked')
     })
     it('Verify Expected / Actual page dirty check with Boolean Population Basis and with multiple groups', () => {
