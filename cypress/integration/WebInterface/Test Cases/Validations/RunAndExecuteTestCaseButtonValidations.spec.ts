@@ -317,7 +317,7 @@ describe('Run Test Case button validations', () => {
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
 
-            cy.get(TestCasesPage.confirmationMsg).should('contains.text', 'An error occurred with the Test Case JSON while creating the test case')
+            cy.get(TestCasesPage.confirmationMsg).should('contains.text', 'Test case created successfully!')
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
