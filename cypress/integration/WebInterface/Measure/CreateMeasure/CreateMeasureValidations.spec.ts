@@ -5,6 +5,7 @@ import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import {Utilities} from "../../../../Shared/Utilities"
 
 
 let newMeasureName = ''
@@ -21,6 +22,329 @@ describe('Create Measure Validations', () => {
     afterEach('Logout', () => {
         OktaLogin.Logout()
     })
+
+    it('Verify Steward & Developers section of Measure Details page', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('include.text','Steward & Developers')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        //confirm Stewardfield
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist')
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('be.visible')
+
+        //confirm Developers field
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist')
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('be.visible')
+    })
+
+    it('Verify fields on the Steward & Developers section of Measure Details page are required and the messaging around the requirement', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()        
+
+        //give the Steward field focus and then remove focus from it without selecting a value for it
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist')
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDrpDwn).click()
+        
+        //remove focus from Steward drop down field
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click() 
+
+        //confirm alert / error message that should appear below the Steward field
+        cy.get(EditMeasurePage.measureStewardAlertMsg).should('exist')
+        cy.get(EditMeasurePage.measureStewardAlertMsg).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardAlertMsg).should('include.text', 'Steward is required')
+
+        //give the Steward field focus and then remove focus from it without selecting a value for it
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist')
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('be.visible')
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).click()
+        
+        //remove focus from Developers drop down field
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click() 
+        
+        //confirm alert / error message that should appear below the Developers field
+        cy.get(EditMeasurePage.measureDevelopersAlertMsg).should('exist')
+        cy.get(EditMeasurePage.measureDevelopersAlertMsg).should('be.visible')
+        cy.get(EditMeasurePage.measureDevelopersAlertMsg).should('include.text', 'At least one developer is required')
+    })
+
+    it('Validate Save buttons accessbility (Save when both fields have value)', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        //select a value for Steward
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist').should('be.visible').click().type('Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //select a value for Developers
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type('ACO Health Solutions')
+        cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.enabled')
+
+
+    })
+
+    it('Validate Discard button accessbility and text / label on button', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        //select a value for Steward
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist').should('be.visible').click().type('Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //discard button becomes avaliable
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.enabled')
+
+        //discard previous entry
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).click()
+
+        //verify that empty fields
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('not.exist')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('not.exist')
+
+        //select a value for Developers
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type('ACO Health Solutions')
+        cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //discard button becomes avaliable
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.enabled')
+    })
+
+    it('Validate dirty check on Steward & Developers section of Measure Details page', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        //select a value for Steward
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist').should('be.visible').click().type('Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //navigate away from the details tab
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
+        cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        //confirm dirty check window
+        cy.get(EditMeasurePage.dirtCheckModal).should('exist')
+        cy.get(EditMeasurePage.dirtCheckModal).should('be.visible')
+
+        //select continue working on page
+        cy.get(EditMeasurePage.keepWorkingCancel).should('exist')
+        cy.get(EditMeasurePage.keepWorkingCancel).should('be.visible')
+        cy.get(EditMeasurePage.keepWorkingCancel).should('be.enabled')
+        cy.get(EditMeasurePage.keepWorkingCancel).click()
+
+        //discard previous entry
+        cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).click()
+
+        //verify that empty fields
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('not.exist')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('not.exist')
+
+        //select a value for Developers
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type('ACO Health Solutions')
+        cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //navigate away from the details tab
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
+        cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        
+        //confirm dirty check window
+        cy.get(EditMeasurePage.dirtCheckModal).should('exist')
+        cy.get(EditMeasurePage.dirtCheckModal).should('be.visible')
+       
+    })
+
+    it('Validate success message once both fields have value and are saved', () => {
+        newMeasureName = 'TestMeasure' + Date.now()
+        newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
+
+        //Create New Measure
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        OktaLogin.Login()
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        //select a value for Steward
+        //Utilities.dropdownSelect(EditMeasurePage.measureStewardDrpDwn, 'Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist').should('be.visible').click().type('Able Health')
+        cy.get(EditMeasurePage.measureStewardDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        //save button should remain disabled because a value has not been placed in both fields
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
+
+        //select a value for Developers
+        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type("ACO Health Solutions")
+        cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
+        //save button should become available, now, because a value is, now, in both fields
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.enabled')
+        
+        //save Steward & Developers
+        cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).click()
+
+        //validate success message
+        cy.get(EditMeasurePage.measureStewardDevelopersSuccessMessage).should('exist')
+        cy.get(EditMeasurePage.measureStewardDevelopersSuccessMessage).should('be.visible')
+        cy.get(EditMeasurePage.measureStewardDevelopersSuccessMessage).should('include.text', 'Steward and Developers Information Saved Successfully')
+
+        //validate values are persisted
+        //navigate away from the details tab
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
+        cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        //navigate back to the details tab
+        cy.get(EditMeasurePage.measureDetailsTab).should('exist')
+        cy.get(EditMeasurePage.measureDetailsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureDetailsTab).click()
+
+        //navigate to the Steward & Developers page
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('exist')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
+
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('include.value', 'Able Health')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('include.text', 'ACO Health Solutions')
+    })
+
     //skipping until MAT-3616 / bug MAT-4857 is completely ready / fixed
     //Clinical Recommendation validations
     it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
@@ -34,7 +358,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(5500)
         OktaLogin.Logout()
         MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
         OktaLogin.Login()

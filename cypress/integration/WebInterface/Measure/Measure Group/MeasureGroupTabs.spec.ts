@@ -207,7 +207,7 @@ describe('Validating Population tabs', () => {
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.rateAggregation).type('Typed some value for Rate Aggregation text area field')
         Utilities.dropdownSelect(MeasureGroupPage.improvementNotationSelect, 'Increased score indicates improvement')
-        
+
 
         //navigate to the populations tab
         cy.get(MeasureGroupPage.populationTab).should('exist')
@@ -328,7 +328,7 @@ describe('Validating Population tabs', () => {
         Utilities.waitForElementVisible(MeasureGroupPage.successfulSaveMeasureGroupMsg, 3000)
 
         //assert save message
-        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')        
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
     })
 
     it('Assert all fields, in all tabs, are for the measure group that is selected', () => {
@@ -479,7 +479,7 @@ describe('Validating Stratification tabs', () => {
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
         //Association -- default value -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne)
-        .should('contain.text', 'Initial Population')
+            .should('contain.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
             expect($ele.text()).to.be.oneOf(['Initial Population', 'Measure Population', 'Measure Population Exclusion'])
@@ -536,14 +536,6 @@ describe('Validating Stratification tabs', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
-        //Click on Measure Group tab
-        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
-        cy.get(MeasureGroupPage.populationTab).click()
-
-        //Click on Stratification tab
-        cy.get(MeasureGroupPage.stratificationTab).should('exist')
-        cy.get(MeasureGroupPage.stratificationTab).click()
         //Click on Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).click()
@@ -800,7 +792,7 @@ describe('Validating Reporting tabs', () => {
     })
 
     it('Can successfully update / change Reporting tab values and save on Reporting tab', () => {
-        
+
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
