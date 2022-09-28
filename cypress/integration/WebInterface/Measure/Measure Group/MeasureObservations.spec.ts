@@ -32,7 +32,7 @@ describe('Measure Observations', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newCqlLibraryName = CqlLibraryName + randValue
 
-        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+        //Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
         OktaLogin.Logout()
 
     })
@@ -333,7 +333,7 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
         cy.get(MeasureGroupPage.measurePopulationOption).eq(0).click() //select denom
 
         cy.get(MeasureGroupPage.cvMeasureObservation).click()
-        Utilities.dropdownSelect(MeasureGroupPage.measureObservationSelect, 'isFinishedEncounter')
+        cy.get(MeasureGroupPage.measureObservationSelect).eq(1).click() //select isFinishedEncounter
         cy.get(MeasureGroupPage.cvAggregateFunction).click()
         cy.get(MeasureGroupPage.aggregateFunctionCount).click()
 
@@ -383,19 +383,19 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
         cy.get(MeasureGroupPage.cvAggregateFunction).should('be.visible')
         cy.get(MeasureGroupPage.cvAggregateFunction).should('not.be.enabled')
 
-        //naviage to stratification tab
+        //navigate to stratification tab
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).should('be.visible')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
-        //verify that startification fields cannot be changed / updated
-        cy.get(MeasureGroupPage.stratOne).should('not.exist')
+        //verify that stratification fields cannot be changed / updated
+        cy.get(MeasureGroupPage.stratOne).should('not.be.enabled')
 
-        cy.get(MeasureGroupPage.stratAssociationOne).should('not.exist')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('not.be.enabled')
 
-        cy.get(MeasureGroupPage.stratTwo).should('not.exist')
+        cy.get(MeasureGroupPage.stratTwo).should('not.be.enabled')
 
-        cy.get(MeasureGroupPage.stratAssociationTwo).should('not.exist')
+        cy.get(MeasureGroupPage.stratAssociationTwo).should('not.be.enabled')
     })
 })
 
