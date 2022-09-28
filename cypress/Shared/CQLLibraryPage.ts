@@ -5,7 +5,7 @@ import {Utilities} from "./Utilities";
 export class CQLLibraryPage {
 
     public static readonly createCQLLibraryBtn = '[data-testid="create-new-cql-library-button"]'
-    public static readonly cqlLibraryNameTextbox = '#cqlLibraryName'
+    public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name-text-field-input"]'
     public static readonly cqlLibraryModelDropdown = '#model-select'
     public static readonly allLibrariesBtn = '[data-testid="all-cql-libraries-tab"]'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core v4.1.1"]'
