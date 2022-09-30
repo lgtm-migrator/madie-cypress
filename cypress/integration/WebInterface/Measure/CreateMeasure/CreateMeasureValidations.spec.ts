@@ -345,9 +345,8 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('include.text', 'ACO Health Solutions')
     })
 
-    //skipping until MAT-3616 / bug MAT-4857 is completely ready / fixed
     //Clinical Recommendation validations
-    it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
+    it('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
         newMeasureName = 'TestMeasure' + Date.now()
         newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
@@ -387,7 +386,12 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('exist')
         cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.visible')
         cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).should('exist')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).should('be.visible')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).should('be.enabled')
         cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.disabled')
+        cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).should('be.disabled')
 
         //verify save success message
         cy.get(EditMeasurePage.measureClinicalRecommendationSuccessMessage).should('exist')
@@ -409,11 +413,6 @@ describe('Create Measure Validations', () => {
 
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Some test value')
 
-        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('exist')
-        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).click()
-
         //if new changes are made to Clinical Recommendation but, then, discarded, the previous value appears
         cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
@@ -423,10 +422,16 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureDetailsTab).should('be.visible')
         cy.get(EditMeasurePage.measureDetailsTab).click()
 
+        //navigate to the clinical recommendation page
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('exist')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).should('be.visible')
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).click()
+
         //clear current value
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('be.visible')
-        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).clear()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).type('{selectAll}{del}')
 
         //enter some new value that will not be saved
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('exist')
