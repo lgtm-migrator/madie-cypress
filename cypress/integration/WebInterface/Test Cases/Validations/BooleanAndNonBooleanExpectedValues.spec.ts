@@ -584,5 +584,106 @@ describe('Boolean Population Basis Expected Values', () => {
         cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
         cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
         cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()        
-    }) 
+    })
+})
+
+describe('Expected values for second initial population', () => {
+
+    beforeEach('Create measure and login', () => {
+
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(5500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Initial Population', 'Initial Population', 'Initial Population', 'Boolean')
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Verify that the Expected value for second initial population can be selected', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //fill in a description value
+        cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
+
+        //Add Second Initial Population
+        cy.get(MeasureGroupPage.addSecondInitialPopulationLink).click()
+        Utilities.dropdownSelect(MeasureGroupPage.secondInitialPopulationSelect, 'Initial Population')
+
+        //save Measure group
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        //click on details tab
+        cy.get(TestCasesPage.detailsTab).should('exist')
+        cy.get(TestCasesPage.detailsTab).should('be.visible')
+        cy.get(TestCasesPage.detailsTab).click()
+
+        cy.get(TestCasesPage.testCaseTitle).should('exist')
+        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
+        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
+        cy.get(TestCasesPage.testCaseTitle).focus().clear()
+        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
+        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
+        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
+        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
+        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+
+        //click on Expected/Actual tab
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('exist')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).eq(0).check()
+        cy.get(TestCasesPage.testCaseIPPCheckBox).eq(1).check()
+
+        //Save Test case with Expected values
+        TestCasesPage.clickCreateTestCaseButton(true)
+
+        //Navigate to Test case tab
+        cy.get(EditMeasurePage.testCasesTab).click()
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //Assert Expected values for Initial population
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCaseIPPCheckBox).eq(0).should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPCheckBox).eq(1).should('be.checked')
+    })
 })
