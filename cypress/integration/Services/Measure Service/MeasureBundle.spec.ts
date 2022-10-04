@@ -32,7 +32,44 @@ let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
     '      \n' +
     'define "numeratorExclusion":\n' +
     '    "num"'
-
+let CVmeasureCQL = 'library TestLibrary1664888387806162 version \'0.0.000\'\n' +
+    '\n' +
+    'using FHIR version \'4.0.1\'\n' +
+    '\n' +
+    'include FHIRHelpers version \'4.1.000\' called FHIRHelpers\n' +
+    '\n' +
+    'parameter "Measurement Period" Interval<DateTime>\n' +
+    '\n' +
+    'context Patient\n' +
+    '\n' +
+    'define "ipp":\n' +
+    '  exists ["Encounter"] E where E.period.start during "Measurement Period"\n' +
+    '  \n' +
+    'define "denom":\n' +
+    '  "ipp"\n' +
+    '  \n' +
+    'define "num":\n' +
+    '  exists ["Encounter"] E where E.status ~ \'finished\'\n' +
+    '  \n' +
+    'define "numeratorExclusion":\n' +
+    '    "num"\n' +
+    '    \n' +
+    'define function ToCode(coding FHIR.Coding):\n' +
+    ' if coding is null then\n' +
+    '   null\n' +
+    '      else\n' +
+    '        System.Code {\n' +
+    '           code: coding.code.value,\n' +
+    '           system: coding.system.value,\n' +
+    '           version: coding.version.value,\n' +
+    '           display: coding.display.value\n' +
+    '           }\n' +
+    '           \n' +
+    'define function fun(notPascalCase Integer ):\n' +
+    '  true\n' +
+    '  \n' +
+    'define function "isFinishedEncounter"(Enc Encounter):\n' +
+    '  true'
 let PopIniPop = 'ipp'
 let PopNum = 'num'
 let PopDenom = 'denom'
@@ -40,7 +77,7 @@ let PopDenex = 'ipp'
 let PopDenexcep = 'denom'
 let PopNumex = 'numeratorExclusion'
 
-describe('Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+describe('Proportion Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
     before('Create Measure',() => {
 
@@ -154,6 +191,112 @@ describe('Measure Bundle end point returns expected data with valid Measure CQL 
         })
     })
 })
+
+describe('CV Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
+
+    before('Create Measure',() => {
+
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        cy.setAccessTokenCookie()
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName, CVmeasureCQL)
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((retrievedMeasureID) => {
+                cy.request({
+                    url: '/api/measures/' + retrievedMeasureID + '/groups/',
+                    method: 'POST',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    body: {
+                        "scoring": 'Continuous Variable',
+                        "populationBasis": 'Boolean',
+                        "populations": [
+                            {
+                                "name": "initialPopulation",
+                                "definition": 'ipp'
+                            },
+                            {
+                                "name": "measurePopulation",
+                                "definition": 'num'
+                            },
+                            {
+                                "name": "measurePopulationExclusion",
+                                "definition": 'numeratorExclusion'
+                            },
+                        ],
+                        "measureObservations": [
+                            {
+                                "id": retrievedMeasureID,
+                                "criteriaReference": null,
+                                "definition": 'ToCode',
+                                "aggregateMethod": 'Count'
+                            },
+                        ],
+                        "measureGroupTypes": [
+                            "Outcome"
+                        ]
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.id).to.be.exist
+                    cy.writeFile('cypress/fixtures/groupId', response.body.id)
+                })
+            })
+        })
+
+    })
+
+    beforeEach('Set Access Token',() => {
+
+        cy.setAccessTokenCookie()
+
+    })
+
+    after('Clean up',() => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    url: '/api/measures/' + id + '/bundles',
+                    method: 'GET',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    expect(response.status).to.eql(200)
+                    expect(response.body.resourceType).to.eql('Bundle')
+                    expect(response.body.entry).to.be.a('array')
+                    expect(response.body.entry[0].resource.resourceType).to.eql('Measure')
+                    expect(response.body.entry[0].resource.effectivePeriod).to.have.property('start')
+                    expect(response.body.entry[0].resource.effectivePeriod).to.have.property('end')
+                    expect(response.body.entry[0].resource.library[0]).is.not.empty
+                    expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
+                    expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql('ipp')
+                    expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('measure-population')
+                    expect(response.body.entry[0].resource.group[0].population[1].criteria.expression).to.eql('num')
+                    expect(response.body.entry[0].resource.group[0].population[2].code.coding[0].code).to.eql('measure-population-exclusion')
+                    expect(response.body.entry[0].resource.group[0].population[2].criteria.expression).to.eql('numeratorExclusion')
+                    expect(response.body.entry[0].resource.group[0].population[3].code.coding[0].code).to.eql('measure-observation')
+                    expect(response.body.entry[0].resource.group[0].population[3].criteria.expression).to.eql('ToCode')
+                    expect(response.body.entry[0].resource.group[0].population[3].extension[0].valueString).to.eql('Count')
+                })
+            })
+        })
+    })
+})
+
 describe('Measure Bundle end point returns 409 with valid Measure CQL but is missing elmJson', () => {
 
     before('Create Measure without elmJson',() => {
