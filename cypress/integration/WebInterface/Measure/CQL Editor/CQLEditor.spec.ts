@@ -11,6 +11,82 @@ let CqlLibraryName = 'TestLibrary' + Date.now() + 1
 let newMeasureName = ''
 let newCqlLibraryName = ''
 
+describe('Validate CQL Editor tab sticky footer', () => {
+
+    beforeEach('Create measure and login', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        //Create New Measure
+        CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        OktaLogin.Login()
+
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Validate Save and Discard buttonns -- text, functionality, and availability', () => {
+            //Click on Edit Measure
+            MeasuresPage.clickEditforCreatedMeasure()
+    
+            //create test case
+            //Navigate to Test Cases page and add Test Case details
+            cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
+            cy.get(EditMeasurePage.cqlEditorTab).click()
+
+            //verify text on Save button
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('contain.text', 'Save')
+            //verify text on discard button
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).should('contain.text', 'Discard Changes')
+
+            //write CQL value into CQL Editory
+            cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+                cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+            })
+            //Save CQL button should be available
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+            //Discard CQL button should be available
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).should('be.enabled')
+
+            //discard entry
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).should('exist')
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).should('be.visible')
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).should('be.enabled')
+            cy.get(EditMeasurePage.cqlEditorDiscardButton).click()
+
+            //confirm that CQL Editor object is empty
+            cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', '')
+
+            //write CQL value into CQL Editory
+            cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
+                cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+            })
+            //save the entry
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+            cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+            cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+            //verify value persists
+            cy.get(EditMeasurePage.testCasesTab).click()
+            cy.get(EditMeasurePage.cqlEditorTab).click()
+            //confirm that CQL Editor object is empty
+            cy.get(EditMeasurePage.cqlEditorTextBox).should('not.be.empty')            
+    })
+
+})
+
+
 describe('Measure: CQL Editor', () => {
 
     beforeEach('Create measure and login', () => {

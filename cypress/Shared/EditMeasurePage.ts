@@ -37,6 +37,8 @@ export class EditMeasurePage {
     public static readonly cqlEditorTextBox = '.ace_content'
     //save button on page
     public static readonly cqlEditorSaveButton = '[data-testid="save-cql-btn"]'
+    //discard changes
+    public static readonly cqlEditorDiscardButton = '[data-testid="reset-cql-btn"]'
 
     //Delete Measure
     public static readonly deleteMeasureButton = '[data-testid=delete-measure-button]'
