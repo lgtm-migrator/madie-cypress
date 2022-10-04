@@ -873,12 +873,14 @@ describe('Measure Stratifications', () => {
                     console.log(response)
                     expect(response.status).to.eql(201)
                     expect(response.body.scoring).to.eql(measureScoring)
+                    expect(response.body.stratifications[0].id).to.be.empty
+                    expect(response.body.stratifications[1].id).to.be.empty
                 })
             })
         })
     })
 
-    it('Verify error message when the population basis does not match with Stratification return type', () => {
+    it.only('Verify error message when the population basis does not match with Stratification return type', () => {
 
         let measurePath = ''
         let measureScoring = 'Proportion'
@@ -952,6 +954,8 @@ describe('Measure Stratifications', () => {
                     console.log(response)
                     expect(response.status).to.eql(400)
                     expect(response.body.message).to.eql('Return type for the CQL definition selected for the Stratification(s) does not match with population basis.')
+                    expect(response.body.stratifications[0].id).to.be.empty
+                    expect(response.body.stratifications[1].id).to.be.empty
                 })
             })
         })

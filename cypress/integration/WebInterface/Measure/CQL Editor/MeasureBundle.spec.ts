@@ -281,7 +281,7 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(7500)
         OktaLogin.Logout()
 
         OktaLogin.Login()
@@ -359,8 +359,10 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.status).to.eql(200)
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('cohort')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
                 })
@@ -449,10 +451,13 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.status).to.eql(200)
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('continuous-variable')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('ipp')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Measure Population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('num')
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('Measure Population Exclusion')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].criteria.expression).to.eql('numeratorExclusion')
                 })
@@ -537,10 +542,13 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.status).to.eql(200)
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('proportion')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Denominator')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
                     expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('Numerator')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].criteria.expression).to.eql('Surgical Absence of Cervix')
                 })
