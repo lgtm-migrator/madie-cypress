@@ -880,7 +880,7 @@ describe('Measure Stratifications', () => {
         })
     })
 
-    it.only('Verify error message when the population basis does not match with Stratification return type', () => {
+    it('Verify error message when the population basis does not match with Stratification return type', () => {
 
         let measurePath = ''
         let measureScoring = 'Proportion'
