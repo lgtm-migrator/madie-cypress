@@ -15,7 +15,6 @@ export class TestCasesPage {
 
     //misc test case page objects
     public static readonly tcHighlightingTab = '[data-testid="highlighting-tab"]'
-    //<button class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1yazzjn" tabindex="0" type="button" role="tab" aria-selected="true" data-testid="highlighting-tab">Highlighting<span class="MuiTouchRipple-root css-w0pj6f"></span></button>
     public static readonly ippActualCheckBox = '[data-testid="test-population-initialPopulation-actual"]'
     public static readonly numActualCheckBox = '[data-testid="test-population-numerator-actual"]'
     public static readonly numExclusionActuralCheckBox = '[data-testid="test-population-numeratorExclusion-actual"]'
@@ -81,6 +80,7 @@ export class TestCasesPage {
     //Test Case Expected/Actual Values
     public static readonly nonBooleanExpectedValueError = '[class="qpp-error-message"]'
     public static readonly measureObservationExpectedValueError = '[data-testid="measureObservation-error-helper-text"]'
+    public static readonly eaMeasureGroupOneStratification = '[data-testid="measure-group-1-stratifications"]'
 
     public static clickCreateTestCaseButton(withBundleId?:boolean) : void {
 
