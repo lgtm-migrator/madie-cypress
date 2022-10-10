@@ -1,12 +1,10 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
-import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
 import {OktaLogin} from "../../../Shared/OktaLogin"
 import {MeasuresPage} from "../../../Shared/MeasuresPage"
 import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
-import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import { v4 as uuidv4 } from 'uuid'
 
 let measureName = 'MeasureBundle' + Date.now()
@@ -14,10 +12,6 @@ let CqlLibraryName = 'MeasureBundle' + Date.now()
 let randValue = (Math.floor((Math.random() * 1000) + 1))
 let newMeasureName = ''
 let newCqlLibraryName = ''
-let testCaseTitle = 'Title for Auto Test'
-let testCaseDescription = 'DENOMFail' + Date.now()
-let testCaseSeries = 'SBTestSeries'
-let testCaseJson = TestCaseJson.TestCaseJson_Valid_w_All_Encounter
 let newmeasureCQL = MeasureCQL.CQL_Multiple_Populations
 
 let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
