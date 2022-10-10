@@ -23,7 +23,7 @@ describe('CQL Library Validations', () => {
         const dayjs = require('dayjs')
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let newCQLLibraryName = CQLLibraryName+randValue
-        let lastUpdated = dayjs().format('M/DD/YYYY')
+        let lastUpdated = dayjs().format('M/D/YYYY')
         //navigate to the main CQL Library list page
         cy.get(Header.cqlLibraryTab).should('exist')
         cy.get(Header.cqlLibraryTab).should('be.visible')

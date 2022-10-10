@@ -260,3 +260,31 @@ Cypress.Commands.add('setAccessTokenCookieALT', () => {
 Cypress.Commands.add('UMLSAPIKeyLogin', () => {
     return UMLSAPIKeyLogin()
 })
+const compareColor = (color: string, property: keyof CSSStyleDeclaration) => (
+    targetEle: JQuery
+  ) => {
+    const tempEle = document.createElement('div');
+    tempEle.style.color = color;
+    tempEle.style.display = 'none'; //make sure it doesn't render
+    document.body.appendChild(tempEle); //append so that `getComputedStyle` actually works
+  
+    const tempColor = getComputedStyle(tempEle).color;
+    const targetColor = getComputedStyle(targetEle[0])[property];
+  
+    document.body.removeChild(tempEle); //remove
+  
+    expect(tempColor).to.equal(targetColor);
+  };
+  
+  Cypress.Commands.overwrite('should', (originalFn: Function, subject: any, expectation: any, ...args: any[]) => {
+    const customMatchers = {
+      'have.backgroundColor': compareColor(args[0], 'backgroundColor'),
+      'have.color': compareColor(args[0], 'color'),
+    };
+    //See if the expected is a string and if it's a member of Jest's expect
+    if (typeof expectation === 'string' && customMatchers[expectation]) {
+      return originalFn(subject, customMatchers[expectation]);
+    }
+  
+    return originalFn(subject, expectation, ...args);
+  });
