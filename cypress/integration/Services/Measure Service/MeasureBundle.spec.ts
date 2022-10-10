@@ -1,6 +1,12 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
+import {TestCaseJson} from "../../../Shared/TestCaseJson"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
+import {OktaLogin} from "../../../Shared/OktaLogin"
+import {MeasuresPage} from "../../../Shared/MeasuresPage"
+import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
+import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import { v4 as uuidv4 } from 'uuid'
 
 let measureName = 'MeasureBundle' + Date.now()
@@ -8,6 +14,11 @@ let CqlLibraryName = 'MeasureBundle' + Date.now()
 let randValue = (Math.floor((Math.random() * 1000) + 1))
 let newMeasureName = ''
 let newCqlLibraryName = ''
+let testCaseTitle = 'Title for Auto Test'
+let testCaseDescription = 'DENOMFail' + Date.now()
+let testCaseSeries = 'SBTestSeries'
+let testCaseJson = TestCaseJson.TestCaseJson_Valid_w_All_Encounter
+let newmeasureCQL = MeasureCQL.CQL_Multiple_Populations
 
 let measureCQL = 'library SimpleFhirMeasure version \'0.0.001\'\n' +
     '\n' +
@@ -170,6 +181,8 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('start')
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('end')
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
+                    expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
+                    expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -282,6 +295,8 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('start')
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('end')
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
+                    expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
+                    expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql('ipp')
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('measure-population')
@@ -431,6 +446,8 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('start')
                     expect(response.body.entry[0].resource.effectivePeriod).to.have.property('end')
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
+                    expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
+                    expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -530,4 +547,61 @@ describe('Measure Bundle end point returns 409 when the measure is missing a gro
             })
         })
     })
+})
+describe('Non-boolean populationBasis returns the correct value and in the correct format', () => {
+
+    beforeEach('Create measure and login', () => {
+        newMeasureName = measureName + randValue
+        newCqlLibraryName = CqlLibraryName + randValue
+
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, newmeasureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
+        cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
+        cy.get(EditMeasurePage.cqlEditorTextBox).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(13500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Qualifying Encounters', 'Qualifying Encounters', 'Qualifying Encounters', 'Encounter')
+        cy.setAccessTokenCookie()
+    })
+
+    afterEach('Clean up',() => {
+
+        Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
+
+    })
+
+    it('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    url: '/api/measures/' + id + '/bundles',
+                    method: 'GET',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    }
+                }).then((response) => {
+                    console.log(response)
+                    expect(response.status).to.eql(200)
+                    expect(response.body.resourceType).to.eql('Bundle')
+                    expect(response.body.entry).to.be.a('array')
+                    expect(response.body.entry[0].resource.resourceType).to.eql('Measure')
+                    expect(response.body.entry[0].resource.effectivePeriod).to.have.property('start')
+                    expect(response.body.entry[0].resource.effectivePeriod).to.have.property('end')
+                    expect(response.body.entry[0].resource.library[0]).is.not.empty
+                    expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
+                    expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('Encounter')
+                })
+            })
+        })
+    })    
 })
