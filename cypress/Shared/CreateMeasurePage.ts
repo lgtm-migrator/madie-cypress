@@ -40,11 +40,19 @@ export class CreateMeasurePage {
         })
     }
 
-    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string) : void {
+    public static CreateQICoreMeasure(measureName: string,CqlLibraryName: string, mpStartDate?: string, mpEndDate?: string) : void {
 
         const now = require('dayjs')
-        let mpStartDate = now().subtract('1', 'year').format('MM/DD/YYYY')
-        let mpEndDate = now().format('MM/DD/YYYY')
+
+        if (mpStartDate === undefined)
+        {
+            mpStartDate = now().subtract('1', 'year').format('MM/DD/YYYY')
+        }
+
+        if (mpEndDate === undefined)
+        {
+            mpEndDate = now().format('MM/DD/YYYY')
+        }
 
         cy.get(LandingPage.newMeasureButton).click()
         cy.get(this.measureNameTextbox).type(measureName)
