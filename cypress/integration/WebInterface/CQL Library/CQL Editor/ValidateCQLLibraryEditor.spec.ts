@@ -30,7 +30,19 @@ describe('Validate CQL on CQL Library page', () => {
         //Click Edit CQL Library
         CQLLibrariesPage.clickEditforCreatedLibrary()
         Utilities.typeFileContents('cypress/fixtures/CQLForTestCaseExecution.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()
+        
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
@@ -54,6 +66,19 @@ describe('Validate CQL on CQL Library page', () => {
 
         //Update text in the CQL Library Editor that will cause error
         Utilities.typeFileContents('cypress/fixtures/cqlCQLEditor.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -97,6 +122,19 @@ describe('Validate CQL on CQL Library page', () => {
         //Update text in the CQL Library Editor that will cause error
         Utilities.typeFileContents('cypress/fixtures/EXM124v7QICore4Entry_FHIR_404.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
 
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
@@ -137,6 +175,19 @@ describe('Validate CQL on CQL Library page', () => {
 
         //Update text in the CQL Library Editor that will cause error
         Utilities.typeFileContents('cypress/fixtures/EXM124v7QICore4Entry_FHIR.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -186,6 +237,19 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         CQLLibrariesPage.clickEditforCreatedLibrary()
         Utilities.typeFileContents('cypress/fixtures/ValueSetTestingEntryValid.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
 
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
@@ -203,6 +267,19 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         CQLLibrariesPage.clickEditforCreatedLibrary()
         Utilities.typeFileContents('cypress/fixtures/ValueSetTestingEntryValid.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
 
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
@@ -219,6 +296,20 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         //Click Edit CQL Library
         CQLLibrariesPage.clickEditforCreatedLibrary()
         Utilities.typeFileContents('cypress/fixtures/ValueSetTestingEntryInValid.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()
+
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
