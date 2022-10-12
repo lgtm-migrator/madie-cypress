@@ -569,6 +569,9 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     afterEach('Clean up',() => {
 
+        randValue = (Math.floor((Math.random() * 1000) + 1))
+        newCqlLibraryName = CqlLibraryName + randValue
+
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
