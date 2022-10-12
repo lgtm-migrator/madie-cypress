@@ -23,6 +23,9 @@ export class CQLLibraryPage {
     public static readonly discardChanges = '[data-testid="cql-library-cancel-button"]'
     public static readonly currentCQLLibSavebtn = '[data-testid="cql-library-save-button"]'
     public static readonly headerDetails = '[class="details"]'
+    public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
+    public static readonly cqlLibraryPublisher = '[class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1uvydh2"]'
+    public static readonly cqlLibraryPublisherDrpDwn = '#mui-3-option-0'
 
 
     //CQL Editor
