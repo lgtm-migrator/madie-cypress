@@ -116,7 +116,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
             .then(($message) => {
                 expect($message.val().toString()).to.equal('MeasureGroup Description value')
             })
-        cy.get('.css-1d8n9bt').should('contain.text','ml milliLiters')
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).should('contain.text','ml milliLiters')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('contain.text','Process')
     })
 
@@ -310,8 +310,7 @@ describe('Validate Population Basis', () => {
             assert($text.text(), 'Boolean')
         })
 
-        cy.get(MeasureGroupPage.popBasis).type('{del}')
-        cy.get('#mui-3').click()
+        cy.get(MeasureGroupPage.popBasis).type('{del}').type('{esc}')
 
         //select scoring unit on measure
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)

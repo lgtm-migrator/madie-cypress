@@ -82,7 +82,7 @@ export class MeasureGroupPage {
     public static readonly populationMismatchErrorMsg = '[data-testid="helper-text"]'
 
     //UCUM scoring unit
-    public static readonly ucumScoringUnitSelect = '.css-ackcql'
+    public static readonly ucumScoringUnitSelect = '[class=" css-1m9es75"]'
     public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
     public static readonly ucumScoringUnitfullName = '#react-select-2-option-1-0'
 
