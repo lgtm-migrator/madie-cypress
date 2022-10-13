@@ -62,7 +62,7 @@ describe('Draft and Version Validations', () => {
         updatedCqlLibraryName = 'UpdatedCQLLibraryOne' + Date.now()
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
-
+        cy.wait(1000)
         cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
         cy.get(CQLLibrariesPage.createVersionContinueButton).click()
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
@@ -78,7 +78,7 @@ describe('Draft and Version Validations', () => {
         let versionNumber = '1.0.000'
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
-
+        cy.wait(1000)
         cy.get(CQLLibrariesPage.versionLibraryRadioButton).eq(0).click()
         cy.get(CQLLibrariesPage.createVersionContinueButton).click()
         cy.get(CQLLibrariesPage.VersionDraftMsgs).should('contain.text', 'New version of CQL Library is Successfully created')
