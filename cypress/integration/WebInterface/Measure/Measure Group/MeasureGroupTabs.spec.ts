@@ -449,6 +449,16 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
+
         //confirm stratification related fields are present
         cy.get(MeasureGroupPage.stratOne).should('exist')
         cy.get(MeasureGroupPage.stratTwo).should('exist')
@@ -465,24 +475,24 @@ describe('Validating Stratification tabs', () => {
             expect($ele.text()).to.be.oneOf(['-', 'denom', 'ipp', 'num'])
         })
         //Association -- default value -- score type is Proportion
-        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'Initial Population')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'initialPopulation')
         //Association -- contains these values based off score type -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
-            expect($ele.text()).to.be.oneOf(['Initial Population', 'Denominator', 'Denominator Exclusion', 'Numerator', 'Numerator Exclusion', 'Denominator Exception'])
+            expect($ele.text()).to.be.oneOf(['initialPopulation', 'Denominator', 'Denominator Exclusion', 'Numerator', 'Numerator Exclusion', 'Denominator Exception'])
         })
         //change score type to Cohort
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         //Association -- contains these values based off score type -- score type is Cohort
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain.text', 'Initial Population')
+            .should('contain.text', 'initialPopulation')
         //change score type to Continuous Variable
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
         //Association -- default value -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain.text', 'Initial Population')
+            .should('contain.text', 'initialPopulation')
         //Association -- contains these values based off score type -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
-            expect($ele.text()).to.be.oneOf(['Initial Population', 'Measure Population', 'Measure Population Exclusion'])
+            expect($ele.text()).to.be.oneOf(['initialPopulation', 'Measure Population', 'Measure Population Exclusion'])
         })
 
     })
@@ -509,6 +519,16 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
+
         //select a value only for Association
         Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
 
@@ -521,7 +541,7 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratificationTab).click()
 
         //Association -- default value -- score type is Proportion
-        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'Initial Population')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'initialPopulation')
     })
 
     it('Add multiple stratifications to the measure group', () => {
@@ -544,6 +564,16 @@ describe('Validating Stratification tabs', () => {
         //Click on Stratification tab
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
@@ -607,6 +637,16 @@ describe('Validating Stratification tabs', () => {
         //Click on Stratification tab
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
@@ -692,6 +732,16 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
 
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
+
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
         Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
@@ -725,6 +775,16 @@ describe('Validating Stratification tabs', () => {
         //Click on Stratification tab
         cy.get(MeasureGroupPage.stratificationTab).should('exist')
         cy.get(MeasureGroupPage.stratificationTab).click()
+
+        //create stratification fields if they do not already exist on page
+        cy.get('body').then((body) => {
+            if((body.find(MeasureGroupPage.stratOne).length == 0) || (body.find(MeasureGroupPage.stratTwo).length == 0)) {
+                cy.get(MeasureGroupPage.addStratButton).should('exist')
+                cy.get(MeasureGroupPage.addStratButton).should('be.visible')
+                cy.get(MeasureGroupPage.addStratButton).should('be.enabled')
+                cy.get(MeasureGroupPage.addStratButton).wait(1000).click().wait(1000).click()
+            }
+        })        
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
