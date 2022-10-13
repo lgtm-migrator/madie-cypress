@@ -26,7 +26,7 @@ describe('Validate CQL on CQL Library page', () => {
 
     })
 
-    it.only('Add valid CQL on CQL Library Editor and verify no errors appear', () => {
+    it('Add valid CQL on CQL Library Editor and verify no errors appear', () => {
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
         //Click Edit CQL Library
@@ -41,9 +41,9 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
         
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
@@ -78,9 +78,9 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -133,9 +133,9 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
@@ -187,9 +187,9 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -248,9 +248,9 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
@@ -278,9 +278,9 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
@@ -308,9 +308,9 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
