@@ -40,6 +40,20 @@ describe('CQL Library Validations', () => {
         //select a model value
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click() 
+
         //save the new CQL Library
         CQLLibraryPage.clickCreateLibraryButton()
         //navigate to CQL Library list page
@@ -77,6 +91,20 @@ describe('CQL Library Validations', () => {
         //select a model value
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).invoke('click') 
+
         //save the new CQL Library
         CQLLibraryPage.clickCreateLibraryButton()
         //navigate to CQL Library list page
@@ -115,6 +143,20 @@ describe('CQL Library Validations', () => {
         //select a model value
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click() 
+
         //save the new CQL Library
         CQLLibraryPage.clickCreateLibraryButton()
         //navigate to CQL Library list page
@@ -199,6 +241,20 @@ describe('CQL Library Validations', () => {
         //Verify error message for duplicate CQL Library Name
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear().type('TestLibrary')
         Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
+
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).click()
         cy.get(CQLLibraryPage.duplicateCQLLibraryNameError).should('contain.text', 'Library name must be unique. cqlLibraryName : Library name must be unique.')
 
@@ -225,6 +281,61 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
     })
 
+    it('CQL Library Description Validations', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let LibraryName = CQLLibraryName+randValue
+
+        //navigate to the CQL Libaray page and create new CQL Library
+        cy.get(Header.cqlLibraryTab).should('exist')
+        cy.get(Header.cqlLibraryTab).should('be.visible')
+        cy.get(Header.cqlLibraryTab).click()
+        cy.wait(1000)
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.enabled')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(LibraryName)
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //move to and then away from the description detail field
+        cy.get(CQLLibraryPage.cqlLibraryDesc).focus().blur()
+        cy.get(CQLLibraryPage.cqlLibDescHelperText).should('contain.text', 'Description is required.')
+        cy.get(CQLLibraryPage.cqlLibDescHelperText).should('have.color', '#D32F2F')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
+
+
+    })
+
+    it('CQL Library Publisher Validations', () => {
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let LibraryName = CQLLibraryName+randValue
+
+        //navigate to the CQL Libaray page and create new CQL Library
+        cy.get(Header.cqlLibraryTab).should('exist')
+        cy.get(Header.cqlLibraryTab).should('be.visible')
+        cy.get(Header.cqlLibraryTab).click()
+        cy.wait(1000)
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('exist')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.visible')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).should('be.enabled')
+        cy.get(CQLLibraryPage.createCQLLibraryBtn).click()
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(LibraryName)
+        cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
+        cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //move to and then away from the publisher field
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).focus().blur()
+        cy.get(CQLLibraryPage.cqlLibPubHelperText).should('contain.text', 'Publisher is required.')
+        cy.get(CQLLibraryPage.cqlLibPubHelperText).should('have.color', '#D32F2F')
+        cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
+    })
+
     it('Create new CQL Library Creation with CQL', () =>{
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let LibraryName = CQLLibraryName+randValue
@@ -241,6 +352,19 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(LibraryName)
         cy.get(CQLLibraryPage.cqlLibraryModelDropdown).focus().click()
         cy.get(CQLLibraryPage.cqlLibraryModelQICore).click()
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()         
 
         CQLLibraryPage.clickCreateLibraryButton()
 
@@ -285,6 +409,19 @@ describe('CQL Library Validations', () => {
         CQLLibrariesPage.clickEditforCreatedLibrary()
         cy.get(CQLLibraryPage.currentCQLLibName).clear().type(UpdatedCQLLibraryName)
         Utilities.typeFileContents('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+
+        //enter description detail
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
+
+        //enter / select a publisher value
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).click()         
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 

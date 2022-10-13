@@ -25,8 +25,11 @@ export class CQLLibraryPage {
     public static readonly headerDetails = '[class="details"]'
     public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
     public static readonly cqlLibraryPublisher = '[class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1uvydh2"]'
-    public static readonly cqlLibraryPublisherDrpDwn = '#mui-3-option-0'
-
+    public static readonly cqlLibraryCreatePublisherDrpDwn = '#mui-3-option-0'
+    public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
+    public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
+    public static readonly cqlLibPubHelperText = '[data-testid="publisher-helper-text"]'
+    
 
     //CQL Editor
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
@@ -43,15 +46,15 @@ export class CQLLibraryPage {
         cy.wait(1000)
         cy.get(this.createCQLLibraryBtn).click()
         cy.get(this.newCQLLibName).type(CQLLibraryName)
+        Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         cy.get(this.cqlLibraryDesc).type('description')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).type(CQLLibraryPublisher)
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisherDrpDwn).click()
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
 
-        Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()
         cy.wait(1000)
