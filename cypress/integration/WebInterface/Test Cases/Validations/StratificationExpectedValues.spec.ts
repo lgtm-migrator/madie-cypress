@@ -36,7 +36,7 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(14500)
+        cy.wait(15500)
         OktaLogin.Logout()
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Initial Population', 'Initial Population', 'Initial Population', 'Boolean')
         OktaLogin.Login()
@@ -371,7 +371,7 @@ describe('Stratification Expected values for Non Boolean Population Basis', () =
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(14500)
+        cy.wait(15500)
         OktaLogin.Logout()
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Qualifying Encounters', 'Qualifying Encounters', 'Qualifying Encounters', 'Encounter')
         OktaLogin.Login()
@@ -522,7 +522,7 @@ describe('Stratification Expected values for Non Boolean Population Basis', () =
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
-
+        
     })
 
     it('Run a failing Test Case with Stratification Expected Values for Non Boolean Population basis', () =>{

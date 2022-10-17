@@ -57,7 +57,6 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.newTestCaseButton).click()
         cy.get(TestCasesPage.testCasePopulationHeaderForNoMeasureGroup).should('contain.text', 'There are no groups associated with this measure. Please review the Groups tab.')
     })
-
     it('Validate Population Values check boxes are correct based on measure scoring value that is applied, ' +
         'when the measure is initially created (default measure group)', () => {
 
@@ -344,7 +343,7 @@ describe('Test Case Population dependencies', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(13500)
         OktaLogin.Logout()
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Initial PopulationOne', 'Initial PopulationOne', 'Initial PopulationOne', 'Boolean')
         OktaLogin.Login()
@@ -604,7 +603,7 @@ describe('TC Pop value options are limited to those that are defined from Measur
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(14500)
         OktaLogin.Logout()
         OktaLogin.Login()
 
@@ -745,7 +744,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(14500)
         OktaLogin.Logout()
         MeasureGroupPage.CreateRatioMeasureGroupAPI(null, null, null, null, null, 'Procedure')
         OktaLogin.Login()

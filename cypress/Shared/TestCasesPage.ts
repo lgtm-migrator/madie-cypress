@@ -51,6 +51,8 @@ export class TestCasesPage {
     public static readonly testCalculationResultsLineEight = '[data-testid="calculation-results"] > div > :nth-child(8)'
     public static readonly testCalculationResultsLineNine = '[data-testid="calculation-results"] > div > :nth-child(9)'
     public static readonly testCalculationError = '[data-testid="calculation-error-alert"]'
+    public static readonly testCaseListPassingPercTab = '[data-testid="passing-tab"]'
+    public static readonly testCaseListCoveragePercTab = '[data-testid="coverage-tab"]'
 
     //Test Case Population Values
     public static readonly testCaseIPPCheckBox = '[data-testid="test-population-initialPopulation-expected"]'
