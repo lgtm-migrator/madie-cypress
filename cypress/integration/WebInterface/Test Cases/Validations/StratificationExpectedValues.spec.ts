@@ -162,9 +162,16 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
         //Save Stratification Expected Values
-        cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).check().should('be.checked')
-        cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).check().should('be.checked')
-        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).check()
+        cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).should('be.checked')
+        cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).check()
+        cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).should('be.checked')
+
+        //save test case
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('exist')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click().wait(1000)
 
         //Assert saved stratification values
         cy.get(EditMeasurePage.testCasesTab).click()
@@ -236,7 +243,7 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).should('be.visible')
         cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).wait(1000).check()
 
-        //check the numerator stratifivation check boxes
+        //check the numerator stratification check boxes
         cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).should('exist')
         cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).should('be.visible')
         cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).wait(1000).check().wait(1000)
@@ -261,13 +268,6 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
-
-        //validate color of Measure Group-1 Stratification after running
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('exist')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('be.visible')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('have.color', '#4d7e23')
-
-
     })
 
     it('Run a failing Test Case with Stratification Expected Values for Boolean Population basis', () =>{
@@ -351,10 +351,6 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
-        //validate color of Measure Group-1 Stratification after running
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('exist')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('be.visible')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('have.color', '#ae1c1c')
     })
 })
 
@@ -527,12 +523,6 @@ describe('Stratification Expected values for Non Boolean Population Basis', () =
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
 
-        //validate color of Measure Group-1 Stratification after running
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('exist')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('be.visible')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('have.color', '#4d7e23')
-        
-        cy.pause()
     })
 
     it('Run a failing Test Case with Stratification Expected Values for Non Boolean Population basis', () =>{
@@ -606,11 +596,6 @@ describe('Stratification Expected values for Non Boolean Population Basis', () =
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
-
-        //validate color of Measure Group-1 Stratification after running
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('exist')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('be.visible')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('have.color', '#ae1c1c')        
     })
 
     it('Verify Expected / Actual page dirty check with Non-Boolean Population Basis', () => {
