@@ -49,10 +49,10 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click() 
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
 
         //save the new CQL Library
         CQLLibraryPage.clickCreateLibraryButton()
@@ -100,7 +100,7 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).invoke('click') 
@@ -152,7 +152,7 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click() 
@@ -250,7 +250,7 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
@@ -361,7 +361,7 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()         
@@ -418,7 +418,7 @@ describe('CQL Library Validations', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
         cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditPublisherDrpDwn).click()         
