@@ -522,11 +522,6 @@ describe('Stratification Expected values for Non Boolean Population Basis', () =
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.enabled')
         cy.get(TestCasesPage.runTestButton).click()
-
-        //validate color of Measure Group-1 Stratification after running
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('exist')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('be.visible')
-        cy.get(TestCasesPage.eaMeasureGroupOneStratification).should('have.color', '#4d7e23')
         
     })
 
