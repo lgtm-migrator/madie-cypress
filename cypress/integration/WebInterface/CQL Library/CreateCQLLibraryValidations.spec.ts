@@ -198,6 +198,18 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.currentCQLLibSavebtn).should('have.attr', 'disabled', 'disabled')
     })
 
+/*     it('CQL Edit page validation on description field', () => {
+
+    })
+
+    it('CQL Edit page validation that the "Experimental" check box can be checked', () => {
+
+    })
+
+    it('CQL Edit page validation on Publisher field', () => {
+
+    }) */
+
     it('CQL Library Name Validations', () => {
         cy.get(Header.cqlLibraryTab).should('exist')
         cy.get(Header.cqlLibraryTab).should('be.visible')
