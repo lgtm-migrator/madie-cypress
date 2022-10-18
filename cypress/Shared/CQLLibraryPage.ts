@@ -24,7 +24,7 @@ export class CQLLibraryPage {
     public static readonly currentCQLLibSavebtn = '[data-testid="cql-library-save-button"]'
     public static readonly headerDetails = '[class="details"]'
     public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
-    public static readonly cqlLibraryPublisher = '[class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1uvydh2"]'
+    public static readonly cqlLibraryPublisher = '[data-testid="cql-library-publisher"]'
     public static readonly cqlLibraryCreatePublisherDrpDwn = '[id="mui-3-option-0"]'
     public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
     public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
@@ -50,10 +50,7 @@ export class CQLLibraryPage {
         cy.get(this.cqlLibraryDesc).type('description')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type(CQLLibraryPublisher)
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
+        cy.get(CQLLibraryPage.cqlLibraryPublisher).type(CQLLibraryPublisher).type('{downArrow}{enter}')
 
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()
