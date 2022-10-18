@@ -74,6 +74,7 @@ export class TestCasesPage {
     public static readonly denominatorExclusionRow = '[data-testid="test-row-population-id-denominatorExclusion"]'
     public static readonly denominatorExceptionRow = '[data-testid="test-row-population-id-denominatorException"]'
     public static readonly measureObservationRow = '[data-testid="test-population-measureObservation-expected"]'
+    public static readonly measureGroup1Label ='[data-testid="measure-group-1"]'
 
     //Stratifications
     public static readonly denominatorStratificationOneExpectedValue = '[data-testid="test-population-Strata-1 Denominator-expected"]'
