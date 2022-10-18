@@ -24,7 +24,6 @@ export class CQLLibraryPage {
     public static readonly currentCQLLibSavebtn = '[data-testid="cql-library-save-button"]'
     public static readonly headerDetails = '[class="details"]'
     public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
-    //public static readonly cqlLibraryPublisher = '[class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-1uvydh2"]'
     public static readonly cqlLibraryPublisher = '[data-testid="cql-library-publisher"]'
     public static readonly cqlLibraryCreatePublisherDrpDwn = '[id="mui-3-option-0"]'
     public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
