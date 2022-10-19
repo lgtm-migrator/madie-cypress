@@ -20,6 +20,7 @@ export class EditMeasurePage {
     public static readonly measureNameFieldLevelError = '[data-testid="measureName-helper-text"]'
     public static readonly measureId = '[data-testid="measure-id-input"]'
     public static readonly versionId = '[data-testid="version-id-input"]'
+    public static readonly successfulMeasureSaveMsg = '[data-testid="measurement-information-success-message"]'
 
     //left panel
     public static readonly leftPanelMeasureInformation = '[data-testid="leftPanelMeasureInformation"]'
