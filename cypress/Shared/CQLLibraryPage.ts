@@ -6,7 +6,8 @@ export class CQLLibraryPage {
 
     public static readonly createCQLLibraryBtn = '[data-testid="create-new-cql-library-button"]'
     public static readonly cqlLibraryNameTextbox = '[data-testid="cql-library-name-text-field-input"]'
-    public static readonly cqlLibraryModelDropdown = '#model-select'
+    public static readonly cqlLibraryModelDropdown = '[data-testid="cql-library-model-select"]'
+    public static readonly cqlLibraryStickySave = '[data-testid="cql-library-save-button"]'
     public static readonly allLibrariesBtn = '[data-testid="all-cql-libraries-tab"]'
     public static readonly cqlLibraryModelQICore = '[data-testid="cql-library-model-option-QI-Core v4.1.1"]'
     public static readonly saveCQLLibraryBtn = '[data-testid="create-new-library-save-button"]'
@@ -25,11 +26,15 @@ export class CQLLibraryPage {
     public static readonly headerDetails = '[class="details"]'
     public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
     public static readonly cqlLibraryPublisher = '[data-testid="cql-library-publisher"]'
+    public static readonly cqlLibraryModalField = '[id="model-select"]'
+    public static readonly cqlLibraryCreateForm = '[id="menu-model"]'
+    public static readonly cqlLibraryCreateFormSideClickArea = '[class="MuiBox-root css-0"]'
+    public static readonly cqlLibraryEditPublisher = '[data-testid="publisher"]'
     public static readonly cqlLibraryCreatePublisherDrpDwn = '[id="mui-3-option-0"]'
     public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
     public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
     public static readonly cqlLibPubHelperText = '[data-testid="publisher-helper-text"]'
-    
+    public static readonly cqlLibraryExperimentalChkBox = '[id="epxerimental"]'
 
     //CQL Editor
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
