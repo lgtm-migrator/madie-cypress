@@ -84,7 +84,7 @@ let PopNumex = 'numeratorExclusion'
 
 describe('Proportion Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
-    before('Create Measure',() => {
+    beforeEach('Create Measure and set access token',() => {
 
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
@@ -131,6 +131,15 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                                 "definition": PopNumex
                             }
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -142,15 +151,11 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                 })
             })
         })
-    })
-
-    beforeEach('Set Access Token',() => {
-
         cy.setAccessTokenCookie()
-
     })
 
-    after('Clean up',() => {
+
+    afterEach('Clean up',() => {
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
@@ -177,6 +182,9 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -236,6 +244,15 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
                                 "definition": 'numeratorExclusion'
                             },
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureObservations": [
                             {
                                 "id": retrievedMeasureID,
@@ -291,6 +308,9 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql('ipp')
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('measure-population')
@@ -405,6 +425,15 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                                 "definition": PopNumex
                             }
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -442,6 +471,9 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -545,6 +577,7 @@ describe('Measure Bundle end point returns 409 when the measure is missing a gro
 describe('Non-boolean populationBasis returns the correct value and in the correct format', () => {
 
     beforeEach('Create measure and login', () => {
+        randValue = (Math.floor((Math.random() * 2000) + 5))
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
 
@@ -569,7 +602,7 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     afterEach('Clean up',() => {
 
-        randValue = (Math.floor((Math.random() * 1000) + 1))
+        randValue = (Math.floor((Math.random() * 2000) + 5))
         newCqlLibraryName = CqlLibraryName + randValue
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
@@ -597,6 +630,9 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('Encounter')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })

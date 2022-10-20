@@ -331,6 +331,13 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.nonBooleanExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
 
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERExpected).clear().type('1.9')
+        cy.get(TestCasesPage.nonBooleanExpectedValueError).should('contain.text', 'Decimals values cannot be entered in the population expected values')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
+
         cy.get(TestCasesPage.testCaseIPPExpected).clear().type('1')
         cy.get(TestCasesPage.testCaseDENOMExpected).clear().type('2')
         cy.get(TestCasesPage.testCaseNUMERExpected).clear().type('3')
