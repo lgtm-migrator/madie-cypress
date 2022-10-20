@@ -577,6 +577,7 @@ describe('Measure Bundle end point returns 409 when the measure is missing a gro
 describe('Non-boolean populationBasis returns the correct value and in the correct format', () => {
 
     beforeEach('Create measure and login', () => {
+        randValue = (Math.floor((Math.random() * 2000) + 5))
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
 
@@ -608,7 +609,7 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     })
 
-    it.only('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
+    it('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
