@@ -813,7 +813,7 @@ describe('Validating Stratification tabs', () => {
     })
 })
 
-describe.only('Validating Reporting tabs', () => {
+describe('Validating Reporting tabs', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
