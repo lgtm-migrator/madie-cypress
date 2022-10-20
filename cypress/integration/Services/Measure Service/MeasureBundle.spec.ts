@@ -84,7 +84,7 @@ let PopNumex = 'numeratorExclusion'
 
 describe('Proportion Measure Bundle end point returns expected data with valid Measure CQL and elmJson', () => {
 
-    before('Create Measure',() => {
+    beforeEach('Create Measure and set access token',() => {
 
         newMeasureName = measureName + randValue
         newCqlLibraryName = CqlLibraryName + randValue
@@ -131,6 +131,15 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                                 "definition": PopNumex
                             }
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -142,21 +151,17 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                 })
             })
         })
-    })
-
-    beforeEach('Set Access Token',() => {
-
         cy.setAccessTokenCookie()
-
     })
 
-    after('Clean up',() => {
+
+    afterEach('Clean up',() => {
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 
-    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+    it.only('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
@@ -177,6 +182,9 @@ describe('Proportion Measure Bundle end point returns expected data with valid M
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -236,6 +244,15 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
                                 "definition": 'numeratorExclusion'
                             },
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureObservations": [
                             {
                                 "id": retrievedMeasureID,
@@ -270,7 +287,7 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
 
     })
 
-    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+    it.only('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
@@ -291,6 +308,9 @@ describe('CV Measure Bundle end point returns expected data with valid Measure C
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql('ipp')
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('measure-population')
@@ -405,6 +425,15 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                                 "definition": PopNumex
                             }
                         ],
+                        "scoringUnit": {
+                            "label": "ml milliLiters",
+                            "value": {
+                              "code": "ml",
+                              "name": "milliLiters",
+                              "guidance": "",
+                              "system": "https://clinicaltables.nlm.nih.gov/"
+                            }
+                        },
                         "measureGroupTypes": [
                             "Outcome"
                         ]
@@ -423,7 +452,7 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
 
     })
 
-    it('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
+    it.only('Get Measure bundle data from madie-fhir-service and confirm all pertinent data is present', () => {
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
                 cy.request({
@@ -442,6 +471,9 @@ describe('Measure Bundle end point returns nothing with Measure CQL missing FHIR
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('boolean')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].population[0].code.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].population[0].criteria.expression).to.eql(PopIniPop)
                     expect(response.body.entry[0].resource.group[0].population[1].code.coding[0].code).to.eql('denominator')
@@ -576,7 +608,7 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     })
 
-    it('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
+    it.only('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
@@ -597,6 +629,9 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
                     expect(response.body.entry[0].resource.library[0]).is.not.empty
                     expect(response.body.entry[0].resource.group[0].extension[1].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis')
                     expect(response.body.entry[0].resource.group[0].extension[1].valueCode).to.eql('Encounter')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })
