@@ -601,14 +601,14 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     afterEach('Clean up',() => {
 
-        randValue = (Math.floor((Math.random() * 1000) + 1))
+        randValue = (Math.floor((Math.random() * 2000) + 5))
         newCqlLibraryName = CqlLibraryName + randValue
 
         Utilities.deleteMeasure(newMeasureName, newCqlLibraryName)
 
     })
 
-    it('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
+    it.only('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
