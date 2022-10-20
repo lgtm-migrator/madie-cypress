@@ -608,7 +608,7 @@ describe('Non-boolean populationBasis returns the correct value and in the corre
 
     })
 
-    it.only('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
+    it('Get Measure bundle data from madie-fhir-service and verify that non-boolean value returns as "Encounter"', () => {
 
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
