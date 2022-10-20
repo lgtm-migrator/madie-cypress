@@ -130,6 +130,7 @@ describe('Validating Population tabs', () => {
 
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
@@ -158,6 +159,7 @@ describe('Validating Population tabs', () => {
         //navigate back to the reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab and their recently updated values
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
@@ -173,6 +175,7 @@ describe('Validating Population tabs', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Click on Reporting tab
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab and their recently updated values
@@ -202,6 +205,7 @@ describe('Validating Population tabs', () => {
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
@@ -218,6 +222,7 @@ describe('Validating Population tabs', () => {
 
         //navigate back to the reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab and their recently updated values
@@ -247,6 +252,7 @@ describe('Validating Population tabs', () => {
 
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab and their recently updated values
@@ -289,6 +295,7 @@ describe('Validating Population tabs', () => {
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert that error indicator appears on the population tab
         cy.get(MeasureGroupPage.populationTab)
@@ -304,6 +311,7 @@ describe('Validating Population tabs', () => {
         //make reporting the active tab
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert that the error indicator no longer appears on the population tab
@@ -351,6 +359,7 @@ describe('Validating Population tabs', () => {
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
@@ -381,6 +390,7 @@ describe('Validating Population tabs', () => {
         }
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).should('exist')
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert that the two fields appear on the reporting tab and are blank / without a selected value
@@ -475,24 +485,27 @@ describe('Validating Stratification tabs', () => {
             expect($ele.text()).to.be.oneOf(['-', 'denom', 'ipp', 'num'])
         })
         //Association -- default value -- score type is Proportion
-        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'initialPopulation')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Proportion
         cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
-            expect($ele.text()).to.be.oneOf(['initialPopulation', 'Denominator', 'Denominator Exclusion', 'Numerator', 'Numerator Exclusion', 'Denominator Exception'])
+            expect($ele.text()).to.be.oneOf(['Initial Population', 'Denominator', 'Denominator Exclusion', 'Numerator', 'Numerator Exclusion', 'Denominator Exception'])
         })
+
         //change score type to Cohort
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.stratificationTab).click()
         //Association -- contains these values based off score type -- score type is Cohort
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain.text', 'initialPopulation')
+            .should('contain.text', 'Initial Population')
         //change score type to Continuous Variable
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.stratificationTab).click()
         //Association -- default value -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne)
-            .should('contain.text', 'initialPopulation')
+            .should('contain.text', 'Initial Population')
         //Association -- contains these values based off score type -- score type is Continuous Variable
         cy.get(MeasureGroupPage.stratAssociationOne).each(($ele) => {
-            expect($ele.text()).to.be.oneOf(['initialPopulation', 'Measure Population', 'Measure Population Exclusion'])
+            expect($ele.text()).to.be.oneOf(['Initial Population', 'Measure Population', 'Measure Population Exclusion'])
         })
 
     })
@@ -530,7 +543,7 @@ describe('Validating Stratification tabs', () => {
         })        
 
         //select a value only for Association
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'denominator')
 
         //save
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
@@ -541,7 +554,7 @@ describe('Validating Stratification tabs', () => {
         cy.get(MeasureGroupPage.stratificationTab).click()
 
         //Association -- default value -- score type is Proportion
-        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'initialPopulation')
+        cy.get(MeasureGroupPage.stratAssociationOne).should('contain.text', 'Initial Population')
     })
 
     it('Add multiple stratifications to the measure group', () => {
@@ -577,24 +590,24 @@ describe('Validating Stratification tabs', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'denominator')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'numerator')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         //Add Stratification 3
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratThree, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'numerator')
         cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
 
         //Add Stratification 4
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratFour, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationFour, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationFour, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescFour).type('StratificationFour')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -650,24 +663,24 @@ describe('Validating Stratification tabs', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'denominator')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'numerator')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         //Add Stratification 3
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratThree, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'numerator')
         cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
 
         //Add Stratification 4
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratFour, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationFour, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationFour, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescFour).type('StratificationFour')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -744,12 +757,12 @@ describe('Validating Stratification tabs', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Denominator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'denominator')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'denom')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'numerator')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -800,7 +813,7 @@ describe('Validating Stratification tabs', () => {
     })
 })
 
-describe('Validating Reporting tabs', () => {
+describe.only('Validating Reporting tabs', () => {
 
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -842,6 +855,7 @@ describe('Validating Reporting tabs', () => {
 
         //Click on Reporting tab
         cy.get(MeasureGroupPage.reportingTab).click()
+        cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab
         cy.get(MeasureGroupPage.rateAggregation).should('exist').should('be.visible').should('be.enabled')
@@ -868,6 +882,7 @@ describe('Validating Reporting tabs', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Click on Reporting tab
+        cy.get(MeasureGroupPage.reportingTab).click()
         cy.get(MeasureGroupPage.reportingTab).click()
 
         //assert the two fields that should appear in the Reporting tab
