@@ -31,7 +31,7 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(15500)
         OktaLogin.Logout()
         //create Measure Group
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
@@ -110,7 +110,7 @@ describe('Bundle returns elmXML', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(15500)
         OktaLogin.Logout()
         //create Measure Group
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
@@ -182,7 +182,7 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.wait(15500)
         OktaLogin.Logout()
         //create Measure Group
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
@@ -220,6 +220,16 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
@@ -242,7 +252,6 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
 
         //log into backend
         cy.setAccessTokenCookie()
-
         //send GET Bundle request and verify response includes elm xml value
         cy.getCookie('accessToken').then((accessToken) => {
             cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
@@ -257,6 +266,9 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('proportion')
                     expect(response.body.entry[0].resource.group[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('cohort')
+                    expect(response.body.entry[0].resource.group[1].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[1].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[1].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })
@@ -280,7 +292,7 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(7500)
+        cy.wait(15500)
         OktaLogin.Logout()
 
         OktaLogin.Login()
@@ -317,6 +329,16 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.popBasisOption).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         //Click on Stratification tab
@@ -325,12 +347,12 @@ describe('Measure bundle end point returns stratifications', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'Surgical Absence of Cervix')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'Surgical Absence of Cervix')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -359,11 +381,14 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('cohort')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })
@@ -401,6 +426,16 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
         Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'denom')
         Utilities.dropdownSelect(MeasureGroupPage.cvMeasureObservation, 'ToCode')
@@ -412,18 +447,18 @@ describe('Measure bundle end point returns stratifications', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Measure Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'measurePopulation')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         //Add Stratification 3
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratThree, 'numeratorExclusion')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'Measure Population Exclusion')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'measurePopulationExclusion')
         cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -451,14 +486,17 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('continuous-variable')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('ipp')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Measure Population')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('measure-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('num')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('Measure Population Exclusion')
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('measure-population-exclusion')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].criteria.expression).to.eql('numeratorExclusion')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })
@@ -490,6 +528,16 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.popBasisOption).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
         Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
         Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
@@ -502,18 +550,18 @@ describe('Measure bundle end point returns stratifications', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'Surgical Absence of Cervix')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'Surgical Absence of Cervix')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Denominator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'denominator')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         //Add Stratification 3
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratThree, 'Surgical Absence of Cervix')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'Numerator')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'numerator')
         cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -542,13 +590,16 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('proportion')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('Initial Population')
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('Denominator')
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('denominator')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
-                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('Numerator')
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('numerator')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].criteria.expression).to.eql('Surgical Absence of Cervix')
                 })
             })
@@ -607,6 +658,16 @@ describe('Verify the criteria reference for measure observations', () => {
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
         Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'denom')
         Utilities.dropdownSelect(MeasureGroupPage.cvMeasureObservation, 'ToCode')
@@ -618,18 +679,18 @@ describe('Verify the criteria reference for measure observations', () => {
 
         //Add Stratification 1
         Utilities.dropdownSelect(MeasureGroupPage.stratOne, 'ipp')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationOne, 'initialPopulation')
         cy.get(MeasureGroupPage.stratDescOne).type('StratificationOne')
 
         //Add Stratification 2
         Utilities.dropdownSelect(MeasureGroupPage.stratTwo, 'num')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'Measure Population')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationTwo, 'measurePopulation')
         cy.get(MeasureGroupPage.stratDescTwo).type('StratificationTwo')
 
         //Add Stratification 3
         cy.get(MeasureGroupPage.addStratButton).click()
         Utilities.dropdownSelect(MeasureGroupPage.stratThree, 'numeratorExclusion')
-        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'Measure Population Exclusion')
+        Utilities.dropdownSelect(MeasureGroupPage.stratAssociationThree, 'measurePopulationExclusion')
         cy.get(MeasureGroupPage.stratDescThree).type('StratificationThree')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -656,6 +717,9 @@ describe('Verify the criteria reference for measure observations', () => {
                     expect(response.status).to.eql(200)
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].population[1].id).to.eql(response.body.entry[0].resource.group[0].population[3].extension[1].valueString)
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
 
                 })
             })
@@ -690,6 +754,16 @@ describe('Verify the criteria reference for measure observations', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
         Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'denom')
@@ -744,6 +818,9 @@ describe('Verify the criteria reference for measure observations', () => {
                     //Compare numerator population id with numerator criteria reference
                     expect(response.body.entry[0].resource.group[0].population[3].id).to.eql(response.body.entry[0].resource.group[0].population[6].extension[1].valueString)
                     expect(response.body.entry[0].resource.group[0].population[3].code.coding[0].code).to.eql('numerator')
+                    expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
+                    expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].display).to.eql('ml milliLiters')
                 })
             })
         })
