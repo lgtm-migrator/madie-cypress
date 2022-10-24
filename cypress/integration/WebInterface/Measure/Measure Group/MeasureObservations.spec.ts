@@ -206,6 +206,45 @@ describe('Measure Observations', () => {
         cy.get(MeasureGroupPage.numeratorAggregateFunction).should('not.exist')
 
     })
+
+    it('Verify drop down values for Measure observation aggregate function', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add CQL
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+
+        //Navigate to Measure Group tab
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Process") {
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+
+        //Verify default value
+        cy.get(MeasureGroupPage.cvAggregateFunction).should('contain', '-')
+
+        //Verify Aggregate function dropdown values
+        cy.get(MeasureGroupPage.cvAggregateFunction).click()
+        cy.get(MeasureGroupPage.aggregateFunctionDropdownList).each(($ele) => {
+            expect($ele.text()).to.be.oneOf(['Average', 'Count', 'Maximum', 'Median', 'Minimum', 'Sum'])
+        })
+    })
 })
 
 describe('Measure Observations and Stratification -- non-owner tests', () => {
