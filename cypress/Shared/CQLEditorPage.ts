@@ -4,8 +4,9 @@ export class CQLEditorPage {
     //success save message without errors
     public static readonly successfulCQLSaveNoErrors = '[data-testid="generic-success-text-header"]'
 
-    //Error marker inside of the CQL Editor window
+    //Error/warning marker inside of the CQL Editor window
     public static readonly errorInCQLEditorWindow = 'div.ace_gutter-cell.ace_error'
+    public static readonly warningInCQLEditorWindow = '.ace_warning'
 
     //UMLS Not Logged in Error
     public static readonly umlsMessage = '[data-testid="valueset-success"]'
@@ -18,9 +19,22 @@ export class CQLEditorPage {
 
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab)
-        .invoke('removeAttr', 'target')
-        .click()
+            .invoke('removeAttr', 'target')
+            .click()
 
     }
 
+    public static validateSuccessfulCQLSave(): void {
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).each(successMsg => {
+            expect(successMsg.text()).to.be.oneOf(['Changes saved successfully but the following errors were found', 'CQL saved successfully'])
+        })
+    }
+
+    public static validateSuccessfulCQLUpdate(): void {
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).each(msg => {
+            expect(msg.text()).to.be.oneOf(['CQL updated successfully! Library Name and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.', 'Changes saved successfully but the following errors were found'])
+        })
+    }
 }
