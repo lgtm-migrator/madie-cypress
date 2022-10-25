@@ -744,7 +744,7 @@ describe('Measure Service: Test Case Endpoints: Validations', () =>{
     })
 })
 
-describe('Test Case Json Validations', () =>{
+describe('Test Case Json Validations', () => {
 
     before('Create Measure', () => {
 
@@ -768,7 +768,7 @@ describe('Test Case Json Validations', () =>{
                     "ecqmTitle": "eCQMTitle",
                     "measurementPeriodStart": mpStartDate,
                     "measurementPeriodEnd": mpEndDate,
-                    'measureScoring': 'Cohort', 
+                    'measureScoring': 'Cohort',
                     'versionId': uuidv4()
                 }
             }).then((response) => {
@@ -786,7 +786,7 @@ describe('Test Case Json Validations', () =>{
 
     })
 
-    after('Clean up',() => {
+    after('Clean up', () => {
 
         Utilities.deleteMeasure(measureName, cqlLibraryName)
 
@@ -871,6 +871,36 @@ describe('Test Case Json Validations', () =>{
                     expect(response.body.hapiOperationOutcome.message).to.eql('An error occurred while parsing the resource')
                     expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('HAPI-1861: Failed to parse JSON encoded FHIR content: HAPI-1859: Content does not appear to be FHIR JSON, first non-whitespace character was: \'<\' (must be \'{\')')
                 })
+            })
+        })
+    })
+
+    it('Verify test case errors flag when json has errors', () => {
+
+        cy.getCookie('accessToken').then((accessToken) => {
+            cy.readFile('cypress/fixtures/measureId').should('exist').then((id) => {
+                cy.request({
+                    failOnStatusCode: false,
+                    url: '/api/measures/' + id + '/test-cases',
+                    headers: {
+                        authorization: 'Bearer ' + accessToken.value
+                    },
+                    method: 'POST',
+                    body: {
+                        'name': "DENOM_Fail",
+                        'series': "Test_Series",
+                        'title': "Test_Title",
+                        'description': "Test_Description",
+                        'json': TestCaseJson.API_TestCaseJson_InValid
+                    }
+                }).then((response) => {
+                    expect(response.status).to.eql(201)
+                    expect(response.body.hapiOperationOutcome.code).to.eql(400)
+                    expect(response.body.hapiOperationOutcome.message).to.eql('An error occurred while parsing the resource')
+                    expect(response.body.hapiOperationOutcome.outcomeResponse.issue[0].diagnostics).to.eql('HAPI-1814: Incorrect resource type found, expected "Bundle" but found "Account"')
+                    expect(response.body.validResource).to.eql(false)
+                })
+
             })
         })
     })
