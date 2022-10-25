@@ -53,7 +53,7 @@ describe('Test Case Validations', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //navigate to the test case list page
         cy.get(EditMeasurePage.testCasesTab).should('exist')

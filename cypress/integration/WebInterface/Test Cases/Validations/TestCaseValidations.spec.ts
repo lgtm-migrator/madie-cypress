@@ -212,7 +212,7 @@ describe('Test Case Validations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -256,7 +256,7 @@ describe('Test Case Validations', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -347,7 +347,7 @@ describe('Attempting to create a test case without a title', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -385,7 +385,7 @@ describe('Attempting to create a test case without a title', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -428,7 +428,7 @@ describe('Attempting to create a test case without a title', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -460,7 +460,7 @@ describe('Attempting to create a test case without a title', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
         
         //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -548,7 +548,7 @@ describe('Validate dirty check modal after saving test case', () => {
         cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle.toString())
 
         //save test case
-        TestCasesPage.clickCreateTestCaseButton(true)
+        TestCasesPage.clickCreateTestCaseButton()
 
         //navigate to the test cases tab
         cy.get(EditMeasurePage.testCasesTab).should('exist')

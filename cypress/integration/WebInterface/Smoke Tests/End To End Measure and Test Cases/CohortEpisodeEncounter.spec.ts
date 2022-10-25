@@ -111,7 +111,7 @@ describe.skip('Measure Creation and Testing: Cohort Episode Encounter', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPExpected).type('1')
 
-        TestCasesPage.clickCreateTestCaseButton(true)
+        TestCasesPage.clickCreateTestCaseButton()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('exist')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')

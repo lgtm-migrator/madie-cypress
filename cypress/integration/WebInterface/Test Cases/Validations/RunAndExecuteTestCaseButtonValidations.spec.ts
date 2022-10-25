@@ -93,7 +93,7 @@ describe('Run Test Case button validations', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -128,7 +128,7 @@ describe('Run Test Case button validations', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -711,7 +711,7 @@ describe('Run and Execute Test case', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton(true)
+        TestCasesPage.clickCreateTestCaseButton()
 
         TestCasesPage.clickEditforCreatedTestCase()
 

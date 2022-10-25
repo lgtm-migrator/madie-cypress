@@ -52,28 +52,12 @@ describe('Non Boolean Population Basis Expected values', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -95,11 +79,10 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.testCaseNUMERExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseNUMERExpected).type('3')
 
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Navigate to Test case tab
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
+        //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.testCaseIPPExpected).should('contain.value', '1')
@@ -147,28 +130,12 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -197,11 +164,10 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPExpected).eq(1).check()
 
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Navigate to Test case tab
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
+        //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         //Assert Expected values for Population Basis Encounter (Proportion Measure Group)
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
@@ -213,66 +179,52 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).eq(1).should('be.checked')
 
     })
+
     it('Verify Expected / Actual page dirty check with Non-Boolean Population Basis', () => {
-                //Click on Edit Measure
-                MeasuresPage.clickEditforCreatedMeasure()
 
-                //Navigate to Test Cases page and add Test Case details
-                cy.get(EditMeasurePage.testCasesTab).click()
-                cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-                cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-                cy.get(TestCasesPage.newTestCaseButton).click()
-        
-                //click on details tab
-                cy.get(TestCasesPage.detailsTab).should('exist')
-                cy.get(TestCasesPage.detailsTab).should('be.visible')
-                cy.get(TestCasesPage.detailsTab).click()
-        
-                cy.get(TestCasesPage.testCaseTitle).should('exist')
-                cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-                cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-                cy.get(TestCasesPage.testCaseTitle).focus().clear()
-                cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-                cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-                cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-                cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-                cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-        
-                //Add json to the test case
-                cy.get(TestCasesPage.aceEditor).type(testCaseJson)
-        
-                //click on Expected/Actual tab
-                cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
-                cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
-                cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-        
-                cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
-                cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
-                cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
-                cy.get(TestCasesPage.testCaseIPPExpected).type('1')
-        
-                cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
-                cy.get(TestCasesPage.testCaseDENOMExpected).should('be.enabled')
-                cy.get(TestCasesPage.testCaseDENOMExpected).should('be.visible')
-                cy.get(TestCasesPage.testCaseDENOMExpected).type('2')
-        
-                cy.get(TestCasesPage.testCaseNUMERExpected).should('exist')
-                cy.get(TestCasesPage.testCaseNUMERExpected).should('be.enabled')
-                cy.get(TestCasesPage.testCaseNUMERExpected).should('be.visible')
-                cy.get(TestCasesPage.testCaseNUMERExpected).type('3')
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
 
-                //attempt to navigate away from the test case page
-                cy.get(EditMeasurePage.measureGroupsTab).should('exist')
-                cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-                cy.get(EditMeasurePage.measureGroupsTab).click()
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
 
-                //verify that the discard modal appears
-                cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('exist')
-                cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('be.visible')
-                cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist')
-                cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
-                cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
-                cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
+
+        TestCasesPage.clickEditforCreatedTestCase()
+        
+        //click on Expected/Actual tab
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
+
+        cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
+        cy.get(TestCasesPage.testCaseDENOMExpected).should('be.enabled')
+        cy.get(TestCasesPage.testCaseDENOMExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseDENOMExpected).type('2')
+
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('exist')
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('be.enabled')
+        cy.get(TestCasesPage.testCaseNUMERExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseNUMERExpected).type('3')
+
+        //attempt to navigate away from the test case page
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //verify that the discard modal appears
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('exist')
+        cy.get(MeasureGroupPage.discardChangesConfirmationModal).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('exist')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.visible')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.continueDiscardChangesBtn).click()
                 
     })
 
@@ -282,28 +234,12 @@ describe('Non Boolean Population Basis Expected values', () => {
         MeasuresPage.clickEditforCreatedMeasure()
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -342,11 +278,10 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.testCaseDENOMExpected).clear().type('2')
         cy.get(TestCasesPage.testCaseNUMERExpected).clear().type('3')
 
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Navigate to Test case tab
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
+        //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.testCaseIPPExpected).should('contain.value', '1')
@@ -354,6 +289,7 @@ describe('Non Boolean Population Basis Expected values', () => {
         cy.get(TestCasesPage.testCaseNUMERExpected).should('contain.value', '3')
     })
 })
+
 describe('Boolean Population Basis Expected Values', () => {
 
     beforeEach('Create measure and login', () => {
@@ -420,28 +356,12 @@ describe('Boolean Population Basis Expected Values', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -470,12 +390,10 @@ describe('Boolean Population Basis Expected Values', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPExpected).eq(1).check()
 
-        //Save Test case with Expected values
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Navigate to Test case tab
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
+        //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         //Assert Expected values for Population Basis Encounter (Proportion Measure Group)
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
@@ -490,7 +408,9 @@ describe('Boolean Population Basis Expected Values', () => {
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 2 - Cohort | Boolean')
         cy.get(TestCasesPage.testCaseIPPExpected).eq(1).should('be.checked')
     })
+
     it('Verify Expected / Actual page dirty check with Boolean Population Basis and with multiple groups', () => {
+
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -528,28 +448,12 @@ describe('Boolean Population Basis Expected Values', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -646,28 +550,12 @@ describe('Expected values for second initial population', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -680,12 +568,10 @@ describe('Expected values for second initial population', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).eq(0).check()
         cy.get(TestCasesPage.testCaseIPPExpected).eq(1).check()
 
-        //Save Test case with Expected values
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Navigate to Test case tab
-        cy.get(EditMeasurePage.testCasesTab).click()
-        TestCasesPage.clickEditforCreatedTestCase()
+        //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         //Assert Expected values for Initial population
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()

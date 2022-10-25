@@ -47,7 +47,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -69,7 +69,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -92,7 +92,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -139,7 +139,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -183,7 +183,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -208,7 +208,7 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()

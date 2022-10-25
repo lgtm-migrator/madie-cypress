@@ -21,15 +21,15 @@ export class TestCasesPage {
     public static readonly denomActualCheckBox = '[data-testid="test-population-denominator-actual"]'
     public static readonly denomExclusionActualCheckBox = '[data-testid="test-population-denominatorExclusion-actual"]'
     public static readonly newTestCaseButton = '[data-testid="create-new-test-case-button"]'
-    public static readonly testCaseDescriptionTextBox = '[data-testid=create-test-case-description]'
-    public static readonly testCaseSeriesTextBox = '[data-testid="create-test-case-series"] > .MuiOutlinedInput-root'
+    public static readonly testCaseDescriptionTextBox = '[data-testid=test-case-description]'
+    public static readonly testCaseSeriesTextBox = '[data-testid="test-case-series"] > .MuiOutlinedInput-root'
     public static readonly existingTestCaseSeriesDropdown = '#mui-6'
     public static readonly editTestCaseSaveButton = '[data-testid="edit-test-case-save-button"]'
     public static readonly tcDiscardChangesButton = '[data-testid="edit-test-case-discard-button"]'
     public static readonly confirmationMsg = '[data-testid="create-test-case-alert"]'
     public static readonly testCaseSeriesList = 'tbody > tr > :nth-child(3)'
-    public static readonly aceEditor = '.ace_content'
-    public static readonly testCaseTitle = '[data-testid=create-test-case-title]'
+    public static readonly aceEditor = '[data-testid="test-case-json-editor"]'
+    public static readonly testCaseTitle = '[data-testid="test-case-title"]'
     public static readonly executeTestCaseButton = '[data-testid="execute-test-cases-button"]'
     public static readonly testCaseStatus = 'tbody > tr > :nth-child(4)'
     public static readonly testCaseTitleInlineError = '[data-testid="title-helper-text"]'
@@ -84,27 +84,29 @@ export class TestCasesPage {
     public static readonly measureObservationExpectedValueError = '[data-testid="measureObservation-error-helper-text"]'
     public static readonly eaMeasureGroupOneStratification = '[data-testid="measure-group-1-stratifications"]'
 
-    public static clickCreateTestCaseButton(withBundleId?:boolean) : void {
+    //New Test Case Modal
+    public static readonly createTestCaseDialog ='[data-testid="dialog-form"]'
+    public static readonly createTestCaseTitleInput ='[data-testid="create-test-case-title-input"]'
+    public static readonly createTestCaseDescriptionInput ='[data-testid="create-test-case-description-input"]'
+    public static readonly createTestCaseGroupInput ='[id="test-case-series"]'
+    public static readonly createTestCaseSaveButton ='[data-testid="create-test-case-save-button"]'
+
+
+
+
+    public static clickCreateTestCaseButton() : void {
 
         //setup for grabbing the measure create call
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(this.editTestCaseSaveButton).click()
-            cy.get(TestCasesPage.detailsTab).click()
+            cy.get(this.createTestCaseSaveButton).click()
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
                 expect(response.statusCode).to.eq(201)
                 cy.writeFile('cypress/fixtures/testCaseId', response.body.id)
             })
-
-/*             if (withBundleId){
-                cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle IDs are auto generated on save. MADiE has over written the ID provided')
-            }
-            else {
-                cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case created successfully! Bundle ID has been auto generated')
-            } */
 
             cy.get(EditMeasurePage.testCasesTab).click()
 
@@ -123,9 +125,7 @@ export class TestCasesPage {
         })
     }
 
-    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string, withBundleId?:boolean)  :void{
-
-        if ((withBundleId == undefined) || (withBundleId === null)){withBundleId = false}
+    public static createTestCase (testCaseTitle:string, testCaseDescription:string, testCaseSeries:string, testCaseJson:string)  :void{
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -134,37 +134,50 @@ export class TestCasesPage {
         cy.get(this.newTestCaseButton).should('be.enabled')
         cy.get(this.newTestCaseButton).click()
 
-        cy.get(this.detailsTab).should('exist')
-        cy.get(this.detailsTab).should('be.visible')
-        cy.get(this.detailsTab).click()
+        cy.get(this.createTestCaseDialog).should('exist')
+        cy.get(this.createTestCaseDialog).should('be.visible')
 
-        cy.get(this.testCaseTitle).should('exist')
-        Utilities.waitForElementVisible(this.testCaseTitle, 20000)
-        Utilities.waitForElementEnabled(this.testCaseTitle, 20000)
-        cy.get(this.testCaseDescriptionTextBox).should('exist')
-        cy.get(this.testCaseDescriptionTextBox).should('be.visible')
-        cy.get(this.testCaseDescriptionTextBox).should('be.enabled')
-        cy.get(this.testCaseDescriptionTextBox).focus()
-        cy.get(this.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(this.testCaseSeriesTextBox).should('exist')
-        cy.get(this.testCaseSeriesTextBox).should('be.visible')
-        cy.get(this.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-        cy.get(this.testCaseTitle).focus()
-        cy.get(this.testCaseTitle).clear()
-        cy.get(this.testCaseTitle).focus()
-        cy.get(this.testCaseTitle).type(testCaseTitle.toString())
+        cy.get(this.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(this.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(this.createTestCaseTitleInput, 20000)
+        cy.get(this.createTestCaseTitleInput).type(testCaseTitle.toString())
+        cy.get(this.createTestCaseDescriptionInput).should('exist')
+        cy.get(this.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(this.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(this.createTestCaseDescriptionInput).focus()
+        cy.get(this.createTestCaseDescriptionInput).type(testCaseDescription)
+        cy.get(this.createTestCaseGroupInput).should('exist')
+        cy.get(this.createTestCaseGroupInput).should('be.visible')
+        cy.get(this.createTestCaseGroupInput).type(testCaseSeries).type('{enter}')
+
+        this.clickCreateTestCaseButton()
+
+        //Verify created test case Title and Series exists on Test Cases Page
+        this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+
+        cy.log('Test Case created successfully')
+
+        this.editTestCaseAddJSON(testCaseJson)
+    }
+
+    public static editTestCaseAddJSON (testCaseJson:string)  :void{
+
+        this.clickEditforCreatedTestCase()
 
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
         cy.get(this.detailsTab).click()
 
-        this.clickCreateTestCaseButton(withBundleId)
+        //Save edited / updated to test case
+        cy.get(this.editTestCaseSaveButton).click()
+        cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
-        //Verify created test case Title and Series exists on Test Cases Page
-        this.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+        cy.log('JSON added to test case successfully')
 
-        cy.log('Test Case created successfully')
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+
     }
 
     public static updateTestCase (updatedTestCaseTitle:string, updatedTestCaseDescription:string, updatedTestCaseSeries:string)  :void{
