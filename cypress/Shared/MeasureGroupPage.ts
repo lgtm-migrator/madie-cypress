@@ -1,4 +1,5 @@
 import {MeasuresPage} from "./MeasuresPage"
+import {Header} from "./Header"
 import {EditMeasurePage} from "./EditMeasurePage"
 import {CQLEditorPage} from "./CQLEditorPage"
 import {Environment} from "./Environment"
@@ -226,6 +227,8 @@ export class MeasureGroupPage {
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        cy.get(Header.mainMadiePageButton).click()
     }
 
     public static createMeasureGroupforContinuousVariableMeasure () : void {

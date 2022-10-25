@@ -60,7 +60,7 @@ describe('Measure Highlighting', () => {
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(testCaseJson)
 
-        TestCasesPage.clickCreateTestCaseButton(true)
+        TestCasesPage.clickCreateTestCaseButton()
 
         TestCasesPage.clickEditforCreatedTestCase()
 

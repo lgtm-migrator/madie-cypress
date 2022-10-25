@@ -40,24 +40,22 @@ describe('Execute Test Case', () => {
 
     })
 
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Verify that the Execute Test Case button is disabled when Measure has no Group', () => {
+    it('Verify that the Execute Test Case button is disabled when Measure has no Group', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
+
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
-        cy.get(TestCasesPage.testCasePopulationList).should('contain.text', 'No populations for current scoring. Please make sure at least one measure group has been created.')
+        cy.get(TestCasesPage.testCasePopulationList).should('contain.text',
+            'No data for current scoring. Please make sure at least one measure group has been created.')
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -74,10 +72,9 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
         cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
 
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
-
-        TestCasesPage.clickCreateTestCaseButton(true)
+        //Save edited / updated to test case
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
@@ -89,33 +86,11 @@ describe('Execute Test Case', () => {
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
-
-        TestCasesPage.clickCreateTestCaseButton(true)
-
-        //Click on Edit for Test Case
         TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
@@ -131,7 +106,9 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
 
         //Save updated test case
+        cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         cy.get(EditMeasurePage.testCasesTab).click()
 
@@ -150,29 +127,12 @@ describe('Execute Test Case', () => {
         //Add Measure Group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()        
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson)
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
@@ -199,14 +159,17 @@ describe('Execute Test Case', () => {
         cy.get(TestCasesPage.testCaseDENEXExpected).click()
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
 
-        TestCasesPage.clickCreateTestCaseButton(true)
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+
+        cy.get(EditMeasurePage.testCasesTab).click()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('exist')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
         cy.get(TestCasesPage.executeTestCaseButton).focus()
         cy.get(TestCasesPage.executeTestCaseButton).invoke('click')
-        cy.get(TestCasesPage.executeTestCaseButton).click()
         cy.get(TestCasesPage.executeTestCaseButton).click()
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
 

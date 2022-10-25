@@ -58,7 +58,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
@@ -113,7 +113,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
@@ -165,7 +165,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREMDatesTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREMDatesTestCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
@@ -219,7 +219,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
@@ -274,7 +274,7 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, invalidTerminologyFHIR_and_QICOREStatusTestCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist').should('be.visible')
@@ -349,7 +349,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -420,7 +420,7 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
 
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson, true)
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
 

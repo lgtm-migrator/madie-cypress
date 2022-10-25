@@ -259,7 +259,9 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(4500)
         OktaLogin.Logout()
-        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
+        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false,
+            'Surgical Absence of Cervix', 'Surgical Absence of Cervix',
+            'Surgical Absence of Cervix', 'Procedure')
         OktaLogin.Login()
 
     })
@@ -556,7 +558,7 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(TestCasesPage.testCaseDENEXExpected).click()
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
 
-        TestCasesPage.clickCreateTestCaseButton(true)
+        TestCasesPage.clickCreateTestCaseButton()
 
         //Navigate to Test Cases Page and execute Test Case
         cy.get(EditMeasurePage.testCasesTab).click()
