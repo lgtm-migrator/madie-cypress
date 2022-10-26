@@ -43,12 +43,13 @@ pipeline{
         CYPRESS_IMPL_MEASURESHARING_API_KEY=credentials('CYPRESS_IMPL_MEASURESHARING_API_KEY')
         CYPRESS_REPORT_BUCKET=credentials('CYPRESS_REPORT_BUCKET')
         NODE_OPTIONS=credentials('NODE_OPTIONS')
+	PROFILE='dev-madie'
         }
 
  stages {
     stage('ECR Login'){
       steps{
-        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com'
+        sh 'aws --profile ${PROFILE} ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com'
       }
     }
     stage('Build Cypress Container'){
