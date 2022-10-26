@@ -43,6 +43,7 @@ pipeline{
         CYPRESS_IMPL_MEASURESHARING_API_KEY=credentials('CYPRESS_IMPL_MEASURESHARING_API_KEY')
         CYPRESS_REPORT_BUCKET=credentials('CYPRESS_REPORT_BUCKET')
         NODE_OPTIONS=credentials('NODE_OPTIONS')
+	PROFILE='dev-madie'
         }
 
  stages {
