@@ -34,8 +34,8 @@ describe('Test Case Page CQL page object', () => {
         Utilities.deleteMeasure(measureName, CqlLibraryName)
 
     })
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Test Case CQL value cannot be updated', () =>{
+
+    it('Test Case CQL value cannot be updated', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -56,8 +56,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.tcCQLArea).find('textarea.ace_text-input').should('have.attr', 'readOnly', 'readonly')
     })
 
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Test Case CQL value is displayed on Test Case page', () =>{
+
+    it('Test Case CQL value is displayed on Test Case page', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -79,8 +79,7 @@ describe('Test Case Page CQL page object', () => {
 
     })
 
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Updates applied and saved from the Measure CQL page / tab are updated and reflective in the Test Case Page', () =>{
+    it('Updates applied and saved from the Measure CQL page / tab are updated and reflective in the Test Case Page', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -126,8 +125,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.tcCQLArea).should('contain.text', 'using FHIR version \'4.0.1\'')
 
     })
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('A message is displayed if there are issues with the CQL', () =>{
+
+    it('A message is displayed if there are issues with the CQL', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -168,8 +167,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.cqlHasErrorsMsg).should('be.visible')
         cy.get(TestCasesPage.cqlHasErrorsMsg).should('contain.text', 'An error exists with the measure CQL, please review the CQL Editor tab')
     })
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Verify the Test Case Measure CQL sub-tab', () =>{
+
+    it('Verify the Test Case Measure CQL sub-tab', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -193,8 +192,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.tctMeasureCQLSubTab).should('be.visible')
     })
 
-    //skipping tests until the implementation of user story MAT-4694
-    it.skip('Verify the Test Case Expected / Actual tab', () =>{
+
+    it('Verify the Test Case Expected / Actual tab', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
