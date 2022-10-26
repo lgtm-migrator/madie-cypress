@@ -35,6 +35,31 @@ describe('Validate Measure Group -- scoring and populations', () => {
         OktaLogin.Logout()
 
     })
+    it('"Please complete the CQL Editor process before continuing" appears when there are issues with entered CQL', () => {        
+
+        //click on Edit button to edit measure
+        MeasuresPage.clickEditforCreatedMeasure()
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        //read and write CQL from flat file
+        cy.readFile('cypress/fixtures/GenericCQLBoolean.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+        for(let i = 0; i<=5; i++){
+            cy.get(EditMeasurePage.cqlEditorTextBox).type('{backspace}')
+        }
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        //Message appears at the top of the Population Criteria tab / page
+        cy.get(MeasureGroupPage.CQLHasErrorMsg).should('exist')
+        cy.get(MeasureGroupPage.CQLHasErrorMsg).should('be.visible')
+        cy.get(MeasureGroupPage.CQLHasErrorMsg).should('contain.text', 'Please complete the CQL Editor process before continuing')
+    })
 
     it('Scoring unit, UCUM, population association, population basis, measure group type and description saves and persists', () => {
 
