@@ -6,11 +6,13 @@ import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {Utilities} from "../../../../Shared/Utilities"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
+import {MeasureCQL} from "../../../../Shared/MeasureCQL"
 
 let measureName = 'TestMeasure' + Date.now()
 let newMeasureName = ''
 let newCqlLibraryName
 let CqlLibraryName = 'TestLibrary' + Date.now()
+let measureCQL = MeasureCQL.CQL_Multiple_Populations
 
 let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
@@ -468,5 +470,84 @@ describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON u
         })
 
         //cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine "num":\n    exists ["Encounter": "Office Visit"] E where E.status ~ \'finished\'\n')
+    })
+})
+
+describe('Warning modal on Test Case JSON Editor', () => {
+
+    beforeEach('Create measure and login', () => {
+
+        CqlLibraryName = 'TestLibrary5' + Date.now()
+
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureName, CqlLibraryName, measureCQL)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(4500)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Initial Population', 'Initial Population', 'Initial Population', 'Boolean')
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        OktaLogin.Logout()
+        Utilities.deleteMeasure(measureName, newCqlLibraryName)
+    })
+
+    it('Verify warning modal when the Test Case JSON has unsaved changes', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Navigate to Test Cases page and create Test case
+        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
+
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type(testCaseTitle.toString())
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type(testCaseDescription)
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type(testCaseSeries).type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.get(TestCasesPage.aceEditor).type('Warning Modal Test')
+
+        //Warning Modal displayed when user navigated to Measure Group tab without saving changes
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(TestCasesPage.discardChangesConfirmationModal).should('contain.text', 'Discard Changes?')
+        cy.get(TestCasesPage.discardChangesConfirmationText).should('contain.text', 'Are you sure you want to discard your changes?')
+        cy.get(TestCasesPage.discardChangesCancelBtn).click()
+
+        //Click on details tab & the warning modal should not display
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.discardChangesConfirmationModal).should('not.exist')
+
+        //Click on Test Cases tab and discard all changes
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.continueDiscardChangesBtn).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('exist')
+
     })
 })

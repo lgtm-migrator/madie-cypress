@@ -91,7 +91,11 @@ export class TestCasesPage {
     public static readonly createTestCaseGroupInput ='[id="test-case-series"]'
     public static readonly createTestCaseSaveButton ='[data-testid="create-test-case-save-button"]'
 
-
+    //Warning Modal
+    public static readonly discardChangesConfirmationModal = '[id="mui-1"]'
+    public static readonly discardChangesConfirmationText = '[id="discard-changes-dialog-body"]'
+    public static readonly discardChangesCancelBtn = '[data-testid="discard-dialog-cancel-button"]'
+    public static readonly continueDiscardChangesBtn = '[data-testid="discard-dialog-continue-button"]'
 
 
     public static clickCreateTestCaseButton() : void {
