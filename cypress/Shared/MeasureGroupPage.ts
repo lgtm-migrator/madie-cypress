@@ -8,6 +8,10 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class MeasureGroupPage {
 
+    ////<p aria-live="polite" data-testid="cql-has-errors-message">Please complete the CQL Editor process before continuing</p>
+    //CQL has errors message
+    public static readonly CQLHasErrorMsg = '[data-testid="cql-has-errors-message"]'
+
     //tabs on Measure Group page
     public static readonly populationTab = '[data-testid="populations-tab"]'
     public static readonly stratificationTab = '[data-testid="stratifications-tab"]'
