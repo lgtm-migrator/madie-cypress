@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class MeasureGroupPage {
 
-    ////<p aria-live="polite" data-testid="cql-has-errors-message">Please complete the CQL Editor process before continuing</p>
     //CQL has errors message
     public static readonly CQLHasErrorMsg = '[data-testid="cql-has-errors-message"]'
 

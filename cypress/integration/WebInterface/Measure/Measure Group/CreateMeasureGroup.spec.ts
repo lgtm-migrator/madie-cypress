@@ -35,7 +35,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         OktaLogin.Logout()
 
     })
-    it.only('"Please complete the CQL Editor process before continuing" appears when there are issues with entered CQL', () => {        
+    it('"Please complete the CQL Editor process before continuing" appears when there are issues with entered CQL', () => {        
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
