@@ -515,20 +515,30 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
-        //click on details tab
-        cy.get(TestCasesPage.detailsTab).should('exist')
-        cy.get(TestCasesPage.detailsTab).should('be.visible')
-        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
 
-        cy.get(TestCasesPage.testCaseTitle).should('exist')
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).focus().clear()
-        cy.get(TestCasesPage.testCaseTitle).invoke('val', '')
-        cy.get(TestCasesPage.testCaseTitle).type('{selectall}{backspace}{selectall}{backspace}')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type(testCaseTitle.toString())
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type(testCaseDescription)
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type(testCaseSeries).type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        //Verify created test case Title and Series exists on Test Cases Page
+        TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+
+        cy.log('Test Case created successfully')
+
+        TestCasesPage.clickEditforCreatedTestCase()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
@@ -538,13 +548,19 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
-        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
-        cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
-        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseIPPExpected).click({ multiple: true })
-        cy.get(TestCasesPage.testCaseIPPExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(0).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(0).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(0).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(0).click({ multiple: true })
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(0).check().should('be.checked')
         cy.get(TestCasesPage.testCaseNUMERExpected).should('not.be.checked')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('not.be.checked')
+
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(1).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(1).should('be.enabled')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(1).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(1).click({ multiple: true })
+        cy.get(TestCasesPage.testCaseIPPExpected).eq(1).check().should('be.checked')
 
         cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('be.enabled')
@@ -558,7 +574,11 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
         cy.get(TestCasesPage.testCaseDENEXExpected).click()
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
 
-        TestCasesPage.clickCreateTestCaseButton()
+        cy.get(TestCasesPage.detailsTab).click()
+
+        //Save edited / updated to test case
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('have.text', 'Test case updated successfully!')
 
         //Navigate to Test Cases Page and execute Test Case
         cy.get(EditMeasurePage.testCasesTab).click()
