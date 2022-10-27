@@ -46,12 +46,10 @@ describe('Edit Measure', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('SemanticBits')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click() 
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).type('SemanticBits')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).type('{downArrow}').type('{enter}')
 
         //save the new CQL Library
         CQLLibraryPage.clickCreateLibraryButton()
@@ -96,7 +94,7 @@ describe('Edit Measure', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         let LibraryName = CQLLibraryName+randValue
 
-        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Peter Grifin')
+        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Able Health')
         OktaLogin.Login()
 
         //navigate to the CQL Libaray page and navigate to the edit CQL Library page
@@ -124,7 +122,7 @@ describe('Edit Measure', () => {
         let LibraryName = CQLLibraryName+randValue
 
         //create CQL Library via API
-        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Peter Grifin')
+        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Able Health')
 
         OktaLogin.Login()
 
@@ -152,7 +150,9 @@ describe('Edit Measure', () => {
         //enter / select a publisher value
         cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Peter Grifin')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{enter}')
 
         cy.get(CQLLibraryPage.cqlLibraryStickySave).should('exist')
         cy.get(CQLLibraryPage.cqlLibraryStickySave).should('be.visible')
@@ -192,7 +192,7 @@ describe('Edit Measure', () => {
         let LibraryName = CQLLibraryName+randValue
 
         //create CQL Library via API
-        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Peter Grifin')
+        CQLLibraryPage.createCQLLibraryAPI(LibraryName, 'Able Health')
 
         OktaLogin.Login()
 

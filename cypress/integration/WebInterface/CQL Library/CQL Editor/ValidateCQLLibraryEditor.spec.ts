@@ -38,13 +38,11 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
-        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
+                
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
         cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
@@ -75,12 +73,10 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -89,6 +85,8 @@ describe('Validate CQL on CQL Library page', () => {
             'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor window
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).scrollIntoView()
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').wait(1000).click({force:true, multiple: true})
@@ -104,6 +102,8 @@ describe('Validate CQL on CQL Library page', () => {
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
         //Validate error(s) in CQL Editor windows
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).scrollIntoView()
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').wait(1000).click({force:true, multiple: true})
@@ -130,12 +130,10 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
@@ -146,6 +144,8 @@ describe('Validate CQL on CQL Library page', () => {
             'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         //Validate error(s) in CQL Editor after saving
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).scrollIntoView()
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').wait(1000).click({force:true, multiple: true})
@@ -158,6 +158,8 @@ describe('Validate CQL on CQL Library page', () => {
         CQLLibrariesPage.clickEditforCreatedLibrary()
 
         //Validate error(s) in CQL Editor persists after saving
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).scrollIntoView()
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').wait(1000).click({force:true, multiple: true})
@@ -184,12 +186,10 @@ describe('Validate CQL on CQL Library page', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         //save the value in the CQL Editor
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -245,12 +245,10 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
@@ -275,12 +273,10 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()        
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
@@ -305,12 +301,10 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //enter / select a publisher value
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type('Peter Griffin')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryCreatePublisherDrpDwn).click()
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('Able Health')
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).type('{downArrow}').type('{enter}')
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.visible')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
@@ -321,6 +315,8 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get(CQLLibraryPage.umlsErrorMessage).should('not.be.visible')
 
         //Validate error(s) in CQL Editor window
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).scrollIntoView()
+        cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('exist')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div').find(CQLLibraryPage.errorInCQLEditorWindow).should('be.visible')
         cy.get('#ace-editor-wrapper > div.ace_gutter > div > ' + CQLLibraryPage.errorInCQLEditorWindow).invoke('show').wait(1000).click({force:true, multiple: true})
