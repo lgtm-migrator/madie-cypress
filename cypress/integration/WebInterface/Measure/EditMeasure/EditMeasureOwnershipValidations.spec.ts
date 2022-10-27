@@ -101,16 +101,16 @@ describe('Read only for measure, measure group, and test cases that user does no
         cy.get(LandingPage.allMeasuresTab).should('be.enabled')
         cy.get(LandingPage.allMeasuresTab).click()
 
-        //edit the measure that was not created by current measure
+        //edit the measure that was not created by current owner
         MeasuresPage.clickEditforCreatedMeasure(true)
 
         //confirm that the CQL Editor tab is available and click on it
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry_FHIR.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
+        cy.get(EditMeasurePage.discardChangesContinue).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('Test for ownership')
+
         cy.get(EditMeasurePage.cqlEditorTextBox.valueOf().toString()).eq(null)
 
     })
