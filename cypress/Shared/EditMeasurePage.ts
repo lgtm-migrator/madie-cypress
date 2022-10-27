@@ -50,11 +50,11 @@ export class EditMeasurePage {
     //Measure Meta Data
     //Measure Steward & Developers Page
     public static readonly measureStewardDrpDwn = '[data-testid="steward"]'
-    public static readonly measureStewardDrpDwnOption = '#mui-3-option-0'
-    public static readonly measureStewardObjHoldingValue = '[id="mui-8"]'
+    public static readonly measureStewardDrpDwnOption = '#steward-option-0'
+    public static readonly measureStewardObjHoldingValue = '#steward'
     public static readonly measureDeveloperDrpDwn = '[data-testid="developers"]'
-    public static readonly measureDevelopersDrpDwnOption = '#mui-5-option-0'
-    public static readonly measureDevelopersObjHoldingValue = '[class="MuiChip-label MuiChip-labelMedium css-9iedg7"]'
+    public static readonly measureDevelopersDrpDwnOption = '#developers-option-0'
+    public static readonly measureDevelopersObjHoldingValue = '#developers'
     //<span class="MuiChip-label MuiChip-labelMedium css-9iedg7">ACO Health Solutions</span>
     public static readonly measureStewardDevelopersSaveButton = '[data-testid="steward-and-developers-save"]'
     public static readonly measureStewardDevelopersDiscardCancel = '[data-testid="cancel-button"]'

@@ -105,7 +105,7 @@ describe('Edit Measure: Add Meta Data', () => {
         //steward
         cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
         cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('include.value', 'Able Health')
-        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('include.text', 'ACO Health Solutions')
+        cy.get('.MuiChip-label').should('include.text', 'ACO Health Solutions')
         cy.log('Measure Steward & Developers added successfully')
 
         //description

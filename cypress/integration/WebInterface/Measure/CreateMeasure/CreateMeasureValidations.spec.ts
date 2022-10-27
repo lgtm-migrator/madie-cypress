@@ -48,7 +48,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.leftPanelStewardDevelopers).should('include.text','Steward & Developers')
         cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
 
-        //confirm Stewardfield
+        //confirm Steward field
         cy.get(EditMeasurePage.measureStewardDrpDwn).should('exist')
         cy.get(EditMeasurePage.measureStewardDrpDwn).should('be.visible')
 
@@ -108,7 +108,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureDevelopersAlertMsg).should('include.text', 'At least one developer is required')
     })
 
-    it('Validate Save buttons accessbility (Save when both fields have value)', () => {
+    it('Validate Save buttons accessibility (Save when both fields have value)', () => {
         newMeasureName = 'TestMeasure' + Date.now()
         newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
@@ -146,10 +146,9 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.enabled')
 
-
     })
 
-    it('Validate Discard button accessbility and text / label on button', () => {
+    it('Validate Discard button accessibility and text / label on button', () => {
         newMeasureName = 'TestMeasure' + Date.now()
         newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
@@ -180,7 +179,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
 
-        //discard button becomes avaliable
+        //discard button becomes available
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('exist')
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.visible')
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.enabled')
@@ -189,8 +188,8 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).click()
 
         //verify that empty fields
-        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('not.exist')
-        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('not.exist')
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('be.empty')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('be.empty')
 
         //select a value for Developers
         cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type('ACO Health Solutions')
@@ -199,7 +198,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
 
-        //discard button becomes avaliable
+        //discard button becomes available
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('exist')
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.visible')
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).should('be.enabled')
@@ -255,8 +254,8 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersDiscardCancel).click()
 
         //verify that empty fields
-        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('not.exist')
-        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('not.exist')
+        cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('be.empty')
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('be.empty')
 
         //select a value for Developers
         cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type('ACO Health Solutions')
@@ -310,7 +309,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.disabled')
 
         //select a value for Developers
-        cy.get(EditMeasurePage.measureDeveloperDrpDwn).should('exist').should('be.visible').click().type("ACO Health Solutions")
+        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('exist').should('be.visible').click().type("ACO Health Solutions")
         cy.get(EditMeasurePage.measureDevelopersDrpDwnOption).click()
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('exist')
         cy.get(EditMeasurePage.measureStewardDevelopersSaveButton).should('be.visible')
@@ -342,24 +341,17 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.leftPanelStewardDevelopers).click()
 
         cy.get(EditMeasurePage.measureStewardObjHoldingValue).should('include.value', 'Able Health')
-        cy.get(EditMeasurePage.measureDevelopersObjHoldingValue).should('include.text', 'ACO Health Solutions')
+        cy.get('.MuiChip-label').should('include.text', 'ACO Health Solutions')
     })
 
+    //Skipping until MAT-4984 is fixed
     //Clinical Recommendation validations
-    it('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
+    it.skip('Validating the Clinical Recommendation page and the fields, buttons, and messaging for that page', () => {
         newMeasureName = 'TestMeasure' + Date.now()
         newCqlLibraryName = 'MeasureTypeTestLibrary' + Date.now()
 
         //Create New Measure
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, ratioMeasureCQL)
-        OktaLogin.Login()
-        MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(5500)
-        OktaLogin.Logout()
-        MeasureGroupPage.CreateRatioMeasureGroupAPI(false, false, 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Surgical Absence of Cervix', 'Procedure')
         OktaLogin.Login()
 
         //Click on Edit Measure
@@ -440,10 +432,7 @@ describe('Create Measure Validations', () => {
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).type('Some new test value')
         cy.get(EditMeasurePage.measureClinicalRecommendationDiscardButton).click()
         cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).should('contain.text', 'Some test value')
-        
-
     })
-
 
     //Measure Name Validations
     it('Verify error messages when the measure name entered is invalid or empty', () => {
