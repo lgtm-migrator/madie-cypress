@@ -7,6 +7,7 @@ import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
+import { symlink } from "fs"
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
@@ -290,7 +291,7 @@ describe('Measure bundle end point returns stratifications', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
         OktaLogin.Logout()
@@ -303,7 +304,7 @@ describe('Measure bundle end point returns stratifications', () => {
 
     })
 
-    it('Measure bundle end point returns stratifications for Cohort Measure', () => {
+    it.only('Measure bundle end point returns stratifications for Cohort Measure', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -336,9 +337,9 @@ describe('Measure bundle end point returns stratifications', () => {
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml').type('{downArrow}').type('{enter}')
         //Select ml milliLiters from the dropdown
-        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+        //cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         //Click on Stratification tab
@@ -392,6 +393,7 @@ describe('Measure bundle end point returns stratifications', () => {
                 })
             })
         })
+        cy.pause()
     })
 
     it('Measure bundle end point returns stratifications for Continuous Variable Measure', () => {

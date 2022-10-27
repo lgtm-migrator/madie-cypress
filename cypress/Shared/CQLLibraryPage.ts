@@ -25,12 +25,12 @@ export class CQLLibraryPage {
     public static readonly currentCQLLibSavebtn = '[data-testid="cql-library-save-button"]'
     public static readonly headerDetails = '[class="details"]'
     public static readonly cqlLibraryDesc = '[id="cql-library-description"]'
-    public static readonly cqlLibraryPublisher = '[data-testid="cql-library-publisher"]'
+    public static readonly cqlLibraryCreatePublisher = '[data-testid="cql-library-publisher"]'
     public static readonly cqlLibraryModalField = '[id="model-select"]'
     public static readonly cqlLibraryCreateForm = '[id="menu-model"]'
     public static readonly cqlLibraryCreateFormSideClickArea = '[class="MuiBox-root css-0"]'
     public static readonly cqlLibraryEditPublisher = '[data-testid="publisher"]'
-    public static readonly cqlLibraryCreatePublisherDrpDwn = '[id="mui-3-option-0"]'
+    public static readonly cqlLibraryCreatePublisherDrpDwn = '[aria-activedescendant="mui-3-option-0"]'
     public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
     public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
     public static readonly cqlLibPubHelperText = '[data-testid="publisher-helper-text"]'
@@ -53,9 +53,9 @@ export class CQLLibraryPage {
         cy.get(this.newCQLLibName).type(CQLLibraryName)
         Utilities.dropdownSelect(CQLLibraryPage.cqlLibraryModelDropdown, CQLLibraryPage.cqlLibraryModelQICore)
         cy.get(this.cqlLibraryDesc).type('description')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('exist')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).should('be.visible')
-        cy.get(CQLLibraryPage.cqlLibraryPublisher).type(CQLLibraryPublisher).type('{downArrow}{enter}')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).should('exist')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).should('be.visible')
+        cy.get(CQLLibraryPage.cqlLibraryCreatePublisher).type(CQLLibraryPublisher).type('{downArrow}{enter}')
 
         this.clickCreateLibraryButton()
         cy.get(Header.cqlLibraryTab).click()

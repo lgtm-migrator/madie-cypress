@@ -1,7 +1,6 @@
 import {Utilities} from "../../../Shared/Utilities"
 import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
-import {describe} from "mocha";
 
 let measureName = 'MeasureName ' + Date.now()
 let CqlLibraryName = 'CQLLibraryName' + Date.now()
@@ -694,13 +693,13 @@ describe('Measure Observations', () => {
                         "measureObservations": [
                             {
                                 "id": "b2622e59-a169-45af-a4b5-fe298e220ae4",
-                                "definition": "fun",
+                                "definition": PopNum,
                                 "criteriaReference": "89f42def-f989-4e9d-8e5f-c2c0cafc04d7",
-                                "aggregateMethod": "Sample Variance"
+                                "aggregateMethod": "Count"
                             },
                             {
                                 "id": "5da9610f-bdc5-4922-bd43-48ae0a0b07a4",
-                                "definition": "ToCode",
+                                "definition": PopDenom,
                                 "criteriaReference": "fa60458b-b2fa-4ba2-9bc4-d6db3468f895",
                                 "aggregateMethod": "Average"
                             }
@@ -716,9 +715,9 @@ describe('Measure Observations', () => {
                     expect(response.body.populations[0].definition).to.eql('ipp')
                     expect(response.body.populations[1].definition).to.eql('denom')
                     expect(response.body.populations[3].definition).to.eql('num')
-                    expect(response.body.measureObservations[0].definition).to.eql('fun')
-                    expect(response.body.measureObservations[1].definition).to.eql('ToCode')
-                    expect(response.body.measureObservations[0].aggregateMethod).to.eql('Sample Variance')
+                    expect(response.body.measureObservations[0].definition).to.eql('num')
+                    expect(response.body.measureObservations[1].definition).to.eql('denom')
+                    expect(response.body.measureObservations[0].aggregateMethod).to.eql('Count')
                     expect(response.body.measureObservations[1].aggregateMethod).to.eql('Average')
                 })
             })
@@ -821,32 +820,32 @@ describe('Measure Stratifications', () => {
                         "populationBasis": "Boolean",
                         "populations": [
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "initialPopulation",
                                 "definition": 'ipp'
                             },
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "denominator",
                                 "definition": 'denom'
                             },
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "denominatorExclusion",
                                 "definition": ""
                             },
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "denominatorException",
                                 "definition": ""
                             },
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "numerator",
                                 "definition": 'num'
                             },
                             {
-                                "_id": "",
+                                "id": "",
                                 "name": "numeratorExclusion",
                                 "definition": ""
                             }
@@ -855,14 +854,14 @@ describe('Measure Stratifications', () => {
                             {
                                 "id": "",
                                 "description": "",
-                                "cqlDefinition": "ipp",
-                                "association": "Initial Population"
+                                "cqlDefinition": 'ipp',
+                                "association": "initialPopulation"
                             },
                             {
                                 "id": "",
                                 "description": "",
-                                "cqlDefinition": "denom",
-                                "association": "Initial Population"
+                                "cqlDefinition": 'denom',
+                                "association": "denominator"
                             }
                         ],
                         "measureGroupTypes": [
@@ -937,13 +936,13 @@ describe('Measure Stratifications', () => {
                                 "id": "",
                                 "description": "",
                                 "cqlDefinition": "Surgical Absence of Cervix",
-                                "association": "Denominator"
+                                "association": "denominator"
                             },
                             {
                                 "id": "",
                                 "description": "",
                                 "cqlDefinition": "Surgical Absence of Cervix",
-                                "association": "Initial Population"
+                                "association": "initialPopulation"
                             }
                         ],
                         "measureGroupTypes": [
