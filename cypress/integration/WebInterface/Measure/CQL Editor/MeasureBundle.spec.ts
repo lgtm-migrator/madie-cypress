@@ -221,6 +221,7 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')
@@ -304,7 +305,7 @@ describe('Measure bundle end point returns stratifications', () => {
 
     })
 
-    it.only('Measure bundle end point returns stratifications for Cohort Measure', () => {
+    it('Measure bundle end point returns stratifications for Cohort Measure', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -330,6 +331,8 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.popBasisOption).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')
@@ -337,9 +340,10 @@ describe('Measure bundle end point returns stratifications', () => {
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml').type('{downArrow}').type('{enter}')
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
         //Select ml milliLiters from the dropdown
-        //cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
 
         //Click on Stratification tab
@@ -393,7 +397,7 @@ describe('Measure bundle end point returns stratifications', () => {
                 })
             })
         })
-        cy.pause()
+
     })
 
     it('Measure bundle end point returns stratifications for Continuous Variable Measure', () => {
@@ -428,6 +432,7 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')
@@ -530,6 +535,7 @@ describe('Measure bundle end point returns stratifications', () => {
         cy.get(MeasureGroupPage.popBasisOption).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')
@@ -660,6 +666,7 @@ describe('Verify the criteria reference for measure observations', () => {
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')
@@ -756,6 +763,7 @@ describe('Verify the criteria reference for measure observations', () => {
         })
         cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
         cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
             if ($ele.text() == "Text") {
                 cy.wrap($ele).should('exist')

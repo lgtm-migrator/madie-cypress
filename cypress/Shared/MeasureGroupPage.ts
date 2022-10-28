@@ -71,6 +71,9 @@ export class MeasureGroupPage {
     public static readonly measureScoringCV = '[data-testid="group-scoring-option-CONTINUOUS_VARIABLE"]'
     public static readonly saveMeasureGroupDetails = '[data-testid="group-form-submit-btn"]'
 
+    //Scoring unit
+    public static readonly measureScoringUnitField = '[data-testid="measure-group-scoring-unit" ]'
+
     //Populations
     public static readonly initialPopulationSelect = '[id="population-select-initial-population-select"]'
     public static readonly denominatorSelect = '[id="population-select-denominator-select"]'
@@ -87,8 +90,8 @@ export class MeasureGroupPage {
 
     //UCUM scoring unit
     public static readonly ucumScoringUnitSelect = '[class=" css-1m9es75"]'
-    public static readonly ucumScoringUnitDropdownList = '#react-select-2-input'
-    public static readonly ucumScoringUnitfullName = '#react-select-2-option-1-0'
+    public static readonly ucumScoringUnitDropdownList = '[id=react-select-2-input]'
+    public static readonly ucumScoringUnitfullName = '#react-select-2-option-0-0'
 
     //Measure Observations
     public static readonly addDenominatorObservationLink = '[data-testid="add-measure-observation-denominator"]'
