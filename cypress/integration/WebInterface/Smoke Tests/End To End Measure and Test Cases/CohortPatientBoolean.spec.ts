@@ -18,12 +18,15 @@ let testCaseJson = TestCaseJson.TestCaseJson_CohortPatientBoolean_PASS
 
 describe('Measure Creation and Testing: Cohort Patient Boolean', () => {
 
-    before('Create Measure', () => {
+    before('Create Measure, Test Case and Login', () => {
 
         OktaLogin.Login()
-
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, '01/01/2012', '12/31/2012')
+
+        TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
+
+        OktaLogin.Login()
 
     })
 
@@ -48,12 +51,6 @@ describe('Measure Creation and Testing: Cohort Patient Boolean', () => {
 
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
-
-        //Navigate to Measures Page
-        cy.get(Header.measures).click()
-
-        //Click on Edit Measure
-        MeasuresPage.clickEditforCreatedMeasure()
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
@@ -81,8 +78,6 @@ describe('Measure Creation and Testing: Cohort Patient Boolean', () => {
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
 

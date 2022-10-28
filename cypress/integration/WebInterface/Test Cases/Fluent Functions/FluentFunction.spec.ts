@@ -17,7 +17,7 @@ let testCaseSeries = 'SBTestSeries'
 
 describe('Fluent Function Capability', () => {
 
-    before('Create Measure', () => {
+    before('Create Measure and Test case', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName)
