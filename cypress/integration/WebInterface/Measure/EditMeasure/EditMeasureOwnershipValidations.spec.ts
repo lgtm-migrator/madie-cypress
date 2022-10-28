@@ -107,8 +107,6 @@ describe('Read only for measure, measure group, and test cases that user does no
         //confirm that the CQL Editor tab is available and click on it
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.get(EditMeasurePage.discardChangesContinue).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('Test for ownership')
 
         cy.get(EditMeasurePage.cqlEditorTextBox.valueOf().toString()).eq(null)

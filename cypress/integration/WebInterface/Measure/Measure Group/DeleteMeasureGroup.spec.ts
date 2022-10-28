@@ -7,6 +7,7 @@ import {Utilities} from "../../../../Shared/Utilities"
 import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+
 let measureOne = 'TestMeasure' + Date.now()
 let CqlLibraryName1 = 'TestLibrary' + Date.now()
 let title1 = 'TCOneForDeleteTests'
@@ -19,7 +20,6 @@ var newCqlLibraryName = null
 var randValue = null
 
 describe('Validate Measure Group deletion functionality', () => {
-
 
     beforeEach('Create measure(s), group(s), test case(s), and login', () => {
         randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -68,8 +68,8 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.deleteMeasureGroupConfirmationMsg).contains('Measure Group 1 will be deleted. Are you sure you want to delete this measure group?')
     })
 
-
-    it('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
+    //Skipping until MAT-4986 is fixed
+    it.skip('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -87,7 +87,7 @@ describe('Validate Measure Group deletion functionality', () => {
 
         //clicking "yes" to confirm deletion of group
         cy.get(MeasureGroupPage.yesDeleteModalbtn).should('exist').should('be.visible').should('be.enabled')
-        cy.get(MeasureGroupPage.yesDeleteModalbtn).click()
+        cy.get(MeasureGroupPage.yesDeleteModalbtn).click({force:true})
 
         //confirm that the modal has closed
         cy.get(MeasureGroupPage.deleteMeasureGroupModal).should('not.exist')
@@ -227,7 +227,8 @@ describe('Validate Measure Group deletion functionality', () => {
         })
     })
 
-    it('Test Cases still loads after all groups are deleted', () => {
+    //Skipping until MAT-4986 is fixed
+    it.skip('Test Cases still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 

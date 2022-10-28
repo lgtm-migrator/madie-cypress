@@ -215,7 +215,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //verify that the population and the scoring unit that was saved, together, appears
         cy.get(MeasureGroupPage.measureScoringSelect).should('contain.text','Ratio')
-        cy.get('#population-select-initial-population-1').should('contain.text', 'Initial Population')
+        cy.get(MeasureGroupPage.firstInitialPopulationSelect).should('contain.text', 'Initial Population')
         cy.get(MeasureGroupPage.secondInitialPopulationSelect).should('contain.text', 'Initial Population2')
 
     })
@@ -224,6 +224,9 @@ describe('Validate Measure Group -- scoring and populations', () => {
 
         cy.log('Create Ratio Measure')
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Change scoring type & population
         cy.get(MeasureGroupPage.measureScoringSelect).click()
