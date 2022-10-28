@@ -19,8 +19,7 @@ define "Qualifying Encounters":
  		union [Encounter: "Preventive Care Services-Initial Office Visit, 18 and Up"]
  		union [Encounter: "Home Healthcare Services"]
  ) ValidEncounter
-		where ValidEncounter.period during "Measurement Period"
- 		 and ValidEncounter.isFinishedEncounter()
+		where ValidEncounter.isFinishedEncounter()
 
 {home}define fluent function "isFinishedEncounter"(Enc Encounter):
   (Enc E where E.status = 'finished') is not null {del}{del}{del}{del}

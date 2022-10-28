@@ -263,7 +263,7 @@ export class TestCasesPage {
                     },
                     method: 'POST',
                     body: {
-                        'name': "DENOMFail",
+                        'name': "TEST",
                         'series': series,
                         'title': title,
                         'description': description,
