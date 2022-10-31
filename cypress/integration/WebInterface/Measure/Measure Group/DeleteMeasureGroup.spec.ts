@@ -68,8 +68,7 @@ describe('Validate Measure Group deletion functionality', () => {
         cy.get(MeasureGroupPage.deleteMeasureGroupConfirmationMsg).contains('Measure Group 1 will be deleted. Are you sure you want to delete this measure group?')
     })
 
-    //Skipping until MAT-4986 is fixed
-    it.skip('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
+    it('Confirmation modal has Yes button and clicking yes when there is only one group removes group a blank group remains', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 
@@ -227,8 +226,7 @@ describe('Validate Measure Group deletion functionality', () => {
         })
     })
 
-    //Skipping until MAT-4986 is fixed
-    it.skip('Test Cases still loads after all groups are deleted', () => {
+    it('Test Cases still loads after all groups are deleted', () => {
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
 

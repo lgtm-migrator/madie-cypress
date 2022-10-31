@@ -20,6 +20,9 @@
 {home}define "numeratorExclusion":
 {home}    "num"
 
+{home}define "numEnc":
+{home}     ["Encounter"] E where E.status ~ 'finished'
+
 {home}define function ToCode(coding FHIR.Coding):
 {home} if coding is null then
 {home}   null
