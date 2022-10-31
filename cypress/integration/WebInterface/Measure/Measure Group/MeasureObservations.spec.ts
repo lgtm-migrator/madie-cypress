@@ -41,6 +41,9 @@ describe('Measure Observations', () => {
 
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
         //Add Denominator Observation
         cy.log('Adding Measure Observations')
         cy.get(MeasureGroupPage.addDenominatorObservationLink).click()
@@ -154,6 +157,9 @@ describe('Measure Observations', () => {
     it('Remove Measure Observations from Ratio Measure', () => {
 
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Add Denominator Observation
         cy.get(MeasureGroupPage.addDenominatorObservationLink).click()
@@ -274,6 +280,9 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
     it('Non-owner of measure cannot change measure observation', () => {
 
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Add Denominator Observation
         cy.log('Adding Measure Observations')
@@ -479,7 +488,8 @@ describe('Measure Observation - Expected Values',  () => {
         OktaLogin.Logout()
     })
 
-    it('Verify Expected values for Boolean Type Continuous Variable Measure Observations', () => {
+    //Skipping until MAT-4943 is verified
+    it.skip('Verify Expected values for Boolean Type Continuous Variable Measure Observations', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -534,6 +544,26 @@ describe('Measure Observation - Expected Values',  () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
+
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type('TestCase001')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type('testCaseDescription')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type('testCaseSeries').type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        TestCasesPage.clickEditforCreatedTestCase()
+
         //click on Expected / Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
@@ -557,9 +587,13 @@ describe('Measure Observation - Expected Values',  () => {
         cy.get(TestCasesPage.measureObservationRow).should('exist')
     })
 
-    it('Verify Expected values for Boolean Type Ratio Measure Observations', () => {
+    //Skipping until MAT-4943 is verified
+    it.skip('Verify Expected values for Boolean Type Ratio Measure Observations', () => {
 
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
 
         //Add Denominator Observation
         cy.log('Adding Measure Observations')
@@ -594,6 +628,25 @@ describe('Measure Observation - Expected Values',  () => {
         cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
         cy.get(TestCasesPage.newTestCaseButton).click()
 
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
+
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type('TestCase002')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type('testCaseDescription')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type('testCaseSeries').type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        TestCasesPage.clickEditforCreatedTestCase()
         //click on Expected / Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')

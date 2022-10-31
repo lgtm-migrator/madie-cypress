@@ -37,7 +37,7 @@ export class MeasureGroupPage {
 
     //Ratio specific -- Add and Delete Initial Population(s)
     public static readonly addSecondInitialPopulationLink = '[data-testid="add_populations[0].definition"]'
-    public static readonly firstInitialPopulationSelect = '[id="population-select-initial-population-1"]'
+    public static readonly firstInitialPopulationSelect = '[id="population-select-initial-population-1-select"]'
     public static readonly secondInitialPopulationSelect = '[id="population-select-initial-population-2-select"]'
     public static readonly deleteSecondInitialPopulation = '[data-testid="remove_populations[1].definition"]'
     public static readonly lblSecondInitialPopulation = '[id="population-select-initial-population-2-label"]'
