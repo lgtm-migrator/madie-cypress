@@ -42,6 +42,7 @@ describe('Edit Measure: Add Meta Data', () => {
         let disclaimer = 'disclaimer'
         let rationale = 'rationale'
         let guidance = 'guidance'
+        let clinicalRecommendation = 'Clinical Recommendation'
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -96,6 +97,12 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.measureGuidanceSaveButton).click()
         cy.get(EditMeasurePage.measureGuidanceSuccessMessage).should('be.visible')
 
+        //Clinical Recommendation
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).clear().type(clinicalRecommendation)
+        cy.get(EditMeasurePage.measureClinicalRecommendationSaveButton).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationSuccessMessage).should('be.visible')
+
         cy.get(Header.mainMadiePageButton).click()
 
         //Click on Edit Measure
@@ -140,6 +147,13 @@ describe('Edit Measure: Add Meta Data', () => {
         cy.get(EditMeasurePage.leftPanelGuidance).click()
         cy.get(EditMeasurePage.measureGuidanceTextBox).invoke('val').then(val =>{
             expect(val).to.eql(guidance)
+        })
+        cy.log('Measure Guidance added successfully')
+
+        //Clinical Recommendation
+        cy.get(EditMeasurePage.leftPanelMClinicalGuidanceRecommendation).click()
+        cy.get(EditMeasurePage.measureClinicalRecommendationTextBox).invoke('val').then(val =>{
+            expect(val).to.eql(clinicalRecommendation)
         })
         cy.log('Measure Guidance added successfully')
     })
