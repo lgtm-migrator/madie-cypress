@@ -270,7 +270,7 @@ describe('Measure: CQL Editor', () => {
         ('show').click({force:true, multiple: true})
 
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
-            'ELM: 1:37 | Model Type and version are required')
+            'ELM: 1:37 | Internal translator error.')
 
     })
     it('Verify Library name and version are replaced with the actual Library Name and Version for the Measure', () => {
