@@ -30,6 +30,9 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -56,6 +59,9 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
 
         //Click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
 
         //making some minor and invalid change to the Measure CQL
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}{home}')
@@ -109,6 +115,9 @@ describe('Bundle returns elmXML', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -133,11 +142,20 @@ describe('Bundle returns elmXML', () => {
 
         //Click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
+
+        //make some insignificant change
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
 
         //save CQL from UI
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        //wait for change to validate
+        cy.wait(15500)
 
         //log out of UI
         OktaLogin.Logout()
@@ -181,6 +199,9 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -292,6 +313,10 @@ describe('Measure bundle end point returns stratifications', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
+        cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
         cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -386,9 +411,11 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('cohort')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
@@ -397,7 +424,6 @@ describe('Measure bundle end point returns stratifications', () => {
                 })
             })
         })
-
     })
 
     it('Measure bundle end point returns stratifications for Continuous Variable Measure', () => {
@@ -407,6 +433,9 @@ describe('Measure bundle end point returns stratifications', () => {
 
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
@@ -496,9 +525,11 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('ipp')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('measure-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('num')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('measure-population-exclusion')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].criteria.expression).to.eql('numeratorExclusion')
                     expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
@@ -598,12 +629,15 @@ describe('Measure bundle end point returns stratifications', () => {
                     expect(response.body.resourceType).to.eql('Bundle')
                     expect(response.body.entry[0].resource.group[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('proportion')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].extension[0].valueCodeableConcept.coding[0].code).to.eql('initial-population')
                     expect(response.body.entry[0].resource.group[0].stratifier[0].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].extension[0].valueCodeableConcept.coding[0].code).to.eql('denominator')
                     expect(response.body.entry[0].resource.group[0].stratifier[1].criteria.expression).to.eql('Surgical Absence of Cervix')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].id).to.not.be.empty
+                    expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-appliesTo')
                     expect(response.body.entry[0].resource.group[0].stratifier[2].extension[0].valueCodeableConcept.coding[0].code).to.eql('numerator')
                     expect(response.body.entry[0].resource.group[0].extension[2].url).to.eql('http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-scoringUnit')
                     expect(response.body.entry[0].resource.group[0].extension[2].valueCodeableConcept.coding[0].code).to.eql('ml')
