@@ -4,6 +4,7 @@ import {Header} from "../../../../Shared/Header"
 import {CQLLibrariesPage} from "../../../../Shared/CQLLibrariesPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {CQLLibraryPage} from "../../../../Shared/CQLLibraryPage"
+import {Global} from "../../../../Shared/Global"
 
 let apiCQLLibraryName = ''
 let CQLLibraryPublisher = 'SemanticBits'
@@ -323,5 +324,17 @@ describe('CQL Library: CQL Editor: valueSet', () => {
         cy.get('#ace-editor-wrapper > div.ace_tooltip').invoke('show').should('contain.text',
             'ELM: 0:101 | Request failed with status code 404 for oid = 2.16.840.1.113883.3.464.1003.110.12.105900 ' +
             'location = 18:0-18:101')
+    })
+
+    it('Dirty Check Modal is displayed', () => {
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
+        //Click Edit CQL Library
+        CQLLibrariesPage.clickEditforCreatedLibrary()
+        Utilities.typeFileContents('cypress/fixtures/ValueSetTestingEntryInValid.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
+
+        cy.get(Header.mainMadiePageButton).click()
+
+        cy.get(Global.dirtCheckModal).should('be.visible')
     })
 })

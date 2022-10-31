@@ -5,6 +5,7 @@ import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 import {Utilities} from "../../../../Shared/Utilities"
 import {EditMeasurePage } from "../../../../Shared/EditMeasurePage"
 import {Header} from "../../../../Shared/Header"
+import {Global} from "../../../../Shared/Global"
 
 let measureName = 'TestMeasure' + Date.now() + 1
 let CqlLibraryName = 'TestLibrary' + Date.now() + 1
@@ -85,7 +86,6 @@ describe('Validate CQL Editor tab sticky footer', () => {
     })
 
 })
-
 
 describe('Measure: CQL Editor', () => {
 
@@ -374,6 +374,23 @@ describe('Measure: CQL Editor', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).should('contain', '/*CONCEPT DECLARATION REMOVED: CQL concept construct shall NOT be used.*/')
 
         })
+    })
+
+    it('Dirty Check Modal is displayed', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Click on the CQL Editor tab
+        CQLEditorPage.clickCQLEditorTab()
+
+        cy.readFile('cypress/fixtures/cqlSaveCQL.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
+        })
+
+        cy.get(Header.mainMadiePageButton).click()
+
+        cy.get(Global.dirtCheckModal).should('be.visible')
     })
 })
 
