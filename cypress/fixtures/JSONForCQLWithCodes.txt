@@ -1,0 +1,98 @@
+{
+  "resourceType": "Bundle",
+  "id": "1366",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2022-03-30T19:02:32.620+00:00"
+  },
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "Observation/obs-2",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "obs-2",
+        "meta": {        },
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "71007-9",
+              "display": "Functional Assessment of Chronic Illness Therapy - Palliative Care Questionnaire (FACIT-Pal)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/test-1"
+        }
+      }
+    },
+    {
+      "fullUrl": "Procedure/proc-1",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "proc-1",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-procedure"
+          ]
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "blood pressure"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/test-1"
+        },
+        "partOf": [
+          {
+            "reference": "Observation/obs-2"
+          }
+        ],
+        "performedPeriod": {
+          "start": "2020-03-02T03:34:10.054Z",
+          "end": "2020-03-03T03:34:10.054Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "http://local/Patient",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "test-1",
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Lizzy Health</div>"
+        },
+        "meta": {
+          "profile": "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient"
+        },
+        "identifier": [
+          {
+            "system": "http://clinfhir.com/fhir/NamingSystem/identifier",
+            "value": "20181011LizzyHealth"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "text": "Lizzy Health",
+            "family": "Health",
+            "given": [
+              "Lizzy"
+            ]
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1990-10-11"
+      }
+    }
+  ]
+}

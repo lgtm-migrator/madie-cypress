@@ -74,10 +74,12 @@ export class TestCasesPage {
     public static readonly denominatorExceptionRow = '[data-testid="test-row-population-id-denominatorException"]'
     public static readonly measureObservationRow = '[data-testid="test-population-measureObservation-expected"]'
     public static readonly measureGroup1Label ='[data-testid="measure-group-1"]'
+    public static readonly denominatorObservationExpectedRow = '[data-testid="test-population-denominatorObservation-expected"]'
 
     //Stratifications
     public static readonly denominatorStratificationOneExpectedValue = '[data-testid="test-population-Strata-1 Denominator-expected"]'
     public static readonly numeratorStratificationTwoExpectedValue = '[data-testid="test-population-Strata-2 Numerator-expected"]'
+    public static readonly initialPopulationStratificationExpectedValue = '[data-testid="test-population-Strata-1 Initial Population-expected"]'
 
     //Test Case Expected/Actual Values
     public static readonly nonBooleanExpectedValueError = '[class="qpp-error-message"]'
@@ -176,6 +178,10 @@ export class TestCasesPage {
         //Save edited / updated to test case
         cy.get(this.editTestCaseSaveButton).click()
         cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+
+        cy.get(this.confirmationMsg).each(msg => {
+            expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
+        })
 
         cy.log('JSON added to test case successfully')
 
