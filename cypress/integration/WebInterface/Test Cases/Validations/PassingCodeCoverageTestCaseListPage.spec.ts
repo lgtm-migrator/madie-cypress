@@ -29,6 +29,9 @@ describe('Test Case Validations', () => {
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
+        if ((EditMeasurePage.dirtCheckModal)) {
+            cy.get(EditMeasurePage.keepWorkingCancel).click()
+        }
         cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
         cy.get(EditMeasurePage.cqlEditorTextBox).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')

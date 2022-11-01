@@ -59,7 +59,7 @@ export class MeasureGroupPage {
     public static readonly improvementNotationSelect = '[id="improvement-notation-select"]'
     //Measure Group Type
     public static readonly measureGroupTypeSelect = '[data-testid="measure-group-type-dropdown"]'
-    public static readonly measureGroupTypeCheckbox = '[class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-1km1ehz"]'
+    public static readonly measureGroupTypeCheckbox = '[id="measure-group-type"]'
     public static readonly measureGroupTypeDropdownBtn = '[class="MuiBackdrop-root MuiBackdrop-invisible css-esi9ax"]'
     public static readonly measureGroupTypeListBox = '[id="mui-component-select-measureGroupTypes"]'
 
@@ -284,11 +284,10 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Proportion'
-        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'/* 'ipp' */}
+        if ((popBasis == undefined) || (popBasis === null) || (popBasis == 'Boolean')){popBasis = 'boolean'/* 'ipp' */}
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}
-        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
@@ -383,7 +382,7 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Ratio'
-        if ((popBasis == undefined) || (popBasis === null)){popBasis = 'Boolean'/* 'ipp' */}
+        if ((popBasis == undefined) || (popBasis === null) || (popBasis == 'Boolean')){popBasis = 'boolean'}
         if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'}
         if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'}
         if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'}
