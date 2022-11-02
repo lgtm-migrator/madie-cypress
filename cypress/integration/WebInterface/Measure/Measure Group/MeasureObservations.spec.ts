@@ -107,17 +107,7 @@ describe('Measure Observations', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.measureScoringSelect).click()
         cy.get(MeasureGroupPage.measureScoringCV).click()
@@ -236,18 +226,7 @@ describe('Measure Observations', () => {
 
         //Navigate to Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
         //Verify default value
@@ -387,18 +366,7 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.measureScoringSelect).click()
         cy.get(MeasureGroupPage.measureScoringCV).click()
@@ -518,17 +486,7 @@ describe('Measure Observation - Expected Values',  () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
@@ -602,8 +560,7 @@ describe('Measure Observation - Expected Values',  () => {
         cy.get(TestCasesPage.measureObservationRow).should('exist')
     })
 
-    //Skipping until MAT-4995 is fixed
-    it.skip('Verify Expected values for Boolean Type Ratio Measure Observations', () => {
+    it('Verify Expected values for Boolean Type Ratio Measure Observations', () => {
 
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
 
@@ -674,46 +631,47 @@ describe('Measure Observation - Expected Values',  () => {
         cy.get(TestCasesPage.testCaseNUMERExpected).wait(1000).should('be.checked')
 
         //Verify Numerator and Denominator Observation rows are added
-        cy.get(TestCasesPage.measureObservationRow).eq(0).should('exist')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('exist')
+        cy.get(TestCasesPage.denominatorObservationRow).should('exist')
+        cy.get(TestCasesPage.numeratorObservationRow).should('exist')
 
         //Check Denominator Exclusion and verify Denominator Observation row goes away
         cy.get(TestCasesPage.testCaseDENEXExpected).should('exist')
         cy.get(TestCasesPage.testCaseDENEXExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENEXExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('not.exist')
+        cy.get(TestCasesPage.denominatorObservationRow).should('not.exist')
 
         //Uncheck Denominator Exclusion and verify Denominator Observation row re appears
         cy.get(TestCasesPage.testCaseDENEXExpected).should('exist')
         cy.get(TestCasesPage.testCaseDENEXExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENEXExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseDENEXExpected).uncheck().should('not.be.checked')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('exist')
+        cy.get(TestCasesPage.denominatorObservationRow).should('exist')
 
         //Check Numerator Exclusion and verify Numerator Observation row goes away
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('exist')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseNUMEXExpected).check().should('be.checked')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('not.exist')
+        cy.get(TestCasesPage.numeratorObservationRow).should('not.exist')
 
         //Uncheck Numerator Exclusion and verify Numerator Observation row re appears
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('exist')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseNUMEXExpected).uncheck().should('not.be.checked')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('exist')
+        cy.get(TestCasesPage.numeratorObservationRow).should('exist')
 
         //Check Numerator & Denominator Exclusion and verify Numerator & Denominator Observation rows goes away
         cy.get(TestCasesPage.testCaseNUMEXExpected).check().should('be.checked')
         cy.get(TestCasesPage.testCaseDENEXExpected).check().should('be.checked')
-        cy.get(TestCasesPage.measureObservationRow).should('not.exist')
+        cy.get(TestCasesPage.denominatorObservationRow).should('not.exist')
+        cy.get(TestCasesPage.numeratorObservationRow).should('not.exist')
 
         //Uncheck Numerator & Denominator Exclusion and verify Numerator & Denominator Observation rows re appear
         cy.get(TestCasesPage.testCaseNUMEXExpected).uncheck().should('not.be.checked')
         cy.get(TestCasesPage.testCaseDENEXExpected).uncheck().should('not.be.checked')
-        cy.get(TestCasesPage.measureObservationRow).eq(0).should('exist')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('exist')
+        cy.get(TestCasesPage.denominatorObservationRow).should('exist')
+        cy.get(TestCasesPage.numeratorObservationRow).should('exist')
     })
 })
