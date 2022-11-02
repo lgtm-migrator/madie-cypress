@@ -24,14 +24,17 @@ let measureCQL = 'library CohortEpisodeEncounter version \'0.0.000\'\n' +
     '\n' +
     'define "Initial Population":\n' +
     '   Global."Inpatient Encounter"'
-//skipping until MAT-4950 and/or MAT-4953 is finished
-describe.skip('Measure Creation and Testing: Cohort Episode Encounter', () => {
 
-    before('Create Measure', () => {
+describe('Measure Creation and Testing: Cohort Episode Encounter', () => {
+
+    before('Create Measure and Test Case', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(measureName, CqlLibraryName, measureCQL, false, false,
             '2012-01-02', '2013-01-01')
+
+        //create test case
+        TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
         OktaLogin.Login()
     })
@@ -57,17 +60,7 @@ describe.skip('Measure Creation and Testing: Cohort Episode Encounter', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).should('exist').invoke('click')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
@@ -85,23 +78,9 @@ describe.skip('Measure Creation and Testing: Cohort Episode Encounter', () => {
         //validation successful save message
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
 
-        //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
-        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.newTestCaseButton).click()
 
-        cy.get(TestCasesPage.detailsTab).click()
-
-        //Add json to the test case
-        cy.get(TestCasesPage.aceEditor).type(testCaseJson, { parseSpecialCharSequences: false })
-
-        cy.get(TestCasesPage.testCaseTitle).should('be.visible')
-        cy.get(TestCasesPage.testCaseTitle).should('be.enabled')
-        cy.get(TestCasesPage.testCaseTitle).type(testCaseTitle, { force: true })
-        cy.get(TestCasesPage.testCaseDescriptionTextBox).type(testCaseDescription)
-        cy.get(TestCasesPage.testCaseSeriesTextBox).type(testCaseSeries).type('{enter}')
+        TestCasesPage.clickEditforCreatedTestCase()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
@@ -111,7 +90,11 @@ describe.skip('Measure Creation and Testing: Cohort Episode Encounter', () => {
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseIPPExpected).type('1')
 
-        TestCasesPage.clickCreateTestCaseButton()
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+
+        cy.get(EditMeasurePage.testCasesTab).click()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('exist')
         cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')

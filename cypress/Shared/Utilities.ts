@@ -52,6 +52,7 @@ export class Utilities {
     public static textValues = {
         dataLines: null
     }
+
     public static typeFileContents(file: string, pageResource: any): void {
         cy.get(pageResource).should('exist')
         cy.get(pageResource).should('be.visible')
@@ -60,6 +61,7 @@ export class Utilities {
             cy.get(pageResource).focused().type(fileContents)
         })
     }
+
     public static readWriteFileData(file: string, pageResource: any): void{
         cy.fixture(file).then((str) => {
             // split file by line endings
@@ -88,6 +90,7 @@ export class Utilities {
             }
         })
     }
+
     public static validateCQL(file: string, pageResource: any): void{
         cy.fixture(file).then((str) => {
             // split file by line endings
@@ -457,5 +460,20 @@ export class Utilities {
             .get('ul > li[data-value="' + valueDataElement + '"]')
             .click()
         }
+    }
+
+    public static setMeasureGroupType (): void {
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
     }
 }
