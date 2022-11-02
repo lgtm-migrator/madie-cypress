@@ -5,8 +5,8 @@ import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {TestCasesPage} from "../../../../Shared/TestCasesPage"
-import {MeasuresPage} from "../../../../Shared/MeasuresPage";
-import {CQLEditorPage} from "../../../../Shared/CQLEditorPage";
+import {MeasuresPage} from "../../../../Shared/MeasuresPage"
+import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -18,8 +18,7 @@ let testCaseJson = TestCaseJson.TestCaseJson_Valid
 let newMeasureName = measureName + randValue
 let newCqlLibraryName = CqlLibraryName + randValue
 
-//skipping until MAT-4943 is finished
-describe.skip('Measure Observation Expected values', () => {
+describe('Measure Observation Expected values', () => {
 
     beforeEach('Create measure and login', () => {
 
@@ -42,7 +41,8 @@ describe.skip('Measure Observation Expected values', () => {
 
     })
 
-    it('Validate and save Measure observation for CV measure', () => {
+    //Skipping until MAT-4994 is fixed
+    it.skip('Validate and save Measure observation for CV measure', () => {
 
         //Create Continuous variable measure group
         MeasureGroupPage.createMeasureGroupforContinuousVariableMeasure()
@@ -58,15 +58,17 @@ describe.skip('Measure Observation Expected values', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCaseMSRPOPLExpected).wait(1000).check()
+        cy.get(TestCasesPage.testCaseMSRPOPLExpected).wait(1000).should('be.checked')
 
         //Validate measure observation expected values
-        cy.get(TestCasesPage.measureObservationRow).type('@#')
+        cy.get(TestCasesPage.measureObservationRow).clear().type('@#')
         cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
         cy.get(TestCasesPage.measureObservationRow).clear().type('ab12')
         cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
-        cy.get(TestCasesPage.measureObservationRow).type('-15')
+        cy.get(TestCasesPage.measureObservationRow).clear().type('-15')
         cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
 
@@ -75,21 +77,29 @@ describe.skip('Measure Observation Expected values', () => {
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.detailsTab).click()
-        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+        cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'An error occurred with the Test Case JSON while updating the test case')
 
         //Assert saved observation values
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.measureObservationRow).should('contain.value', '1.3')
     })
 
-    it('Validate and save Measure observation for Ratio measure', () => {
+    //Skipping until MAT-4995 is fixed
+    it.skip('Validate and save Measure observation for Ratio measure', () => {
 
         //Create Ratio measure group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        //Select null values for Denominator & Numerator Exclusion
+        cy.get(MeasureGroupPage.denominatorExclusionSelect).click()
+        cy.get('.MuiList-root > [data-value=""]').click()
+        cy.get(MeasureGroupPage.numeratorExclusionSelect).click()
+        cy.get('.MuiList-root > [data-value=""]').click()
 
         //Add Denominator Observation
         cy.log('Adding Measure Observations')
-        cy.get(MeasureGroupPage.addDenominatorObservationLink).click()
+        cy.get(MeasureGroupPage.addDenominatorObservationLink).wait(1000).click()
         cy.get(MeasureGroupPage.denominatorObservation).click()
         cy.get(MeasureGroupPage.measureObservationSelect).eq(0).click() //select ToCode
         cy.get(MeasureGroupPage.denominatorAggregateFunction).click()
@@ -121,29 +131,33 @@ describe.skip('Measure Observation Expected values', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCaseDENOMExpected).wait(1000).check()
+        cy.get(TestCasesPage.testCaseDENOMExpected).wait(1000).should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERExpected).wait(1000).check()
+        cy.get(TestCasesPage.testCaseNUMERExpected).wait(1000).should('be.checked')
 
         //Validate measure observation expected values
-        cy.get(TestCasesPage.measureObservationRow).eq(0).type('@#')
-        cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.denominatorObservationRow).type('@#')
+        cy.get(TestCasesPage.denominatorObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).type('ab12')
-        cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.numeratorObservationRow).type('ab12')
+        cy.get(TestCasesPage.numeratorObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).type('-15')
-        cy.get(TestCasesPage.measureObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
+        cy.get(TestCasesPage.numeratorObservationRow).type('-15')
+        cy.get(TestCasesPage.numeratorObservationExpectedValueError).should('contain.text', 'Only positive numeric values can be entered in the expected values')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.disabled')
 
         //Save measure observation expected values
-        cy.get(TestCasesPage.measureObservationRow).eq(0).clear().type('1.3')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).clear().type('5')
+        cy.get(TestCasesPage.denominatorObservationRow).clear().type('1.3')
+        cy.get(TestCasesPage.numeratorObservationRow).clear().type('5')
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         //Assert saved observation values
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-        cy.get(TestCasesPage.measureObservationRow).eq(0).should('contain.value', '1.3')
-        cy.get(TestCasesPage.measureObservationRow).eq(1).should('contain.value', '5')
+        cy.get(TestCasesPage.denominatorObservationRow).should('contain.value', '1.3')
+        cy.get(TestCasesPage.numeratorObservationRow).should('contain.value', '5')
     })
 
     it('Verify Expected / Actual page dirty check for Measure Observations', () => {
@@ -155,13 +169,14 @@ describe.skip('Measure Observation Expected values', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
         //create test case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
-        cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+        cy.get(TestCasesPage.testCaseMSRPOPLExpected).wait(1000).check()
+        cy.get(TestCasesPage.testCaseMSRPOPLExpected).wait(1000).should('be.checked')
 
         //Enter value in to Measure observation Expected values
         cy.get(TestCasesPage.measureObservationRow).type('1.3')
@@ -182,8 +197,7 @@ describe.skip('Measure Observation Expected values', () => {
     })
 })
 
-//skipping until MAT-4943 is finished
-describe.skip('Measure observation expected result', () => {
+describe('Measure observation expected result', () => {
 
     beforeEach('Create measure and login', () => {
 
@@ -230,11 +244,13 @@ describe.skip('Measure observation expected result', () => {
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
         cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force: true})
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
@@ -269,14 +285,15 @@ describe.skip('Measure observation expected result', () => {
         //Enter values in to Measure population(MP) & Measure population exclusion(MPE) fields and verify MP-MPE = number of observation rows
         cy.get(TestCasesPage.testCaseMSRPOPLExpected).type('5')
         cy.get(TestCasesPage.testCaseMSRPOPLEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ2')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ3')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ4')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
 
     })
 
-    it('Verify Measure Observation expected result for Ratio measure', () => {
+    //Skipping until MAT-4995 is fixed
+    it.skip('Verify Measure Observation expected result for Ratio measure', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -298,11 +315,13 @@ describe.skip('Measure observation expected result', () => {
         cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
         cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
         cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
                 cy.wrap($ele).click()
             }
         })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
@@ -320,7 +339,7 @@ describe.skip('Measure observation expected result', () => {
 
         //Add Denominator Observation
         cy.log('Adding Measure Observations')
-        cy.get(MeasureGroupPage.addDenominatorObservationLink).click()
+        cy.get(MeasureGroupPage.addDenominatorObservationLink).wait(1000).click()
         cy.get(MeasureGroupPage.denominatorObservation).click()
         cy.get(MeasureGroupPage.measureObservationSelect).should('exist')
         cy.get(MeasureGroupPage.measureObservationSelect).should('be.visible')
@@ -361,15 +380,15 @@ describe.skip('Measure observation expected result', () => {
         //Enter values in to Denominator & Denominator exclusion(DE) fields and verify Denominator-DE = number of Denominator observation rows
         cy.get(TestCasesPage.testCaseDENOMExpected).type('4')
         cy.get(TestCasesPage.testCaseDENEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ2')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ3')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
 
         //Enter values in to Numerator & Numerator exclusion(NE) fields and verify Denominator-NE = number of Numerator observation rows
         cy.get(TestCasesPage.testCaseNUMERExpected).type('4')
         cy.get(TestCasesPage.testCaseNUMEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ4')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ5')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'observ6')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
     })
 })
