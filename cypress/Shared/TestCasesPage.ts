@@ -186,6 +186,10 @@ export class TestCasesPage {
             expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
         })
 
+        cy.get(this.confirmationMsg).each(msg => {
+            expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
+        })
+
         cy.log('JSON added to test case successfully')
 
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
