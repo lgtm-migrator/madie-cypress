@@ -107,17 +107,7 @@ describe('Measure Observations', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.measureScoringSelect).click()
         cy.get(MeasureGroupPage.measureScoringCV).click()
@@ -236,18 +226,7 @@ describe('Measure Observations', () => {
 
         //Navigate to Measure Group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
         //Verify default value
@@ -387,18 +366,7 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
-
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.measureScoringSelect).click()
         cy.get(MeasureGroupPage.measureScoringCV).click()
@@ -518,17 +486,7 @@ describe('Measure Observation - Expected Values',  () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
