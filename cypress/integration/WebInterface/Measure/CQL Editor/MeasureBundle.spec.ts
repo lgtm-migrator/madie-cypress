@@ -30,9 +30,6 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -59,9 +56,6 @@ describe('Measure Bundle end point returns cqlErrors as true', () => {
 
         //Click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         //making some minor and invalid change to the Measure CQL
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}{home}')
@@ -115,9 +109,6 @@ describe('Bundle returns elmXML', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -142,9 +133,6 @@ describe('Bundle returns elmXML', () => {
 
         //Click on the CQL Editor tab
         CQLEditorPage.clickCQLEditorTab()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         //make some insignificant change
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
@@ -199,9 +187,6 @@ describe('Measure bundle end point returns scoring type for multiple Measure gro
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(15500)
@@ -313,9 +298,6 @@ describe('Measure bundle end point returns stratifications', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
         cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -433,9 +415,6 @@ describe('Measure bundle end point returns stratifications', () => {
 
         //navigate to CQL Editor page / tab
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
