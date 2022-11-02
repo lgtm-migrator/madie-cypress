@@ -20,7 +20,7 @@ let newCqlLibraryName = CqlLibraryName + randValue
 
 describe('Measure Observation Expected values', () => {
 
-    beforeEach('Create measure and login', () => {
+    beforeEach('Create Measure, Test Case and login', () => {
 
         randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
@@ -28,6 +28,7 @@ describe('Measure Observation Expected values', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
         OktaLogin.Login()
     })
 
@@ -48,9 +49,6 @@ describe('Measure Observation Expected values', () => {
         MeasureGroupPage.createMeasureGroupforContinuousVariableMeasure()
 
         //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -84,8 +82,7 @@ describe('Measure Observation Expected values', () => {
         cy.get(TestCasesPage.measureObservationRow).should('contain.value', '1.3')
     })
 
-    //Skipping until MAT-4995 is fixed
-    it.skip('Validate and save Measure observation for Ratio measure', () => {
+    it('Validate and save Measure observation for Ratio measure', () => {
 
         //Create Ratio measure group
         MeasureGroupPage.createMeasureGroupforRatioMeasure()
@@ -121,9 +118,6 @@ describe('Measure Observation Expected values', () => {
         cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
 
         //Navigate to Test Cases page and add Test Case details
-        cy.get(EditMeasurePage.testCasesTab).click()
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
@@ -167,8 +161,6 @@ describe('Measure Observation Expected values', () => {
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
         TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
@@ -199,7 +191,7 @@ describe('Measure Observation Expected values', () => {
 
 describe('Measure observation expected result', () => {
 
-    beforeEach('Create measure and login', () => {
+    beforeEach('Create Measure, Test Case and login', () => {
 
         randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
@@ -207,6 +199,7 @@ describe('Measure observation expected result', () => {
 
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasureAPI(newMeasureName, newCqlLibraryName)
+        TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
         OktaLogin.Login()
     })
 
@@ -240,17 +233,7 @@ describe('Measure observation expected result', () => {
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
@@ -272,9 +255,6 @@ describe('Measure observation expected result', () => {
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
-        cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
@@ -285,15 +265,14 @@ describe('Measure observation expected result', () => {
         //Enter values in to Measure population(MP) & Measure population exclusion(MPE) fields and verify MP-MPE = number of observation rows
         cy.get(TestCasesPage.testCaseMSRPOPLExpected).type('5')
         cy.get(TestCasesPage.testCaseMSRPOPLEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'msrpopobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Observation 1')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Observation 2')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Observation 3')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Observation 4')
 
     })
 
-    //Skipping until MAT-4995 is fixed
-    it.skip('Verify Measure Observation expected result for Ratio measure', () => {
+    it('Verify Measure Observation expected result for Ratio measure', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -311,17 +290,7 @@ describe('Measure observation expected result', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
@@ -367,9 +336,6 @@ describe('Measure observation expected result', () => {
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
-        cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
 
         //click on Expected/Actual tab
@@ -380,15 +346,15 @@ describe('Measure observation expected result', () => {
         //Enter values in to Denominator & Denominator exclusion(DE) fields and verify Denominator-DE = number of Denominator observation rows
         cy.get(TestCasesPage.testCaseDENOMExpected).type('4')
         cy.get(TestCasesPage.testCaseDENEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denomobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator Observation 1')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator Observation 2')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator Observation 3')
 
         //Enter values in to Numerator & Numerator exclusion(NE) fields and verify Denominator-NE = number of Numerator observation rows
         cy.get(TestCasesPage.testCaseNUMERExpected).type('4')
         cy.get(TestCasesPage.testCaseNUMEXExpected).type('1')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numerobserv')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Numerator Observation 1')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Numerator Observation 2')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Numerator Observation 3')
     })
 })
