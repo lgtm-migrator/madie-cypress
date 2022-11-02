@@ -53,9 +53,6 @@ describe('Run Test Case button validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -122,9 +119,6 @@ describe('Run Test Case button validations', () => {
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -153,9 +147,6 @@ describe('Run Test Case button validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -264,9 +255,6 @@ describe('Run Test Case button validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -373,9 +361,6 @@ describe('Run Test Case button validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -542,9 +527,6 @@ describe('Execute Test Case Button Validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -618,9 +600,6 @@ describe('Execute Test Case Button Validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -681,9 +660,6 @@ describe('Execute Test Case Button Validations', () => {
 
         //Add CQL
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
 
         cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -755,9 +731,6 @@ describe('Run and Execute Test case', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
         cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
@@ -892,9 +865,6 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         OktaLogin.Login()
         MeasuresPage.clickEditforCreatedMeasure()
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
         cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
