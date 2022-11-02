@@ -118,39 +118,36 @@ export class TestCaseJson {
 
     public static readonly CohortEpisodeEncounter_PASS ='{ "resourceType": "Bundle", "id": "ip-pass-InpatientEncounter", ' +
         '"meta": { "versionId": "3", "lastUpdated": "2022-09-14T12:38:39.889+00:00" }, "type": "collection", "entry": [ ' +
-        '{ "fullUrl": "609bde3598086b0a16d79fc6", "resource": {{} "id":"1", "resourceType": "Patient", "id": "609bde3598086b0a' +
-        '16d79fc6", "meta": { "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-patient" ] }, "tex' +
-        't": { "status": "generated", "div": "<div xmlns=\\"http://www.w3.org/1999/xhtml\\"><div class=\\"hapiHeaderTex' +
-        't\\">LocationPeriodStartTimeMissing <b>MSRPOPLEXSTRAT2PASS </b></div><table class=\\"hapiPropertyTable\\"><tbod' +
-        'y><tr><td>Identifier</td><td>8065dc8d26797064d8766be71f2bf020</td></tr><tr><td>Date of birth</td><td><span>10 Fe' +
-        'bruary 1954</span></td></tr></tbody></table></div>" }, "identifier": [ { "type": { "coding": [ { "system": "ht' +
-        'tp://terminology.hl7.org/CodeSystem/v2-0203", "code": "MR" } ] }, "system": "http://myGoodHealthcare.com/MRN", ' +
-        '"value": "8065dc8d26797064d8766be71f2bf020" } ], "active": true, "name": [ { "use": "usual", "family": "IPPass", ' +
-        '"given": [ "Inpatient Encounter" ] } ], "gender": "male", "birthDate": "1954-02-10" } }, { "fullUrl": "5c6c61ceb' +
-        '84846536a9a98f9", "resource": {{} "id":"2", "resourceType": "Encounter", "id": "5c6c61ceb84846536a9a98f9", "status": "finis' +
-        'hed", "class" : { "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code" : "IMP", "display" : "i' +
-        'npatient encounter" }, "type": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "183452005", "disp' +
-        'lay": "Emergency hospital admission (procedure)" } ] } ], "subject": { "reference": "Patient/609bde3598086b0a16' +
-        'd79fc6" }, "priority": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "103391001", "display": "Ur' +
-        'gency" } ] } ], "period": { "start": "2012-07-15T08:00:00+00:00", "end": "2012-07-16T09:00:00+00:00" }, "length"' +
-        ': { "value": 1.0, "unit": "days" }, "location" : [ { "location" : { "reference" : "Location/4989ju789fn93bvy562l' +
-        'oe87c", "display" : "Holy Family Hospital Inpatient" }, "period": { "start": "2012-07-15T08:00:00+00:00", "end' +
-        '": "2012-07-16T09:00:00+00:00" } } ] } }, { "fullUrl": "9dju7njdn764mdjy6dm92nje", "resource": {{} "id":"3", "resourceType"' +
-        ': "Encounter", "id": "9dju7njdn764mdjy6dm92nje", "status": "finished", "class" : { "system" : "http://terminolo' +
-        'gy.hl7.org/CodeSystem/v3-ActCode", "code" : "EMRGONLY", "display" : "Emergency only" }, "type": [ { "coding": [ ' +
-        '{ "system": "http://snomed.info/sct", "code": "4525004", "display": "Emergency department patient visit (procedu' +
-        're)" } ] } ], "subject": { "reference": "Patient/609bde3598086b0a16d79fc6" }, "period": { "start": "2012-07-14T2' +
-        '3:00:00+00:00", "end": "2012-07-15T07:30:00+00:00" }, "length": { "value": 1.0, "unit": "days" }, "location" : ' +
-        '[ { "location" : { "reference" : "Location/489juh6757h87j03jhy73mv7", "display" : "Holy Family Hospital Inpatie' +
-        'nt" }, "period": { "start": "2012-07-14T23:00:00+00:00", "end": "2012-07-15T07:30:00+00:00" } } ] } }, { "fullU' +
-        'rl": "489juh6757h87j03jhy73mv7", "resource": {{} "id":"4", "resourceType" : "Location", "id" : "489juh6757h87j03jhy73mv7", ' +
-        '"meta" : { "profile" : [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-location" ] }, "identifier" :' +
-        ' [ { "use" : "official", "system" : "http://holycrosshospital.com/location", "value" : "489juh6757h87j03jhy73mv7' +
-        '" } ], "status" : "active", "name" : "South Wing, second floor" } }, { "fullUrl": "4989ju789fn93bvy562loe87c", "' +
-        'resource": {{} "id":"5", "resourceType" : "Location", "id" : "4989ju789fn93bvy562loe87c", "meta" : { "profile" : [ "http://h' +
-        'l7.org/fhir/us/qicore/StructureDefinition/qicore-location" ] }, "identifier" : [ { "use" : "official", "system" ' +
-        ': "http://holycrosshospital.com/location", "value" : "4989ju789fn93bvy562loe87c" } ], "status" : "active", "name" ' +
-        ': "North Wing, second floor" } }  ] }'
+        '{ "fullUrl": "http://MyHealthcare.com/Patient/609bde3598086b0a16d79fc6", "resource": { "id": "609bde3598086b0a1' +
+        '6d79fc6", "resourceType": "Patient", "meta": { "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/' +
+        'qicore-patient" ] }, "identifier": [ { "type": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/' +
+        'v2-0203", "code": "MR" } ] }, "system": "http://myGoodHealthcare.com/MRN", "value": "8065dc8d26797064d8766be71f' +
+        '2bf020" } ], "active": true, "name": [ { "use": "usual", "family": "IPPass", "given": [ "Inpatient Encounter" ] ' +
+        '} ], "gender": "male", "birthDate": "1954-02-10" } }, { "fullUrl": "http://MyHealthcare.com/Encounter/5c6c61ceb8' +
+        '4846536a9a98f9", "resource": { "id": "5c6c61ceb84846536a9a98f9", "resourceType": "Encounter", "status": "finishe' +
+        'd", "class": { "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "IMP", "display": "inpatie' +
+        'nt encounter" }, "type": [ { "coding": [ { "system": "http://snomed.info/sct", "code": "183452005", "display": ' +
+        '"Emergency hospital admission (procedure)" } ] } ], "subject": { "reference": "Patient/609bde3598086b0a16d79fc6"' +
+        ' }, "priority": { "coding": [ { "system": "http://snomed.info/sct", "code": "103391001", "display": "Urgency" } ' +
+        '] }, "period": { "start": "2012-07-15T08:00:00+00:00", "end": "2012-07-16T09:00:00+00:00" }, "length": { "value"' +
+        ': 1, "unit": "days" }, "location": [ { "location": { "reference": "Location/4989ju789fn93bvy562loe87c", "display"' +
+        ': "Holy Family Hospital Inpatient" }, "period": { "start": "2012-07-15T08:00:00+00:00", "end": "2012-07-16T09:00' +
+        ':00+00:00" } } ] } }, { "fullUrl": "http://MyHealthcare.com/Encounter/9dju7njdn764mdjy6dm92nje", "resource": { "' +
+        'id": "9dju7njdn764mdjy6dm92nje", "resourceType": "Encounter", "status": "finished", "class": { "system": "http:' +
+        '//terminology.hl7.org/CodeSystem/v3-ActCode", "code": "EMRGONLY", "display": "Emergency only" }, "type": [ { "' +
+        'coding": [ { "system": "http://snomed.info/sct", "code": "4525004", "display": "Emergency department patient v' +
+        'isit (procedure)" } ] } ], "subject": { "reference": "Patient/609bde3598086b0a16d79fc6" }, "period": { "start": ' +
+        '"2012-07-14T23:00:00+00:00", "end": "2012-07-15T07:30:00+00:00" }, "length": { "value": 1, "unit": "days" }, "' +
+        'location": [ { "location": { "reference": "Location/489juh6757h87j03jhy73mv7", "display": "Holy Family Hospital ' +
+        'Inpatient" }, "period": { "start": "2012-07-14T23:00:00+00:00", "end": "2012-07-15T07:30:00+00:00" } } ] } }, { ' +
+        '"fullUrl": "http://MyHealthcare.com/Location/489juh6757h87j03jhy73mv7", "resource": { "id": "489juh6757h87j03jhy' +
+        '73mv7", "resourceType": "Location", "meta": { "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/q' +
+        'icore-location" ] }, "identifier": [ { "use": "official", "system": "http://holycrosshospital.com/location", "v' +
+        'alue": "489juh6757h87j03jhy73mv7" } ], "status": "active", "name": "South Wing, second floor" } }, { "fullUrl": ' +
+        '"http://MyHealthcare.com/Location/4989ju789fn93bvy562loe87c", "resource": { "id": "4989ju789fn93bvy562loe87c", "' +
+        'resourceType": "Location", "meta": { "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-lo' +
+        'cation" ] }, "identifier": [ { "use": "official", "system": "http://holycrosshospital.com/location", "value": "' +
+        '4989ju789fn93bvy562loe87c" } ], "status": "active", "name": "North Wing, second floor" } } ] }'
 
     public static readonly TestCase_XML = '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '\n' +

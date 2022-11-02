@@ -94,24 +94,23 @@ describe('Measure Creation and Testing: Cohort Episode Encounter', () => {
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
-        cy.get(EditMeasurePage.testCasesTab).click()
-
-        cy.get(TestCasesPage.executeTestCaseButton).should('exist')
-        cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
-        cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
-
-        cy.get(TestCasesPage.executeTestCaseButton).click()
-
-        cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
-
-        TestCasesPage.clickEditforCreatedTestCase()
-
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.testCasePopulationList).should('be.visible')
 
         cy.get(TestCasesPage.runTestButton).click()
 
         cy.get(TestCasesPage.measureGroup1Label).should('have.color', '#4d7e23')
+
+        cy.get(EditMeasurePage.testCasesTab).click()
+
+        cy.get(TestCasesPage.executeTestCaseButton).should('exist')
+        cy.get(TestCasesPage.executeTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.executeTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.executeTestCaseButton).focus()
+        cy.get(TestCasesPage.executeTestCaseButton).invoke('click')
+        cy.get(TestCasesPage.executeTestCaseButton).click()
+        cy.get(TestCasesPage.executeTestCaseButton).click()
+        cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
 
     })
 })
