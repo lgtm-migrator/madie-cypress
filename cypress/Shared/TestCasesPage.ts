@@ -73,7 +73,9 @@ export class TestCasesPage {
     public static readonly denominatorRow = '[data-testid="test-row-population-id-denominator"]'
     public static readonly denominatorExclusionRow = '[data-testid="test-row-population-id-denominatorExclusion"]'
     public static readonly denominatorExceptionRow = '[data-testid="test-row-population-id-denominatorException"]'
-    public static readonly measureObservationRow = '[data-testid="test-population-measureObservation-expected"]'
+    public static readonly measureObservationRow = '[data-testid="test-population-measurePopulationObservation-expected"]'
+    public static readonly denominatorObservationRow = '[data-testid="test-population-denominatorObservation-expected"]'
+    public static readonly numeratorObservationRow = '[data-testid="test-population-numeratorObservation-expected"]'
     public static readonly measureGroup1Label ='[data-testid="measure-group-1"]'
     public static readonly denominatorObservationExpectedRow = '[data-testid="test-population-denominatorObservation-expected"]'
 
@@ -84,7 +86,9 @@ export class TestCasesPage {
 
     //Test Case Expected/Actual Values
     public static readonly nonBooleanExpectedValueError = '[class="qpp-error-message"]'
-    public static readonly measureObservationExpectedValueError = '[data-testid="measureObservation-error-helper-text"]'
+    public static readonly measureObservationExpectedValueError = '[data-testid="measurePopulationObservation-error-helper-text"]'
+    public static readonly denominatorObservationExpectedValueError = '[data-testid="denominatorObservation-error-helper-text"]'
+    public static readonly numeratorObservationExpectedValueError = '[data-testid="numeratorObservation-error-helper-text"]'
     public static readonly eaMeasureGroupOneStratification = '[data-testid="measure-group-1-stratifications"]'
 
     //New Test Case Modal
@@ -178,7 +182,9 @@ export class TestCasesPage {
 
         //Save edited / updated to test case
         cy.get(this.editTestCaseSaveButton).click()
-        cy.get(this.confirmationMsg).should('contain.text', 'Test case updated successfully!')
+        cy.get(this.confirmationMsg).each(msg => {
+            expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
+        })
 
         cy.get(this.confirmationMsg).each(msg => {
             expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
