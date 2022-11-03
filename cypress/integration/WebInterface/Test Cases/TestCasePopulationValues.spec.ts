@@ -290,7 +290,7 @@ describe('Test Case Expected Measure Group population values based on initial me
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
         //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click().wait(3500)
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
@@ -299,16 +299,36 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
         cy.log((measureScoringArray[4].valueOf()).toString())
+        Utilities.setMeasureGroupType()
+    
+        //select scoring on measure
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
         //select correct Population Basis value
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Procedure')
         cy.get(MeasureGroupPage.popBasisOption).click()
-        //select scoring unit on measure
-        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
 
-        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(), 'wOOpt')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExceptionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
+
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
@@ -333,12 +353,12 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'ipp')
-        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'numer')
-        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'denom')
-        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'numex')
-        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'denex')
-        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'denexcep')
+        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'Initial Population')
+        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'Numerator')
+        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'Denominator')
+        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'Numerator Exclusion')
+        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'Denominator Exclusion')
+        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'Denominator Exception')
     })
 })
 
@@ -597,16 +617,37 @@ describe('TC Pop value options are limited to those that are defined from Measur
         MeasuresPage.clickEditforCreatedMeasure()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+        Utilities.setMeasureGroupType()
+    
         //set scoring value
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+
         //set Population Basis value
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Procedure')
         cy.get(MeasureGroupPage.popBasisOption).click()
-        //setup measure group so that only the required fields / populations are defined / has values
-        Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'wOOpt')
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExceptionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
+
         //save group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -632,12 +673,12 @@ describe('TC Pop value options are limited to those that are defined from Measur
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'ipp')
-        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'numer')
-        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'denom')
-        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'numex')
-        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'denex')
-        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'denexcep')
+        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'Initial Population')
+        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'Numerator')
+        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'Denominator')
+        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'Numerator Exclusion')
+        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'Denominator Exclusion')
+        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'Denominator Exception')
         //go back and update measure group to contain values for all of the population fields
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
@@ -655,12 +696,12 @@ describe('TC Pop value options are limited to those that are defined from Measur
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'ipp')
-        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'numer')
-        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'denom')
-        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'numex')
-        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'denex')
-        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'denexcep')
+        cy.get(TestCasesPage.initialPopulationRow).should('contain.text', 'Initial Population')
+        cy.get(TestCasesPage.numeratorRow).should('contain.text', 'Numerator')
+        cy.get(TestCasesPage.denominatorRow).should('contain.text', 'Denominator')
+        cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'Numerator Exclusion')
+        cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'Denominator Exclusion')
+        cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'Denominator Exception')
 
     })
 })
@@ -696,13 +737,43 @@ describe('Test Case Expected Measure Group population values based on initial me
         MeasuresPage.clickEditforCreatedMeasure()
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
+        Utilities.setMeasureGroupType()
+    
+        //set scoring value
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringProportion)
+        //select scoring unit on measure
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+
+        //set Population Basis value
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
         //setup measure group so that only the required fields / populations are defined / has values
         Utilities.validateMeasureGroup(measureScoringArray[1].valueOf().toString(),'all')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-        cy.wait(500)
+        cy.wait(1000)
+
+        //confirm change to Population Criteria
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
+
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).click()
         //create test case
@@ -716,15 +787,16 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
     
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - Ratio | Procedure')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - Proportion | Procedure')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'ipp')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numer')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denom')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'numex')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'denex')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Initial Population')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Numerator')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Numerator Exclusion')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator Exclusion')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Denominator Exception')
 
     
     })
