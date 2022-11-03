@@ -8,15 +8,15 @@ import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {MeasuresPage} from "../../../../Shared/MeasuresPage"
 import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 
-let measureName = 'RatioPatientSingleIPNoMO' + Date.now()
-let CqlLibraryName = 'RatioPatientSingleIPNoMO' + Date.now()
+let measureName = 'RatioEpisodeSingleIPNoMO' + Date.now()
+let CqlLibraryName = 'RatioEpisodeSingleIPNoMO' + Date.now()
 let testCaseTitleIppPass = 'IPP PASS'
-let testCaseTitleDrcPass = 'DRC PASS'
+let testCaseTitleMultipleEpisodesPass = 'Multiple Episodes PASS'
 let testCaseDescription = 'PASS' + Date.now()
 let testCaseSeries = 'SBTestSeries'
-let testCaseJsonIppPass = TestCaseJson.RatioPatientSingleIPNoMO_IPP_PASS
-let testCaseJsonDrcPass = TestCaseJson.RatioPatientSingleIPNoMO_DRC_PASS
-let measureCQL = 'library RatioPatientSingleIPNoMO version \'0.0.000\'\n' +
+let testCaseJsonIppPass = TestCaseJson.RatioEpisodeSingleIPNoMO_IPP_PASS
+let testCaseJsonMultipleEpisodesPass = TestCaseJson.RatioEpisodeSingleIPNoMO_MultipleEpisodes_PASS
+let measureCQL = 'library RatioEpisodeSingleIPNoMO version \'0.0.000\'\n' +
     '\n' +
     'using QICore version \'4.1.1\'\n' +
     '\n' +
@@ -38,41 +38,26 @@ let measureCQL = 'library RatioPatientSingleIPNoMO version \'0.0.000\'\n' +
     'context Patient\n' +
     '\n' +
     'define "Initial Population 1":\n' +
-    '   exists "Inpatient Encounters"\n' +
+    '   [Encounter: "Encounter Inpatient"] InptEncounter\n' +
+    '     where InptEncounter.status = \'finished\'\n' +
     '\n' +
     'define "Denominator":\n' +
-    '    exists "Inpatient Encounters Ends During MP"\n' +
+    '    "Initial Population 1" IP\n' +
+    '      where IP.period ends during day of "Measurement Period"\n' +
     '        \n' +
     'define "Denominator Exclusions":\n' +
-    '    exists "Inpatient Encounters Ends During MP GT 120 Days"\n' +
+    '    Denominator Denom\n' +
+    '        where Global."LengthInDays"(Denom.period) > 120\n' +
     '\n' +
     'define "Numerator":\n' +
-    '    exists "Unscheduled Inpatient Encounters Ends During MP"\n' +
+    '    "Denominator" Denom\n' +
+    '        where Denom.priority ~ "Unscheduled (qualifier value)"\n' +
     '\n' +
     'define "Numerator Exclusions":\n' +
-    '    exists "Unscheduled Emergency Inpatient Encounters Ends During MP"\n' +
-    '\n' +
-    'define "Inpatient Encounters":\n' +
-    '  [Encounter: "Encounter Inpatient"] InptEncounter\n' +
-    '      where InptEncounter.status = \'finished\'\n' +
-    '\n' +
-    'define "Inpatient Encounters Ends During MP":\n' +
-    '  "Inpatient Encounters" IE\n' +
-    '        where IE.period ends during day of "Measurement Period"\n' +
-    '\n' +
-    'define "Inpatient Encounters Ends During MP GT 120 Days":\n' +
-    '  "Inpatient Encounters Ends During MP" IE\n' +
-    '        where Global."LengthInDays"(IE.period) > 120\n' +
-    '\n' +
-    'define "Unscheduled Inpatient Encounters Ends During MP":\n' +
-    '  "Inpatient Encounters Ends During MP" IE\n' +
-    '        where IE.priority ~ "Unscheduled (qualifier value)"\n' +
-    '\n' +
-    'define "Unscheduled Emergency Inpatient Encounters Ends During MP":\n' +
-    '  "Unscheduled Inpatient Encounters Ends During MP" IE\n' +
-    '        where IE.class ~ "Emergency"'
+    '    Numerator Numer\n' +
+    '        where Numer.class ~ "Emergency"'
 
-describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', () => {
+describe('Measure Creation and Testing: Ratio Episode Single IP w/o MO', () => {
 
     before('Create Measure and Test Case', () => {
 
@@ -94,7 +79,7 @@ describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', 
 
     })
 
-    it('End to End Cohort Ratio Patient Single IP w/o MO w/ DRC, IPP Pass Result', () => {
+    it('End to End Cohort Ratio Episode Single IP w/o MO, IPP Pass Result', () => {
 
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
@@ -112,7 +97,7 @@ describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
-        cy.get(MeasureGroupPage.popBasis).type('Boolean')
+        cy.get(MeasureGroupPage.popBasis).type('Encounter')
         cy.get(MeasureGroupPage.popBasisOption).click()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, 'Ratio')
@@ -139,8 +124,7 @@ describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', 
         cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseIPPExpected).click()
-        cy.get(TestCasesPage.testCaseIPPExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
 
         cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
@@ -167,9 +151,9 @@ describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', 
 
     })
 
-    it('End to End Cohort Ratio Patient Single IP w/o MO w/ DRC, DRC Pass Result', () => {
+    it('End to End Cohort Ratio Patient Single IP w/o MO, Multiple Episodes Pass Result', () => {
 
-        TestCasesPage.CreateTestCaseAPI(testCaseTitleDrcPass, testCaseDescription, testCaseSeries, testCaseJsonDrcPass)
+        TestCasesPage.CreateTestCaseAPI(testCaseTitleMultipleEpisodesPass, testCaseDescription, testCaseSeries, testCaseJsonMultipleEpisodesPass)
 
         OktaLogin.Login()
 
@@ -186,26 +170,22 @@ describe('Measure Creation and Testing: Ratio Patient Single IP w/o MO w/ DRC', 
         cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseIPPExpected).click()
-        cy.get(TestCasesPage.testCaseIPPExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('2')
 
         cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseDENOMExpected).click()
-        cy.get(TestCasesPage.testCaseDENOMExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseDENOMExpected).type('2')
 
         cy.get(TestCasesPage.testCaseNUMERExpected).should('exist')
         cy.get(TestCasesPage.testCaseNUMERExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMERExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseNUMERExpected).click()
-        cy.get(TestCasesPage.testCaseNUMERExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMERExpected).type('2')
 
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('exist')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseNUMEXExpected).should('be.visible')
-        cy.get(TestCasesPage.testCaseNUMEXExpected).click()
-        cy.get(TestCasesPage.testCaseNUMEXExpected).check().should('be.checked')
+        cy.get(TestCasesPage.testCaseNUMEXExpected).type('1')
 
         cy.get(TestCasesPage.detailsTab).click()
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
