@@ -35,6 +35,7 @@ export class CQLLibraryPage {
     public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
     public static readonly cqlLibPubHelperText = '[data-testid="publisher-helper-text"]'
     public static readonly cqlLibraryExperimentalChkBox = '[id="epxerimental"]'
+    public static readonly editLibraryOwnershipError = '[id="content"]'
 
     //CQL Editor
     public static readonly cqlLibraryEditorTextBox = '.ace_content'
