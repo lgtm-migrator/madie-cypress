@@ -30,7 +30,8 @@ describe('Verify non Library owner unable to create Version', () => {
 
     })
 
-    it('Verify non Library owner unable to create Version', () => {
+    //Skipping until MAT-5012 is fixed
+    it.skip('Verify non Library owner unable to create Version', () => {
 
         //Navigate to CQL Library Page
         cy.get(Header.cqlLibraryTab).click()
@@ -44,3 +45,38 @@ describe('Verify non Library owner unable to create Version', () => {
     })
 
 })
+
+describe('Edit CQL Library ownership validations', () => {
+
+    beforeEach('Create CQL Library with regular user and Login as Alt user', () => {
+
+        CqlLibraryOne = 'TestLibrary' + Date.now()
+
+        CQLLibraryPage.createAPICQLLibraryWithValidCQL(CqlLibraryOne, CQLLibraryPublisher)
+
+        OktaLogin.AltLogin()
+    })
+
+    afterEach('Logout', () => {
+
+        OktaLogin.Logout()
+    })
+
+    it('Verify Non owner of the library unable to edit details', () => {
+
+        //Navigate to CQL Library Page
+        cy.get(Header.cqlLibraryTab).click()
+
+        //Navigate to All Libraries tab
+        cy.get(CQLLibraryPage.allLibrariesBtn).click()
+
+        //Edit CQL Library
+        CQLLibrariesPage.clickEditforCreatedLibrary()
+        cy.get(CQLLibraryPage.editLibraryOwnershipError).should('contain.text', 'You are not the owner of the CQL Library. Only owner can edit it.')
+        cy.get(CQLLibraryPage.cqlLibraryNameTextbox).should('have.attr', 'readonly', 'readonly')
+        cy.get(CQLLibraryPage.cqlLibraryDesc).should('have.attr', 'readonly', 'readonly')
+        cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.disabled')
+
+    })
+})
+
