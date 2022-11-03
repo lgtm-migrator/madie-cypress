@@ -14,6 +14,7 @@ let CqlLibraryName = 'CohortPatientBoolean' + Date.now()
 let testCaseTitle = 'PASS'
 let testCaseDescription = 'PASS' + Date.now()
 let testCaseSeries = 'SBTestSeries'
+let testCaseJson = TestCaseJson.TestCaseJson_CohortPatientBoolean_PASS
 
 describe('Measure Creation and Testing: Cohort Patient Boolean', () => {
 
@@ -23,9 +24,7 @@ describe('Measure Creation and Testing: Cohort Patient Boolean', () => {
         //Create New Measure
         CreateMeasurePage.CreateQICoreMeasure(measureName, CqlLibraryName, '01/01/2012', '12/31/2012')
 
-        cy.readFile('cypress/fixtures/FluentFunctionJSON.txt').should('exist').then((fileContents) => {
-            TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, fileContents)
-        })
+        TestCasesPage.CreateTestCaseAPI(testCaseTitle, testCaseDescription, testCaseSeries, testCaseJson)
 
         OktaLogin.Login()
 
