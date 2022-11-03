@@ -111,7 +111,7 @@ export class TestCasesPage {
         cy.readFile('cypress/fixtures/measureId').should('exist').then((id)=> {
             cy.intercept('POST', '/api/measures/' + id + '/test-cases').as('testcase')
 
-            cy.get(this.createTestCaseSaveButton).click()
+            cy.get(this.createTestCaseSaveButton).click().wait(1000)
 
             //saving testCaseId to file to use later
             cy.wait('@testcase').then(({response}) => {
@@ -178,10 +178,10 @@ export class TestCasesPage {
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 
-        cy.get(this.detailsTab).click()
+        cy.get(this.detailsTab).click().wait(1000)
 
         //Save edited / updated to test case
-        cy.get(this.editTestCaseSaveButton).click()
+        cy.get(this.editTestCaseSaveButton).click().wait(1000)
         cy.get(this.confirmationMsg).each(msg => {
             expect(msg.text()).to.be.oneOf(['Test case updated successfully!', 'An error occurred with the Test Case JSON while updating the test case'])
         })

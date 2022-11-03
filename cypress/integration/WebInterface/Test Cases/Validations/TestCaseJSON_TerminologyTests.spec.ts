@@ -7,6 +7,7 @@ import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {Utilities} from "../../../../Shared/Utilities"
 import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
 import {MeasureCQL} from "../../../../Shared/MeasureCQL"
+import {CQLEditorPage} from "../../../../Shared/CQLEditorPage"
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -14,6 +15,7 @@ let testCaseTitle = 'test case title'
 let testCaseDescription = 'DENOMFail' + Date.now()
 let missingResourceIDTCJson = TestCaseJson.TestCaseJson_missingResourceIDs
 let dupResourceIDTCJson = TestCaseJson.TestCaseJson_resourceIDsDup
+let validTestCaseJson = TestCaseJson.TestCaseJson_Valid
 let testCaseSeries = 'SBTestSeries'
 let measureCQL = MeasureCQL.CQL_Multiple_Populations
 let mesureCQLPFTests = MeasureCQL.CQL_Populations
@@ -743,3 +745,239 @@ describe('JSON Rescource ID tests', () => {
         cy.get(TestCasesPage.testCaseJsonValidationDisplayList).should('contain.text', 'All resources in bundle must have unique ID regardless of type. Multiple resources detected with ID [1]')
     })
 })
+describe('JSON Rescource ID tests - Proportion Score Type', () => {
+
+    beforeEach('Create measure, login and update CQL, create group, and login', () => {
+
+        CqlLibraryName = 'TestLibrary5' + Date.now()
+
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureName, CqlLibraryName, mesureCQLPFTests)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
+        cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(17000)
+        OktaLogin.Logout()
+        MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Initial Population', 'Initial Population', 'Initial Population', 'boolean')
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        Utilities.deleteMeasure(measureName, newCqlLibraryName)
+    })
+    it('Expect / Actual Labels are correct', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+
+        //Add second Measure Group with return type as Boolean
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
+        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('boolean')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
+        
+
+        //validation successful save message
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group updated successfully.')
+
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
+
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type(testCaseTitle.toString())
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type(testCaseDescription)
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type(testCaseSeries).type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        //Verify created test case Title and Series exists on Test Cases Page
+        TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        //Add json to the test case
+        cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Initial Population')
+    })
+
+})
+describe('JSON Rescource ID tests -- CV', () => {
+
+    beforeEach('Create measure, login and update CQL, create group, and login', () => {
+
+        CqlLibraryName = 'TestLibrary5' + Date.now()
+
+        CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(measureName, CqlLibraryName, mesureCQLPFTests)
+        OktaLogin.Login()
+        MeasuresPage.clickEditforCreatedMeasure()
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
+        cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.wait(17000)
+        OktaLogin.Logout()
+        //MeasureGroupPage.CreateProportionMeasureGroupAPI(false, false, 'Initial Population', 'Initial Population', 'Initial Population', 'boolean')
+        OktaLogin.Login()
+    })
+
+    afterEach('Logout and Clean up Measures', () => {
+
+        OktaLogin.Logout()
+
+        let randValue = (Math.floor((Math.random() * 1000) + 1))
+        let newCqlLibraryName = CqlLibraryName + randValue
+
+        Utilities.deleteMeasure(measureName, newCqlLibraryName)
+    })
+    it('Measure bundle end point returns stratifications for Continuous Variable Measure', () => {
+
+        //Click on Edit Measure
+        MeasuresPage.clickEditforCreatedMeasure()
+    
+        //navigate to CQL Editor page / tab
+        cy.get(EditMeasurePage.cqlEditorTab).click()
+        cy.get(EditMeasurePage.cqlEditorTextBox).type('{selectall}{backspace}{selectall}{backspace}')
+    
+        cy.readFile('cypress/fixtures/CQLForTestCaseExecution.txt').should('exist').then((fileContents) => {
+            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents, {delay:50})
+        })
+    
+        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+    
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).click()
+        Utilities.setMeasureGroupType()
+    
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).click()
+        cy.get(MeasureGroupPage.ucumScoringUnitDropdownList).each(($ele) => {
+            if ($ele.text() == "Text") {
+                cy.wrap($ele).should('exist')
+                cy.wrap($ele).focus()
+                cy.wrap($ele).click()
+            }
+        })
+        cy.get(MeasureGroupPage.ucumScoringUnitSelect).type('ml')
+        //Select ml milliLiters from the dropdown
+        cy.get(MeasureGroupPage.ucumScoringUnitfullName).click()
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
+        Utilities.dropdownSelect(MeasureGroupPage.measurePopulationSelect, 'denom')
+        Utilities.dropdownSelect(MeasureGroupPage.measurePopulationExclusionSelect, 'num')
+        Utilities.dropdownSelect(MeasureGroupPage.cvMeasureObservation, 'ToCode')
+        Utilities.dropdownSelect(MeasureGroupPage.cvAggregateFunction, 'Maximum')
+
+        //save Population Criteria
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.enabled')
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click().wait(3500)
+    
+        //Navigate to Test Cases page and add Test Case details
+        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(TestCasesPage.newTestCaseButton).should('be.visible')
+        cy.get(TestCasesPage.newTestCaseButton).should('be.enabled')
+        cy.get(TestCasesPage.newTestCaseButton).click()
+
+        cy.get(TestCasesPage.createTestCaseDialog).should('exist')
+        cy.get(TestCasesPage.createTestCaseDialog).should('be.visible')
+
+        cy.get(TestCasesPage.createTestCaseTitleInput).should('exist')
+        Utilities.waitForElementVisible(TestCasesPage.createTestCaseTitleInput, 20000)
+        Utilities.waitForElementEnabled(TestCasesPage.createTestCaseTitleInput, 20000)
+        cy.get(TestCasesPage.createTestCaseTitleInput).type(testCaseTitle.toString())
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).should('be.enabled')
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).focus()
+        cy.get(TestCasesPage.createTestCaseDescriptionInput).type(testCaseDescription)
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('exist')
+        cy.get(TestCasesPage.createTestCaseGroupInput).should('be.visible')
+        cy.get(TestCasesPage.createTestCaseGroupInput).type(testCaseSeries).type('{enter}')
+
+        TestCasesPage.clickCreateTestCaseButton()
+
+        //Verify created test case Title and Series exists on Test Cases Page
+        TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
+
+        TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Initial Population')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Population')
+        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Population Exclusion')
+    })
+
+})
+
