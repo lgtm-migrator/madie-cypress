@@ -7,6 +7,7 @@ import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {Utilities} from "../../../Shared/Utilities"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage";
 
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
@@ -33,7 +34,7 @@ describe('Create Test Case', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        cy.wait(4500)
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
         OktaLogin.Logout()
         MeasureGroupPage.CreateProportionMeasureGroupAPI(false,null,null,null,null, 'Procedure')
     })
