@@ -283,11 +283,12 @@ export class TestCasesPage {
                         'json': jsonValue
                     }
                 }).then((response) => {
-                    expect(response.status).to.eql(202)
+                    expect(response.status).to.eql(201)
                     expect(response.body.id).to.be.exist
                     expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
                     expect(response.body.description).to.eql(description)
+                    expect(response.body.description).to.eql('asdfasdf')
                     console.log(response.body.id)
                     console.log(testCasePath)
                     cy.writeFile(testCasePath, response.body.id)
