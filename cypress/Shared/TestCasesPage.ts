@@ -175,6 +175,8 @@ export class TestCasesPage {
 
         this.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         //Add json to the test case
         cy.get(this.aceEditor).type(testCaseJson)
 

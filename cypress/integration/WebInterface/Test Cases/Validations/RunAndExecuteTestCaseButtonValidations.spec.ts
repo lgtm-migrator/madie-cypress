@@ -61,21 +61,16 @@ describe('Run Test Case button validations', () => {
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{home}')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('adjfajsdfljafja;lsdjf')
 
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Boolean')
@@ -103,10 +98,11 @@ describe('Run Test Case button validations', () => {
         cy.get(TestCasesPage.detailsTab).should('be.visible')
         cy.get(TestCasesPage.detailsTab).click()
 
-        cy.get(TestCasesPage.runTestButton).should('be.disabled')
+        cy.get(TestCasesPage.runTestButton).should('be.disabled').wait(1000)
 
+        cy.get(EditMeasurePage.testCasesTab).should('exist')
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
-        cy.get(EditMeasurePage.testCasesTab).click()
+        cy.get(EditMeasurePage.testCasesTab).wait(1000).click()
 
         cy.get(TestCasesPage.executeTestCaseButton).should('be.disabled')
 
@@ -124,9 +120,11 @@ describe('Run Test Case button validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
@@ -152,21 +150,16 @@ describe('Run Test Case button validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Boolean')
@@ -221,6 +214,8 @@ describe('Run Test Case button validations', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(invalidTestCaseJson)
 
@@ -260,21 +255,16 @@ describe('Run Test Case button validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Boolean')
@@ -366,21 +356,16 @@ describe('Run Test Case button validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Boolean')
@@ -427,6 +412,8 @@ describe('Run Test Case button validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(invalidTestCaseJson)
@@ -532,9 +519,11 @@ describe('Execute Test Case Button Validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -565,6 +554,8 @@ describe('Execute Test Case Button Validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(invalidTestCaseJson)
@@ -605,9 +596,11 @@ describe('Execute Test Case Button Validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Navigate to Test Cases page and add Test Case details
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -665,9 +658,11 @@ describe('Execute Test Case Button Validations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
 
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(1000).click().wait(1000)
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //Navigate to Test Cases page and create Test case without Json
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -760,17 +755,7 @@ describe('Run and Execute Test case', () => {
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+       Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -818,6 +803,8 @@ describe('Run and Execute Test case', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
@@ -867,9 +854,6 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.cqlEditorTab).click()
         cy.get(EditMeasurePage.cqlEditorTextBox).scrollIntoView()
         cy.get(EditMeasurePage.cqlEditorTextBox).click().type('{enter}')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         cy.wait(17000)
         OktaLogin.Logout()
@@ -895,17 +879,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         //Add second Measure Group with return type as Boolean
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -959,6 +933,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
@@ -1005,17 +981,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         //Add second Measure Group with return type as Boolean
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -1069,6 +1035,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
@@ -1179,17 +1147,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         //Add second Measure Group with return type as Boolean
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -1245,6 +1203,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries('Failing Test Case', 'ICFTCSeries')
         
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
         
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
