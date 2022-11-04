@@ -18,6 +18,7 @@ export class CQLLibraryPage {
     public static readonly duplicateCQLLibraryNameError = '[data-testid="create-cql-library-error-text"]'
     public static readonly cqlLibraryModelErrorMsg = '.MuiFormHelperText-root'
     public static readonly successfulCQLSaveNoErrors = '[data-testid=cql-library-success-alert]'
+    public static readonly genericSuccessMessage = '[data-testid="generic-success-text-header"]'
     public static readonly warningAlert = '[data-testid="cql-library-warning-alert"]'
     public static readonly newCQLLibName = '[data-testid="cql-library-name-text-field-input"]'
     public static readonly currentCQLLibName = '[id="cql-library-name-text-field-input"]'

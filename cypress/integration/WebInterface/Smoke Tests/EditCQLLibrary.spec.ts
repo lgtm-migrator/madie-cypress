@@ -30,6 +30,9 @@ describe('Edit Measure', () => {
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).clear()
         cy.get(CQLLibraryPage.cqlLibraryNameTextbox).type(updatedCQLLibraryName)
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
+
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('be.visible')
+
         cy.log('CQL Library Updated Successfully')
 
         //Navigate back to CQL Library page and verify if the Library Name is updated
