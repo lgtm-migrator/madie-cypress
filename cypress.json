@@ -21,7 +21,7 @@
         "inline": true
     },
     "retries": {
-        "runMode": 0,
+        "runMode": 2,
         "openMode": 0
     },
     "screenshotsFolder": "mochawesome-report/assets"
