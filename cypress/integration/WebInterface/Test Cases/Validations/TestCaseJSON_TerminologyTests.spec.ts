@@ -513,6 +513,8 @@ describe('Warning modal on Test Case JSON Editor', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         cy.get(TestCasesPage.aceEditor).type('Warning Modal Test')
 
         //Warning Modal displayed when user navigated to Measure Group tab without saving changes
@@ -637,6 +639,8 @@ describe('JSON Rescource ID tests', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(missingResourceIDTCJson)
 
@@ -727,6 +731,8 @@ describe('JSON Rescource ID tests', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(dupResourceIDTCJson)
 
@@ -784,17 +790,7 @@ describe('JSON Rescource ID tests - Proportion Score Type', () => {
         //Add second Measure Group with return type as Boolean
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Text") {
-                cy.wrap($ele).should('exist')
-                cy.wrap($ele).focus()
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).type('Process').type('{downArrow}').type('{enter}')
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -848,6 +844,8 @@ describe('JSON Rescource ID tests - Proportion Score Type', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+
+        cy.reload()
 
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)

@@ -540,6 +540,8 @@ describe('Adding an Initial Population to group -- Ratio score only', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+        cy.reload()
+
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
 
