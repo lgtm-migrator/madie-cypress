@@ -288,7 +288,7 @@ export class TestCasesPage {
                     expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
                     expect(response.body.description).to.eql(description)
-                    expect(response.body.description).to.eql('asdfasdf')
+                    expect(response.body.description).to.eql(response.body.id)
                     console.log(response.body.id)
                     console.log(testCasePath)
                     cy.writeFile(testCasePath, response.body.id)
