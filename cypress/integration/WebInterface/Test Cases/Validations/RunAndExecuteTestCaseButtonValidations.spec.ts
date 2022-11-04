@@ -92,6 +92,7 @@ describe('Run Test Case button validations', () => {
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -129,6 +130,7 @@ describe('Run Test Case button validations', () => {
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTestCaseJson)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.get(TestCasesPage.runTestButton).should('be.visible')
         cy.get(TestCasesPage.runTestButton).should('be.disabled')
@@ -213,6 +215,7 @@ describe('Run Test Case button validations', () => {
         cy.log('Test Case created successfully')
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.reload()
 
@@ -231,6 +234,7 @@ describe('Run Test Case button validations', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -318,6 +322,7 @@ describe('Run Test Case button validations', () => {
         cy.log('Test Case created successfully')
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.get(TestCasesPage.detailsTab).click()
 
@@ -331,6 +336,7 @@ describe('Run Test Case button validations', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -412,6 +418,7 @@ describe('Run Test Case button validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.reload()
 
@@ -554,6 +561,7 @@ describe('Execute Test Case Button Validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.reload()
 
@@ -571,6 +579,7 @@ describe('Execute Test Case Button Validations', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -631,6 +640,7 @@ describe('Execute Test Case Button Validations', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //click on details tab
         cy.get(TestCasesPage.detailsTab).should('exist')
@@ -745,7 +755,7 @@ describe('Run and Execute Test case', () => {
         Utilities.deleteMeasure(measureName, newCqlLibraryName)
     })
 
-    it('Run and Execute Test case for multiple Measure groups', () => {
+    it('Run and Execute Test case for multiple Population Criteria and validate Population Criteria discernment, on Highlighting page', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -755,7 +765,7 @@ describe('Run and Execute Test case', () => {
         cy.get(MeasureGroupPage.addMeasureGroupButton).should('be.visible')
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
 
-       Utilities.setMeasureGroupType()
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         cy.get(MeasureGroupPage.popBasis).should('exist')
@@ -803,10 +813,15 @@ describe('Run and Execute Test case', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.reload()
+        cy.wait(3700)
 
         cy.reload()
 
         //Add json to the test case
+        Utilities.waitForElementVisible(TestCasesPage.aceEditor, 20000)
+        cy.get(TestCasesPage.aceEditor).should('exist')
+        cy.get(TestCasesPage.aceEditor).should('be.visible')
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
 
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
@@ -821,14 +836,16 @@ describe('Run and Execute Test case', () => {
 
         TestCasesPage.clickEditforCreatedTestCase()
 
+
         //Verify Highlighting tab before clicking on Run Test button
         cy.get(TestCasesPage.tcHighlightingTab).click()
         cy.get(TestCasesPage.runTestAlertMsg).should('contain.text', 'To see the logic highlights, click \'Run Test\'')
-
+        cy.wait(1000)
         //Click on Run Test button and verify the text on Highlighting tab
         cy.get(TestCasesPage.runTestButton).click()
-        cy.get(TestCasesPage.testCalculationResultsLineTwo).should('contain.text', '\ndefine fluent function "isFinishedEncounter"(Enc Encounter):\n(Enc E where E.status = \'finished\') is not null\n\ndefine fluent function "isFinishedEncounter"(Enc Encounter):\n(Enc E where E.status = \'finished\') is not null\n')
-
+        cy.get(TestCasesPage.testCalculationResults).should('include.text', 'Population Criteria 1\ndefine fluent function "isFinishedEncounter"(Enc Encounter):\n(Enc E where E.status = \'finished\') is not null')
+        cy.get(TestCasesPage.testCalculationResults).should('include.text', 'Population Criteria 2')
+        cy.pause()
         //Click on Execute Test Case button on Edit Test Case page
         cy.get(EditMeasurePage.testCasesTab).click()
         cy.get(TestCasesPage.executeTestCaseButton).should('exist')
@@ -841,8 +858,8 @@ describe('Run and Execute Test case', () => {
         cy.get(TestCasesPage.testCaseStatus).should('contain.text', 'pass')
     })
 })
-
-describe('Run / Execute Test case and verify passing percentage', () => {
+//these tests will need to be fixed once MAT-5020 is fixed
+describe('Run / Execute Test case and verify passing percentage and coverage', () => {
 
     beforeEach('Create measure, login and update CQL, create group, and login', () => {
 
@@ -888,7 +905,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(MeasureGroupPage.popBasis).type('boolean')
         cy.get(MeasureGroupPage.popBasisOption).click()
 
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial PopulationOne')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -933,6 +950,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.reload()
+        cy.wait(2000)
 
         cy.reload()
 
@@ -950,6 +969,18 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         //Verify Highlighting tab before clicking on Run Test button
         cy.get(TestCasesPage.tcHighlightingTab).click()
@@ -972,6 +1003,12 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '100%')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', 'Passing')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '(1/1)')
+        
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('exist')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('be.visible')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', '100%')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', 'Coverage')
+
     })
     it('Run / Execute one passing and one failing Test Cases', () => {
 
@@ -990,7 +1027,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(MeasureGroupPage.popBasis).type('boolean')
         cy.get(MeasureGroupPage.popBasisOption).click()
 
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial PopulationOne')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -1035,6 +1072,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries(testCaseTitle, testCaseSeries)
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.reload()
+        cy.wait(3700)
 
         cy.reload()
 
@@ -1052,6 +1091,18 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(3700)
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         //Verify Highlighting tab before clicking on Run Test button
         cy.get(TestCasesPage.tcHighlightingTab).click()
@@ -1087,7 +1138,10 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries('Failing Test Case', 'ICFTCSeries')
         
         TestCasesPage.clickEditforCreatedTestCase()
-        
+        cy.reload() 
+        cy.wait(3700)
+
+
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
         
@@ -1102,13 +1156,22 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+/*        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')        
-        cy.get(TestCasesPage.testCaseIPPExpected).wait(1000).click().wait(1000).check()
+        cy.get(TestCasesPage.testCaseIPPExpected).wait(1000).click().wait(1000).check() */
+
+        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
         cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
@@ -1138,6 +1201,11 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '50%')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', 'Passing')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '(1/2)')
+
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('exist')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('be.visible')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', '50%')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', 'Coverage')
     })
     it('Run / Execute single failing Test Cases', () => {
 
@@ -1156,7 +1224,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(MeasureGroupPage.popBasis).type('boolean')
         cy.get(MeasureGroupPage.popBasisOption).click()
 
-        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial PopulationOne')
 
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('exist')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
@@ -1203,8 +1271,8 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         TestCasesPage.grabValidateTestCaseTitleAndSeries('Failing Test Case', 'ICFTCSeries')
         
         TestCasesPage.clickEditforCreatedTestCase()
-
         cy.reload()
+        cy.wait(2000)
         
         //Add json to the test case
         cy.get(TestCasesPage.aceEditor).type(validTestCaseJson)
@@ -1220,6 +1288,18 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
+        cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
+        cy.get(TestCasesPage.testCaseIPPExpected).should('be.visible')
+        cy.get(TestCasesPage.testCaseIPPExpected).type('1')
+
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.visible')
+        cy.get(TestCasesPage.editTestCaseSaveButton).should('be.enabled')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
@@ -1239,6 +1319,7 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(EditMeasurePage.testCasesTab).click()
 
         TestCasesPage.clickEditforCreatedTestCase()
+        cy.wait(2000)
 
         //Verify Highlighting tab before clicking on Run Test button
         cy.get(TestCasesPage.tcHighlightingTab).click()
@@ -1261,5 +1342,10 @@ describe('Run / Execute Test case and verify passing percentage', () => {
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '0%')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', 'Passing')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '(0/1)')
+
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('exist')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('be.visible')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', '0%')
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).should('contain.text', 'Coverage')
     })
 })

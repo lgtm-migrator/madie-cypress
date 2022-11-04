@@ -290,10 +290,10 @@ export class MeasureGroupPage {
         let measurePath = ''
         let measureGroupPath = ''
         let measureScoring = 'Proportion'
-        if ((popBasis == undefined) || (popBasis === null) || (popBasis == 'Boolean')){popBasis = 'boolean'/* 'ipp' */}
-        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'/* 'ipp' */}
-        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'/* 'num' */}
-        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'/* 'denom' */}
+        if ((popBasis == undefined) || (popBasis === null) || (popBasis == 'Boolean')){popBasis = 'boolean'}
+        if ((PopIniPopP == undefined) || (PopIniPopP === null)){PopIniPopP = 'Surgical Absence of Cervix'}
+        if ((PopNumP == undefined) || (PopNumP === null)){PopNumP = 'Surgical Absence of Cervix'}
+        if ((PopDenomP == undefined) || (PopDenomP === null)){PopDenomP = 'Surgical Absence of Cervix'}
         if (altUser)
         {
             cy.setAccessTokenCookieALT()
