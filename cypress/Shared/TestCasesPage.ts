@@ -258,12 +258,12 @@ export class TestCasesPage {
         if (twoTestCases === true)
         {
             measurePath = 'cypress/fixtures/measureId2'
-            testCasePath = 'cypress/fixtures/testcaseId2'
+            testCasePath = 'cypress/fixtures/testCaseId2'
         }
         else
         {
             measurePath = 'cypress/fixtures/measureId'
-            testCasePath = 'cypress/fixtures/testcaseId'
+            testCasePath = 'cypress/fixtures/testCaseId'
         }
 
         //Add Test Case to the Measure
@@ -288,9 +288,6 @@ export class TestCasesPage {
                     expect(response.body.series).to.eql(series)
                     expect(response.body.title).to.eql(title)
                     expect(response.body.description).to.eql(description)
-                    expect(response.body.description).to.eql(testCasePath)
-                    console.log(response.body.id)
-                    console.log(testCasePath)
                     cy.writeFile(testCasePath, response.body.id)
                 })
             })
