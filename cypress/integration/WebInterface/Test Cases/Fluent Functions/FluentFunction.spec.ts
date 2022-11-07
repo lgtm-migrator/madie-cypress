@@ -65,15 +65,7 @@ describe('Fluent Function Capability', () => {
         //Create Measure Group
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, 'Cohort')
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Initial Population')
