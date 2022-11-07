@@ -3,6 +3,7 @@ import {Header} from "../../../Shared/Header"
 import {CQLLibraryPage} from "../../../Shared/CQLLibraryPage"
 import {CQLLibrariesPage} from "../../../Shared/CQLLibrariesPage"
 import {Utilities} from "../../../Shared/Utilities"
+import {Global} from "../../../Shared/Global"
 
 let CQLLibraryName = 'TestLibrary' + Date.now()
 
@@ -18,6 +19,7 @@ describe('CQL Library Validations', () => {
         OktaLogin.Logout()
 
     })
+
     it('CQL Library header (breadcrumbs, name, version/draft, model, last update)', () => {
 
         const dayjs = require('dayjs')
@@ -71,6 +73,7 @@ describe('CQL Library Validations', () => {
 
 
     })
+
     it('CQL Library cancel / discard changes button', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         //navigate to the main CQL Library list page
@@ -116,10 +119,8 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.discardChanges).should('contain.text', 'Discard Changes')
         cy.intercept('GET', '/api/cql-libraries?currentUser=true').as('alias')
         cy.get(CQLLibraryPage.discardChanges).click()
-        //discarding the changes moves the user successfully back to the main CQL Library list page
-        cy.wait('@alias').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
-        })
+
+        cy.get(Global.dirtCheckModal).should('be.visible')
     })
 
     it('CQL Library Name Validations', () => {
@@ -198,9 +199,9 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.newCQLLibName).should('be.visible')
         cy.get(CQLLibraryPage.newCQLLibName).should('be.enabled')
         cy.get(CQLLibraryPage.newCQLLibName).type(CQLLibraryName+randValue)
-        cy.get(CQLLibraryPage.cqlLibraryModalField).wait(1000).click().wait(1000)
+        cy.get(CQLLibraryPage.cqlLibraryModalField).wait(2000).click().wait(2000)
         cy.get(CQLLibraryPage.cqlLibraryCreateForm).click().wait(1000)
-        cy.get(CQLLibraryPage.cqlLibraryCreateFormSideClickArea).click().wait(1000).click().wait(1000).click()
+        cy.get(CQLLibraryPage.cqlLibraryCreateFormSideClickArea).click().wait(2000).click().wait(2000).click()
         cy.get(CQLLibraryPage.cqlLibraryModelErrorMsg).should('contain.text', 'A CQL library model is required.')
         cy.get(CQLLibraryPage.saveCQLLibraryBtn).should('be.disabled')
     })
@@ -301,7 +302,7 @@ describe('CQL Library Validations', () => {
         Utilities.typeFileContents('cypress/fixtures/AdultOutpatientEncountersQICore4Entry.txt', CQLLibraryPage.cqlLibraryEditorTextBox)
 
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
-        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('contain.text', 'CQL updated successfully! Library Name ' +
             'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
@@ -315,7 +316,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).greaterThan(1750)
+            expect(text.length).greaterThan(1710)
         })
 
     })
@@ -349,7 +350,7 @@ describe('CQL Library Validations', () => {
 
         cy.get(CQLLibraryPage.cqlLibraryStickySave).click()
 
-        cy.get(CQLLibraryPage.warningAlert).should('contain.text', 'CQL updated successfully! Library Name ' +
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('contain.text', 'CQL updated successfully! Library Name ' +
             'and/or Version can not be updated in the CQL Editor. MADiE has overwritten the updated Library Name and/or Version.')
 
         cy.get(Header.cqlLibraryTab).should('be.visible')
@@ -362,7 +363,7 @@ describe('CQL Library Validations', () => {
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).should('be.visible')
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).click()
         cy.get(CQLLibraryPage.cqlLibraryEditorTextBox).invoke('text').then((text) => {
-            expect(text.length).greaterThan(1760)
+            expect(text.length).greaterThan(1715)
         })
 
     })
