@@ -58,7 +58,7 @@ export class CreateMeasurePage {
         cy.get(this.measureNameTextbox).type(measureName)
         cy.get(this.measureModelDropdown).click()
         cy.get(this.measureModelQICore).click()
-        cy.get(this.eCQMAbbreviatedTitleTextbox).type('eCQMTitle')
+        cy.get(this.eCQMAbbreviatedTitleTextbox).type('eCQMTitle01')
         cy.get(this.cqlLibraryNameTextbox).type(CqlLibraryName)
 
         cy.get(CreateMeasurePage.measurementPeriodStartDate).type(mpStartDate)
