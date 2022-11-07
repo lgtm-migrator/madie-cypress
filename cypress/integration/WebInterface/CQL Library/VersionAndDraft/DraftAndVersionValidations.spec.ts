@@ -70,7 +70,7 @@ describe('Draft and Version Validations', () => {
         cy.log('Version Created Successfully')
 
         CQLLibrariesPage.clickEditforCreatedLibrary()
-        cy.get(CQLLibrariesPage.infoMsg).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
+        cy.get(CQLLibrariesPage.editCQLLibraryAlertMessage).should('contain.text', 'CQL Library is not a draft. Only drafts can be edited.')
     })
 
     it('Draft cannot be saved with a name that exists for a different library', () => {
@@ -106,8 +106,8 @@ describe('Draft and Version Validations', () => {
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).should('be.enabled')
         cy.get(CQLLibraryPage.updateCQLLibraryBtn).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('be.visible')
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('contain.text', 'CQL saved successfully')
 
         CQLLibrariesPage.clickVersionforCreatedLibrary()
         cy.get('.MuiDialogContent-root > :nth-child(2) > :nth-child(4)').should('contain.text', 'Versioning cannot be done as there is no associated Cql with this library')
