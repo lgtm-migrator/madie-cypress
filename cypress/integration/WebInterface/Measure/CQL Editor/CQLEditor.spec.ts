@@ -45,11 +45,6 @@ describe('Validate CQL Editor tab sticky footer', () => {
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
 
-        //verify text on Save button
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('contain.text', 'Save')
-        //verify text on discard button
-        cy.get(EditMeasurePage.cqlEditorDiscardButton).should('contain.text', 'Discard Changes')
-
         //write CQL value into CQL Editor
         cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
@@ -65,24 +60,11 @@ describe('Validate CQL Editor tab sticky footer', () => {
         cy.get(EditMeasurePage.cqlEditorDiscardButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorDiscardButton).click()
 
+        cy.get(Global.dirtCheckModal).should('be.visible')
+        cy.get(Global.discardChangesContinue).click()
+
         //confirm that CQL Editor object is empty
         cy.get(EditMeasurePage.cqlEditorTextBox).should('contain.text', '')
-
-        //write CQL value into CQL Editory
-        cy.readFile('cypress/fixtures/EXM124v7QICore4Entry.txt').should('exist').then((fileContents) => {
-            cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
-        })
-        //save the entry
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //verify value persists
-        cy.get(EditMeasurePage.testCasesTab).click()
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-        //confirm that CQL Editor object is empty
-        cy.get(EditMeasurePage.cqlEditorTextBox).should('not.be.empty')
     })
 
 })
