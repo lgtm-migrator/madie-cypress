@@ -14,6 +14,7 @@ export class CQLLibrariesPage {
     public static readonly versionErrorMsg = '[data-testid=create-version-error-message]'
     public static readonly versionCancelBtn = '[data-testid="create-version-cancel-button"]'
     public static readonly infoMsg = '[class="EditCqlLibrary__InfoAlert-sc-j81nve-3 eTmbnI"]'
+    public static readonly editCQLLibraryAlertMessage = '.madie-alert'
 
 
 
