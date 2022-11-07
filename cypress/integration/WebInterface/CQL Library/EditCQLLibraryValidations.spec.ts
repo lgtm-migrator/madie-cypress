@@ -159,9 +159,9 @@ describe('Edit Measure', () => {
         cy.get(CQLLibraryPage.cqlLibraryStickySave).should('be.enabled')
         cy.get(CQLLibraryPage.cqlLibraryStickySave).click()
 
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('exist')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('be.visible')
-        cy.get(CQLLibraryPage.successfulCQLSaveNoErrors).should('contain.text', 'CQL saved successfully')
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('exist')
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('be.visible')
+        cy.get(CQLLibraryPage.genericSuccessMessage).should('contain.text', 'CQL saved successfully')
 
         //navigate back to the CQL Libaray page and navigate to the edit CQL Library page
         cy.get(Header.cqlLibraryTab).should('exist')
@@ -223,8 +223,8 @@ describe('Edit Measure', () => {
         cy.get(CQLLibraryPage.cqlLibraryDesc).type('Some random data')
 
         //move to and, then, away from the Publisher field
-        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).clear()
-        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).focused().blur()
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisher).click()
+        cy.get(CQLLibraryPage.cqlLibraryEditPublisherCloseIcon).click()
         cy.get(CQLLibraryPage.cqlLibPubHelperText).should('contain.text', 'Publisher is required.')
         cy.get(CQLLibraryPage.cqlLibPubHelperText).should('have.color', '#FF342D')
         cy.get(CQLLibraryPage.cqlLibraryStickySave).should('be.disabled')

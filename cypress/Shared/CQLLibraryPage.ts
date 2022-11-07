@@ -32,6 +32,7 @@ export class CQLLibraryPage {
     public static readonly cqlLibraryCreateForm = '[id="menu-model"]'
     public static readonly cqlLibraryCreateFormSideClickArea = '[class="MuiBox-root css-0"]'
     public static readonly cqlLibraryEditPublisher = '[data-testid="publisher"]'
+    public static readonly cqlLibraryEditPublisherCloseIcon = '[data-testid="CloseIcon"]'
     public static readonly cqlLibraryCreatePublisherDrpDwn = '[aria-activedescendant="mui-3-option-0"]'
     public static readonly cqlLibraryEditPublisherDrpDwn = '#mui-4-option-0'
     public static readonly cqlLibDescHelperText = '[data-testid="description-helper-text"]'
