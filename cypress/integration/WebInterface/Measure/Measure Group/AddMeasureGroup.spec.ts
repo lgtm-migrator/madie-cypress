@@ -125,7 +125,7 @@ describe('Validate Measure Group additions', () => {
 
     })
 
-    it.only('Ensure numbering of groups is updated when group is created and saved out of sequential order', () => {
+    it('Ensure numbering of groups is updated when group is created and saved out of sequential order', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
