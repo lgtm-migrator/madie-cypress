@@ -380,7 +380,7 @@ describe('Measure Observations and Stratification -- non-owner tests', () => {
         cy.get(MeasureGroupPage.cvMeasureObservation).click()
         cy.get(MeasureGroupPage.measureObservationSelect).should('exist')
         cy.get(MeasureGroupPage.measureObservationSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureObservationSelect).wait(1000).eq(0).wait(1000).click() //select ToCode
+        Utilities.dropdownSelect(MeasureGroupPage.measureObservationSelect, 'ToCode')
         cy.get(MeasureGroupPage.cvAggregateFunction).click()
         cy.get(MeasureGroupPage.aggregateFunctionCount).click()
 
