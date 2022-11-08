@@ -35,7 +35,7 @@ describe('Validate Measure Group -- scoring and populations', () => {
         OktaLogin.Logout()
 
     })
-    it('"Please complete the CQL Editor process before continuing" appears when there are issues with entered CQL', () => {        
+    it('"Please complete the CQL Editor process before continuing" appears when there are issues with entered CQL', () => {
 
         //click on Edit button to edit measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -49,11 +49,14 @@ describe('Validate Measure Group -- scoring and populations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type('{backspace}')
         }
         //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(2000).click().wait(1000)
 
         //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).wait(2000).click().wait(1000)
 
         //Message appears at the top of the Population Criteria tab / page
         cy.get(MeasureGroupPage.CQLHasErrorMsg).should('exist')
@@ -72,31 +75,25 @@ describe('Validate Measure Group -- scoring and populations', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
         //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(2000).click().wait(1000)
 
         //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).wait(2000).click().wait(1000)
 
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Boolean')
         cy.get(MeasureGroupPage.popBasisOption).click()
-
 
         //select scoring unit on measure
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
@@ -157,26 +154,20 @@ describe('Validate Measure Group -- scoring and populations', () => {
         })
 
         //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(2000).click().wait(2000)
 
         //Click on the measure group tab
-        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist').wait(1000)
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible').wait(2000)
+        cy.get(EditMeasurePage.measureGroupsTab).wait(4000).click()
 
         //Select Group Type
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         //select scoring unit as Ratio on measure
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
-
 
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect,'Initial Population')
         Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Denominator')
@@ -313,24 +304,19 @@ describe('Validate Population Basis', () => {
             cy.get(EditMeasurePage.cqlEditorTextBox).type(fileContents)
         })
         //save CQL on measure
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(2000).click().wait(1000)
 
         //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).wait(2000).click().wait(1000)
 
         //fill in a description value
         cy.get(MeasureGroupPage.measureGroupDescriptionBox).type('MeasureGroup Description value')
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
