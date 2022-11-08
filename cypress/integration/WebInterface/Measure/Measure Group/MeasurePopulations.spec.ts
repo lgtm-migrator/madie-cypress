@@ -46,15 +46,7 @@ describe('Measure Populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
 
@@ -122,15 +114,7 @@ describe('Measure Populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
@@ -164,15 +148,7 @@ describe('Measure Populations', () => {
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCV)
 
