@@ -101,23 +101,19 @@ describe('Measure Sharing', () => {
 
         Utilities.typeFileContents('cypress/fixtures/CQLForTestCaseExecution.txt', EditMeasurePage.cqlEditorTextBox)
 
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+        //save CQL on measure
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('exist')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
+        cy.get(EditMeasurePage.cqlEditorSaveButton).wait(2000).click().wait(3000)
         cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
-        //Add New Measure group
+        //Click on the measure group tab
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).wait(2000).click()
 
         cy.get(MeasureGroupPage.addMeasureGroupButton).click()
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
 
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
