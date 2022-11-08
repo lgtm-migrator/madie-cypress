@@ -90,6 +90,9 @@ export class TestCasesPage {
     public static readonly denominatorObservationExpectedValueError = '[data-testid="denominatorObservation-error-helper-text"]'
     public static readonly numeratorObservationExpectedValueError = '[data-testid="numeratorObservation-error-helper-text"]'
     public static readonly eaMeasureGroupOneStratification = '[data-testid="measure-group-1-stratifications"]'
+    public static readonly cvMeasureObservationActualValue = '[data-testid="test-population-measurePopulationObservation-actual"]'
+    public static readonly denominatorMeasureObservationActualValue = '[data-testid="test-population-denominatorObservation-actual"]'
+    public static readonly numeratorMeasureObservationActualValue = '[data-testid="test-population-numeratorObservation-actual"]'
 
     //New Test Case Modal
     public static readonly createTestCaseDialog ='[data-testid="dialog-form"]'
