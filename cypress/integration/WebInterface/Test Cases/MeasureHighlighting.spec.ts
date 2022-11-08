@@ -68,7 +68,7 @@ describe('Measure Highlighting', () => {
         cy.get(TestCasesPage.tcHighlightingTab).should('be.visible')
         cy.get(TestCasesPage.tcHighlightingTab).click()
 
-        cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Group:')
+        cy.get(TestCasesPage.testCalculationResults).should('contain', 'Population Criteria 1')
 
         cy.get(TestCasesPage.testCalculationResults).should('contain.text','define "ipp":\n' +
             '  exists ["Encounter"] E where E.period.start during "Measurement Period"')
