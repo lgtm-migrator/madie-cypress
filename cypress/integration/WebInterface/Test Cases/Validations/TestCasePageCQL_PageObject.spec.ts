@@ -5,6 +5,7 @@ import {TestCasesPage} from "../../../../Shared/TestCasesPage"
 import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
 import {TestCaseJson} from "../../../../Shared/TestCaseJson"
 import {Utilities} from "../../../../Shared/Utilities"
+import {CQLEditorPage} from "../../../../Shared/CQLEditorPage";
 
 let measureName = 'TestMeasure' + Date.now()
 let measureCQL = 'library SimpleFhirLibrary version \'0.0.004\''//MeasureCQL.SBTEST_CQL
@@ -35,60 +36,9 @@ describe('Test Case Page CQL page object', () => {
 
     })
 
-    it('Test Case CQL value cannot be updated', () =>{
-        //Click on Edit Button
-        MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
-
-        //edit created test case
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //confirm that CQL field, on the Test Case page, cannot be edited
-        cy.get(TestCasesPage.tcCQLArea).find('textarea.ace_text-input').should('have.attr', 'readOnly', 'readonly')
-    })
-
-
-    it('Test Case CQL value is displayed on Test Case page', () =>{
-        //Click on Edit Button
-        MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
-
-        //edit created test case
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //confirm that CQL field, on the Test Case page, cannot be edited
-        cy.get(TestCasesPage.tcCQLArea).should('contain.text', measureCQL)
-
-    })
-
     it('Updates applied and saved from the Measure CQL page / tab are updated and reflective in the Test Case Page', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
         //create test case
         TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
@@ -111,7 +61,8 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-        
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
 
         //navigate to the test case tab
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
@@ -126,22 +77,9 @@ describe('Test Case Page CQL page object', () => {
 
     })
 
-    it('A message is displayed if there are issues with the CQL', () =>{
+    it.only('A message is displayed if there are issues with the CQL', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
-
-        //edit created test case
-        TestCasesPage.clickEditforCreatedTestCase()
 
         //navigate to the CQL Editor tab, for the measure
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
@@ -155,9 +93,10 @@ describe('Test Case Page CQL page object', () => {
         cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
 
-        //navigate to the test case tab
-        cy.get(EditMeasurePage.testCasesTab).should('be.visible')
-        cy.get(EditMeasurePage.testCasesTab).click()        
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+
+        //create test case
+        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
 
         //edit created test case
         TestCasesPage.clickEditforCreatedTestCase()
@@ -168,52 +107,4 @@ describe('Test Case Page CQL page object', () => {
         cy.get(TestCasesPage.cqlHasErrorsMsg).should('contain.text', 'An error exists with the measure CQL, please review the CQL Editor tab')
     })
 
-    it('Verify the Test Case Measure CQL sub-tab', () =>{
-        //Click on Edit Button
-        MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('Additional text')
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
-
-        //edit created test case
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //verify the Test Case MeasureCQL sub-tab
-        cy.get(TestCasesPage.tctMeasureCQLSubTab).should('exist')
-        cy.get(TestCasesPage.tctMeasureCQLSubTab).should('be.visible')
-    })
-
-
-    it('Verify the Test Case Expected / Actual tab', () =>{
-        //Click on Edit Button
-        MeasuresPage.clickEditforCreatedMeasure()
-        cy.get(EditMeasurePage.cqlEditorTab).should('exist')
-        cy.get(EditMeasurePage.cqlEditorTab).click()
-
-        cy.get(EditMeasurePage.cqlEditorTextBox).type('Additional text')
-
-        //saving current Measure CQL value
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.visible')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).should('be.enabled')
-        cy.get(EditMeasurePage.cqlEditorSaveButton).click()
-
-        //create test case
-        TestCasesPage.createTestCase(testCaseTitle, testCaseDescription, testCaseSeries, validTerminologyFHIR_and_QICORETestCaseJson)
-
-        //edit created test case
-        TestCasesPage.clickEditforCreatedTestCase()
-
-        //verify the Test Case MeasureCQL sub-tab
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
-        cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
-    })
 })
