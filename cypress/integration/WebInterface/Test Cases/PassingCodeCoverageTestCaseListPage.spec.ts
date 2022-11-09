@@ -1,12 +1,12 @@
-import {OktaLogin} from "../../../../Shared/OktaLogin"
-import {CreateMeasurePage} from "../../../../Shared/CreateMeasurePage"
-import {MeasuresPage} from "../../../../Shared/MeasuresPage"
-import {EditMeasurePage} from "../../../../Shared/EditMeasurePage"
-import {MeasureGroupPage} from "../../../../Shared/MeasureGroupPage"
-import {Utilities} from "../../../../Shared/Utilities"
-import {MeasureCQL} from "../../../../Shared/MeasureCQL"
-import {TestCasesPage} from "../../../../Shared/TestCasesPage"
-import {TestCaseJson} from "../../../../Shared/TestCaseJson"
+import {OktaLogin} from "../../../Shared/OktaLogin"
+import {CreateMeasurePage} from "../../../Shared/CreateMeasurePage"
+import {MeasuresPage} from "../../../Shared/MeasuresPage"
+import {EditMeasurePage} from "../../../Shared/EditMeasurePage"
+import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
+import {Utilities} from "../../../Shared/Utilities"
+import {MeasureCQL} from "../../../Shared/MeasureCQL"
+import {TestCasesPage} from "../../../Shared/TestCasesPage"
+import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
 
 let measureName = 'TestMeasure' + Date.now()
@@ -20,7 +20,11 @@ let newMeasureName = measureName + randValue
 let newCqlLibraryName = CqlLibraryName + randValue
 let measureCQL = MeasureCQL.CQL_Multiple_Populations
 
-describe('Test Case Validations', () => {
+
+
+//Need to wait for Brandon, skipping for now.
+// The basics of code coverage are working, but might need to rethink how we want to Regression test it
+describe.skip('Test Case Validations', () => {
 
     beforeEach('Create Measure', () => {
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
