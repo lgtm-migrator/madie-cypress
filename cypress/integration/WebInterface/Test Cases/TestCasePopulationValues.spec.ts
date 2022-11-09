@@ -8,6 +8,8 @@ import {MeasureGroupPage} from "../../../Shared/MeasureGroupPage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 import {MeasureCQL} from "../../../Shared/MeasureCQL"
 import {Header} from "../../../Shared/Header"
+import {CQLEditorPage} from "../../../Shared/CQLEditorPage"
+import {Global} from "../../../Shared/Global"
 
 let measureName = 'TestMeasure' + (Date.now())
 let CqlLibraryName = 'TestLibrary' + (Date.now())
@@ -86,10 +88,6 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - Proportion | Boolean')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
 
         cy.get(TestCasesPage.testCaseIPPExpected).should('exist')
         cy.get(TestCasesPage.testCaseIPPExpected).should('be.enabled')
@@ -107,6 +105,7 @@ describe('Test Case Expected Measure Group population values based on initial me
         cy.get(TestCasesPage.testCaseDENOMExpected).check().should('be.checked')
 
     })
+
     it('Validate notification that a reset of population values, on test cases, will occur once the completed ' +
         'save / update of the scoring value is executed', () => {
 
@@ -121,41 +120,48 @@ describe('Test Case Expected Measure Group population values based on initial me
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
         //Click on the measure group tab
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
+
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        for (let i = 1; i <= 2; i++) {
-            //log, in cypress, the measure score value
-            cy.log((measureScoringArray[i].valueOf()).toString())
-            //select scoring unit on measure
-            if (i == 1) {
-                Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
-            } else if (i == 2) {
-                Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
-            }
-            //based on the scoring unit value, select a value for all population fields
-            Utilities.validationMeasureGroupSaveAll((measureScoringArray[i].valueOf()).toString())
-            //select correct Population Basis value
-            cy.get(MeasureGroupPage.popBasis).should('exist')
-            cy.get(MeasureGroupPage.popBasis).should('be.visible')
-            cy.get(MeasureGroupPage.popBasis).click()
-            cy.get(MeasureGroupPage.popBasis).type('Procedure')
-            cy.get(MeasureGroupPage.popBasisOption).click()
-            //save measure group
-            cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
-            if (i == 2) {
-                //validation message after attempting to save
-                cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('exist')
-                cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('contain.text', 'Change Scoring?Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.Are you sure you want to Save Changes?This action cannot be undone.No, Keep WorkingYes, Save changes')
-                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
-                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
-                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
-                cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
-            } else if (i == 1) {
-                //validation message after attempting to save
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
-                cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
-            }
-        }
+        Utilities.setMeasureGroupType()
+
+        cy.get(MeasureGroupPage.popBasis).should('exist')
+        cy.get(MeasureGroupPage.popBasis).should('be.visible')
+        cy.get(MeasureGroupPage.popBasis).click()
+        cy.get(MeasureGroupPage.popBasis).type('Procedure')
+        cy.get(MeasureGroupPage.popBasisOption).click()
+
+
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('exist')
+        cy.get(MeasureGroupPage.successfulSaveMeasureGroupMsg).should('contain.text', 'Population details for this group saved successfully.')
+
+        Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringCohort)
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+
+        cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
+
+        //validation message after attempting to save
+        cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('exist')
+        cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('contain.text', 'Change Scoring?Your Measure Scoring is about to be saved and updated based on these changes. Any expected values on your test cases will be cleared for this measure.Are you sure you want to Save Changes?This action cannot be undone.No, Keep WorkingYes, Save changes')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('exist')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.visible')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).should('be.enabled')
+        cy.get(MeasureGroupPage.updateMeasureGroupConfirmationBtn).click()
+
+        cy.get(MeasureGroupPage.scoreUpdateConfirmModal).should('not.exist')
 
     })
 
@@ -172,20 +178,27 @@ describe('Test Case Expected Measure Group population values based on initial me
         })
         //save CQL on measure
         cy.get(EditMeasurePage.cqlEditorSaveButton).click()
+
+        cy.get(CQLEditorPage.successfulCQLSaveNoErrors).should('be.visible')
         //Click on the measure group tab
         cy.get(EditMeasurePage.measureGroupsTab).click()
         //log, in cypress, the measure score value
-        cy.log((measureScoringArray[1].valueOf()).toString())
-        //select correct Population Basis value
+        Utilities.setMeasureGroupType()
+
         cy.get(MeasureGroupPage.popBasis).should('exist')
         cy.get(MeasureGroupPage.popBasis).should('be.visible')
         cy.get(MeasureGroupPage.popBasis).click()
         cy.get(MeasureGroupPage.popBasis).type('Procedure')
         cy.get(MeasureGroupPage.popBasisOption).click()
-        //select scoring unit on measure
+
+
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
-        //based on the scoring unit value, select a value for all population fields
-        Utilities.validationMeasureGroupSaveAll((measureScoringArray[1].valueOf()).toString())
+
+        Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.denominatorExclusionSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorSelect, 'Surgical Absence of Cervix')
+        Utilities.dropdownSelect(MeasureGroupPage.numeratorExclusionSelect, 'Surgical Absence of Cervix')
         //save measure group
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).should('be.visible')
         cy.get(MeasureGroupPage.saveMeasureGroupDetails).click()
@@ -424,12 +437,6 @@ describe('Test Case Population dependencies', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - Proportion | Boolean')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Population')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Expected')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Actual')
 
         cy.log('Select DENOM and verify IPP is checked')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
@@ -679,9 +686,13 @@ describe('TC Pop value options are limited to those that are defined from Measur
         cy.get(TestCasesPage.numeratorExclusionRow).should('contain.text', 'Numerator Exclusion')
         cy.get(TestCasesPage.denominatorExclusionRow).should('contain.text', 'Denominator Exclusion')
         cy.get(TestCasesPage.denominatorExceptionRow).should('contain.text', 'Denominator Exception')
+
         //go back and update measure group to contain values for all of the population fields
         cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
         cy.get(EditMeasurePage.measureGroupsTab).click()
+
+        cy.get(Global.discardChangesContinue).click()
+
         Utilities.validateMeasureGroup(measureScoringArray[4].valueOf().toString(),'all')
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
