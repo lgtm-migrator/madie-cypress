@@ -27,7 +27,9 @@ let invalidTerminologyFHIR_and_QICOREEntireEntryBlockTestCaseJson = TestCaseJson
 let invalidTerminologyFHIR_and_QICOREStatusTestCaseJson = TestCaseJson.invalidTestCaseJsonFHIR_and_QICORE_Status
 let invalidTerminologyFHIR_and_QICOREMDatesTestCaseJson = TestCaseJson.invalidTestCaseJsonFHIR_and_QICORE_MDates
 
-describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON does not use value set(s)', () => {
+
+//needs review, not sure what we are testing in these cases
+describe.skip('Test Case JSON / terminology tests: Negative tests -- Test Case JSON does not use value set(s)', () => {
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
@@ -302,7 +304,8 @@ describe('Test Case JSON / terminology tests: Negative tests -- Test Case JSON d
     })
 })
 
-describe('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
+//needs review, not suer what we are testing in these cases
+describe.skip('Test Case JSON / terminology tests: positive tests -- Test Case JSON uses value set(s)', () => {
     beforeEach('Create measure and login', () => {
         let randValue = (Math.floor((Math.random() * 1000) + 1))
         newMeasureName = measureName + randValue
