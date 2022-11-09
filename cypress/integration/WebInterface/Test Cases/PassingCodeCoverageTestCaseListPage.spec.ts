@@ -22,7 +22,7 @@ let measureCQL = MeasureCQL.CQL_Multiple_Populations
 
 
 
-//Need to wait for Brandon, skipping for now.
+//Need to wait for MAT-4696 to finish, skipping for now.
 // The basics of code coverage are working, but might need to rethink how we want to Regression test it
 describe.skip('Test Case Validations', () => {
 

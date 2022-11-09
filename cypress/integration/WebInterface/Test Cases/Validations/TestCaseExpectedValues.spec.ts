@@ -60,8 +60,8 @@ describe('Validate Test Case Expected value updates on Measure Group change', ()
         cy.get(TestCasesPage.testCaseNUMERExpected).check().should('be.checked')
 
         //Save edited / updated to test case
-        cy.get(TestCasesPage.editTestCaseSaveButton).click()
         cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
         cy.get(TestCasesPage.confirmationMsg).should('contain.text', 'Test case updated successfully!')
 
         //Navigate to Measure group page and update scoring type
@@ -204,15 +204,8 @@ describe('Validate Test Case Expected value updates on Measure Group change', ()
 
         cy.get(EditMeasurePage.measureGroupsTab).click()
 
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('exist')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).should('be.visible')
-        cy.get(MeasureGroupPage.measureGroupTypeSelect).click()
-        cy.get(MeasureGroupPage.measureGroupTypeCheckbox).each(($ele) => {
-            if ($ele.text() == "Process") {
-                cy.wrap($ele).click()
-            }
-        })
-        cy.get(MeasureGroupPage.measureGroupTypeDropdownBtn).click({force:true})
+        Utilities.setMeasureGroupType()
+
         Utilities.dropdownSelect(MeasureGroupPage.measureScoringSelect, MeasureGroupPage.measureScoringRatio)
 
         Utilities.dropdownSelect(MeasureGroupPage.initialPopulationSelect, 'ipp')
@@ -308,7 +301,12 @@ describe('Validate Test Case Expected value updates on Measure Group change', ()
         cy.get(TestCasesPage.testCaseDENOMExpected).click()
         cy.get(TestCasesPage.testCaseDENOMExpected).check().should('be.checked')
         cy.get(TestCasesPage.denominatorObservationExpectedRow).should('exist')
+
+        cy.get(TestCasesPage.detailsTab).click()
+
         cy.get(TestCasesPage.editTestCaseSaveButton).click()
+
+        cy.get(TestCasesPage.confirmationMsg).should('be.visible')
 
         //Remove Measure Observation from Measure group
         cy.get(EditMeasurePage.measureGroupsTab).click()
@@ -324,15 +322,16 @@ describe('Validate Test Case Expected value updates on Measure Group change', ()
         //Navigate to Test case Expected values tab and verify Measure Observation Expected value does not exist
         cy.get(EditMeasurePage.testCasesTab).click()
         TestCasesPage.clickEditforCreatedTestCase()
+
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
         cy.get(TestCasesPage.testCaseDENOMExpected).should('exist')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('be.enabled')
         cy.get(TestCasesPage.testCaseDENOMExpected).should('be.visible')
         cy.get(TestCasesPage.testCaseDENOMExpected).click()
-        cy.get(TestCasesPage.testCaseDENOMExpected).uncheck().should('not.be.checked')
+
+        cy.get(TestCasesPage.testCaseDENOMExpected).should('not.be.checked')
         cy.get(TestCasesPage.testCaseDENOMExpected).check().should('be.checked')
         cy.get(TestCasesPage.denominatorObservationExpectedRow).should('not.exist')
-        cy.get(TestCasesPage.editTestCaseSaveButton).click()
     })
 
     it('Verify if Stratification is added to the Measure group, test case Expected values will be updated', () => {
