@@ -54,6 +54,7 @@ export class TestCasesPage {
     public static readonly testCalculationError = '[data-testid="calculation-error-alert"]'
     public static readonly testCaseListPassingPercTab = '[data-testid="passing-tab"]'
     public static readonly testCaseListCoveragePercTab = '[data-testid="coverage-tab"]'
+    public static readonly testCaseListCoverageHighlighting = '[data-testid="code-coverage-highlighting"]'
 
     //Test Case Population Values
     public static readonly testCaseIPPExpected = '[data-testid="test-population-initialPopulation-expected"]'

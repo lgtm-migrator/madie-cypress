@@ -8,7 +8,6 @@ import {MeasureCQL} from "../../../Shared/MeasureCQL"
 import {TestCasesPage} from "../../../Shared/TestCasesPage"
 import {TestCaseJson} from "../../../Shared/TestCaseJson"
 
-
 let measureName = 'TestMeasure' + Date.now()
 let CqlLibraryName = 'TestLibrary' + Date.now()
 let randValue = (Math.floor((Math.random() * 1000) + 1))
@@ -20,11 +19,7 @@ let newMeasureName = measureName + randValue
 let newCqlLibraryName = CqlLibraryName + randValue
 let measureCQL = MeasureCQL.CQL_Multiple_Populations
 
-
-
-//Need to wait for MAT-4696 to finish, skipping for now.
-// The basics of code coverage are working, but might need to rethink how we want to Regression test it
-describe.skip('Test Case Validations', () => {
+describe('Test Case Validations', () => {
 
     beforeEach('Create Measure', () => {
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
@@ -33,9 +28,6 @@ describe.skip('Test Case Validations', () => {
         cy.get(EditMeasurePage.cqlEditorTab).should('exist')
         cy.get(EditMeasurePage.cqlEditorTab).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTab).click()
-        if ((EditMeasurePage.dirtCheckModal)) {
-            cy.get(EditMeasurePage.keepWorkingCancel).click()
-        }
         cy.get(EditMeasurePage.cqlEditorTextBox).should('exist')
         cy.get(EditMeasurePage.cqlEditorTextBox).should('be.visible')
         cy.get(EditMeasurePage.cqlEditorTextBox).type('{enter}')
@@ -54,7 +46,7 @@ describe.skip('Test Case Validations', () => {
 
     })
 
-    it('Validate Passing and Code Coverage tabs contain the initial "-" value, and displayes a percentage when Test Case is ran', () => {
+    it('Validate Passing and Code Coverage tabs contain the initial "-" value, and displays a percentage when Test Case is ran', () => {
 
         //Click on Edit Measure
         MeasuresPage.clickEditforCreatedMeasure()
@@ -67,7 +59,7 @@ describe.skip('Test Case Validations', () => {
         cy.get(EditMeasurePage.testCasesTab).should('be.visible')
         cy.get(EditMeasurePage.testCasesTab).click()
 
-        //verify initial "-" value, appears in the pasing and code coverage tabs
+        //verify initial "-" value, appears in the passing and code coverage tabs
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('exist')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('be.visible')
         cy.get(TestCasesPage.testCaseListPassingPercTab).should('contain.text', '-')
@@ -99,5 +91,10 @@ describe.skip('Test Case Validations', () => {
         cy.get(TestCasesPage.testCaseListCoveragePercTab).should('be.visible')
         cy.get(TestCasesPage.testCaseListCoveragePercTab).should('not.contain.text', '-')
 
-    })    
+        cy.get(TestCasesPage.testCaseListCoveragePercTab).click()
+        cy.get('[class="qpp-c-alert__text"]').should('contain.text', 'Only first measure group coverage shown')
+        cy.get(TestCasesPage.testCaseListCoverageHighlighting).should('contain.text', 'define fluent function "isFinishedEncounter"(Enc Encounter):\n' +
+            '(Enc E where E.status = \'finished\') is not null')
+
+    })
 })
