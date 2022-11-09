@@ -105,11 +105,11 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
 
-        //Verify Stratification Expected Values
+        //Verify Stratification Expected check boxes are displayed
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Stratifications - Proportion | Boolean')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-1 denominator')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-2 numerator')
+        cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).should('be.visible')
+        cy.get(TestCasesPage.numeratorStratificationTwoExpectedValue).should('be.visible')
+
 
     })
 
@@ -233,12 +233,6 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-        
-        //Verify Stratification Expected Values
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Stratifications - Proportion | Boolean')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-1 denominator')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-2 numerator')
 
         //check the denominator stratification check boxes
         cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).should('exist')
@@ -320,12 +314,6 @@ describe('Stratification Expected values for Boolean Population Basis', () => {
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('exist')
         cy.get(TestCasesPage.tctExpectedActualSubTab).should('be.visible')
         cy.get(TestCasesPage.tctExpectedActualSubTab).click()
-
-        //Verify Stratification Expected Values
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Stratifications - Proportion | Boolean')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-1 denominator')
-        cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'strata-2 numerator')
 
         //check the denominator stratification check boxes
         cy.get(TestCasesPage.denominatorStratificationOneExpectedValue).should('exist')
