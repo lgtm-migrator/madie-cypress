@@ -19,7 +19,7 @@ let newMeasureName = measureName + randValue
 let newCqlLibraryName = CqlLibraryName + randValue
 let measureCQL = MeasureCQL.CQL_Multiple_Populations
 
-describe('Test Case Validations', () => {
+describe('Code Coverage Highlighting', () => {
 
     beforeEach('Create Measure', () => {
         CreateMeasurePage.CreateAPIQICoreMeasureWithCQL(newMeasureName, newCqlLibraryName, measureCQL)
