@@ -133,6 +133,21 @@ export class TestCaseJson {
         '"system": "http://holycrosshospital.com/location", "value": "4989ju789fn93bvy562loe87c" } ], "status": "active", "' +
         'name": "North Wing, second floor" } } ] }'
 
+    public static readonly TestCaseJson_CohortEpisodeWithStrat_PASS ='{ "resourceType": "Bundle", "id": "ip-pass-Encounter", ' +
+        '"meta": { "versionId": "3", "lastUpdated": "2022-09-14T12:38:39.889+00:00" }, "type": "collection", "entry": [ { ' +
+        '"fullUrl": "http://MyHealthcare.com/Patient/609bde3598086b0a16d79fc6", "resource": { "id": "609bde3598086b0a16d79' +
+        'fc6", "resourceType": "Patient", "meta": { "profile": [ "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-' +
+        'patient" ] }, "identifier": [ { "type": { "coding": [ { "system": "http://terminology.hl7.org/CodeSystem/v2-0203",' +
+        ' "code": "MR" } ] }, "system": "http://myGoodHealthcare.com/MRN", "value": "8065dc8d26797064d8766be71f2bf020" } ],' +
+        ' "active": true, "name": [ { "use": "usual", "family": "IPPass", "given": [ "Inpatient Encounter" ] } ], "gender":' +
+        ' "male", "birthDate": "1954-02-10" } }, { "fullUrl": "http://MyHealthcare.com/Encounter/5c6c61ceb84846536a9a98f9",' +
+        '"resource": { "id": "5c6c61ceb84846536a9a98f9", "resourceType": "Encounter", "status": "finished", "class": { "syst' +
+        'em": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "AMB", "display": "ambulatory" }, "type": [ { "co' +
+        'ding": [ { "system": "http://snomed.info/sct", "code": "444971000124105", "display": "Annual wellness visit (proced' +
+        'ure)" } ] } ], "subject": { "reference": "Patient/609bde3598086b0a16d79fc6" }, "priority": { "coding": [ { "system"' +
+        ': "http://snomed.info/sct", "code": "103391001", "display": "Urgency" } ] }, "period": { "start": "2022-07-15T08:00' +
+        ':00+00:00", "end": "2022-07-15T09:00:00+00:00" } } } ] }'
+
     public static readonly CohortEpisodeEncounter_PASS ='{ "resourceType": "Bundle", "id": "ip-pass-InpatientEncounter", ' +
         '"meta": { "versionId": "3", "lastUpdated": "2022-09-14T12:38:39.889+00:00" }, "type": "collection", "entry": [ ' +
         '{ "fullUrl": "http://MyHealthcare.com/Patient/609bde3598086b0a16d79fc6", "resource": { "id": "609bde3598086b0a1' +
