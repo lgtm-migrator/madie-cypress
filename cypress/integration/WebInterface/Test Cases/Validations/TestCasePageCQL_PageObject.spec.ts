@@ -77,7 +77,7 @@ describe('Test Case Page CQL page object', () => {
 
     })
 
-    it.only('A message is displayed if there are issues with the CQL', () =>{
+    it('A message is displayed if there are issues with the CQL', () =>{
         //Click on Edit Button
         MeasuresPage.clickEditforCreatedMeasure()
 
