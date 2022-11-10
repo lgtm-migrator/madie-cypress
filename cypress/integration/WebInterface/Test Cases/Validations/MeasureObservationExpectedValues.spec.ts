@@ -42,8 +42,7 @@ describe('Measure Observation Expected values', () => {
 
     })
 
-    //Skipping until MAT-4994 is fixed
-    it.skip('Validate and save Measure observation for CV measure', () => {
+    it('Validate and save Measure observation for CV measure', () => {
 
         //Create Continuous variable measure group
         MeasureGroupPage.createMeasureGroupforContinuousVariableMeasure()
