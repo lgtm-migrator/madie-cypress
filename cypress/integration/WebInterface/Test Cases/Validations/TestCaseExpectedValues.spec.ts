@@ -167,9 +167,13 @@ describe('Validate Test Case Expected value updates on Measure Group change', ()
 
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('be.visible')
         cy.get(TestCasesPage.testCasePopulationValuesTable).should('contain.text', 'Measure Group 1 - Ratio | boolean')
+        cy.get(TestCasesPage.testCaseIPPExpected).check().should('be.checked')
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
 
         //Delete Measure group
-        cy.get(EditMeasurePage.measureGroupsTab).click()
+        cy.get(EditMeasurePage.measureGroupsTab).should('exist')
+        cy.get(EditMeasurePage.measureGroupsTab).should('be.visible')
+        cy.get(EditMeasurePage.measureGroupsTab).wait(2000).click()
         cy.get(MeasureGroupPage.deleteGroupbtn).should('exist').should('be.visible').should('be.enabled')
         cy.get(MeasureGroupPage.deleteGroupbtn).click()
         cy.get(MeasureGroupPage.yesDeleteModalbtn).should('exist').should('be.visible').should('be.enabled')
