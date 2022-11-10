@@ -337,10 +337,19 @@ describe('Boolean Measure Observation Actual values', () => {
         //Click on RunTest Button
         cy.get(TestCasesPage.testCaseDENOMExpected).check().should('be.checked')
         cy.get(TestCasesPage.testCaseNUMERExpected).check().should('be.checked')
-        cy.get(TestCasesPage.editTestCaseSaveButton).click().wait(1000)
+
+        cy.get(TestCasesPage.detailsTab).click()
+        cy.get(TestCasesPage.editTestCaseSaveButton).click()
+
+        cy.get(TestCasesPage.confirmationMsg).should('be.visible')
+
+        cy.get(TestCasesPage.tctExpectedActualSubTab).click()
+
         cy.get(TestCasesPage.runTestButton).should('exist')
         cy.get(TestCasesPage.runTestButton).should('be.visible')
-        cy.get(TestCasesPage.runTestButton).wait(2000).click({force:true}).wait(2000)
+        cy.get(TestCasesPage.runTestButton).should('be.enabled')
+        cy.get(TestCasesPage.runTestButton).click()
+
         cy.get(TestCasesPage.denominatorMeasureObservationActualValue).should('have.value', '1')
         cy.get(TestCasesPage.numeratorMeasureObservationActualValue).should('have.value', '14')
 
